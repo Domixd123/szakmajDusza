@@ -20,6 +20,11 @@ namespace szakmajDusza
         {
             InitializeComponent();
             a
+
+
+
+
+                sddasdas
         }
     }
 }

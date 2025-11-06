@@ -6,3 +6,4 @@
 *.suo
 *.json
 *.editorconfig
+*.AssemblyInfo.cs

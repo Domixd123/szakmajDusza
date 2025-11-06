@@ -1,0 +1,4 @@
+C:\Users\Domi\coding\Dusza\szakmajDusza\szakmajDusza\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\Domi\coding\Dusza\szakmajDusza\szakmajDusza\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\Domi\coding\Dusza\szakmajDusza\szakmajDusza\obj\Debug\net8.0-windows\szakmajDusza_MarkupCompile.cache
+C:\Users\Domi\coding\Dusza\szakmajDusza\szakmajDusza\obj\Debug\net8.0-windows\szakmajDusza_MarkupCompile.lref

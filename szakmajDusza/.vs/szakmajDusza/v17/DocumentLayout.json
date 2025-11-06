@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Domi\\coding\\Dusza\\szakmajDusza\\szakmajDusza\\",
+  "WorkspaceRootPath": "C:\\Users\\zbszu\\Downloads\\AS\\prog\\szakmajDusza\\szakmajDusza\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|c:\\users\\domi\\coding\\dusza\\szakmajdusza\\szakmajdusza\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|c:\\users\\zbszu\\downloads\\as\\prog\\szakmajdusza\\szakmajdusza\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|c:\\users\\domi\\coding\\dusza\\szakmajdusza\\szakmajdusza\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|c:\\users\\zbszu\\downloads\\as\\prog\\szakmajdusza\\szakmajdusza\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{958D560F-D855-4BC2-9042-070683A548C5}|szakmajDusza.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -18,19 +18,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{e8b06f53-6d01-11d2-aa7d-00c04f990343}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Domi\\coding\\Dusza\\szakmajDusza\\szakmajDusza\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\zbszu\\Downloads\\AS\\prog\\szakmajDusza\\szakmajDusza\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Domi\\coding\\Dusza\\szakmajDusza\\szakmajDusza\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\zbszu\\Downloads\\AS\\prog\\szakmajDusza\\szakmajDusza\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-06T17:48:21.191Z"
@@ -39,9 +35,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Domi\\coding\\Dusza\\szakmajDusza\\szakmajDusza\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\zbszu\\Downloads\\AS\\prog\\szakmajDusza\\szakmajDusza\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\Domi\\coding\\Dusza\\szakmajDusza\\szakmajDusza\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\zbszu\\Downloads\\AS\\prog\\szakmajDusza\\szakmajDusza\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

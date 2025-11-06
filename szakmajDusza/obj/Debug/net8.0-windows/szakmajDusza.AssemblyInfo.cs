@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("szakmajDusza")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb9201d2e08435e12b2b2e9e794147f86ecea02d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4b3f4be787c34aae08b7d89f627029b69cff10a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("szakmajDusza")]
 [assembly: System.Reflection.AssemblyTitleAttribute("szakmajDusza")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,6 @@
 .vs/
 .Debug/
+.obj/
 *.exe
 *.user
 *.cache

@@ -8,5 +8,9 @@ namespace szakmajDusza
 {
     internal class Kristof
     {
+        public Kristof() 
+        {
+            Console.WriteLine("Cigany");
+        }
     }
 }

@@ -1,7 +1,6 @@
 .vs/
 *.exe
 *.user
-*.suo
 *.cache
 *.log
 *.suo

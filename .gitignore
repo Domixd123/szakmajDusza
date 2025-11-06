@@ -4,3 +4,5 @@
 *.suo
 *.cache
 *.log
+*.suo
+*.json

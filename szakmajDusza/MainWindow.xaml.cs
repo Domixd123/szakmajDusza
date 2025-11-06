@@ -19,7 +19,7 @@ namespace szakmajDusza
         public MainWindow()
         {
             InitializeComponent();
-            sugma
+            dwdwwd
         }
     }
 }

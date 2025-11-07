@@ -65,10 +65,12 @@ namespace szakmajDusza
 				if (data[0] == "uj kartya")
 				{
 					Cards.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4],false));
+					CardsDict.Add(data[1], Cards[Cards.Count - 1]);
 				}
 				else if (data[0] == "uj vezer")
 				{
 					Leaders.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4], true));
+					LeadersDict.Add(data[1], Leaders[Leaders.Count - 1]);
 				}
 				else if (data[0]=="uj kazamata")
 				{

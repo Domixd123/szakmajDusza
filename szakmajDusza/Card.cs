@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Shapes;
+using System.Windows.Media;
+using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace szakmajDusza
 {
@@ -14,30 +20,99 @@ namespace szakmajDusza
         public KartyaTipus Tipus { get; set; }
         public bool Vezer { get; set; }
 
-        public Card(string n, int d, int h, string tipus, bool vezer) 
+        public Rectangle Rec { get; private set; }
+
+        private Label NameLabel;
+        private Label DamageAndHPLabel;
+        private Label TypeLabel;
+
+        private Grid visualGroup;
+
+        public Card(string n, int d, int h, string tipus, bool vezer)
         {
             Name = n;
             Damage = d;
             HP = h;
-            switch (tipus)
-            {
-                case "tuz":
-                    Tipus = KartyaTipus.tuz;
-                    break;
-                case "fold":
-                    Tipus = KartyaTipus.fold;
-                    break;
-                case "viz":
-                    Tipus = KartyaTipus.viz;
-                    break;
-                case "levego":
-                    Tipus = KartyaTipus.levego;
-                    break;
-                default:
-                    break;
-            }
             Vezer = vezer;
+
+            // Enum beállítása szöveg alapján
+            Tipus = tipus switch
+            {
+                "tuz" => KartyaTipus.tuz,
+                "fold" => KartyaTipus.fold,
+                "viz" => KartyaTipus.viz,
+                "levego" => KartyaTipus.levego,
+                _ => KartyaTipus.fold
+            };
+
+            
+            Rec = new Rectangle
+            {
+                Width = 175,
+                Height = 300,
+                
+            };
+
+            
+            NameLabel = new Label
+            {
+                Content = Name,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(0, 5, 0, 0)
+            };
+
+            DamageAndHPLabel = new Label
+            {
+                Content = $"{Damage}/{HP}",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+
+            TypeLabel = new Label
+            {
+                Content = Tipus.ToString(),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Foreground = Brushes.DarkBlue
+            };
+
+            
+            visualGroup = new Grid();
+            visualGroup.Width = Rec.Width;
+            visualGroup.Height = Rec.Height;
+            visualGroup.Margin = new Thickness(10, 10, 10, 10);
+            visualGroup.Background = Brushes.LightGray;
+            visualGroup.Children.Add(Rec);
+            visualGroup.Children.Add(NameLabel);
+            visualGroup.Children.Add(TypeLabel);
+            visualGroup.Children.Add(DamageAndHPLabel);
         }
+
+        
+        public UIElement GetVisual()
+        {
+            return visualGroup;
+        }
+
+        public bool Equals(Card? obj)
+        {
+            if (obj.Name == this.Name && obj.Damage == this.Damage && obj.HP == this.HP && obj.Tipus == this.Tipus)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        
+        public void SetPosition(double x, double y)
+        {
+            Canvas.SetLeft(visualGroup, x);
+            Canvas.SetTop(visualGroup, y);
+        }
+
     }
 
     public enum KartyaTipus : byte

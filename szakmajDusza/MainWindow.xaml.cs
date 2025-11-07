@@ -24,7 +24,12 @@ namespace szakmajDusza
         public MainWindow()
         {
             InitializeComponent();
+
+            MainRoom_Grid.Visibility = Visibility.Visible;
+
             UploadCards();
+            
+
         }
 
         private void UploadCards()
@@ -54,6 +59,27 @@ namespace szakmajDusza
             NagyKazamata.Add(new Card("Nerun", 3, 3, "tuz", false));
             NagyKazamata.Add(new Card("Torak", 3, 4, "fold", false));
             NagyKazamata.Add(new Card("Priestess Selia", 2, 12, "fold", true));
+
+
+            foreach (var item in Jatekos)
+            {
+                Cards_Wrap.Children.Add(item.GetVisual());
+            }
+        }
+
+        private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Kis_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Nagy_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

@@ -33,6 +33,7 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
+
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
@@ -484,3 +485,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+![Bb]in/Debug/net8.0-windows/files/

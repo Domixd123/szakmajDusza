@@ -4,57 +4,155 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace szakmajDusza
 {
     public class Harc
     {
         //vizuáls gotta make it work
-        static public void StartFight(Kazamata k, List<Card> pakli)
+        public static async Task StartFight(Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend)
         {
+            List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
+            List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
+            int index = 0;
+            attack.Visibility = Visibility.Collapsed;
+            defend.Visibility = Visibility.Collapsed;
+
+            player.Children.Clear();
+            kazamata.Children.Clear();
+
+            foreach (var c in playerCopies)
+                player.Children.Add(c.GetVisual());
+            foreach (var c in kazamataCopies)
+                kazamata.Children.Add(c.GetVisual());
+
             Card? kaz = null;
             Card? play = null;
-           
-            while ((k.Defenders.Count != 0 || kaz != null) )
+
+            while ((kazamataCopies.Count != 0 || kaz != null))
             {
                 if (kaz == null)
                 {
-                    kaz = k.Defenders[0].GetCopy();
-                    k.Defenders.RemoveAt(0);
+                    try
+                    {
+                        kaz = kazamataCopies[0];
+                        kazamataCopies.RemoveAt(0);
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    
                 }
                 else
                 {
-                    play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
-                    if (play.HP <= 0)
+                    try
                     {
-                        play = null;
+                        play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
+                        play.UpdateVisual();
+                        defend.Visibility = Visibility.Visible;
+                        attack.Visibility = Visibility.Collapsed;
+
+                        if (play.HP <= 0)
+                        {
+                            player.Children.Remove(play.GetVisual());
+
+                            index++;
+                            play = null;
+                        }
                     }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    
                 }
+
+                await Task.Delay(1500);
 
                 if (play == null)
                 {
-                    play = pakli[0].GetCopy();
-                    pakli.RemoveAt(0);
+                    try
+                    {
+                        play = playerCopies[0];
+                        playerCopies.RemoveAt(0);
+                    }
+                    catch(Exception)
+                    {
+
+                    }
+                    
+                    
                 }
                 else
                 {
-                    kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
-                    if (kaz.HP <= 0)
+                    try
                     {
-                        kaz = null;
+                        kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
+                        kaz.UpdateVisual();
+                        defend.Visibility = Visibility.Collapsed;
+                        attack.Visibility = Visibility.Visible;
+                        if (kaz.HP <= 0)
+                        {
+                            kazamata.Children.Remove(kaz.GetVisual());
+
+                            kaz = null;
+                        }
                     }
+                    catch (Exception)
+                    {
+
+                    }
+                    
                 }
+
+                await Task.Delay(1500);
             }
-            
-            if (pakli.Count == 0)
+
+            if (playerCopies.Count == 0)
             {
-                //jatekos veszít
+                MessageBox.Show("Játékos veszített!");
+                kazamata.Children.Clear();
+                player.Children.Clear();
             }
+
             else
             {
-                //jatekos nyer
+                MessageBox.Show("Játékos nyert!");
+                kazamata.Children.Clear();
+                player.Children.Clear();
+
+                switch (k.reward)
+                {
+                    case KazamataReward.eletero:
+                        pakli[index].HP += 2;
+                        pakli[index].UpdateVisual();
+                        break;
+                    case KazamataReward.sebzes:
+                        pakli[index].Damage += 1;
+                        pakli[index].UpdateVisual();
+                        break;
+                    case KazamataReward.newcard:
+                        foreach (var item in k.Defenders)
+                        {
+                            if (!pakli.Contains(item))
+                            {
+                                pakli.Add(item);
+                                
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
+
+        
         //tesztes
         static public void StartFight(Kazamata k, List<Card> pakli, StreamWriter w)
         {

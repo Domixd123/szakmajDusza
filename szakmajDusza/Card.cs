@@ -44,13 +44,13 @@ namespace szakmajDusza
 
             visualGroup = new Grid
             {
-                Width = 120,
+                Width = 140,
                 Height = 180,
                 Margin = new Thickness(10),
-                Background = new LinearGradientBrush(
+                /*Background = new LinearGradientBrush(
         Color.FromRgb(25, 20, 30),
         Color.FromRgb(45, 35, 55),
-        90)
+        90)*/
             };
             visualGroup.Effect = new System.Windows.Media.Effects.DropShadowEffect
             {
@@ -157,8 +157,19 @@ namespace szakmajDusza
             visualGroup.Children.Add(But);
         }
 
-        
-        
+        public void UpdateVisual()
+        {
+            // Frissítjük a statisztikát kiíró címkét
+            DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
+
+            // Opcionális: ha a HP <= 0, halványítsuk el a kártyát
+            if (HP <= 0)
+            {
+                visualGroup.Opacity = 0.4;
+            }
+        }
+
+
         public UIElement GetVisual()
         {
             return visualGroup;

@@ -76,7 +76,7 @@ namespace szakmajDusza
 
         private void AddToPakli(object? sender, Card clicked)
         {
-            if (Jatekos.Count > Gyujtemeny.Count / 2 || Jatekos.Contains(clicked))
+            if (Jatekos.Count >= Gyujtemeny.Count / 2 || Jatekos.Contains(clicked))
             {
                 MessageBox.Show("Nem lehet hozzáadni ezt a kártyát");
             }
@@ -86,24 +86,44 @@ namespace szakmajDusza
                 Jatekos.Add(clicked);
                 PlayerCards_Wrap.Children.Add(clicked.GetVisual());
                 clicked.Clicked -= AddToPakli;
+                clicked.Clicked += RemoveFromPakli;
+
+                SelectedCards_Label.Content = Jatekos.Count;
             }
         }
 
-        private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
+        private void RemoveFromPakli(object? sender, Card clicked)
+        {
+            PlayerCards_Wrap.Children.Remove(clicked.GetVisual());
+            Jatekos.Remove(clicked);
+            Cards_Wrap.Children.Add(clicked.GetVisual());
+            clicked.Clicked -= RemoveFromPakli;
+            clicked.Clicked += AddToPakli;
+
+            SelectedCards_Label.Content = Jatekos.Count;
+        }
+
+        private async void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            Harc.StartFight(EgyszeruKazamata, Jatekos);
+            await Harc.StartFight(EgyszeruKazamata, Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label);
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
+            ShowPakli();
         }
 
-        private void Kis_Button_Click(object sender, RoutedEventArgs e)
+        private async void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;
-            Harc.StartFight(KisKazamata, Jatekos);
+            await Harc.StartFight(KisKazamata, Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label);
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            KisKazamata_Grid.Visibility = Visibility.Collapsed;
+            ShowPakli();
         }
 
-        private void Nagy_Button_Click(object sender, RoutedEventArgs e)
+        private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in NagyKazamata.Defenders)
             {
@@ -111,39 +131,17 @@ namespace szakmajDusza
                 {
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
-                    Harc.StartFight(NagyKazamata, Jatekos);
+                    await Harc.StartFight(NagyKazamata, Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label);
+                    MainRoom_Grid.Visibility = Visibility.Visible;
+                    NagyKazamata_Grid.Visibility = Visibility.Collapsed;
+                    ShowPakli();
+                    break;
                 }
             }
         }
 
 
-        private void StartFight(Kazamata k, List<Card> pakli)
-        {
-            Card kaz = null;
-            Card play = null;
-            while (k.Defenders.Count != 0 && pakli.Count != 0)
-            {
-                if (kaz == null)
-                {
-                    kaz = k.Defenders[0];
-                    k.Defenders.RemoveAt(0);
-                }
-                else
-                {
-
-                }
-
-                if (play == null)
-                {
-                    play = pakli[0];
-                    pakli.RemoveAt(0);
-                }
-                else
-                {
-
-                }
-            }
-        }
+        
 
         static public float Multiplier(Card attack, Card def)
         {
@@ -161,12 +159,44 @@ namespace szakmajDusza
 
         private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)
         {
-            PakliOssze_Grid.Visibility = Visibility.Collapsed;
-            MainRoom_Grid.Visibility = Visibility.Visible;
+            if (Jatekos.Count != 0)
+            {
+                PakliOssze_Grid.Visibility = Visibility.Collapsed;
+                MainRoom_Grid.Visibility = Visibility.Visible;
+                ShowPakli();
+            }
+
+            else
+            {
+                MessageBox.Show("Legalább egy kártyát ki kell választanod!");
+            }
+            
+        }
+
+        private void ShowPakli()
+        {
+            PakliCards_Wrap.Children.Clear();
             foreach (var item in Jatekos)
             {
+                
+                item.Clicked -= RemoveFromPakli;
+                item.Clicked -= AddToPakli;
                 PlayerCards_Wrap.Children.Remove(item.GetVisual());
                 PakliCards_Wrap.Children.Add(item.GetVisual());
+            }
+
+        }
+
+        private void PakliChange_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainRoom_Grid.Visibility = Visibility.Collapsed;
+            PakliOssze_Grid.Visibility = Visibility.Visible;
+
+            foreach (var item in Jatekos)
+            {
+                PakliCards_Wrap.Children.Remove(item.GetVisual());
+                PlayerCards_Wrap.Children.Add(item.GetVisual());
+                item.Clicked += RemoveFromPakli;
             }
         }
     }

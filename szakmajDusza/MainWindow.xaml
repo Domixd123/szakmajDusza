@@ -8,33 +8,57 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Grid>
         <Grid Name="PakliOssze_Grid" Visibility="Collapsed">
-            <WrapPanel Name="Cards_Wrap" Margin="0,34,0,560"/>
-            <WrapPanel x:Name="PlayerCards_Wrap" Margin="0,675,0,0"/>
-            <Label FontSize="50" Content="Kiválasztottak:" HorizontalAlignment="Center" Margin="0,504,0,0" VerticalAlignment="Top"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="335*"/>
+                <RowDefinition Height="197*"/>
+            </Grid.RowDefinitions>
+            <WrapPanel Name="Cards_Wrap" Margin="0,34,0,166"/>
+            <WrapPanel x:Name="PlayerCards_Wrap" Margin="0,5,0,0" Grid.Row="1"/>
+            <Label FontSize="50" Content="Kiválasztottak:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
             <Button Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,509,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
+            <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="428,504,0,0" VerticalAlignment="Top"/>
+            <Label FontSize="50" Content="/10" HorizontalAlignment="Left" Margin="465,504,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid Name="MainRoom_Grid" Visibility="Visible">
-            <WrapPanel Name="PakliCards_Wrap" Margin="10,594,-10,0"/>
+        <Grid Name="MainRoom_Grid" Visibility="Collapsed">
+            <WrapPanel Name="PakliCards_Wrap" Margin="10,594,648,0"/>
             <Button Name="Egyszeri_Button" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
             <Button Name="Kis_Button" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
             <Button Name="Nagy_Button" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>
+            <Button Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
 
         </Grid>
 
-        <Grid Name="EgyszeriKazamata_Grid" Visibility="Collapsed">
+        <Grid Name="EgyszeriKazamata_Grid" Visibility="Visible">
+            <Label Content="Játékos" FontSize="60" HorizontalAlignment="Left" Margin="144,116,0,0" VerticalAlignment="Top"/>
+            <Label Content="Kazamata" FontSize="60" HorizontalAlignment="Right" Margin="0,116,144,0" VerticalAlignment="Top"/>
+            <WrapPanel Name="FightPlayerEgyszeri_Wrap" Margin="115,263,1343,37" Width="400"/>
+            <WrapPanel Name="FightKazamataEgyszeri_Wrap" Margin="1386,263,146,37" Width="400"/>
+            <Label Name="DefendEgyszeri_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackEgyszeri_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
 
         </Grid>
 
         <Grid Name="KisKazamata_Grid" Visibility="Collapsed">
+            <WrapPanel Name="FightPlayerKis_Wrap" Margin="115,263,1343,37" Width="400"/>
+            <WrapPanel Name="FightKazamataKis_Wrap" Margin="1386,263,146,37" Width="400"/>
+            <Label Name="DefendKis_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackKis_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
 
         </Grid>
 
         <Grid Name="NagyKazamata_Grid" Visibility="Collapsed">
+            <WrapPanel Name="FightPlayerNagy_Wrap" Margin="115,263,1343,37" Width="400"/>
+            <WrapPanel Name="FightKazamataNagy_Wrap" Margin="1386,263,146,37" Width="400"/>
+            <Label Name="DefendNagy_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackNagy_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>
 
     <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="Gold"></Setter>
+        </Style>
         <Style TargetType="Button">
             <Setter Property="Background">
                 <Setter.Value>
@@ -78,7 +102,7 @@
             </Setter>
         </Style>
 
-        
+
     </Window.Resources>
 </Window>
     

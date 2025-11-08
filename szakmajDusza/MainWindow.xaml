@@ -66,6 +66,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+<<<<<<< Updated upstream
         
         <Style TargetType="Grid">
         <Setter Property="Background">
@@ -77,6 +78,19 @@
             </Setter.Value>
         </Setter>
     </Style>
+=======
+
+        <Style TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#14141A" Offset="0"/>
+                        <GradientStop Color="#322C3C" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+>>>>>>> Stashed changes
     </Window.Resources>
 </Window>
     

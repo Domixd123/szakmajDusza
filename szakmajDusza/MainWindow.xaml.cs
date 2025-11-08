@@ -16,6 +16,7 @@ namespace szakmajDusza
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
         public static Kazamata EgyszeruKazamata = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
         public static Kazamata KisKazamata = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
@@ -25,7 +26,11 @@ namespace szakmajDusza
         {
             InitializeComponent();
 
-            MainRoom_Grid.Visibility = Visibility.Visible;
+            PakliOssze_Grid.Visibility = Visibility.Visible;
+            MainRoom_Grid.Visibility = Visibility.Collapsed;
+            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
+            KisKazamata_Grid.Visibility = Visibility.Collapsed;
+            NagyKazamata_Grid.Visibility = Visibility.Collapsed;
 
             UploadCards();
             
@@ -34,16 +39,16 @@ namespace szakmajDusza
 
         private void UploadCards()
         {
-            Jatekos.Add(new Card("Arin", 2, 5, "fold", false));
-            Jatekos.Add(new Card("Liora", 2, 4, "levego", false));
-            Jatekos.Add(new Card("Sellia", 2, 6, "viz", false));
-            Jatekos.Add(new Card("Nerun", 3, 3, "tuz", false));
-            Jatekos.Add(new Card("Torak", 3, 4, "fold", false));
-            Jatekos.Add(new Card("Emera", 2, 5, "levego", false));
-            Jatekos.Add(new Card("Kael", 3, 5, "tuz", false));
-            Jatekos.Add(new Card("Myra", 2, 6, "fold", false));
-            Jatekos.Add(new Card("Thalen", 3, 5, "levego", false));
-            Jatekos.Add(new Card("Isara", 2, 6, "viz", false));
+            Gyujtemeny.Add(new Card("Arin", 2, 5, "fold", false));
+            Gyujtemeny.Add(new Card("Liora", 2, 4, "levego", false));
+            Gyujtemeny.Add(new Card("Sellia", 2, 6, "viz", false));
+            Gyujtemeny.Add(new Card("Nerun", 3, 3, "tuz", false));
+            Gyujtemeny.Add(new Card("Torak", 3, 4, "fold", false));
+            Gyujtemeny.Add(new Card("Emera", 2, 5, "levego", false));
+            Gyujtemeny.Add(new Card("Kael", 3, 5, "tuz", false));
+            Gyujtemeny.Add(new Card("Myra", 2, 6, "fold", false));
+            Gyujtemeny.Add(new Card("Thalen", 3, 5, "levego", false));
+            Gyujtemeny.Add(new Card("Isara", 2, 6, "viz", false));
 
 
             EgyszeruKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
@@ -61,7 +66,7 @@ namespace szakmajDusza
             NagyKazamata.Defenders.Add(new Card("Priestess Selia", 2, 12, "fold", true));
 
 
-            foreach (var item in Jatekos)
+            foreach (var item in Gyujtemeny)
             {
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
@@ -69,17 +74,34 @@ namespace szakmajDusza
 
         private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            MainRoom_Grid.Visibility = Visibility.Collapsed;
+            EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
+            StartFight(EgyszeruKazamata);
         }
 
         private void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            MainRoom_Grid.Visibility = Visibility.Collapsed;
+            KisKazamata_Grid.Visibility = Visibility.Visible;
+            StartFight(KisKazamata);
         }
 
         private void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            foreach (var item in NagyKazamata.Defenders)
+            {
+                if (!Jatekos.Contains(item))
+                {
+                    MainRoom_Grid.Visibility = Visibility.Collapsed;
+                    NagyKazamata_Grid.Visibility = Visibility.Visible;
+                    StartFight(NagyKazamata);
+                }
+            }
+        }
+
+        private void StartFight(Kazamata k)
+        {
+
         }
     }
 }

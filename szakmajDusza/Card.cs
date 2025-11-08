@@ -21,6 +21,7 @@ namespace szakmajDusza
         public bool Vezer { get; set; }
 
         public Rectangle Rec { get; private set; }
+        public Button But { get; private set; }
 
         private Label NameLabel;
         private Label DamageAndHPLabel;
@@ -50,6 +51,12 @@ namespace szakmajDusza
             {
                 Height = 150,
                 
+            };
+
+            But = new Button
+            {
+                Height = Rec.Height,
+                Width = Rec.Width
             };
 
             
@@ -85,6 +92,7 @@ namespace szakmajDusza
             visualGroup.Margin = new Thickness(10, 10, 10, 10);
             visualGroup.Background = Brushes.LightGray;
             visualGroup.Children.Add(Rec);
+            visualGroup.Children.Add(But);
             visualGroup.Children.Add(NameLabel);
             visualGroup.Children.Add(TypeLabel);
             visualGroup.Children.Add(DamageAndHPLabel);

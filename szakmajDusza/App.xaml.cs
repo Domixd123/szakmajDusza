@@ -1,14 +1,12 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.IO;
 
 namespace szakmajDusza
 {
-    //copied from dusza github, we have to use this - TKD
-    public partial class App : Application
-    {
+	//copied from dusza github, we have to use this - TKD
+	public partial class App : Application
+	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			AttachConsole(-1);
@@ -42,17 +40,17 @@ namespace szakmajDusza
 			}
 		}
 		public static List<Card> Cards = new List<Card>();
-		public static Dictionary<string,Card>CardsDict = new Dictionary<string,Card>();
+		public static Dictionary<string, Card> CardsDict = new Dictionary<string, Card>();
 		public static List<Card> Leaders = new List<Card>();
 		public static Dictionary<string, Card> LeadersDict = new Dictionary<string, Card>();
 
 		public static List<Card> Jatekos = new List<Card>();
-		public static List<Card>Pakli = new List<Card>();
+		public static List<Card> Pakli = new List<Card>();
 
-		public static List<Kazamata>Kazamatak=new List<Kazamata>();
+		public static List<Kazamata> Kazamatak = new List<Kazamata>();
 		private void RunAutomatedTest(string v)
 		{
-			StreamReader sr=new StreamReader(v);
+			StreamReader sr = new StreamReader(v);
 			while (!sr.EndOfStream)
 			{
 				string? line = sr.ReadLine();
@@ -64,7 +62,7 @@ namespace szakmajDusza
 
 				if (data[0] == "uj kartya")
 				{
-					Cards.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4],false));
+					Cards.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4], false));
 					CardsDict.Add(data[1], Cards[Cards.Count - 1]);
 				}
 				else if (data[0] == "uj vezer")
@@ -72,16 +70,16 @@ namespace szakmajDusza
 					Leaders.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4], true));
 					LeadersDict.Add(data[1], Leaders[Leaders.Count - 1]);
 				}
-				else if (data[0]=="uj kazamata")
+				else if (data[0] == "uj kazamata")
 				{
-					if(data[1] == "egyszeru")
+					if (data[1] == "egyszeru")
 					{
-						Kazamatak.Add(new Kazamata(data[2], data[1], data[4],new List<Card>() { CardsDict[data[3]] }));
+						Kazamatak.Add(new Kazamata(data[2], data[1], data[4], new List<Card>() { CardsDict[data[3]] }));
 					}
-					else if(data[1] == "kis")
+					else if (data[1] == "kis")
 					{
-						List<Card>defenders= new List<Card>();
-						string[]def=data[3].Split(",");
+						List<Card> defenders = new List<Card>();
+						string[] def = data[3].Split(",");
 						for (int i = 0; i < def.Length; i++)
 						{
 							defenders.Add(CardsDict[def[i]]);
@@ -102,14 +100,14 @@ namespace szakmajDusza
 					}
 
 
-						
+
 
 				}
-				else if (data[0]=="uj jatekos")
+				else if (data[0] == "uj jatekos")
 				{
 					//i dont think we need to add anything into here
 				}
-				else if (data[0]=="felvetel gyujtemenybe")
+				else if (data[0] == "felvetel gyujtemenybe")
 				{
 					if (CardsDict.ContainsKey(data[1]))
 					{
@@ -120,9 +118,9 @@ namespace szakmajDusza
 						Jatekos.Add(LeadersDict[data[1]]);
 					}
 				}
-				else if (data[0] =="uj pakli")
+				else if (data[0] == "uj pakli")
 				{
-					string[]kartyanevek=data[1].Split(',');
+					string[] kartyanevek = data[1].Split(',');
 					for (int i = 0; i < kartyanevek.Length; i++)
 					{
 						if (CardsDict.ContainsKey(kartyanevek[i]))
@@ -135,28 +133,26 @@ namespace szakmajDusza
 						}
 					}
 				}
-				else if(data[0] =="export vilag")
+				else if (data[0] == "export vilag")
 				{
-					StreamWriter sw=new StreamWriter(data[1]);
-					for (int i = 0; i < Jatekos.Count; i++)
+					StreamWriter sw = new StreamWriter(data[1]);
+					for (int i = 0; i < Cards.Count; i++)
 					{
-						if (!Jatekos[i].Vezer)
+						sw.WriteLine($"kartya;{Cards[i].Name};{Cards[i].Damage};{Cards[i].HP};{Card.TipusToString(Cards[i].Tipus)}");
+
+					}
+					sw.WriteLine();
+					for (int i = 0; i < Leaders.Count; i++)
+					{
+						if (Leaders[i].Vezer)
 						{
-							sw.WriteLine($"kartya;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
+							sw.WriteLine($"vezer;{Leaders[i].Name};{Leaders[i].Damage};{Leaders[i].HP};{Card.TipusToString(Leaders[i].Tipus)}");
 						}
 					}
 					sw.WriteLine();
-					for (int i = 0; i < Jatekos.Count; i++)
+					for (int i = 0; i < Kazamatak.Count; i++)
 					{
-						if (Jatekos[i].Vezer)
-						{
-							sw.WriteLine($"vezer;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
-						}
-					}
-					sw.WriteLine();
-					for(int i = 0;i < Kazamatak.Count; i++)
-					{
-						if (Kazamatak[i].Tipus==KazamataType.egyszeru)
+						if (Kazamatak[i].Tipus == KazamataType.egyszeru)
 						{
 							sw.WriteLine($"kazamata;egyszeru;{Kazamatak[i].Name};{Kazamatak[i].Defenders[0].Name};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
 						}
@@ -170,7 +166,21 @@ namespace szakmajDusza
 									normalDefenders += $"{Kazamatak[i].Defenders[j].Name},";
 								}
 							}
-							sw.WriteLine($"kazamata;kis;{Kazamatak[i].Name};{Kazamatak[i].Defenders[0].Name};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
+							normalDefenders = normalDefenders.Substring(0,normalDefenders.Length-1);//remove last ','
+							string vezer="";
+							for (int j = 0; j < Kazamatak[i].Defenders.Count; j++)
+							{
+								if (Kazamatak[i].Defenders[j].Vezer)
+								{
+									vezer = Kazamatak[i].Defenders[j].Name;
+									break;
+								}
+							}
+							sw.WriteLine($"kazamata;kis;{Kazamatak[i].Name};{normalDefenders};{vezer};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
+						}
+						else if (Kazamatak[i].Tipus==KazamataType.nagy)
+						{
+
 						}
 					}
 					sw.Close();

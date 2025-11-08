@@ -9,6 +9,7 @@ namespace szakmajDusza
 {
     public class Harc
     {
+        //vizuáls
         static public void StartFight(Kazamata k, List<Card> pakli)
         {
             Card? kaz = null;
@@ -52,6 +53,7 @@ namespace szakmajDusza
                 //jatekos nyer
             }
         }
+        //tesztes
         static public void StartFight(Kazamata k, List<Card> pakli, StreamWriter w)
         {
             Card? kaz = null;
@@ -108,7 +110,7 @@ namespace szakmajDusza
             {
                 if (k.Tipus==KazamataType.nagy)
                 {
-                    Card nemBirtok;
+                    Card? nemBirtok = null;
                     for (int i = 0; i < App.Cards.Count; i++)
                     {
                         if (!App.Jatekos.Contains(App.Cards[i]))
@@ -117,13 +119,23 @@ namespace szakmajDusza
                             break;
                         }
                     }
-                    
+                    if (nemBirtok!=null)
+                    {
+                        App.Jatekos.Add(nemBirtok);
+                        w.WriteLine($"jatekos nyert;{nemBirtok.Name}");
+                    }
                 }
                 else
                 {
                     if (k.reward==KazamataReward.eletero)
                     {
-
+                        w.WriteLine($"jatekos nyert;eletero;{play.Name}");
+                        //increase the stats actually
+                    }
+                    else
+                    {
+                        w.WriteLine($"jatekos nyert;sebzes;{play.Name}");
+                        //increase the stats actually
                     }
                 }
             }

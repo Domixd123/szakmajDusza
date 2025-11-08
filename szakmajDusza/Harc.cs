@@ -14,7 +14,7 @@ namespace szakmajDusza
         {
             Card? kaz = null;
             Card? play = null;
-            while ((k.Defenders.Count != 0 || kaz != null) && pakli.Count != 0)
+            while ((k.Defenders.Count != 0 || kaz != null) )
             {
                 if (kaz == null)
                 {
@@ -60,7 +60,7 @@ namespace szakmajDusza
             Card? play = null;
             bool kazWin = false;
             int kor = 1;
-            while ((k.Defenders.Count != 0||kaz!=null) && pakli.Count != 0)
+            while ((k.Defenders.Count != 0||kaz!=null) )
             {
                 if (kaz == null)
                 {

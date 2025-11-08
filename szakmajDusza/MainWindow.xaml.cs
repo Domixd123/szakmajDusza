@@ -1,11 +1,9 @@
-<<<<<<< Updated upstream
+
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-=======
 ﻿using System.Windows;
->>>>>>> Stashed changes
 using System.Windows.Controls;
 using System.Windows.Media;
 

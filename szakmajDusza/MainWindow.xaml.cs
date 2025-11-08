@@ -17,9 +17,9 @@ namespace szakmajDusza
     public partial class MainWindow : Window
     {
         public static List<Card> Jatekos = new List<Card>();
-        public static List<Card> EgyszeruKazamata = new List<Card>();
-        public static List<Card> KisKazamata = new List<Card>();
-        public static List<Card> NagyKazamata = new List<Card>();
+        public static Kazamata EgyszeruKazamata = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
+        public static Kazamata KisKazamata = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
+        public static Kazamata NagyKazamata = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
 
         public MainWindow()
         {
@@ -46,19 +46,19 @@ namespace szakmajDusza
             Jatekos.Add(new Card("Isara", 2, 6, "viz", false));
 
 
-            EgyszeruKazamata.Add(new Card("Nerun", 3, 3, "tuz", false));
+            EgyszeruKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
 
-            KisKazamata.Add(new Card("Arin", 2, 5, "fold", false));
-            KisKazamata.Add(new Card("Emera", 2, 5, "levego", false));
-            KisKazamata.Add(new Card("Selia", 2, 6, "viz", false));
-            KisKazamata.Add(new Card("Lord Torak", 6, 4, "fold", true));
+            KisKazamata.Defenders.Add(new Card("Arin", 2, 5, "fold", false));
+            KisKazamata.Defenders.Add(new Card("Emera", 2, 5, "levego", false));
+            KisKazamata.Defenders.Add(new Card("Selia", 2, 6, "viz", false));
+            KisKazamata.Defenders.Add(new Card("Lord Torak", 6, 4, "fold", true));
 
-            NagyKazamata.Add(new Card("Liora", 2, 4, "levego", false));
-            NagyKazamata.Add(new Card("Arin", 2, 5, "fold", false));
-            NagyKazamata.Add(new Card("Selia", 2, 6, "viz", false));
-            NagyKazamata.Add(new Card("Nerun", 3, 3, "tuz", false));
-            NagyKazamata.Add(new Card("Torak", 3, 4, "fold", false));
-            NagyKazamata.Add(new Card("Priestess Selia", 2, 12, "fold", true));
+            NagyKazamata.Defenders.Add(new Card("Liora", 2, 4, "levego", false));
+            NagyKazamata.Defenders.Add(new Card("Arin", 2, 5, "fold", false));
+            NagyKazamata.Defenders.Add(new Card("Selia", 2, 6, "viz", false));
+            NagyKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
+            NagyKazamata.Defenders.Add(new Card("Torak", 3, 4, "fold", false));
+            NagyKazamata.Defenders.Add(new Card("Priestess Selia", 2, 12, "fold", true));
 
 
             foreach (var item in Jatekos)

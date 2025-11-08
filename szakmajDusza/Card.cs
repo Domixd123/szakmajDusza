@@ -48,8 +48,7 @@ namespace szakmajDusza
             
             Rec = new Rectangle
             {
-                Width = 175,
-                Height = 300,
+                Height = 150,
                 
             };
 

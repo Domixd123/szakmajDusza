@@ -68,7 +68,23 @@ namespace szakmajDusza
 
             foreach (var item in Gyujtemeny)
             {
+                item.Clicked += AddToPakli;
                 Cards_Wrap.Children.Add(item.GetVisual());
+            }
+
+            
+        }
+
+        private void AddToPakli(object? sender, Card clicked)
+        {
+            if (Jatekos.Count > Gyujtemeny.Count / 2 || Jatekos.Contains(clicked))
+            {
+                MessageBox.Show("Nem lehet hozzáadni ezt a kártyát");
+            }
+            else
+            {
+                Jatekos.Add(clicked);
+                PlayerCards_Wrap.Children.Add(clicked.GetVisual());
             }
         }
 

@@ -29,6 +29,8 @@ namespace szakmajDusza
 
         private Grid visualGroup;
 
+        public event EventHandler<Card> Clicked;
+
         public Card(string n, int d, int h, string tipus, bool vezer)
         {
             Name = n;
@@ -88,8 +90,11 @@ namespace szakmajDusza
             visualGroup.Children.Add(NameLabel);
             visualGroup.Children.Add(TypeLabel);
             visualGroup.Children.Add(DamageAndHPLabel);
+
+            But.Click += (sender, e) => Clicked.Invoke(this, this);
         }
 
+        
         
         public UIElement GetVisual()
         {

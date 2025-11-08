@@ -8,10 +8,12 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Grid>
         <Grid Name="PakliOssze_Grid" Visibility="Visible">
-            <WrapPanel Name="Cards_Wrap" Margin="0,160,0,160"/>
+            <WrapPanel Name="Cards_Wrap" Margin="0,34,0,560"/>
+            <WrapPanel x:Name="PlayerCards_Wrap" Margin="0,675,0,0"/>
+            <Label FontSize="50" Content="Kiválasztottak:" HorizontalAlignment="Center" Margin="0,504,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Name="MainRoom_Grid" Visibility="Collapsed">
-            
+
             <Button Name="Egyszeri_Button" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
             <Button Name="Kis_Button" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
             <Button Name="Nagy_Button" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>
@@ -19,7 +21,7 @@
         </Grid>
 
         <Grid Name="EgyszeriKazamata_Grid" Visibility="Collapsed">
-            
+
         </Grid>
 
         <Grid Name="KisKazamata_Grid" Visibility="Collapsed">

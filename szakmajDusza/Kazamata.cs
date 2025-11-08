@@ -4,24 +4,19 @@
 	{
 		public string Name { get; set; }
 		public List<Card> Defenders { get; set; }
-		public Type Tipus { get; set; }
-		public Reward reward {  get; set; }
+		public KazamataType Tipus { get; set; }
+		public KazamataReward reward {  get; set; }
 		public Kazamata(string name, string type, string reward,List<Card> defenders)
 		{
 			Name = name;
 			Tipus = type switch
 			{
-				"egyszeru" => Type.egyszeru,
-				"kis" => Type.kis,
-				"nagy" => Type.nagy,
-				_ => Type.kis
+				"egyszeru" => KazamataType.egyszeru,
+				"kis" => KazamataType.kis,
+				"nagy" => KazamataType.nagy,
+				_ => KazamataType.kis
 			};
-			this.reward = reward switch
-			{
-				"eletero" => Reward.eletero,
-				"sebzes" => Reward.sebzes,
-				_ => Reward.newcard
-			};
+			this.reward=StringToKazamataReward(reward);
 			Defenders = defenders;
 		}
 		public bool Equals(Kazamata? obj)
@@ -32,17 +27,39 @@
 			}
 			return false;
 		}
-		public enum Type : byte
+		public static string KazamataRewardToString(KazamataReward reward)
 		{
-			egyszeru,
-			kis,
-			nagy
+			string Reward;
+			Reward = reward switch
+			{
+				KazamataReward.eletero => "eletero",
+				KazamataReward.sebzes => "sebzes",
+				_ => ""
+			};
+			return Reward;
 		}
-		public enum Reward : byte
+		public static KazamataReward StringToKazamataReward(string reward)
 		{
-			eletero,
-			sebzes,
-			newcard
+			KazamataReward Reward;
+			Reward = reward switch
+			{
+				"eletero" => KazamataReward.eletero,
+				"sebzes" => KazamataReward.sebzes,
+				_ => KazamataReward.newcard
+			};
+			return Reward;
 		}
+	}
+	public enum KazamataType : byte
+	{
+		egyszeru,
+		kis,
+		nagy
+	}
+	public enum KazamataReward : byte
+	{
+		eletero,
+		sebzes,
+		newcard
 	}
 }

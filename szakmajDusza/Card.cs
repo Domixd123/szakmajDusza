@@ -36,15 +36,7 @@ namespace szakmajDusza
             HP = h;
             Vezer = vezer;
 
-            // Enum beállítása szöveg alapján
-            Tipus = tipus switch
-            {
-                "tuz" => KartyaTipus.tuz,
-                "fold" => KartyaTipus.fold,
-                "viz" => KartyaTipus.viz,
-                "levego" => KartyaTipus.levego,
-                _ => KartyaTipus.fold
-            };
+            Tipus=StringToTipus(tipus);
 
             
             Rec = new Rectangle
@@ -119,9 +111,33 @@ namespace szakmajDusza
             Canvas.SetLeft(visualGroup, x);
             Canvas.SetTop(visualGroup, y);
         }
-
-    }
-
+		public static string TipusToString(KartyaTipus tipus)
+		{
+			string Tipus;
+			Tipus = tipus switch
+			{
+				KartyaTipus.tuz => "tuz",
+				KartyaTipus.fold => "fold",
+				KartyaTipus.viz => "viz",
+				KartyaTipus.levego => "levego",
+				_ => "hiba"
+			};
+			return Tipus;
+		}
+        public static KartyaTipus StringToTipus(string tipus)
+        {
+            KartyaTipus Tipus;
+			Tipus = tipus switch
+			{
+				"tuz" => KartyaTipus.tuz,
+				"fold" => KartyaTipus.fold,
+				"viz" => KartyaTipus.viz,
+				"levego" => KartyaTipus.levego,
+				_ => KartyaTipus.fold
+			};
+            return Tipus;
+		}
+	}
     public enum KartyaTipus : byte
     {
         fold,

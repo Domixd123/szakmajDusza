@@ -80,7 +80,25 @@ namespace szakmajDusza
 					}
 					else if(data[1] == "kis")
 					{
-						//gotta finish this
+						List<Card>defenders= new List<Card>();
+						string[]def=data[3].Split(",");
+						for (int i = 0; i < def.Length; i++)
+						{
+							defenders.Add(CardsDict[def[i]]);
+						}
+						defenders.Add(LeadersDict[data[4]]);
+						Kazamatak.Add(new Kazamata(data[2], data[1], data[5], defenders));
+					}
+					else if (data[1] == "nagy")
+					{
+						List<Card> defenders = new List<Card>();
+						string[] def = data[3].Split(",");
+						for (int i = 0; i < def.Length; i++)
+						{
+							defenders.Add(CardsDict[def[i]]);
+						}
+						defenders.Add(LeadersDict[data[4]]);
+						Kazamatak.Add(new Kazamata(data[2], data[1], "newcard", defenders));
 					}
 
 
@@ -119,7 +137,43 @@ namespace szakmajDusza
 				}
 				else if(data[0] =="export vilag")
 				{
-
+					StreamWriter sw=new StreamWriter(data[1]);
+					for (int i = 0; i < Jatekos.Count; i++)
+					{
+						if (!Jatekos[i].Vezer)
+						{
+							sw.WriteLine($"kartya;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
+						}
+					}
+					sw.WriteLine();
+					for (int i = 0; i < Jatekos.Count; i++)
+					{
+						if (Jatekos[i].Vezer)
+						{
+							sw.WriteLine($"vezer;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
+						}
+					}
+					sw.WriteLine();
+					for(int i = 0;i < Kazamatak.Count; i++)
+					{
+						if (Kazamatak[i].Tipus==KazamataType.egyszeru)
+						{
+							sw.WriteLine($"kazamata;egyszeru;{Kazamatak[i].Name};{Kazamatak[i].Defenders[0].Name};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
+						}
+						else if (Kazamatak[i].Tipus == KazamataType.kis)
+						{
+							string normalDefenders = "";
+							for (int j = 0; j < Kazamatak[i].Defenders.Count; j++)
+							{
+								if (!Kazamatak[i].Defenders[j].Vezer)
+								{
+									normalDefenders += $"{Kazamatak[i].Defenders[j].Name},";
+								}
+							}
+							sw.WriteLine($"kazamata;kis;{Kazamatak[i].Name};{Kazamatak[i].Defenders[0].Name};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
+						}
+					}
+					sw.Close();
 				}
 				else if (data[0] == "export jatekos")
 				{

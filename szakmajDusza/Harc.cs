@@ -9,7 +9,7 @@ namespace szakmajDusza
 {
     public class Harc
     {
-        //vizuáls
+        //vizuáls gotta make it work
         static public void StartFight(Kazamata k, List<Card> pakli)
         {
             Card? kaz = null;
@@ -18,7 +18,7 @@ namespace szakmajDusza
             {
                 if (kaz == null)
                 {
-                    kaz = k.Defenders[0];
+                    kaz = k.Defenders[0].GetCopy();
                     k.Defenders.RemoveAt(0);
                 }
                 else
@@ -32,7 +32,7 @@ namespace szakmajDusza
 
                 if (play == null)
                 {
-                    play = pakli[0];
+                    play = pakli[0].GetCopy();
                     pakli.RemoveAt(0);
                 }
                 else
@@ -64,7 +64,7 @@ namespace szakmajDusza
             {
                 if (kaz == null)
                 {
-                    kaz = k.Defenders[0];
+                    kaz = k.Defenders[0].GetCopy();
                     w.WriteLine($"{kor}.kor;kazamata;kijatszik;{kaz.Name};{kaz.Damage};{kaz.HP};{kaz.Tipus.ToString()}");
                     k.Defenders.RemoveAt(0);
                 }
@@ -80,7 +80,7 @@ namespace szakmajDusza
 
                 if (play == null&&pakli.Count!=0)
                 {
-                    play = pakli[0];
+                    play = pakli[0].GetCopy();
                     w.WriteLine($"{kor}.kor;jatekos;kijatszik;{play.Name};{play.Damage};{play.HP};{play.Tipus.ToString()}");
 
                     pakli.RemoveAt(0);
@@ -131,11 +131,39 @@ namespace szakmajDusza
                     {
                         w.WriteLine($"jatekos nyert;eletero;{play.Name}");
                         //increase the stats actually
+                        for (int i = 0; i < App.Pakli.Count; i++)
+                        {
+                            if (App.Pakli[i].Name==play.Name)
+                            {
+                                App.Pakli[i].HP += 2;
+                            }
+                        }
+                        for (int i = 0; i < App.Jatekos.Count; i++)
+                        {
+                            if (App.Jatekos[i].Name == play.Name)
+                            {
+                                App.Jatekos[i].HP += 2;
+                            }
+                        }
                     }
                     else
                     {
                         w.WriteLine($"jatekos nyert;sebzes;{play.Name}");
                         //increase the stats actually
+                        for (int i = 0; i < App.Pakli.Count; i++)
+                        {
+                            if (App.Pakli[i].Name == play.Name)
+                            {
+                                App.Pakli[i].Damage += 1;
+                            }
+                        }
+                        for (int i = 0; i < App.Jatekos.Count; i++)
+                        {
+                            if (App.Jatekos[i].Name == play.Name)
+                            {
+                                App.Jatekos[i].HP += 1;
+                            }
+                        }
                     }
                 }
             }

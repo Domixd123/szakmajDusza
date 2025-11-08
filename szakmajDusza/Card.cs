@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows.Controls;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace szakmajDusza
 {
@@ -40,61 +41,120 @@ namespace szakmajDusza
 
             Tipus=StringToTipus(tipus);
 
-            
-            Rec = new Rectangle
+
+            visualGroup = new Grid
             {
-                Height = 150,
-                
+                Width = 120,
+                Height = 180,
+                Margin = new Thickness(10),
+                Background = new LinearGradientBrush(
+        Color.FromRgb(25, 20, 30),
+        Color.FromRgb(45, 35, 55),
+        90)
+            };
+            visualGroup.Effect = new System.Windows.Media.Effects.DropShadowEffect
+            {
+                BlurRadius = 15,
+                ShadowDepth = 5,
+                Color = Colors.Black,
+                Opacity = 0.7
             };
 
-            But = new Button
+            // keret
+            var border = new Border
             {
-                Height = Rec.Height,
-                Width = Rec.Width
+                CornerRadius = new CornerRadius(12),
+                BorderBrush = new LinearGradientBrush(
+                    Color.FromRgb(255, 215, 100),
+                    Color.FromRgb(180, 120, 30),
+                    45),
+                BorderThickness = new Thickness(3),
+                Background = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255))
+            };
+            visualGroup.Children.Add(border);
+
+            // típus színezés
+            Brush typeColor = Tipus switch
+            {
+                KartyaTipus.tuz => new SolidColorBrush(Color.FromRgb(200, 50, 30)),
+                KartyaTipus.fold => new SolidColorBrush(Color.FromRgb(60, 140, 70)),
+                KartyaTipus.viz => new SolidColorBrush(Color.FromRgb(50, 100, 200)),
+                KartyaTipus.levego => new SolidColorBrush(Color.FromRgb(180, 200, 255)),
+                _ => Brushes.Gray
             };
 
-
+            // cím
             NameLabel = new Label
             {
                 Content = Name,
+                Foreground = Brushes.Gold,
+                FontWeight = FontWeights.Bold,
+                FontSize = 16,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 5, 0, 0),
+                Margin = new Thickness(0, 8, 0, 0),
                 IsHitTestVisible = false
             };
 
+            // statok
             DamageAndHPLabel = new Label
             {
-                Content = $"{Damage}/{HP}",
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 5),
-                IsHitTestVisible = false
-            };
-
-            TypeLabel = new Label
-            {
-                Content = Tipus.ToString(),
+                Content = $"{Damage} ⚔ / {HP} ❤",
+                Foreground = Brushes.WhiteSmoke,
+                FontSize = 14,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Bottom,
-                Foreground = Brushes.DarkBlue,
+                Margin = new Thickness(0, 0, 0, 10),
                 IsHitTestVisible = false
             };
 
-            
-            visualGroup = new Grid();
-            visualGroup.Width = Rec.Width;
-            visualGroup.Height = Rec.Height;
-            visualGroup.Margin = new Thickness(10, 10, 10, 10);
-            visualGroup.Background = Brushes.LightGray;
-            visualGroup.Children.Add(Rec);
-            visualGroup.Children.Add(But);
-            visualGroup.Children.Add(NameLabel);
-            visualGroup.Children.Add(TypeLabel);
-            visualGroup.Children.Add(DamageAndHPLabel);
+            // típus indikátor
+            var ellipse = new Ellipse
+            {
+                Width = 30,
+                Height = 30,
+                Fill = typeColor,
+                Stroke = Brushes.Gold,
+                StrokeThickness = 1.5,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(10, 10, 0, 0),
+                Effect = new System.Windows.Media.Effects.DropShadowEffect
+                {
+                    BlurRadius = 5,
+                    Color = Colors.Black,
+                    Opacity = 0.6
+                },
+                IsHitTestVisible = false
+            };
 
+            // vezér aura
+            if (Vezer)
+            {
+                border.BorderBrush = new LinearGradientBrush(
+                    Color.FromRgb(255, 220, 100),
+                    Color.FromRgb(255, 255, 200),
+                    45);
+                border.BorderThickness = new Thickness(4);
+                visualGroup.Background = new LinearGradientBrush(
+                    Color.FromRgb(45, 35, 60),
+                    Color.FromRgb(80, 60, 100),
+                    90);
+            }
+
+            // gomb (láthatatlan, de kattintható)
+            But = new Button
+            {
+                Background = Brushes.Transparent,
+                BorderThickness = new Thickness(0),
+                Cursor = Cursors.Hand
+            };
             But.Click += (sender, e) => Clicked?.Invoke(this, this);
+
+            visualGroup.Children.Add(ellipse);
+            visualGroup.Children.Add(NameLabel);
+            visualGroup.Children.Add(DamageAndHPLabel);
+            visualGroup.Children.Add(But);
         }
 
         

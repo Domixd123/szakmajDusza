@@ -99,7 +99,7 @@ namespace szakmajDusza
             visualGroup.Children.Add(TypeLabel);
             visualGroup.Children.Add(DamageAndHPLabel);
 
-            But.Click += (sender, e) => Clicked.Invoke(this, this);
+            But.Click += (sender, e) => Clicked?.Invoke(this, this);
         }
 
         

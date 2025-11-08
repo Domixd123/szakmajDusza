@@ -95,14 +95,14 @@ namespace szakmajDusza
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            StartFight(EgyszeruKazamata);
+            StartFight(EgyszeruKazamata, Jatekos);
         }
 
         private void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;
-            StartFight(KisKazamata);
+            StartFight(KisKazamata, Jatekos);
         }
 
         private void Nagy_Button_Click(object sender, RoutedEventArgs e)
@@ -113,14 +113,50 @@ namespace szakmajDusza
                 {
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
-                    StartFight(NagyKazamata);
+                    StartFight(NagyKazamata, Jatekos);
                 }
             }
         }
 
-        private void StartFight(Kazamata k)
+        private void StartFight(Kazamata k, List<Card> pakli)
         {
+            Card kaz=null;
+            Card play=null;
+            while (k.Defenders.Count!=0&&pakli.Count!=0)
+            {
+                if (kaz==null)
+                {
+                    kaz=k.Defenders[0];
+                    k.Defenders.RemoveAt(0);
+                }
+                else
+                {
 
+                }
+
+                if (play == null)
+                {
+                    play = pakli[0];
+                    pakli.RemoveAt(0);
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        static public float Multiplier(Card attack, Card def)
+        {
+            if (attack.Tipus==def.Tipus)
+            {
+                return 1;
+            }
+            /*else if (attack.Tipus==)
+            {
+
+            }*/
+            return 0;
         }
 
         private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)

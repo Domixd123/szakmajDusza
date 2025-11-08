@@ -48,9 +48,10 @@ namespace szakmajDusza
 		public static List<Card> Pakli = new List<Card>();
 
 		public static List<Kazamata> Kazamatak = new List<Kazamata>();
+		public static Dictionary<string,Kazamata>KazamatakDict=new Dictionary<string,Kazamata>();
 		private void RunAutomatedTest(string v)
 		{
-			StreamReader sr = new StreamReader(v+"in.txt");
+			StreamReader sr = new StreamReader(v + "in.txt");
 			while (!sr.EndOfStream)
 			{
 				string? line = sr.ReadLine();
@@ -68,7 +69,7 @@ namespace szakmajDusza
 				else if (data[0] == "uj vezer")
 				{
 					Card vezer = CardsDict[data[2]].GetCopy();
-					if (data[3]=="sebzes") vezer.Damage *= 2;
+					if (data[3] == "sebzes") vezer.Damage *= 2;
 					else if (data[3] == "eletero") vezer.HP *= 2;
 					vezer.Vezer = true;
 					vezer.Name = data[1];
@@ -103,7 +104,7 @@ namespace szakmajDusza
 						defenders.Add(LeadersDict[data[4]]);
 						Kazamatak.Add(new Kazamata(data[2], data[1], "newcard", defenders));
 					}
-
+					KazamatakDict.Add(Kazamatak[Kazamatak.Count - 1].Name, Kazamatak[Kazamatak.Count-1]);
 
 
 				}
@@ -115,11 +116,11 @@ namespace szakmajDusza
 				{
 					if (CardsDict.ContainsKey(data[1]))
 					{
-						Jatekos.Add(CardsDict[data[1]]);
+						Jatekos.Add(CardsDict[data[1]].GetCopy());
 					}
 					else if (LeadersDict.ContainsKey(data[1]))
 					{
-						Jatekos.Add(LeadersDict[data[1]]);
+						Jatekos.Add(LeadersDict[data[1]].GetCopy());
 					}
 				}
 				else if (data[0] == "uj pakli")
@@ -139,7 +140,7 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "export vilag")
 				{
-					StreamWriter sw = new StreamWriter(v+data[1]);
+					StreamWriter sw = new StreamWriter(v + data[1]);
 					for (int i = 0; i < Cards.Count; i++)
 					{
 						sw.WriteLine($"kartya;{Cards[i].Name};{Cards[i].Damage};{Cards[i].HP};{Card.TipusToString(Cards[i].Tipus)}");
@@ -209,13 +210,13 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "export jatekos")
 				{
-					StreamWriter sw = new StreamWriter(v+data[1]);
+					StreamWriter sw = new StreamWriter(v + data[1]);
 					for (int i = 0; i < Jatekos.Count; i++)
 					{
 						sw.WriteLine($"gyujtemeny;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
 					}
 					sw.WriteLine();
-					for (int i = 0;i < Pakli.Count; i++)
+					for (int i = 0; i < Pakli.Count; i++)
 					{
 						sw.WriteLine($"pakli;{Pakli[i].Name}");
 					}
@@ -223,7 +224,9 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "harc")
 				{
-
+					StreamWriter sw = new StreamWriter(v + data[2]);
+					Harc.StartFight(KazamatakDict[data[1]].GetCopy(), Card.GetListCopy(Pakli), sw);
+					sw.Close();
 				}
 			}
 		}

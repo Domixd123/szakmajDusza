@@ -209,6 +209,15 @@ namespace szakmajDusza
         {
             return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer);
 		}
+        public static List<Card> GetListCopy(List<Card>cards)
+        {
+			List<Card> cardsCopy = new List<Card>();
+			for (int i = 0; i < cards.Count; i++)
+			{
+				cardsCopy.Add(cards[i].GetCopy());
+			}
+            return cardsCopy;
+		}
 	}
     public enum KartyaTipus : byte
     {

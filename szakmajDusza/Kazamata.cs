@@ -9,13 +9,7 @@
 		public Kazamata(string name, string type, string reward,List<Card> defenders)
 		{
 			Name = name;
-			Tipus = type switch
-			{
-				"egyszeru" => KazamataType.egyszeru,
-				"kis" => KazamataType.kis,
-				"nagy" => KazamataType.nagy,
-				_ => KazamataType.kis
-			};
+			Tipus=StringToKazamataType(type);
 			this.reward=StringToKazamataReward(reward);
 			Defenders = defenders;
 		}
@@ -48,6 +42,34 @@
 				_ => KazamataReward.newcard
 			};
 			return Reward;
+		}
+		public static string KazamataTypeToString(KazamataType type)
+		{
+			string Type;
+			Type = type switch
+			{
+				KazamataType.egyszeru => "egyszeru",
+				KazamataType.kis => "kis",
+				KazamataType.nagy => "nagy",
+				_ => "hiba"
+			};
+			return Type;
+		}
+		public static KazamataType StringToKazamataType(string type)
+		{
+			KazamataType Type;
+			Type = type switch
+			{
+				"egyszeru" => KazamataType.egyszeru,
+				"kis" => KazamataType.kis,
+				"nagy" => KazamataType.nagy,
+				_ => KazamataType.kis
+			};
+			return Type;
+		}
+		public Kazamata GetCopy()
+		{
+			return new Kazamata(Name,KazamataTypeToString(Tipus),KazamataRewardToString(reward),Card.GetListCopy(Defenders));
 		}
 	}
 	public enum KazamataType : byte

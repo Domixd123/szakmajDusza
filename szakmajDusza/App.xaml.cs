@@ -50,7 +50,7 @@ namespace szakmajDusza
 		public static List<Kazamata> Kazamatak = new List<Kazamata>();
 		private void RunAutomatedTest(string v)
 		{
-			StreamReader sr = new StreamReader(v);
+			StreamReader sr = new StreamReader(v+"in.txt");
 			while (!sr.EndOfStream)
 			{
 				string? line = sr.ReadLine();
@@ -67,7 +67,12 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "uj vezer")
 				{
-					Leaders.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4], true));
+					Card vezer = CardsDict[data[2]].GetCopy();
+					if (data[3]=="sebzes") vezer.Damage *= 2;
+					else if (data[3] == "eletero") vezer.HP *= 2;
+					vezer.Vezer = true;
+					vezer.Name = data[1];
+					Leaders.Add(vezer);
 					LeadersDict.Add(data[1], Leaders[Leaders.Count - 1]);
 				}
 				else if (data[0] == "uj kazamata")
@@ -134,7 +139,7 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "export vilag")
 				{
-					StreamWriter sw = new StreamWriter(data[1]);
+					StreamWriter sw = new StreamWriter(v+data[1]);
 					for (int i = 0; i < Cards.Count; i++)
 					{
 						sw.WriteLine($"kartya;{Cards[i].Name};{Cards[i].Damage};{Cards[i].HP};{Card.TipusToString(Cards[i].Tipus)}");
@@ -165,8 +170,8 @@ namespace szakmajDusza
 									normalDefenders += $"{Kazamatak[i].Defenders[j].Name},";
 								}
 							}
-							normalDefenders = normalDefenders.Substring(0,normalDefenders.Length-1);//remove last ','
-							string vezer="";
+							normalDefenders = normalDefenders.Substring(0, normalDefenders.Length - 1);//remove last ','
+							string vezer = "";
 							for (int j = 0; j < Kazamatak[i].Defenders.Count; j++)
 							{
 								if (Kazamatak[i].Defenders[j].Vezer)
@@ -177,16 +182,44 @@ namespace szakmajDusza
 							}
 							sw.WriteLine($"kazamata;kis;{Kazamatak[i].Name};{normalDefenders};{vezer};{Kazamata.KazamataRewardToString(Kazamatak[i].reward)}");
 						}
-						else if (Kazamatak[i].Tipus==KazamataType.nagy)
+						else if (Kazamatak[i].Tipus == KazamataType.nagy)
 						{
-
+							string normalDefenders = "";
+							for (int j = 0; j < Kazamatak[i].Defenders.Count; j++)
+							{
+								if (!Kazamatak[i].Defenders[j].Vezer)
+								{
+									normalDefenders += $"{Kazamatak[i].Defenders[j].Name},";
+								}
+							}
+							normalDefenders = normalDefenders.Substring(0, normalDefenders.Length - 1);//remove last ','
+							string vezer = "";
+							for (int j = 0; j < Kazamatak[i].Defenders.Count; j++)
+							{
+								if (Kazamatak[i].Defenders[j].Vezer)
+								{
+									vezer = Kazamatak[i].Defenders[j].Name;
+									break;
+								}
+							}
+							sw.WriteLine($"kazamata;nagy;{Kazamatak[i].Name};{normalDefenders};{vezer}");
 						}
 					}
 					sw.Close();
 				}
 				else if (data[0] == "export jatekos")
 				{
-
+					StreamWriter sw = new StreamWriter(v+data[1]);
+					for (int i = 0; i < Jatekos.Count; i++)
+					{
+						sw.WriteLine($"gyujtemeny;{Jatekos[i].Name};{Jatekos[i].Damage};{Jatekos[i].HP};{Card.TipusToString(Jatekos[i].Tipus)}");
+					}
+					sw.WriteLine();
+					for (int i = 0;i < Pakli.Count; i++)
+					{
+						sw.WriteLine($"pakli;{Pakli[i].Name}");
+					}
+					sw.Close();
 				}
 				else if (data[0] == "harc")
 				{

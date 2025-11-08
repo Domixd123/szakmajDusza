@@ -205,6 +205,10 @@ namespace szakmajDusza
 			};
             return Tipus;
 		}
+        public Card GetCopy()
+        {
+            return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer);
+		}
 	}
     public enum KartyaTipus : byte
     {

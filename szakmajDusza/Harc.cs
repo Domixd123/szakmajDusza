@@ -14,6 +14,7 @@ namespace szakmajDusza
         {
             Card? kaz = null;
             Card? play = null;
+           
             while ((k.Defenders.Count != 0 || kaz != null) )
             {
                 if (kaz == null)
@@ -44,6 +45,7 @@ namespace szakmajDusza
                     }
                 }
             }
+            
             if (pakli.Count == 0)
             {
                 //jatekos veszít
@@ -60,8 +62,10 @@ namespace szakmajDusza
             Card? play = null;
             bool kazWin = false;
             int kor = 1;
+            w.WriteLine($"harc kezdodik;{k.Name}");
             while ((k.Defenders.Count != 0||kaz!=null) )
             {
+                w.WriteLine();
                 if (kaz == null)
                 {
                     kaz = k.Defenders[0].GetCopy();
@@ -102,6 +106,7 @@ namespace szakmajDusza
                 }
                 kor++;
             }
+            w.WriteLine();
             if (kazWin)
             {
                 w.WriteLine("jatekos vesztett");
@@ -138,13 +143,7 @@ namespace szakmajDusza
                                 App.Pakli[i].HP += 2;
                             }
                         }
-                        for (int i = 0; i < App.Jatekos.Count; i++)
-                        {
-                            if (App.Jatekos[i].Name == play.Name)
-                            {
-                                App.Jatekos[i].HP += 2;
-                            }
-                        }
+                        
                     }
                     else
                     {
@@ -157,16 +156,11 @@ namespace szakmajDusza
                                 App.Pakli[i].Damage += 1;
                             }
                         }
-                        for (int i = 0; i < App.Jatekos.Count; i++)
-                        {
-                            if (App.Jatekos[i].Name == play.Name)
-                            {
-                                App.Jatekos[i].HP += 1;
-                            }
-                        }
+                        
                     }
                 }
             }
+
         }
 
         static public float Multiplier(Card attack, Card def)

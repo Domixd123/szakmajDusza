@@ -1,15 +1,13 @@
+<<<<<<< Updated upstream
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+=======
+﻿using System.Windows;
+>>>>>>> Stashed changes
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace szakmajDusza
 {
@@ -36,10 +34,10 @@ namespace szakmajDusza
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
 
             UploadCards();
-            
 
         }
 
+        
         private void UploadCards()
         {
             Gyujtemeny.Add(new Card("Arin", 2, 5, "fold", false));
@@ -75,7 +73,7 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
-            
+
         }
 
         private void AddToPakli(object? sender, Card clicked)
@@ -120,9 +118,48 @@ namespace szakmajDusza
             }
         }
 
-        
 
-        
+        private void StartFight(Kazamata k, List<Card> pakli)
+        {
+            Card kaz = null;
+            Card play = null;
+            while (k.Defenders.Count != 0 && pakli.Count != 0)
+            {
+                if (kaz == null)
+                {
+                    kaz = k.Defenders[0];
+                    k.Defenders.RemoveAt(0);
+                }
+                else
+                {
+
+                }
+
+                if (play == null)
+                {
+                    play = pakli[0];
+                    pakli.RemoveAt(0);
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        static public float Multiplier(Card attack, Card def)
+        {
+            if (attack.Tipus == def.Tipus)
+            {
+                return 1;
+            }
+            /*else if (attack.Tipus==)
+            {
+
+            }*/
+            return 0;
+        }
+
 
         private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)
         {

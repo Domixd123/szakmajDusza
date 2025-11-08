@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -83,8 +84,10 @@ namespace szakmajDusza
             }
             else
             {
+                Cards_Wrap.Children.Remove(clicked.GetVisual());
                 Jatekos.Add(clicked);
                 PlayerCards_Wrap.Children.Add(clicked.GetVisual());
+                clicked.Clicked -= AddToPakli;
             }
         }
 
@@ -118,6 +121,17 @@ namespace szakmajDusza
         private void StartFight(Kazamata k)
         {
 
+        }
+
+        private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)
+        {
+            PakliOssze_Grid.Visibility = Visibility.Collapsed;
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            foreach (var item in Jatekos)
+            {
+                PlayerCards_Wrap.Children.Remove(item.GetVisual());
+                PakliCards_Wrap.Children.Add(item.GetVisual());
+            }
         }
     }
 }

@@ -7,13 +7,14 @@
         mc:Ignorable="d"
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Grid>
-        <Grid Name="PakliOssze_Grid" Visibility="Visible">
+        <Grid Name="PakliOssze_Grid" Visibility="Collapsed">
             <WrapPanel Name="Cards_Wrap" Margin="0,34,0,560"/>
             <WrapPanel x:Name="PlayerCards_Wrap" Margin="0,675,0,0"/>
             <Label FontSize="50" Content="Kiválasztottak:" HorizontalAlignment="Center" Margin="0,504,0,0" VerticalAlignment="Top"/>
+            <Button Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,509,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
         </Grid>
-        <Grid Name="MainRoom_Grid" Visibility="Collapsed">
-
+        <Grid Name="MainRoom_Grid" Visibility="Visible">
+            <WrapPanel Name="PakliCards_Wrap" Margin="10,594,-10,0"/>
             <Button Name="Egyszeri_Button" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
             <Button Name="Kis_Button" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
             <Button Name="Nagy_Button" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>

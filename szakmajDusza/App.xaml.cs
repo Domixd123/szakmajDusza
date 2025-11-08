@@ -101,7 +101,6 @@ namespace szakmajDusza
 
 
 
-
 				}
 				else if (data[0] == "uj jatekos")
 				{

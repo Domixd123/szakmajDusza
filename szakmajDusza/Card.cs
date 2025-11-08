@@ -53,14 +53,15 @@ namespace szakmajDusza
                 Width = Rec.Width
             };
 
-            
+
             NameLabel = new Label
             {
                 Content = Name,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
                 FontWeight = FontWeights.Bold,
-                Margin = new Thickness(0, 5, 0, 0)
+                Margin = new Thickness(0, 5, 0, 0),
+                IsHitTestVisible = false
             };
 
             DamageAndHPLabel = new Label
@@ -68,7 +69,8 @@ namespace szakmajDusza
                 Content = $"{Damage}/{HP}",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 5)
+                Margin = new Thickness(0, 0, 0, 5),
+                IsHitTestVisible = false
             };
 
             TypeLabel = new Label
@@ -76,7 +78,8 @@ namespace szakmajDusza
                 Content = Tipus.ToString(),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Bottom,
-                Foreground = Brushes.DarkBlue
+                Foreground = Brushes.DarkBlue,
+                IsHitTestVisible = false
             };
 
             
@@ -91,7 +94,7 @@ namespace szakmajDusza
             visualGroup.Children.Add(TypeLabel);
             visualGroup.Children.Add(DamageAndHPLabel);
 
-            But.Click += (sender, e) => Clicked.Invoke(this, this);
+            But.Click += (sender, e) => Clicked?.Invoke(this, this);
         }
 
         

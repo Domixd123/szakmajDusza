@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace szakmajDusza
@@ -111,6 +112,7 @@ namespace szakmajDusza
             // típus indikátor
             var ellipse = new Ellipse
             {
+
                 Width = 30,
                 Height = 30,
                 Fill = typeColor,
@@ -127,6 +129,30 @@ namespace szakmajDusza
                 },
                 IsHitTestVisible = false
             };
+            var brush = new ImageBrush();
+            switch (Tipus)
+            {
+                case KartyaTipus.fold:
+                    brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\earth.jpg"));
+
+                    break;
+                case KartyaTipus.levego:
+                    brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\wind.jpg"));
+
+                    break;
+                case KartyaTipus.tuz:
+                    brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\fire.jpg"));
+
+                    break;
+                case KartyaTipus.viz:
+                    brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\water.jpg"));
+
+                    break;
+                
+            }
+            brush.Stretch = Stretch.UniformToFill;
+
+            ellipse.Fill = brush;
 
             // vezér aura
             if (Vezer)

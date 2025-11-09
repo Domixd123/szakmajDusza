@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace szakmajDusza
 {
@@ -26,7 +27,8 @@ namespace szakmajDusza
         public MainWindow()
         {
             InitializeComponent();
-
+            string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "playing-card.ico");
+            this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
             PakliOssze_Grid.Visibility = Visibility.Visible;
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;

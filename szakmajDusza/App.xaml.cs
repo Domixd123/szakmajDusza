@@ -28,7 +28,8 @@ namespace szakmajDusza
 			// Teszt mód
 			try
 			{
-				RunAutomatedTest(e.Args[0]);
+				if (e.Args[0][e.Args[0].Length-1]=='\\') RunAutomatedTest(e.Args[0]);
+				else RunAutomatedTest(e.Args[0] + "\\");
 			}
 			catch (Exception ex)
 			{

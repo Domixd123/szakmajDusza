@@ -579,6 +579,17 @@ namespace szakmajDusza
                     }
                 }
             }
+            foreach (var item in ((sender as Button).Parent as Grid).Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if ((item as Label).Name == "Jutalom")
+                    {
+                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
+                        break;
+                    }
+                }
+            }
             MainRoom_Grid.Visibility = Visibility.Visible;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility= Visibility.Collapsed;
@@ -586,8 +597,22 @@ namespace szakmajDusza
 
             ShowPakli();
         }
+        public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)
+        {
+            WrapPanel wrap = new WrapPanel
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Orientation = Orientation.Horizontal, // vízszintes
+                Width = width,
+                Height = height,
+                Margin = new Thickness(spacing)
+            };
+            wrap.Children.Add(kartya.GetVisual());
+            return wrap;
+        }
 
-// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+        // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
     }
 }

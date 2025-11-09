@@ -164,7 +164,7 @@ namespace szakmajDusza
 			vissza.Visibility=Visibility.Visible;
             if (playerCopies.Count == 0 && play == null)
 			{
-				l.Content = "Játékos veszített!";
+				l.Content = "Vesztettél!";
 
                 //MessageBox.Show("Játékos veszített!");
 				kazamata.Children.Clear();
@@ -185,7 +185,7 @@ namespace szakmajDusza
 				{
 					case KazamataReward.eletero:
 						//MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
-						l.Content = $"Nyertél";
+						l.Content = $"Nyertél!";
 						l2.Content = $"+2❤ {pakli[index].Name}";
 
                         pakli[index].HP += 2;
@@ -193,7 +193,7 @@ namespace szakmajDusza
 						break;
 					case KazamataReward.sebzes:
 						//MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
-						l.Content = $"Nyertél";
+						l.Content = $"Nyertél!";
                         l2.Content = $"+1⚔ {pakli[index].Name}";					
                         pakli[index].Damage += 1;
 						pakli[index].UpdateVisual();
@@ -222,8 +222,12 @@ namespace szakmajDusza
 								//MainWindow.Cards_Wrap.Children.Add(gyujt[gyujt.Count-1].GetVisual());
 								//ui fix needed
 								//MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
-                                l.Content = $"Nyertél";
-								l2.Content =item.Name;
+                                l.Content = $"Nyertél!";
+								//l2.Content =item.Name;
+								WrapPanel w = MainWindow.CreateCenteredWrapPanel(160, 200, 5,item);
+								grid.Children.Add(w);
+
+
 
                                 return;
 							}

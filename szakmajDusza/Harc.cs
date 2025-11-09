@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace szakmajDusza
 {
     public class Harc
     {
         //vizuáls gotta make it work
-        public static async Task StartFight(Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend)
+        public static async Task StartFight(Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
         {
             List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
             List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -37,6 +38,10 @@ namespace szakmajDusza
                 {
                     kaz = kazamataCopies[0];
                     kazamataCopies.RemoveAt(0);
+                    kazamata.Children.Remove(kaz.GetVisual());
+                    kaz.visualGroup.Width = 160;
+                    kaz.visualGroup.Height = 200;
+                    fightKazamata.Children.Add(kaz.GetVisual());
                 }
                 else if (kaz != null && play != null)
                 {
@@ -47,8 +52,15 @@ namespace szakmajDusza
 
                     if (play.HP <= 0)
                     {
-                        player.Children.Remove(play.GetVisual());
+                        //player.Children.Remove(play.GetVisual());
+                        fightPlayer.Children.Remove(play.GetVisual());
+                        play.visualGroup.Width = 140;
+                        play.visualGroup.Height = 180;
+                        //play.But.Background = Brushes.Gray;
+                        play.NameLabel.Foreground = Brushes.Gray;
+                        player.Children.Add(play.GetVisual());
                         play = null;
+                        
                         index++;
                     }
                 }
@@ -59,6 +71,10 @@ namespace szakmajDusza
                 {
                     play = playerCopies[0];
                     playerCopies.RemoveAt(0);
+                    player.Children.Remove(play.GetVisual());
+                    play.visualGroup.Width = 160;
+                    play.visualGroup.Height = 200;
+                    fightPlayer.Children.Add(play.GetVisual());
                 }
                 else if (play != null && kaz != null)
                 {
@@ -69,7 +85,13 @@ namespace szakmajDusza
 
                     if (kaz.HP <= 0)
                     {
-                        kazamata.Children.Remove(kaz.GetVisual());
+                        //kazamata.Children.Remove(kaz.GetVisual());
+                        fightKazamata.Children.Remove(kaz.GetVisual());
+                        play.visualGroup.Width = 140;
+                        play.visualGroup.Height = 180;
+                        //kaz.But.Background = Brushes.Gray;
+                        kaz.NameLabel.Foreground= Brushes.Gray;
+                        kazamata.Children.Add(kaz.GetVisual());
                         kaz = null;
                     }
                 }
@@ -77,11 +99,13 @@ namespace szakmajDusza
                 await Task.Delay(1500);
             }
 
-            if (playerCopies.Count == 0)
+            if (playerCopies.Count == 0 && play != null)
             {
                 MessageBox.Show("Játékos veszített!");
                 kazamata.Children.Clear();
                 player.Children.Clear();
+                fightPlayer.Children.Clear();
+                fightKazamata.Children.Clear();
             }
 
             else
@@ -89,6 +113,8 @@ namespace szakmajDusza
                 MessageBox.Show("Játékos nyert!");
                 kazamata.Children.Clear();
                 player.Children.Clear();
+                fightPlayer.Children.Clear();
+                fightKazamata.Children.Clear();
 
                 switch (k.reward)
                 {

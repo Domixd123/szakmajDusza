@@ -24,11 +24,11 @@ namespace szakmajDusza
         public Rectangle Rec { get; private set; }
         public Button But { get; private set; }
 
-        private Label NameLabel;
+        public Label NameLabel;
         private Label DamageAndHPLabel;
         private Label TypeLabel;
 
-        private Grid visualGroup;
+        public Grid visualGroup;
 
         public event EventHandler<Card> Clicked;
 

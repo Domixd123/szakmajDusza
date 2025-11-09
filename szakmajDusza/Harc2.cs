@@ -1,7 +1,9 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using System.IO;
 
 namespace szakmajDusza
 {
@@ -10,7 +12,7 @@ namespace szakmajDusza
 		//vizuáls gotta make it work
 		public static double playSpeedMultiplier = 1d;
 		public static double basePlaySpeed = 750;//in miliseconds
-		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
+		public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
 			List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -77,6 +79,7 @@ namespace szakmajDusza
 
 					if (kaz.HP <= 0)
 					{
+						
 						kaz.HP = 0;
 						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 						kaz.UpdateVisual();
@@ -153,14 +156,17 @@ namespace szakmajDusza
 				else
 				{
 					MessageBox.Show("KYS kazamata action");
-					//this shouldnt have happened xd
-				}
-			}
+                    //this shouldnt have happened xd
+                }
+            }
 
-
-			if (playerCopies.Count == 0 && play == null)
+            Label l = MainWindow.CreateJutalom(grid);
+			vissza.Visibility=Visibility.Visible;
+            if (playerCopies.Count == 0 && play == null)
 			{
-				MessageBox.Show("Játékos veszített!");
+				l.Content = "Játékos veszített!";
+
+                //MessageBox.Show("Játékos veszített!");
 				kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
@@ -168,8 +174,9 @@ namespace szakmajDusza
 			}
 			else
 			{
-
-				kazamata.Children.Clear();
+				Label l2 = MainWindow.CreateJutalom(grid);
+				l2.Margin = new Thickness(0, 305 + 100, 0, 0);
+                kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
@@ -177,13 +184,18 @@ namespace szakmajDusza
 				switch (k.reward)
 				{
 					case KazamataReward.eletero:
-						MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
-						pakli[index].HP += 2;
+						//MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
+						l.Content = $"Nyertél";
+						l2.Content = $"+2❤ {pakli[index].Name}";
+
+                        pakli[index].HP += 2;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.sebzes:
-						MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
-						pakli[index].Damage += 1;
+						//MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
+						l.Content = $"Nyertél";
+                        l2.Content = $"+1⚔ {pakli[index].Name}";					
+                        pakli[index].Damage += 1;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.newcard:
@@ -209,8 +221,11 @@ namespace szakmajDusza
 								gyujt.Add(item.GetCopy());
 								//MainWindow.Cards_Wrap.Children.Add(gyujt[gyujt.Count-1].GetVisual());
 								//ui fix needed
-								MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
-								return;
+								//MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
+                                l.Content = $"Nyertél";
+								l2.Content =item.Name;
+
+                                return;
 							}
 						}
 						break;

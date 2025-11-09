@@ -71,7 +71,16 @@ namespace szakmajDusza
 				else if(kaz!=null)
 				{
 					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
-					kaz.UpdateVisual();
+					if (kaz.DamageAndHPLabel.Content.ToString().Split('-').Count() > 1)
+					{
+						kaz.UpdateVisualDamage(int.Parse(kaz.DamageAndHPLabel.Content.ToString().Split(' ')[5]) + (int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+
+                    }
+					else
+					{
+                        kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+                    }
+						
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
 					attackDeploy.Visibility = Visibility.Collapsed;
@@ -80,9 +89,17 @@ namespace szakmajDusza
 					if (kaz.HP <= 0)
 					{
 						kaz.HP = 0;
-						kaz.UpdateVisual();
-						//kazamata.Children.Remove(kaz.GetVisual());
-						fightKazamata.Children.Remove(kaz.GetVisual());
+                        if (kaz.DamageAndHPLabel.Content.ToString().Split('-').Count() > 1)
+                        {
+                            kaz.UpdateVisualDamage(int.Parse(kaz.DamageAndHPLabel.Content.ToString().Split(' ')[5]) + (int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+
+                        }
+                        else
+                        {
+                            kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+                        }
+                        //kazamata.Children.Remove(kaz.GetVisual());
+                        fightKazamata.Children.Remove(kaz.GetVisual());
 						kaz.visualGroup.Width = 140;
 						kaz.visualGroup.Height = 180;
 						//kaz.But.Background = Brushes.Gray;
@@ -124,8 +141,16 @@ namespace szakmajDusza
 				else if (play != null)
 				{
 					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
-					play.UpdateVisual();
-					attack.Visibility = Visibility.Collapsed;
+                    if (play.DamageAndHPLabel.Content.ToString().Split('-').Count() > 1)
+                    {
+                        play.UpdateVisualDamage(int.Parse(play.DamageAndHPLabel.Content.ToString().Split(' ')[5]) + (int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+
+                    }
+                    else
+                    {
+                        play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+                    }
+                    attack.Visibility = Visibility.Collapsed;
 					defend.Visibility = Visibility.Visible;
 					attackDeploy.Visibility = Visibility.Collapsed;
 					defendDeploy.Visibility = Visibility.Collapsed;
@@ -133,9 +158,17 @@ namespace szakmajDusza
 					if (play.HP <= 0)
 					{
 						play.HP = 0;
-						play.UpdateVisual();
-						//player.Children.Remove(play.GetVisual());
-						fightPlayer.Children.Remove(play.GetVisual());
+                        if (play.DamageAndHPLabel.Content.ToString().Split('-').Count() > 1)
+                        {
+                            play.UpdateVisualDamage(int.Parse(play.DamageAndHPLabel.Content.ToString().Split(' ')[5]) + (int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+
+                        }
+                        else
+                        {
+                            play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+                        }
+                        //player.Children.Remove(play.GetVisual());
+                        fightPlayer.Children.Remove(play.GetVisual());
 						play.visualGroup.Width = 140;
 						play.visualGroup.Height = 180;
 						//play.But.Background = Brushes.Gray;

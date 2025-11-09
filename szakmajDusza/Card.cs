@@ -26,7 +26,7 @@ namespace szakmajDusza
         public Button But { get; private set; }
 
         public Label NameLabel;
-        private Label DamageAndHPLabel;
+        public Label DamageAndHPLabel;
         private Label TypeLabel;
 
         public Grid visualGroup;
@@ -198,13 +198,15 @@ namespace szakmajDusza
 		public void UpdateVisualDamage(int dmg)
 		{
 			// Frissítjük a statisztikát kiíró címkét
-			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} - {dmg}❤";
+			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP+dmg} - {dmg} ❤";
 
 			// Opcionális: ha a HP <= 0, halványítsuk el a kártyát
 			if (HP <= 0)
 			{
 				visualGroup.Opacity = 0.4;
-			}
+                DamageAndHPLabel.Content = $"{Damage} ⚔ / 0 ❤";
+
+            }
 		}
 
 

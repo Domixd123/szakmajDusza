@@ -165,9 +165,24 @@ namespace szakmajDusza
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.newcard:
-						foreach (var item in k.Defenders)
+						foreach (var item in MainWindow.AllCards)
 						{
-							if (!gyujt.Contains(item)&&!pakli.Contains(item))
+							bool found=false;
+							for (int i = 0; i < gyujt.Count; i++)
+							{
+								if (item.Name == gyujt[i].Name)
+								{
+									found=true; break;
+								}
+							}
+							for (int i = 0; i < pakli.Count; i++)
+							{
+								if (item.Name == pakli[i].Name)
+								{
+									found = true; break;
+								}
+							}
+							if (!found)
 							{
 								gyujt.Add(item);
                                 MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");

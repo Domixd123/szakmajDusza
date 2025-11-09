@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Grid>
-        <Grid Name="PakliOssze_Grid" Visibility="Collapsed">
+        <Grid Name="PakliOssze_Grid" Visibility="Collapsed" d:IsHidden="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="335*"/>
                 <RowDefinition Height="197*"/>
@@ -19,16 +19,16 @@
             <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="428,504,0,0" VerticalAlignment="Top"/>
             <Label FontSize="50" Content="/5" HorizontalAlignment="Left" Margin="465,504,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid Name="MainRoom_Grid" Visibility="Collapsed">
+        <Grid Name="MainRoom_Grid" Visibility="Collapsed" d:IsHidden="True">
             <WrapPanel Name="PakliCards_Wrap" Margin="10,594,648,0"/>
-            <Button Name="Egyszeri_Button" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
-            <Button Name="Kis_Button" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
-            <Button Name="Nagy_Button" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>
+            <Button Name="Barlangi_portya" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
+            <Button Name="Osi_szentely" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
+            <Button Name="A_melyseg_kiralynoje" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>
             <Button Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
 
         </Grid>
 
-        <Grid Name="EgyszeriKazamata_Grid" Visibility="Visible">
+        <Grid Name="EgyszeriKazamata_Grid" Visibility="Collapsed" d:IsHidden="True">
             <Label Content="Játékos" FontSize="60" HorizontalAlignment="Left" Margin="144,116,0,0" VerticalAlignment="Top"/>
             <Label Content="Kazamata" FontSize="60" HorizontalAlignment="Right" Margin="0,116,144,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightPlayerEgyszeri_Wrap" Margin="115,263,1343,37" Width="400"/>
@@ -37,10 +37,12 @@
             <Label Name="AttackEgyszeri_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightPlayerAttackerEgyszeri_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerEgyszeri_Wrap" Margin="960,310,746,362"/>
+            <Button Name ="Harc" Content="Harc" HorizontalAlignment="Center" Height="100" Margin="0,650,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="HarcE_Button_Click"/>
+            <Button Name="Vissza" Content="Vissza" HorizontalAlignment="Center" Height="100" Margin="0,794,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="Vissza_Button_Click"/>
 
         </Grid>
 
-        <Grid Name="KisKazamata_Grid" Visibility="Collapsed">
+        <Grid Name="KisKazamata_Grid" Visibility="Visible">
             <WrapPanel Name="FightPlayerKis_Wrap" Margin="115,263,1343,37" Width="400"/>
             <WrapPanel Name="FightKazamataKis_Wrap" Margin="1386,263,146,37" Width="400"/>
             <Label Name="DefendKis_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
@@ -48,6 +50,8 @@
             <WrapPanel Name="FightKis_Wrap" Margin="665,310,665,362"/>
             <WrapPanel Name="FightPlayerAttackerKis_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerKis_Wrap" Margin="960,310,746,362"/>
+            <Button x:Name ="HarcK" Content="Harc" HorizontalAlignment="Center" Height="100" Margin="0,650,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="HarcK_Button_Click"/>
+            <Button x:Name="VisszaK" Content="Vissza" HorizontalAlignment="Center" Height="100" Margin="0,794,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="Vissza_Button_Click"/>
         </Grid>
 
         <Grid Name="NagyKazamata_Grid" Visibility="Collapsed">
@@ -58,6 +62,8 @@
             <WrapPanel Name="FightNagy_Wrap" Margin="665,310,665,362"/>
             <WrapPanel Name="FightPlayerAttackerNagy_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerNagy_Wrap" Margin="960,310,746,362"/>
+            <Button x:Name ="HarcN" Content="Harc" HorizontalAlignment="Center" Height="100" Margin="0,650,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="HarcN_Button_Click"/>
+            <Button x:Name="VisszaN" Content="Vissza" HorizontalAlignment="Center" Height="100" Margin="0,794,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="Vissza_Button_Click"/>
         </Grid>
     </Grid>
 

@@ -19,9 +19,10 @@ namespace szakmajDusza
         public static List<Card> Jatekos = new List<Card>();
         public static List<Card> AllCards = new List<Card>();
 		public static Dictionary<string,Card> AllCardsDict = new Dictionary<string,Card>();
-		public static Kazamata EgyszeruKazamata = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
-        public static Kazamata KisKazamata = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
-        public static Kazamata NagyKazamata = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
+        public static Dictionary<string, Kazamata> AllKazamata = new Dictionary<string, Kazamata>();
+		//public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
+        //public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
+        //public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
 
         public MainWindow()
         {
@@ -32,7 +33,7 @@ namespace szakmajDusza
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
-
+            UploadKazamata();
             UploadCards();
 
         }
@@ -76,19 +77,19 @@ namespace szakmajDusza
 			Gyujtemeny.Add(AllCardsDict["Isara"].GetCopy());
 
             //leader cards, kazamata fix would be great
-			EgyszeruKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
+            AllKazamata["Barlangi portya"].Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
 
-            KisKazamata.Defenders.Add(new Card("Arin", 2, 5, "fold", false));
-            KisKazamata.Defenders.Add(new Card("Emera", 2, 5, "levego", false));
-            KisKazamata.Defenders.Add(new Card("Selia", 2, 6, "viz", false));
-            KisKazamata.Defenders.Add(new Card("Lord Torak", 6, 4, "fold", true));
+            AllKazamata["Osi szentely"].Defenders.Add(new Card("Arin", 2, 5, "fold", false));
+            AllKazamata["Osi szentely"].Defenders.Add(new Card("Emera", 2, 5, "levego", false));
+            AllKazamata["Osi szentely"].Defenders.Add(new Card("Selia", 2, 6, "viz", false));
+            AllKazamata["Osi szentely"].Defenders.Add(new Card("Lord Torak", 6, 4, "fold", true));
 
-            NagyKazamata.Defenders.Add(new Card("Liora", 2, 4, "levego", false));
-            NagyKazamata.Defenders.Add(new Card("Arin", 2, 5, "fold", false));
-            NagyKazamata.Defenders.Add(new Card("Selia", 2, 6, "viz", false));
-            NagyKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
-            NagyKazamata.Defenders.Add(new Card("Torak", 3, 4, "fold", false));
-            NagyKazamata.Defenders.Add(new Card("Priestess Selia", 2, 12, "fold", true));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Liora", 2, 4, "levego", false));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Arin", 2, 5, "fold", false));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Selia", 2, 6, "viz", false));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Torak", 3, 4, "fold", false));
+            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Priestess Selia", 2, 12, "fold", true));
 
 
             foreach (var item in Gyujtemeny)
@@ -98,6 +99,12 @@ namespace szakmajDusza
             }
 
 
+        }
+        private void UploadKazamata()
+        {
+            AllKazamata.Add("Barlangi portya", new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>()));
+            AllKazamata.Add("Osi szentely", new Kazamata("Osi szentely", "kis", "eletero", new List<Card>()));
+            AllKazamata.Add("A melyseg kiralynoje", new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>()));
         }
 
         private void AddToPakli(object? sender, Card clicked)
@@ -129,29 +136,105 @@ namespace szakmajDusza
             SelectedCards_Label.Content = Jatekos.Count;
         }
 
-        private async void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
+        private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
         {
+            Button? b = sender as Button;
+            Label Jutalom = CreateJutalom(EgyszeriKazamata_Grid);
+
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(Gyujtemeny, EgyszeruKazamata, Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
+            AttackEgyszeri_Label.Visibility = Visibility.Collapsed;
+            DefendEgyszeri_Label.Visibility = Visibility.Collapsed;
+            FightPlayerEgyszeri_Wrap.Children.Clear();
+            FightKazamataEgyszeri_Wrap.Children.Clear();
+            List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
+            List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+
+            foreach (var c in playerCopies)
+                FightPlayerEgyszeri_Wrap.Children.Add(c.GetVisual());
+            foreach (var c in kazamataCopies)
+                FightKazamataEgyszeri_Wrap.Children.Add(c.GetVisual());
+            if (AllKazamata[Alsovonas(b.Name)].reward==KazamataReward.sebzes)
+            {
+                Jutalom.Content = "Jutalom: +1⚔";
+            }
+            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+            {
+                Jutalom.Content = "Jutalom: +2❤";
+            }
+            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+            {
+                Jutalom.Content = "Jutalom: Új kártya";
+            }
+
+            /*MainRoom_Grid.Visibility = Visibility.Collapsed;
+            EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
+            ShowPakli();*/
+        }
+
+        private async void HarcE_Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in ((sender as Button).Parent as Grid).Children)
+            {
+                if (item.GetType()==typeof(Label))
+                {
+                    if ((item as Label).Name=="Jutalom")
+                    {
+                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
+                        break;
+
+                    }
+                }
+            }
+            Harc.Visibility = Visibility.Collapsed;
+            Vissza.Visibility = Visibility.Collapsed;
+            //MainRoom_Grid.Visibility = Visibility.Collapsed;
+            //EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
         }
 
-        private async void Kis_Button_Click(object sender, RoutedEventArgs e)
+
+        private void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
+            Button? b = sender as Button;
+            Label Jutalom = CreateJutalom(KisKazamata_Grid);
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(Gyujtemeny, KisKazamata, Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
-            MainRoom_Grid.Visibility = Visibility.Visible;
-            KisKazamata_Grid.Visibility = Visibility.Collapsed;
-            ShowPakli();
+            AttackKis_Label.Visibility = Visibility.Collapsed;
+            DefendKis_Label.Visibility = Visibility.Collapsed;
+            FightPlayerKis_Wrap.Children.Clear();
+            FightKazamataKis_Wrap.Children.Clear();
+            List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
+            List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+
+            foreach (var c in playerCopies)
+                FightPlayerKis_Wrap.Children.Add(c.GetVisual());
+            foreach (var c in kazamataCopies)
+                FightKazamataKis_Wrap.Children.Add(c.GetVisual());
+            if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
+            {
+                Jutalom.Content = "Jutalom: +1⚔";
+            }
+            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+            {
+                Jutalom.Content = "Jutalom: +2❤";
+            }
+            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+            {
+                Jutalom.Content = "Jutalom: Új kártya";
+            }
         }
 
         private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
             bool anythingpossible=false;
+            //string talal;
             foreach (var item in AllCards)
             {
                 bool found=false;
@@ -172,12 +255,37 @@ namespace szakmajDusza
 				if (!found)
                 {
                     anythingpossible= true;
+                    Button? b = sender as Button;
+                    Label Jutalom = CreateJutalom(NagyKazamata_Grid);
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
-                    await Harc2.StartFight(Gyujtemeny, NagyKazamata, Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
-                    MainRoom_Grid.Visibility = Visibility.Visible;
-                    NagyKazamata_Grid.Visibility = Visibility.Collapsed;
-                    ShowPakli();
+                    AttackNagy_Label.Visibility = Visibility.Collapsed;
+                    DefendNagy_Label.Visibility = Visibility.Collapsed;
+                    FightPlayerNagy_Wrap.Children.Clear();
+                    FightKazamataNagy_Wrap.Children.Clear();
+                    List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
+                    List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+
+                    foreach (var c in playerCopies)
+                        FightPlayerNagy_Wrap.Children.Add(c.GetVisual());
+                    foreach (var c in kazamataCopies)
+                        FightKazamataNagy_Wrap.Children.Add(c.GetVisual());
+                    if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
+                    {
+                        Jutalom.Content = "Jutalom: +1⚔";
+                    }
+                    else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+                    {
+                        Jutalom.Content = "Jutalom: +2❤";
+                    }
+                    else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+                    {
+                        Jutalom.Content = $"Jutalom: {item.Name}"; //show acutal card if time
+                        while (Jutalom.Width<Jutalom.ActualWidth)
+                        {
+                            Jutalom.FontSize--;
+                        }
+                    }
                     break;
                 }
             }
@@ -188,7 +296,23 @@ namespace szakmajDusza
         }
 
 
-        
+        static private string Alsovonas(string soveg)
+        {
+            string o = "";
+            for (int i = 0; i < soveg.Length; i++)
+            {
+                if (soveg[i]=='_')
+                {
+                    o += " ";
+                }
+                else
+                {
+                    o += soveg[i];
+                }
+            }
+            return o;
+        }
+
 
         static public float Multiplier(Card attack, Card def)
         {
@@ -246,5 +370,78 @@ namespace szakmajDusza
                 item.Clicked += RemoveFromPakli;
             }
         }
+
+        private async void HarcK_Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in ((sender as Button).Parent as Grid).Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if ((item as Label).Name == "Jutalom")
+                    {
+                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
+                        break;
+                    }
+                }
+            }
+            HarcK.Visibility = Visibility.Collapsed;
+            VisszaK.Visibility = Visibility.Collapsed;
+            /*MainRoom_Grid.Visibility = Visibility.Collapsed;
+            KisKazamata_Grid.Visibility = Visibility.Visible;*/
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            KisKazamata_Grid.Visibility = Visibility.Collapsed;
+            ShowPakli();
+        }
+        private async void HarcN_Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in ((sender as Button).Parent as Grid).Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if ((item as Label).Name == "Jutalom")
+                    {
+                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
+                        break;
+                    }
+                }
+            }
+            HarcN.Visibility = Visibility.Collapsed;
+            VisszaN.Visibility = Visibility.Collapsed;
+            //MainRoom_Grid.Visibility = Visibility.Collapsed;
+            //NagyKazamata_Grid.Visibility = Visibility.Visible;
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            NagyKazamata_Grid.Visibility = Visibility.Collapsed;
+            ShowPakli();
+        }
+        private Label CreateJutalom(Grid Parent)
+        {
+            Label Jutalom = new Label();
+            Jutalom.Content = "";
+            Jutalom.Name = "Jutalom";
+            Parent.Children.Add(Jutalom);
+            Jutalom.Height = 340;
+            Jutalom.Margin = new Thickness(0,305,0,0);
+            Jutalom.VerticalAlignment = VerticalAlignment.Top;
+            Jutalom.Width = 450;
+            Jutalom.FontSize = 60;
+            Jutalom.HorizontalAlignment = HorizontalAlignment.Center;
+            Jutalom.HorizontalContentAlignment= HorizontalAlignment.Center;
+            return Jutalom;
+
+        }
+
+        private  void Vissza_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainRoom_Grid.Visibility = Visibility.Visible;
+            KisKazamata_Grid.Visibility = Visibility.Collapsed;
+            EgyszeriKazamata_Grid.Visibility= Visibility.Collapsed;
+            NagyKazamata_Grid.Visibility=Visibility.Collapsed;
+            ShowPakli();
+        }
+
+// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+
     }
 }

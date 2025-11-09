@@ -151,10 +151,27 @@ namespace szakmajDusza
 
         private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var item in NagyKazamata.Defenders)
+            bool anythingpossible=false;
+            foreach (var item in AllCards)
             {
-                if (!Gyujtemeny.Contains(item)&&!Jatekos.Contains(item))
+                bool found=false;
+                for (int i = 0; i < Gyujtemeny.Count; i++)
                 {
+                    if (Gyujtemeny[i].Name==item.Name)
+                    {
+                        found= true; break;
+                    }
+                }
+				for (int i = 0; i < Jatekos.Count; i++)
+				{
+					if (Jatekos[i].Name == item.Name)
+					{
+						found = true; break;
+					}
+				}
+				if (!found)
+                {
+                    anythingpossible= true;
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
                     await Harc2.StartFight(Gyujtemeny, NagyKazamata, Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
@@ -163,6 +180,10 @@ namespace szakmajDusza
                     ShowPakli();
                     break;
                 }
+            }
+            if (!anythingpossible)
+            {
+                MessageBox.Show("Már minden kartyát megszereztél!");
             }
         }
 

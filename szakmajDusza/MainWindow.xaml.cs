@@ -435,6 +435,39 @@ namespace szakmajDusza
 
         }
 
+        private void ChangeSpeed_Click(object sender, RoutedEventArgs e)
+        {
+            switch (Harc2.playSpeedMultiplier)
+            {
+                case 1:
+                    Harc2.playSpeedMultiplier = 2d;
+                    break;
+                case 2:
+                    Harc2.playSpeedMultiplier = 4d;
+                    break;
+                case 4:
+                    Harc2.playSpeedMultiplier = 8d;
+                    break;
+                case 8:
+                    Harc2.playSpeedMultiplier = 0.25d;
+                    break;
+                case 0.25d:
+                    Harc2.playSpeedMultiplier = 0.5d;
+                    break;
+                case 0.5d:
+                    Harc2.playSpeedMultiplier = 1d;
+                    break;
+                default:
+                    break;
+            }
+
+            SpeedEgyszeri_Label.Content = $"{Harc2.playSpeedMultiplier}x";
+            SpeedKis_Label.Content = $"{Harc2.playSpeedMultiplier}x";
+            SpeedNagy_Label.Content = $"{Harc2.playSpeedMultiplier}x";
+
+
+        }
+
         private void PakliChange_Button_Click(object sender, RoutedEventArgs e)
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;

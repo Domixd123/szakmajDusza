@@ -31,8 +31,8 @@ namespace szakmajDusza
 				player.Children.Add(c.GetVisual());
 			foreach (var c in kazamataCopies)
 				kazamata.Children.Add(c.GetVisual());
-
-			Card? kaz = kazamataCopies[0];
+            await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
+            Card? kaz = kazamataCopies[0];
 			kazamataCopies.RemoveAt(0);
 			kazamata.Children.Remove(kaz.GetVisual());
 			kaz.visualGroup.Width = 160;
@@ -42,7 +42,7 @@ namespace szakmajDusza
 			defend.Visibility = Visibility.Collapsed;
 			attackDeploy.Visibility = Visibility.Collapsed;
 			defendDeploy.Visibility = Visibility.Visible;
-			await Task.Delay((int)(basePlaySpeed * playSpeedMultiplier));
+			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 			Card? play = null;
 			while ((kazamataCopies.Count!=0||kaz!=null)&&(playerCopies.Count!=0||play!=null))
 			{
@@ -97,7 +97,7 @@ namespace szakmajDusza
 					//this shouldnt have happened xd
 				}
 
-				await Task.Delay((int)(basePlaySpeed*playSpeedMultiplier));
+				await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 
 				//kazamata action
 				if (kaz == null)
@@ -151,7 +151,7 @@ namespace szakmajDusza
 					MessageBox.Show("KYS kazamata action");
 					//this shouldnt have happened xd
 				}
-				await Task.Delay((int)(basePlaySpeed * playSpeedMultiplier));
+				await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 			}
 
 

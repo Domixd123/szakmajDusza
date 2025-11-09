@@ -568,10 +568,22 @@ namespace szakmajDusza
 
         private  void Vissza_Button_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in ((sender as Button).Parent as Grid).Children)
+            {
+                if (item.GetType() == typeof(Label))
+                {
+                    if ((item as Label).Name == "Jutalom")
+                    {
+                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
+                        break;
+                    }
+                }
+            }
             MainRoom_Grid.Visibility = Visibility.Visible;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility= Visibility.Collapsed;
             NagyKazamata_Grid.Visibility=Visibility.Collapsed;
+
             ShowPakli();
         }
 

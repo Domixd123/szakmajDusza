@@ -167,7 +167,7 @@ namespace szakmajDusza
 					case KazamataReward.newcard:
 						foreach (var item in k.Defenders)
 						{
-							if (!gyujt.Contains(item))
+							if (!gyujt.Contains(item)&&!pakli.Contains(item))
 							{
 								gyujt.Add(item);
                                 MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");

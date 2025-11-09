@@ -13,15 +13,17 @@ namespace szakmajDusza
 	public class Harc2
 	{
 		//vizuáls gotta make it work
-		public static int playSpeed = 150;//in miliseconds
-		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
+		public static double playSpeedMultiplier = 1d;
+		public static double basePlaySpeed = 750;//in miliseconds
+		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend,Label attackDeploy,Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
 			List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
 			int index = 0;
 			attack.Visibility = Visibility.Collapsed;
 			defend.Visibility = Visibility.Collapsed;
-
+			attackDeploy.Visibility = Visibility.Collapsed;
+			defendDeploy.Visibility = Visibility.Collapsed;
 			player.Children.Clear();
 			kazamata.Children.Clear();
 
@@ -36,7 +38,11 @@ namespace szakmajDusza
 			kaz.visualGroup.Width = 160;
 			kaz.visualGroup.Height = 200;
 			fightKazamata.Children.Add(kaz.GetVisual());
-
+			attack.Visibility = Visibility.Collapsed;
+			defend.Visibility = Visibility.Collapsed;
+			attackDeploy.Visibility = Visibility.Collapsed;
+			defendDeploy.Visibility = Visibility.Visible;
+			await Task.Delay((int)(basePlaySpeed * playSpeedMultiplier));
 			Card? play = null;
 			while ((kazamataCopies.Count!=0||kaz!=null)&&(playerCopies.Count!=0||play!=null))
 			{
@@ -51,6 +57,10 @@ namespace szakmajDusza
 						play.visualGroup.Width = 160;
 						play.visualGroup.Height = 200;
 						fightPlayer.Children.Add(play.GetVisual());
+						attack.Visibility = Visibility.Collapsed;
+						defend.Visibility = Visibility.Collapsed;
+						attackDeploy.Visibility = Visibility.Visible;
+						defendDeploy.Visibility = Visibility.Collapsed;
 					}
 					else
 					{
@@ -62,8 +72,10 @@ namespace szakmajDusza
 				{
 					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
 					kaz.UpdateVisual();
-					defend.Visibility = Visibility.Collapsed;
 					attack.Visibility = Visibility.Visible;
+					defend.Visibility = Visibility.Collapsed;
+					attackDeploy.Visibility = Visibility.Collapsed;
+					defendDeploy.Visibility = Visibility.Collapsed;
 
 					if (kaz.HP <= 0)
 					{
@@ -85,7 +97,7 @@ namespace szakmajDusza
 					//this shouldnt have happened xd
 				}
 
-				await Task.Delay(playSpeed);
+				await Task.Delay((int)(basePlaySpeed*playSpeedMultiplier));
 
 				//kazamata action
 				if (kaz == null)
@@ -98,6 +110,10 @@ namespace szakmajDusza
 						kaz.visualGroup.Width = 160;
 						kaz.visualGroup.Height = 200;
 						fightKazamata.Children.Add(kaz.GetVisual());
+						attack.Visibility = Visibility.Collapsed;
+						defend.Visibility = Visibility.Collapsed;
+						attackDeploy.Visibility = Visibility.Collapsed;
+						defendDeploy.Visibility = Visibility.Visible;
 					}
 					else
 					{
@@ -109,8 +125,10 @@ namespace szakmajDusza
 				{
 					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
 					play.UpdateVisual();
-					defend.Visibility = Visibility.Visible;
 					attack.Visibility = Visibility.Collapsed;
+					defend.Visibility = Visibility.Visible;
+					attackDeploy.Visibility = Visibility.Collapsed;
+					defendDeploy.Visibility = Visibility.Collapsed;
 
 					if (play.HP <= 0)
 					{
@@ -133,7 +151,7 @@ namespace szakmajDusza
 					MessageBox.Show("KYS kazamata action");
 					//this shouldnt have happened xd
 				}
-				await Task.Delay(playSpeed);
+				await Task.Delay((int)(basePlaySpeed * playSpeedMultiplier));
 			}
 
 

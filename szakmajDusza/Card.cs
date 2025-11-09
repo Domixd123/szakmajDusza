@@ -195,9 +195,20 @@ namespace szakmajDusza
                 visualGroup.Opacity = 0.4;
             }
         }
+		public void UpdateVisualDamage(int dmg)
+		{
+			// Frissítjük a statisztikát kiíró címkét
+			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} - {dmg}❤";
+
+			// Opcionális: ha a HP <= 0, halványítsuk el a kártyát
+			if (HP <= 0)
+			{
+				visualGroup.Opacity = 0.4;
+			}
+		}
 
 
-        public UIElement GetVisual()
+		public UIElement GetVisual()
         {
             return visualGroup;
         }

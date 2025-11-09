@@ -3,7 +3,6 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
-﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -138,14 +137,18 @@ namespace szakmajDusza
 
         private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
         {
-            Button? b = sender as Button;
+			Harc.Visibility = Visibility.Visible;
+			Vissza.Visibility = Visibility.Visible;
+			Button? b = sender as Button;
             Label Jutalom = CreateJutalom(EgyszeriKazamata_Grid);
 
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
             AttackEgyszeri_Label.Visibility = Visibility.Collapsed;
             DefendEgyszeri_Label.Visibility = Visibility.Collapsed;
-            FightPlayerEgyszeri_Wrap.Children.Clear();
+            AttackDeployEgyszeri_Label.Visibility=Visibility.Collapsed;
+			DefendDeployEgyszeri_Label.Visibility = Visibility.Collapsed;
+			FightPlayerEgyszeri_Wrap.Children.Clear();
             FightKazamataEgyszeri_Wrap.Children.Clear();
             List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
             List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
@@ -193,7 +196,7 @@ namespace szakmajDusza
             Vissza.Visibility = Visibility.Collapsed;
             //MainRoom_Grid.Visibility = Visibility.Collapsed;
             //EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label,AttackDeployEgyszeri_Label ,DefendDeployEgyszeri_Label,FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
@@ -202,13 +205,17 @@ namespace szakmajDusza
 
         private void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
-            Button? b = sender as Button;
+			HarcK.Visibility = Visibility.Visible;
+			VisszaK.Visibility = Visibility.Visible;
+			Button? b = sender as Button;
             Label Jutalom = CreateJutalom(KisKazamata_Grid);
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;
             AttackKis_Label.Visibility = Visibility.Collapsed;
             DefendKis_Label.Visibility = Visibility.Collapsed;
-            FightPlayerKis_Wrap.Children.Clear();
+			AttackDeployKis_Label.Visibility = Visibility.Collapsed;
+			DefendDeployKis_Label.Visibility = Visibility.Collapsed;
+			FightPlayerKis_Wrap.Children.Clear();
             FightKazamataKis_Wrap.Children.Clear();
             List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
             List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
@@ -233,6 +240,8 @@ namespace szakmajDusza
 
         private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
+            HarcN.Visibility = Visibility.Visible;
+            VisszaN.Visibility = Visibility.Visible;
             bool anythingpossible=false;
             //string talal;
             foreach (var item in AllCards)
@@ -261,7 +270,9 @@ namespace szakmajDusza
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
                     AttackNagy_Label.Visibility = Visibility.Collapsed;
                     DefendNagy_Label.Visibility = Visibility.Collapsed;
-                    FightPlayerNagy_Wrap.Children.Clear();
+					AttackDeployNagy_Label.Visibility = Visibility.Collapsed;
+					DefendDeployNagy_Label.Visibility = Visibility.Collapsed;
+					FightPlayerNagy_Wrap.Children.Clear();
                     FightKazamataNagy_Wrap.Children.Clear();
                     List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
                     List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
@@ -388,7 +399,7 @@ namespace szakmajDusza
             VisszaK.Visibility = Visibility.Collapsed;
             /*MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;*/
-            await Harc2.StartFight(Gyujtemeny, AllKazamata["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, AttackDeployKis_Label,DefendDeployKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
@@ -410,7 +421,7 @@ namespace szakmajDusza
             VisszaN.Visibility = Visibility.Collapsed;
             //MainRoom_Grid.Visibility = Visibility.Collapsed;
             //NagyKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(Gyujtemeny, AllKazamata["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
+            await Harc2.StartFight(Gyujtemeny, AllKazamata["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label,AttackDeployNagy_Label,DefendDeployNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();

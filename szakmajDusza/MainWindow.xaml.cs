@@ -97,7 +97,7 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
-            SelectableCounter_Label.Content = $"/{Math.Floor((float)Gyujtemeny.Count / 2f)}";
+            SelectableCounter_Label.Content = $"/{Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
 
 
         }
@@ -110,7 +110,7 @@ namespace szakmajDusza
 
         private void AddToPakli(object? sender, Card clicked)
         {
-            if (Jatekos.Count >= Gyujtemeny.Count / 2 || Jatekos.Contains(clicked))
+            if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
             {
                 MessageBox.Show("Nem lehet hozzáadni ezt a kártyát");
             }
@@ -360,9 +360,16 @@ namespace szakmajDusza
         private void ShowPakli()
         {
             PakliCards_Wrap.Children.Clear();
-            foreach (var item in Jatekos)
+            foreach (var item in Gyujtemeny)
             {
                 
+                item.Clicked -= RemoveFromPakli;
+                item.Clicked -= AddToPakli;
+                
+            }
+
+            foreach (var item in Jatekos)
+            {
                 item.Clicked -= RemoveFromPakli;
                 item.Clicked -= AddToPakli;
                 PlayerCards_Wrap.Children.Remove(item.GetVisual());
@@ -381,6 +388,7 @@ namespace szakmajDusza
                 PakliCards_Wrap.Children.Remove(item.GetVisual());
                 PlayerCards_Wrap.Children.Add(item.GetVisual());
                 item.Clicked += RemoveFromPakli;
+                item.Clicked -= AddToPakli;
             }
 
             Cards_Wrap.Children.Clear();
@@ -396,7 +404,7 @@ namespace szakmajDusza
                 
             }
 
-            SelectableCounter_Label.Content = $"/{Math.Floor((float)Gyujtemeny.Count / 2f)}";
+            SelectableCounter_Label.Content = $"/{Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
         }
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)

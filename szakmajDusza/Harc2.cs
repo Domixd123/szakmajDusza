@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,7 +10,7 @@ namespace szakmajDusza
 		//vizuáls gotta make it work
 		public static double playSpeedMultiplier = 1d;
 		public static double basePlaySpeed = 750;//in miliseconds
-		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend,Label attackDeploy,Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
+		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
 			List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -31,7 +26,11 @@ namespace szakmajDusza
 				player.Children.Add(c.GetVisual());
 			foreach (var c in kazamataCopies)
 				kazamata.Children.Add(c.GetVisual());
+<<<<<<< Updated upstream
 
+=======
+			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
+>>>>>>> Stashed changes
 			Card? kaz = kazamataCopies[0];
 			kazamataCopies.RemoveAt(0);
 			kazamata.Children.Remove(kaz.GetVisual());
@@ -44,10 +43,10 @@ namespace szakmajDusza
 			defendDeploy.Visibility = Visibility.Visible;
 			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 			Card? play = null;
-			while ((kazamataCopies.Count!=0||kaz!=null)&&(playerCopies.Count!=0||play!=null))
+			while ((kazamataCopies.Count != 0 || kaz != null) && (playerCopies.Count != 0 || play != null))
 			{
 				//player action
-				if (play==null)
+				if (play == null)
 				{
 					if (playerCopies.Count != 0)
 					{
@@ -67,10 +66,16 @@ namespace szakmajDusza
 						//player lost
 						break;
 					}
+					await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 				}
-				else if(kaz!=null)
+				else if (kaz != null)
 				{
 					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
+<<<<<<< Updated upstream
+=======
+					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -80,6 +85,10 @@ namespace szakmajDusza
 					if (kaz.HP <= 0)
 					{
 						kaz.HP = 0;
+<<<<<<< Updated upstream
+=======
+						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 						kaz.UpdateVisual();
 						//kazamata.Children.Remove(kaz.GetVisual());
 						fightKazamata.Children.Remove(kaz.GetVisual());
@@ -90,6 +99,7 @@ namespace szakmajDusza
 						kazamata.Children.Add(kaz.GetVisual());
 						kaz = null;
 					}
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
 				else
 				{
@@ -97,7 +107,7 @@ namespace szakmajDusza
 					//this shouldnt have happened xd
 				}
 
-				await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
+
 
 				//kazamata action
 				if (kaz == null)
@@ -120,10 +130,16 @@ namespace szakmajDusza
 						//kazamata lost
 						break;
 					}
+					await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 				}
 				else if (play != null)
 				{
 					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
+<<<<<<< Updated upstream
+=======
+					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 					play.UpdateVisual();
 					attack.Visibility = Visibility.Collapsed;
 					defend.Visibility = Visibility.Visible;
@@ -145,13 +161,13 @@ namespace szakmajDusza
 
 						index++;
 					}
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
 				else
 				{
 					MessageBox.Show("KYS kazamata action");
 					//this shouldnt have happened xd
 				}
-				await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 			}
 
 
@@ -165,7 +181,7 @@ namespace szakmajDusza
 			}
 			else
 			{
-				
+
 				kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
@@ -174,24 +190,24 @@ namespace szakmajDusza
 				switch (k.reward)
 				{
 					case KazamataReward.eletero:
-                        MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
-                        pakli[index].HP += 2;
+						MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
+						pakli[index].HP += 2;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.sebzes:
-                        MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
-                        pakli[index].Damage += 1;
+						MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
+						pakli[index].Damage += 1;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.newcard:
 						foreach (var item in MainWindow.AllCards)
 						{
-							bool found=false;
+							bool found = false;
 							for (int i = 0; i < gyujt.Count; i++)
 							{
 								if (item.Name == gyujt[i].Name)
 								{
-									found=true; break;
+									found = true; break;
 								}
 							}
 							for (int i = 0; i < pakli.Count; i++)

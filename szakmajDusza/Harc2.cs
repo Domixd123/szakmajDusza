@@ -84,7 +84,7 @@ namespace szakmajDusza
 					//this shouldnt have happened xd
 				}
 
-				await Task.Delay(1500);
+				await Task.Delay(150);
 
 				//kazamata action
 				if (kaz == null)
@@ -132,7 +132,7 @@ namespace szakmajDusza
 					MessageBox.Show("KYS kazamata action");
 					//this shouldnt have happened xd
 				}
-				await Task.Delay(1500);
+				await Task.Delay(150);
 			}
 
 

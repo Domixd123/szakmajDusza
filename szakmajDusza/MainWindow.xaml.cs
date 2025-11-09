@@ -17,7 +17,9 @@ namespace szakmajDusza
         
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
-        public static Kazamata EgyszeruKazamata = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
+        public static List<Card> AllCards = new List<Card>();
+		public static Dictionary<string,Card> AllCardsDict = new Dictionary<string,Card>();
+		public static Kazamata EgyszeruKazamata = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
         public static Kazamata KisKazamata = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
         public static Kazamata NagyKazamata = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
 
@@ -38,19 +40,43 @@ namespace szakmajDusza
         
         private void UploadCards()
         {
-            Gyujtemeny.Add(new Card("Arin", 2, 5, "fold", false));
-            Gyujtemeny.Add(new Card("Liora", 2, 4, "levego", false));
-            Gyujtemeny.Add(new Card("Sellia", 2, 6, "viz", false));
-            Gyujtemeny.Add(new Card("Nerun", 3, 3, "tuz", false));
-            Gyujtemeny.Add(new Card("Torak", 3, 4, "fold", false));
-            Gyujtemeny.Add(new Card("Emera", 2, 5, "levego", false));
-            Gyujtemeny.Add(new Card("Kael", 3, 5, "tuz", false));
-            Gyujtemeny.Add(new Card("Myra", 2, 6, "fold", false));
-            Gyujtemeny.Add(new Card("Thalen", 3, 5, "levego", false));
-            Gyujtemeny.Add(new Card("Isara", 2, 6, "viz", false));
+            AllCardsDict.Add("Arin", new Card("Arin", 2, 5, "fold", false));
+			AllCardsDict.Add("Liora", new Card("Liora", 2, 4, "levego", false));
+			AllCardsDict.Add("Nerun", new Card("Nerun", 3, 3, "tuz", false));
+			AllCardsDict.Add("Selia", new Card("Selia", 2, 6, "viz", false));
+			AllCardsDict.Add("Torak", new Card("Torak", 3, 4, "fold", false));
+			AllCardsDict.Add("Emera", new Card("Emera", 2, 5, "levego", false));
+			AllCardsDict.Add("Vorn", new Card("Vorn", 2, 7, "viz", false));
+			AllCardsDict.Add("Kael", new Card("Kael", 3, 5, "tuz", false));
+			AllCardsDict.Add("Myra", new Card("Myra", 2, 6, "fold", false));
+			AllCardsDict.Add("Thalen", new Card("Thalen", 3, 5, "levego", false));
+			AllCardsDict.Add("Isara", new Card("Isara", 2, 6, "viz", false));
 
+            AllCards.Add(AllCardsDict["Arin"]);
+			AllCards.Add(AllCardsDict["Liora"]);
+			AllCards.Add(AllCardsDict["Nerun"]);
+			AllCards.Add(AllCardsDict["Selia"]);
+			AllCards.Add(AllCardsDict["Torak"]);
+			AllCards.Add(AllCardsDict["Emera"]);
+			AllCards.Add(AllCardsDict["Vorn"]);
+			AllCards.Add(AllCardsDict["Kael"]);
+			AllCards.Add(AllCardsDict["Myra"]);
+			AllCards.Add(AllCardsDict["Thalen"]);
+			AllCards.Add(AllCardsDict["Isara"]);
 
-            EgyszeruKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
+            Gyujtemeny.Add(AllCardsDict["Arin"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Liora"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Selia"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Nerun"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Torak"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Emera"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Kael"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Myra"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Thalen"].GetCopy());
+			Gyujtemeny.Add(AllCardsDict["Isara"].GetCopy());
+
+            //leader cards, kazamata fix would be great
+			EgyszeruKazamata.Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
 
             KisKazamata.Defenders.Add(new Card("Arin", 2, 5, "fold", false));
             KisKazamata.Defenders.Add(new Card("Emera", 2, 5, "levego", false));
@@ -127,7 +153,7 @@ namespace szakmajDusza
         {
             foreach (var item in NagyKazamata.Defenders)
             {
-                if (!Gyujtemeny.Contains(item))
+                if (!Gyujtemeny.Contains(item)&&!Jatekos.Contains(item))
                 {
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;

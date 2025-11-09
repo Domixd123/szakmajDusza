@@ -31,83 +31,47 @@ namespace szakmajDusza
             Card? kaz = null;
             Card? play = null;
 
-            while ((kazamataCopies.Count != 0 || kaz != null))
+            while ((kazamataCopies.Count != 0 || kaz != null) && (playerCopies.Count != 0 || play != null))
             {
-                if (kaz == null)
+                if (kaz == null && kazamataCopies.Count > 0)
                 {
-                    try
-                    {
-                        kaz = kazamataCopies[0];
-                        kazamataCopies.RemoveAt(0);
-                    }
-                    catch (Exception)
-                    {
-
-                        
-                    }
-                    
+                    kaz = kazamataCopies[0];
+                    kazamataCopies.RemoveAt(0);
                 }
-                else
+                else if (kaz != null && play != null)
                 {
-                    try
+                    play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
+                    play.UpdateVisual();
+                    defend.Visibility = Visibility.Visible;
+                    attack.Visibility = Visibility.Collapsed;
+
+                    if (play.HP <= 0)
                     {
-                        play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
-                        play.UpdateVisual();
-                        defend.Visibility = Visibility.Visible;
-                        attack.Visibility = Visibility.Collapsed;
-
-                        if (play.HP <= 0)
-                        {
-                            player.Children.Remove(play.GetVisual());
-
-                            index++;
-                            play = null;
-                        }
+                        player.Children.Remove(play.GetVisual());
+                        play = null;
+                        index++;
                     }
-                    catch (Exception)
-                    {
-
-                        
-                    }
-                    
                 }
 
                 await Task.Delay(1500);
 
-                if (play == null)
+                if (play == null && playerCopies.Count > 0)
                 {
-                    try
-                    {
-                        play = playerCopies[0];
-                        playerCopies.RemoveAt(0);
-                    }
-                    catch(Exception)
-                    {
-
-                    }
-                    
-                    
+                    play = playerCopies[0];
+                    playerCopies.RemoveAt(0);
                 }
-                else
+                else if (play != null && kaz != null)
                 {
-                    try
-                    {
-                        kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
-                        kaz.UpdateVisual();
-                        defend.Visibility = Visibility.Collapsed;
-                        attack.Visibility = Visibility.Visible;
-                        if (kaz.HP <= 0)
-                        {
-                            kazamata.Children.Remove(kaz.GetVisual());
+                    kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
+                    kaz.UpdateVisual();
+                    defend.Visibility = Visibility.Collapsed;
+                    attack.Visibility = Visibility.Visible;
 
-                            kaz = null;
-                        }
-                    }
-                    catch (Exception)
+                    if (kaz.HP <= 0)
                     {
-
+                        kazamata.Children.Remove(kaz.GetVisual());
+                        kaz = null;
                     }
-                    
                 }
 
                 await Task.Delay(1500);
@@ -142,7 +106,7 @@ namespace szakmajDusza
                             if (!pakli.Contains(item))
                             {
                                 pakli.Add(item);
-                                
+                                break;
                             }
                         }
                         break;

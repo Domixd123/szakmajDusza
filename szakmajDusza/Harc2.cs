@@ -13,6 +13,7 @@ namespace szakmajDusza
 	public class Harc2
 	{
 		//vizuáls gotta make it work
+		public static int playSpeed = 150;//in miliseconds
 		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
@@ -84,7 +85,7 @@ namespace szakmajDusza
 					//this shouldnt have happened xd
 				}
 
-				await Task.Delay(150);
+				await Task.Delay(playSpeed);
 
 				//kazamata action
 				if (kaz == null)
@@ -132,7 +133,7 @@ namespace szakmajDusza
 					MessageBox.Show("KYS kazamata action");
 					//this shouldnt have happened xd
 				}
-				await Task.Delay(150);
+				await Task.Delay(playSpeed);
 			}
 
 
@@ -184,9 +185,11 @@ namespace szakmajDusza
 							}
 							if (!found)
 							{
-								gyujt.Add(item);
-                                MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
-                                break;
+								gyujt.Add(item.GetCopy());
+								//MainWindow.Cards_Wrap.Children.Add(gyujt[gyujt.Count-1].GetVisual());
+								//ui fix needed
+								MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
+								return;
 							}
 						}
 						break;

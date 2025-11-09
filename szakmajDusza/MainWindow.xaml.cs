@@ -97,7 +97,7 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
-            SelectableCounter_Label.Content = $"/{Gyujtemeny.Count / 2}";
+            SelectableCounter_Label.Content = $"/{Math.Floor((float)Gyujtemeny.Count / 2f)}";
 
 
         }
@@ -396,7 +396,7 @@ namespace szakmajDusza
                 
             }
 
-            SelectableCounter_Label.Content = $"/{Gyujtemeny.Count / 2}";
+            SelectableCounter_Label.Content = $"/{Math.Floor((float)Gyujtemeny.Count / 2f)}";
         }
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)

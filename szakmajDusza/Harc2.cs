@@ -27,7 +27,11 @@ namespace szakmajDusza
 			foreach (var c in kazamataCopies)
 				kazamata.Children.Add(c.GetVisual());
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
+>>>>>>> Stashed changes
 =======
 			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
 >>>>>>> Stashed changes
@@ -72,6 +76,11 @@ namespace szakmajDusza
 				{
 					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 =======
 					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
@@ -86,6 +95,10 @@ namespace szakmajDusza
 					{
 						kaz.HP = 0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 =======
 						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 >>>>>>> Stashed changes
@@ -136,6 +149,11 @@ namespace szakmajDusza
 				{
 					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+>>>>>>> Stashed changes
 =======
 					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));

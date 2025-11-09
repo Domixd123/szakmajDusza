@@ -17,7 +17,7 @@
             <Label FontSize="50" Content="Kiválasztottak:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
             <Button Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,509,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
             <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="428,504,0,0" VerticalAlignment="Top"/>
-            <Label FontSize="50" Content="/5" HorizontalAlignment="Left" Margin="465,504,0,0" VerticalAlignment="Top"/>
+            <Label FontSize="50" Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="465,504,0,0" VerticalAlignment="Top"/>
         </Grid>
         <Grid Name="MainRoom_Grid" Visibility="Collapsed" d:IsHidden="True">
             <WrapPanel Name="PakliCards_Wrap" Margin="10,594,648,0"/>

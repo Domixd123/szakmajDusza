@@ -97,6 +97,8 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
+            SelectableCounter_Label.Content = $"/{Gyujtemeny.Count / 2}";
+
 
         }
         private void UploadKazamata()
@@ -380,6 +382,21 @@ namespace szakmajDusza
                 PlayerCards_Wrap.Children.Add(item.GetVisual());
                 item.Clicked += RemoveFromPakli;
             }
+
+            Cards_Wrap.Children.Clear();
+            
+            foreach (var item in Gyujtemeny)
+            {
+                if (!Jatekos.Contains(item))
+                {
+                    Cards_Wrap.Children.Add(item.GetVisual());
+                    item.Clicked += AddToPakli;
+                    item.Clicked -= RemoveFromPakli;
+                }
+                
+            }
+
+            SelectableCounter_Label.Content = $"/{Gyujtemeny.Count / 2}";
         }
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)

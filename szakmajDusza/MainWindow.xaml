@@ -33,8 +33,8 @@
             <Label Content="Kazamata" FontSize="60" HorizontalAlignment="Right" Margin="0,116,144,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightPlayerEgyszeri_Wrap" Margin="115,263,1343,37" Width="400"/>
             <WrapPanel Name="FightKazamataEgyszeri_Wrap" Margin="1386,263,146,37" Width="400"/>
-            <Label Name="DefendEgyszeri_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-            <Label Name="AttackEgyszeri_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="DefendEgyszeri_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackEgyszeri_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightPlayerAttackerEgyszeri_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerEgyszeri_Wrap" Margin="960,310,746,362"/>
 
@@ -43,8 +43,8 @@
         <Grid Name="KisKazamata_Grid" Visibility="Collapsed">
             <WrapPanel Name="FightPlayerKis_Wrap" Margin="115,263,1343,37" Width="400"/>
             <WrapPanel Name="FightKazamataKis_Wrap" Margin="1386,263,146,37" Width="400"/>
-            <Label Name="DefendKis_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-            <Label Name="AttackKis_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="DefendKis_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackKis_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightKis_Wrap" Margin="665,310,665,362"/>
             <WrapPanel Name="FightPlayerAttackerKis_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerKis_Wrap" Margin="960,310,746,362"/>
@@ -53,8 +53,8 @@
         <Grid Name="NagyKazamata_Grid" Visibility="Collapsed">
             <WrapPanel Name="FightPlayerNagy_Wrap" Margin="115,263,1343,37" Width="400"/>
             <WrapPanel Name="FightKazamataNagy_Wrap" Margin="1386,263,146,37" Width="400"/>
-            <Label Name="DefendNagy_Label" Content="Védekezés" Foreground="White" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-            <Label Name="AttackNagy_Label" Content="Támadás" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="DefendNagy_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
+            <Label Name="AttackNagy_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
             <WrapPanel Name="FightNagy_Wrap" Margin="665,310,665,362"/>
             <WrapPanel Name="FightPlayerAttackerNagy_Wrap" Margin="740,310,965,362"/>
             <WrapPanel Name="FightKazamataAttackerNagy_Wrap" Margin="960,310,746,362"/>

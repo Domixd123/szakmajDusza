@@ -37,7 +37,6 @@ namespace szakmajDusza
 			fightKazamata.Children.Add(kaz.GetVisual());
 
 			Card? play = null;
-			string winner = "";
 			while ((kazamataCopies.Count!=0||kaz!=null)&&(playerCopies.Count!=0||play!=null))
 			{
 				//player action
@@ -55,7 +54,6 @@ namespace szakmajDusza
 					else
 					{
 						//player lost
-						winner = "kazamata";
 						break;
 					}
 				}
@@ -68,10 +66,12 @@ namespace szakmajDusza
 
 					if (kaz.HP <= 0)
 					{
+						kaz.HP = 0;
+						kaz.UpdateVisual();
 						//kazamata.Children.Remove(kaz.GetVisual());
 						fightKazamata.Children.Remove(kaz.GetVisual());
-						play.visualGroup.Width = 140;
-						play.visualGroup.Height = 180;
+						kaz.visualGroup.Width = 140;
+						kaz.visualGroup.Height = 180;
 						//kaz.But.Background = Brushes.Gray;
 						kaz.NameLabel.Foreground = Brushes.Gray;
 						kazamata.Children.Add(kaz.GetVisual());
@@ -101,7 +101,6 @@ namespace szakmajDusza
 					else
 					{
 						//kazamata lost
-						winner = "player";
 						break;
 					}
 				}
@@ -114,6 +113,8 @@ namespace szakmajDusza
 
 					if (play.HP <= 0)
 					{
+						play.HP = 0;
+						play.UpdateVisual();
 						//player.Children.Remove(play.GetVisual());
 						fightPlayer.Children.Remove(play.GetVisual());
 						play.visualGroup.Width = 140;
@@ -135,7 +136,7 @@ namespace szakmajDusza
 			}
 
 
-			if (winner=="kazamata")
+			if (playerCopies.Count == 0 && play == null)
 			{
 				MessageBox.Show("Játékos veszített!");
 				kazamata.Children.Clear();
@@ -143,7 +144,7 @@ namespace szakmajDusza
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
 			}
-			else if(winner=="player")
+			else
 			{
 				MessageBox.Show("Játékos nyert!");
 				kazamata.Children.Clear();
@@ -174,11 +175,6 @@ namespace szakmajDusza
 					default:
 						break;
 				}
-			}
-			else
-			{
-				MessageBox.Show("KYS nowinner");
-				//this really shouldnt have happened
 			}
 		}
 

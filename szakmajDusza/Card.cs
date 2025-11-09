@@ -241,15 +241,21 @@ namespace szakmajDusza
 
         public void UpdateVisual()
         {
-            DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
-            if (HP <= 0)
-            {
-                visualGroup.Opacity = 0.4;
-            }
+			if (HP <= 0)
+			{
+                HP = 0;
+				visualGroup.Opacity = 0.4;
+			}
+			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
         }
 		public async Task UpdateVisualDamage(int dmg)
 		{
-			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP+dmg} - {dmg} ❤";
+            int previousHP = HP + dmg;
+            if (HP+dmg <= 0)
+            {
+                previousHP = 0;
+            }
+			DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
 		}
 
 

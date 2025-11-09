@@ -26,15 +26,7 @@ namespace szakmajDusza
 				player.Children.Add(c.GetVisual());
 			foreach (var c in kazamataCopies)
 				kazamata.Children.Add(c.GetVisual());
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
 			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
->>>>>>> Stashed changes
-=======
-			await Task.Delay((int)(basePlaySpeed / playSpeedMultiplier));
->>>>>>> Stashed changes
 			Card? kaz = kazamataCopies[0];
 			kazamataCopies.RemoveAt(0);
 			kazamata.Children.Remove(kaz.GetVisual());
@@ -75,16 +67,8 @@ namespace szakmajDusza
 				else if (kaz != null)
 				{
 					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
-=======
-					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
-					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -94,14 +78,7 @@ namespace szakmajDusza
 					if (kaz.HP <= 0)
 					{
 						kaz.HP = 0;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
-=======
-						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
 						kaz.UpdateVisual();
 						//kazamata.Children.Remove(kaz.GetVisual());
 						fightKazamata.Children.Remove(kaz.GetVisual());
@@ -148,16 +125,8 @@ namespace szakmajDusza
 				else if (play != null)
 				{
 					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
 					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
-=======
-					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
-					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
->>>>>>> Stashed changes
 					play.UpdateVisual();
 					attack.Visibility = Visibility.Collapsed;
 					defend.Visibility = Visibility.Visible;

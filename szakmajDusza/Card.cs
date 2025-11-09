@@ -241,10 +241,7 @@ namespace szakmajDusza
 
         public void UpdateVisual()
         {
-            // Frissítjük a statisztikát kiíró címkét
             DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
-
-            // Opcionális: ha a HP <= 0, halványítsuk el a kártyát
             if (HP <= 0)
             {
                 visualGroup.Opacity = 0.4;
@@ -252,15 +249,7 @@ namespace szakmajDusza
         }
 		public async Task UpdateVisualDamage(int dmg)
 		{
-			// Frissítjük a statisztikát kiíró címkét
 			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP+dmg} - {dmg} ❤";
-			// Opcionális: ha a HP <= 0, halványítsuk el a kártyát
-			/*if (HP <= 0)
-			{
-				visualGroup.Opacity = 0.4;
-                DamageAndHPLabel.Content = $"{Damage} ⚔ / 0 ❤";
-
-            }*/
 		}
 
 

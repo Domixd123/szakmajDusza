@@ -14,7 +14,7 @@ namespace szakmajDusza
 	{
 		//vizuáls gotta make it work
 		public static double playSpeedMultiplier = 1d;
-		public static double basePlaySpeed = 50;//in miliseconds
+		public static double basePlaySpeed = 750;//in miliseconds
 		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend,Label attackDeploy,Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();

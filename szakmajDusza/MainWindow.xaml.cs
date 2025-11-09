@@ -1,11 +1,14 @@
 
-﻿using System.Numerics;
+using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace szakmajDusza
 {
@@ -99,7 +102,7 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
-            SelectableCounter_Label.Content = $"/{Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
 
 
         }
@@ -114,9 +117,36 @@ namespace szakmajDusza
         {
             if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
             {
-                MessageBox.Show("Nem lehet hozzáadni ezt a kártyát");
-            }
-            else
+				int flashCount = 0;
+				bool isRed = false;
+				DispatcherTimer timer = new DispatcherTimer();
+				timer.Interval = TimeSpan.FromMilliseconds(100);
+
+				timer.Tick += (s, e) =>
+				{
+					if (isRed)
+					{
+						SelectedCards_Label.Foreground = Brushes.Gold;
+						SelectableCounter_Label.Foreground = Brushes.Gold;
+					}
+					else
+					{
+						SelectedCards_Label.Foreground = Brushes.Red;
+						SelectableCounter_Label.Foreground = Brushes.Red;
+					}
+
+					isRed = !isRed;
+					flashCount++;
+
+					if (flashCount >= 4)
+						timer.Stop();
+				};
+
+				timer.Start();
+
+
+			}
+			else
             {
                 Cards_Wrap.Children.Remove(clicked.GetVisual());
                 Jatekos.Add(clicked);
@@ -354,8 +384,33 @@ namespace szakmajDusza
 
             else
             {
-                MessageBox.Show("Legalább egy kártyát ki kell választanod!");
-            }
+				int flashCount = 0;
+				bool isRed = false;
+				DispatcherTimer timer = new DispatcherTimer();
+				timer.Interval = TimeSpan.FromMilliseconds(100);
+
+				timer.Tick += (s, e) =>
+				{
+					if (isRed)
+					{
+						SelectedCards_Label.Foreground = Brushes.Gold;
+						SelectableCounter_Label.Foreground = Brushes.Gold;
+					}
+					else
+					{
+						SelectedCards_Label.Foreground = Brushes.Red;
+						SelectableCounter_Label.Foreground = Brushes.Red;
+					}
+
+					isRed = !isRed;
+					flashCount++;
+
+					if (flashCount >= 4)
+						timer.Stop();
+				};
+
+				timer.Start();
+			}
             
         }
 
@@ -406,7 +461,7 @@ namespace szakmajDusza
                 
             }
 
-            SelectableCounter_Label.Content = $"/{Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
         }
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)

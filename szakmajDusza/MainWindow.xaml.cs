@@ -540,8 +540,14 @@ namespace szakmajDusza
             MainRoom_Grid.Visibility = Visibility.Visible;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
+            if (AllCards.Count == Gyujtemeny.Count)
+            {
+                A_melyseg_kiralynoje.Opacity = 0.5f;
+                A_melyseg_kiralynoje.IsEnabled = false;
+                EveryCard_Label.Visibility = Visibility.Visible;
+            }
         }
-        private Label CreateJutalom(Grid Parent)
+        public static Label CreateJutalom(Grid Parent)
         {
             Label Jutalom = new Label();
             Jutalom.Content = "";
@@ -557,6 +563,8 @@ namespace szakmajDusza
             return Jutalom;
 
         }
+
+        
 
         private  void Vissza_Button_Click(object sender, RoutedEventArgs e)
         {

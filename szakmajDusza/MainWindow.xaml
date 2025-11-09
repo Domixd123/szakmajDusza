@@ -8,20 +8,20 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920">
-            <Grid Name="PakliOssze_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid Name="PakliOssze_Grid" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="335*"/>
                     <RowDefinition Height="197*"/>
                 </Grid.RowDefinitions>
                 <WrapPanel Name="Cards_Wrap" Margin="100,102,100,171"/>
                 <WrapPanel x:Name="PlayerCards_Wrap" Margin="100,5,100,0" Grid.Row="1"/>
-                <Label FontSize="50" Content="Pakli: Kiválasztottak:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
-                <Button Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,509,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
-                <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="556,504,0,0" VerticalAlignment="Top"/>
-                <Label FontSize="50" Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="592,504,0,0" VerticalAlignment="Top"/>
+                <Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
+                <Button Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,504,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
+                <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top"/>
+                <Label FontSize="50" Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
                 <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
             </Grid>
-            <Grid Name="MainRoom_Grid" Visibility="Visible">
+            <Grid Name="MainRoom_Grid" Visibility="Collapsed">
                 <WrapPanel Name="PakliCards_Wrap" Margin="100,594,648,20"/>
                 <Button Name="Barlangi_portya" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
                 <Button Name="Osi_szentely" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
@@ -29,6 +29,7 @@
                 <Button Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
                 <Label Content="Kazamaták:" HorizontalAlignment="Left" Height="87" Margin="100,50,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
                 <Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
+                <Label Name="EveryCard_Label" Visibility="Collapsed" Foreground="Red" Content="Már minden kártyát megszereztél!" HorizontalAlignment="Left" Margin="1290,482,0,0" VerticalAlignment="Top"/>
 
             </Grid>
 
@@ -84,15 +85,15 @@
             </Grid>
         </Grid>
     </Viewbox>
-    
+
 
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="Gold"></Setter>
         </Style>
-        
-        
-        
+
+
+
         <Style TargetType="Button">
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Foreground" Value="Gold"/>

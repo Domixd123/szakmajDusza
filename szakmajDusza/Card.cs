@@ -147,7 +147,8 @@ namespace szakmajDusza
             {
                 Background = Brushes.Transparent,
                 BorderThickness = new Thickness(0),
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                
             };
             But.Click += (sender, e) => Clicked?.Invoke(this, this);
 

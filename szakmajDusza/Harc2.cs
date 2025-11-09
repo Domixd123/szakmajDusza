@@ -13,7 +13,7 @@ namespace szakmajDusza
 	public class Harc2
 	{
 		//vizuáls gotta make it work
-		public static async Task StartFight(Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
+		public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
 			List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -146,7 +146,7 @@ namespace szakmajDusza
 			}
 			else
 			{
-				MessageBox.Show("Játékos nyert!");
+				
 				kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
@@ -155,20 +155,23 @@ namespace szakmajDusza
 				switch (k.reward)
 				{
 					case KazamataReward.eletero:
-						pakli[index].HP += 2;
+                        MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
+                        pakli[index].HP += 2;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.sebzes:
-						pakli[index].Damage += 1;
+                        MessageBox.Show($"Játékos nyert! Nyeremény: +1 sebzés {pakli[index].Name}");
+                        pakli[index].Damage += 1;
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.newcard:
 						foreach (var item in k.Defenders)
 						{
-							if (!pakli.Contains(item))
+							if (!gyujt.Contains(item))
 							{
-								pakli.Add(item);
-								break;
+								gyujt.Add(item);
+                                MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
+                                break;
 							}
 						}
 						break;

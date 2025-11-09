@@ -107,7 +107,7 @@ namespace szakmajDusza
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(EgyszeruKazamata, Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
+            await Harc2.StartFight(Gyujtemeny, EgyszeruKazamata, Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
@@ -117,7 +117,7 @@ namespace szakmajDusza
         {
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(KisKazamata, Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
+            await Harc2.StartFight(Gyujtemeny, KisKazamata, Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
             MainRoom_Grid.Visibility = Visibility.Visible;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();
@@ -127,11 +127,11 @@ namespace szakmajDusza
         {
             foreach (var item in NagyKazamata.Defenders)
             {
-                if (!Jatekos.Contains(item))
+                if (!Gyujtemeny.Contains(item))
                 {
                     MainRoom_Grid.Visibility = Visibility.Collapsed;
                     NagyKazamata_Grid.Visibility = Visibility.Visible;
-                    await Harc2.StartFight(NagyKazamata, Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
+                    await Harc2.StartFight(Gyujtemeny, NagyKazamata, Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
                     MainRoom_Grid.Visibility = Visibility.Visible;
                     NagyKazamata_Grid.Visibility = Visibility.Collapsed;
                     ShowPakli();

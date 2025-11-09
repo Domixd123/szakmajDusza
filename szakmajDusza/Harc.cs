@@ -13,7 +13,7 @@ namespace szakmajDusza
     public class Harc
     {
         //vizuáls gotta make it work
-        public static async Task StartFight(Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
+        public static async Task StartFight(List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, WrapPanel fightPlayer, WrapPanel fightKazamata)
         {
             List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
             List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -110,7 +110,7 @@ namespace szakmajDusza
 
             else
             {
-                MessageBox.Show("Játékos nyert!");
+                
                 kazamata.Children.Clear();
                 player.Children.Clear();
                 fightPlayer.Children.Clear();
@@ -119,19 +119,22 @@ namespace szakmajDusza
                 switch (k.reward)
                 {
                     case KazamataReward.eletero:
+                        MessageBox.Show($"Játékos nyert! Nyereméy: +2 életerő {pakli[index].Name} kártyára!");
                         pakli[index].HP += 2;
                         pakli[index].UpdateVisual();
                         break;
                     case KazamataReward.sebzes:
+                        MessageBox.Show($"Játékos nyert! Nyereméy: +1 sebzés {pakli[index].Name} kártyára!");
                         pakli[index].Damage += 1;
                         pakli[index].UpdateVisual();
                         break;
                     case KazamataReward.newcard:
                         foreach (var item in k.Defenders)
                         {
-                            if (!pakli.Contains(item))
+                            if (!gyujt.Contains(item))
                             {
-                                pakli.Add(item);
+                                gyujt.Add(item);
+                                MessageBox.Show($"Játékos nyert! Új kártya: {item}!");
                                 break;
                             }
                         }

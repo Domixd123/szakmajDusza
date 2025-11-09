@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -26,6 +27,7 @@ namespace szakmajDusza
         public Button But { get; private set; }
 
         public Label NameLabel;
+        public Label Name2Label;
         public Label DamageAndHPLabel;
         private Label TypeLabel;
 
@@ -60,6 +62,35 @@ namespace szakmajDusza
                 Color = Colors.Black,
                 Opacity = 0.7
             };
+            visualGroup.MouseEnter += (s, e) =>
+            {
+                visualGroup.Background = new LinearGradientBrush(
+                    Color.FromRgb(92, 71, 161),
+                    Color.FromRgb(58, 42, 96),
+                    90);
+                visualGroup.Effect = new DropShadowEffect
+                {
+                    BlurRadius = 25,
+                    ShadowDepth = 2,
+                    Color = Color.FromRgb(217, 166, 0),
+                    Opacity = 0.9
+                };
+            };
+
+            visualGroup.MouseLeave += (s, e) =>
+            {
+                visualGroup.Background = new LinearGradientBrush(
+                    Color.FromRgb(25, 20, 30),
+                    Color.FromRgb(45, 35, 55),
+                    90);
+                visualGroup.Effect = new DropShadowEffect
+                {
+                    BlurRadius = 15,
+                    ShadowDepth = 5,
+                    Color = Colors.Black,
+                    Opacity = 0.7
+                };
+            };
 
             // keret
             var border = new Border
@@ -87,15 +118,39 @@ namespace szakmajDusza
             // cím
             NameLabel = new Label
             {
-                Content = Name,
+                Content = Name.Split(' ')[0],
                 Foreground = Brushes.Gold,
                 FontWeight = FontWeights.Bold,
                 FontSize = 16,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 8, 0, 0),
-                IsHitTestVisible = false
+                Margin = new Thickness(10, 8, 0, 0),
+                IsHitTestVisible = false,
+                MaxWidth = 90,                // max szélesség
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                
             };
+            if (Name.Split(' ').Length > 1)
+            {
+                Name2Label = new Label
+                {
+
+                    Content = Name.Split(' ')[1],
+                    Foreground = Brushes.Gold,
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Margin = new Thickness(10, 24, 0, 0),
+                    IsHitTestVisible = false,
+                    MaxWidth = 90,                // max szélesség
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+
+                };
+                visualGroup.Children.Add(Name2Label);
+            }
+            
+
 
             // statok
             DamageAndHPLabel = new Label

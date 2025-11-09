@@ -90,6 +90,9 @@
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="Gold"></Setter>
         </Style>
+        
+        
+        
         <Style TargetType="Button">
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Foreground" Value="Gold"/>
@@ -137,6 +140,7 @@
                                 <GradientStop Color="#3A2A60" Offset="1"/>
                             </LinearGradientBrush>
                         </Setter.Value>
+
                     </Setter>
                     <Setter Property="Effect">
                         <Setter.Value>

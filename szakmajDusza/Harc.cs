@@ -57,7 +57,7 @@ namespace szakmajDusza
                         play.visualGroup.Width = 140;
                         play.visualGroup.Height = 180;
                         //play.But.Background = Brushes.Gray;
-                        play.NameLabel.Foreground = Brushes.Gray;
+                        //play.NameText.Foreground = Brushes.Gray;
                         player.Children.Add(play.GetVisual());
                         play = null;
                         

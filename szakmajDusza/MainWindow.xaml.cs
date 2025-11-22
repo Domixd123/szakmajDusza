@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using System.Media;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -23,10 +24,12 @@ namespace szakmajDusza
         public static List<Card> AllCards = new List<Card>();
 		public static Dictionary<string,Card> AllCardsDict = new Dictionary<string,Card>();
         public static Dictionary<string, Kazamata> AllKazamata = new Dictionary<string, Kazamata>();
-		//public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
+        //public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
         //public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
         //public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
 
+        public static MediaPlayer sp;
+        public static MediaPlayer se;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +43,16 @@ namespace szakmajDusza
             UploadKazamata();
             UploadCards();
 
+            se = new MediaPlayer();
+            sp = new MediaPlayer();
+            sp.Volume = 0.3f;
+            sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+            sp.MediaEnded += (s, e) =>
+            {
+                sp.Position = TimeSpan.Zero;
+                sp.Play();
+            };
+            sp.Play();
         }
 
         
@@ -155,6 +168,9 @@ namespace szakmajDusza
                 clicked.Clicked += RemoveFromPakli;
 
                 SelectedCards_Label.Content = Jatekos.Count;
+
+                se.Open(new Uri("Sounds/KartyaClick.wav", UriKind.Relative));
+                se.Play();
             }
         }
 
@@ -171,7 +187,12 @@ namespace szakmajDusza
 
         private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
         {
-			Harc.Visibility = Visibility.Visible;
+            sp.Stop();
+
+            sp.Open(new Uri("Sounds/KisHarc.wav", UriKind.Relative));
+            sp.Play();
+
+            Harc.Visibility = Visibility.Visible;
 			Vissza.Visibility = Visibility.Visible;
 			Button? b = sender as Button;
             Label Jutalom = CreateJutalom(EgyszeriKazamata_Grid);
@@ -214,6 +235,8 @@ namespace szakmajDusza
 
         private async void HarcE_Button_Click(object sender, RoutedEventArgs e)
         {
+            
+            
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType()==typeof(Label))
@@ -239,7 +262,10 @@ namespace szakmajDusza
 
         private void Kis_Button_Click(object sender, RoutedEventArgs e)
         {
-			HarcK.Visibility = Visibility.Visible;
+            sp.Stop();
+            sp.Open(new Uri("Sounds/KozepesHarc.wav", UriKind.Relative));
+            sp.Play();
+            HarcK.Visibility = Visibility.Visible;
 			VisszaK.Visibility = Visibility.Visible;
 			Button? b = sender as Button;
             Label Jutalom = CreateJutalom(KisKazamata_Grid);
@@ -274,6 +300,9 @@ namespace szakmajDusza
 
         private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
         {
+            sp.Stop();
+            sp.Open(new Uri("Sounds/NagyHarc.wav", UriKind.Relative));
+            sp.Play();
             HarcN.Visibility = Visibility.Visible;
             VisszaN.Visibility = Visibility.Visible;
             bool anythingpossible=false;
@@ -499,6 +528,7 @@ namespace szakmajDusza
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)
         {
+            
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType() == typeof(Label))
@@ -521,6 +551,7 @@ namespace szakmajDusza
         }
         private async void HarcN_Button_Click(object sender, RoutedEventArgs e)
         {
+            
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType() == typeof(Label))
@@ -594,6 +625,10 @@ namespace szakmajDusza
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility= Visibility.Collapsed;
             NagyKazamata_Grid.Visibility=Visibility.Collapsed;
+
+            sp.Stop();
+            sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+            sp.Play();
 
             ShowPakli();
         }

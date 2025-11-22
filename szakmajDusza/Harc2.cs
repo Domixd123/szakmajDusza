@@ -165,7 +165,9 @@ namespace szakmajDusza
             if (playerCopies.Count == 0 && play == null)
 			{
 				l.Content = "Vesztettél!";
-
+				MainWindow.se.Open(new Uri("Sounds/Lose.wav", UriKind.Relative));
+				MainWindow.se.Play();
+				MainWindow.sp.Stop();
                 //MessageBox.Show("Játékos veszített!");
 				kazamata.Children.Clear();
 				player.Children.Clear();
@@ -180,8 +182,11 @@ namespace szakmajDusza
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
+                MainWindow.se.Open(new Uri("Sounds/Win.wav", UriKind.Relative));
+                MainWindow.se.Play();
+				MainWindow.sp.Stop();
 
-				switch (k.reward)
+                switch (k.reward)
 				{
 					case KazamataReward.eletero:
 						//MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");

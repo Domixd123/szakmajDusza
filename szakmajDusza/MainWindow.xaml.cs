@@ -130,6 +130,8 @@ namespace szakmajDusza
         {
             if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
             {
+                se.Open(new Uri("Sounds/Decline.wav", UriKind.Relative));
+                se.Play();
 				int flashCount = 0;
 				bool isRed = false;
 				DispatcherTimer timer = new DispatcherTimer();
@@ -235,8 +237,9 @@ namespace szakmajDusza
 
         private async void HarcE_Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
+            se.Play();
+
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType()==typeof(Label))
@@ -408,11 +411,15 @@ namespace szakmajDusza
             {
                 PakliOssze_Grid.Visibility = Visibility.Collapsed;
                 MainRoom_Grid.Visibility = Visibility.Visible;
+                se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
+                se.Play();
                 ShowPakli();
             }
 
             else
             {
+                se.Open(new Uri("Sounds/Decline.wav", UriKind.Relative));
+                se.Play();
 				int flashCount = 0;
 				bool isRed = false;
 				DispatcherTimer timer = new DispatcherTimer();
@@ -528,7 +535,8 @@ namespace szakmajDusza
 
         private async void HarcK_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
+            se.Play();
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType() == typeof(Label))
@@ -551,7 +559,8 @@ namespace szakmajDusza
         }
         private async void HarcN_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
+            se.Play();
             foreach (var item in ((sender as Button).Parent as Grid).Children)
             {
                 if (item.GetType() == typeof(Label))

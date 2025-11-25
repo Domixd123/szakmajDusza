@@ -8,7 +8,68 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920">
+            <Grid Name="Menu_Grid" Visibility="Collapsed">
+                <Button FontSize="60" Name="GoToGame_Button" Content="Játék" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
+                <Button FontSize="60" Name="GoToModes_Button" Content="Módok választása" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0"/>
+                <Button FontSize="60" Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
+                <Button FontSize="60" Name="Exit_Button" Content="Kilépés" HorizontalAlignment="Center" Margin="0,160,0,160" VerticalAlignment="Bottom" Width="724" Height="132" Click="Exit_Button_Click"/>
+
+
+            </Grid>
+            <Grid Name="Options_Grid" Visibility="Collapsed">
+
+                <StackPanel Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
+
+
+                    <StackPanel Orientation="Horizontal" Margin="0 20">
+                        <TextBlock Text="Hangeffektek:" Foreground="Gold" FontSize="60"
+                       Width="406" VerticalAlignment="Center"/>
+                        <RadioButton Content="Be" GroupName="SFX" FontSize="60"
+                         Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On"/>
+                        <RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
+                         Foreground="Gold"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0 20">
+                        <TextBlock Text="Hangerő:" Foreground="Gold" FontSize="60"
+                       Width="298" VerticalAlignment="Center"/>
+                        <Slider Name="Sl" Minimum="0" Maximum="100" Width="300" Value="50"
+                    Height="30" ValueChanged="Slider_ValueChanged"/>
+                    </StackPanel>
+
+                </StackPanel>
+                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Center" Margin="0,790,0,0" VerticalAlignment="Top" FontSize="60" Width="768" Height="120"/>
+
+                <Grid.Resources>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Grid Width="28" Height="28" Margin="5">
+                                            <Ellipse Stroke="Gold" StrokeThickness="3"/>
+                                            <Ellipse Fill="Gold" Margin="6" Visibility="{Binding IsChecked, 
+                                RelativeSource={RelativeSource TemplatedParent},
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        </Grid>
+
+                                        <ContentPresenter VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="Gold"/>
+                        <Setter Property="FontSize" Value="28"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                </Grid.Resources>
+            </Grid>
+
+
+
             <Grid Name="PakliOssze_Grid" Visibility="Visible">
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="335*"/>
                     <RowDefinition Height="197*"/>
@@ -20,6 +81,8 @@
                 <Label Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top"/>
                 <Label FontSize="50" Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
                 <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
+                <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
+
             </Grid>
             <Grid Name="MainRoom_Grid" Visibility="Collapsed">
                 <WrapPanel Name="PakliCards_Wrap" Margin="100,594,648,20"/>
@@ -83,6 +146,7 @@
                 <Button Click="ChangeSpeed_Click" Content="Harc gyorsítása" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
                 <Label Name="SpeedNagy_Label" FontStyle="Oblique" FontSize="50" Content="1x" HorizontalAlignment="Left" Margin="1746,71,0,0" VerticalAlignment="Top"/>
             </Grid>
+
         </Grid>
     </Viewbox>
 

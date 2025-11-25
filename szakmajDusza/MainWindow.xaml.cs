@@ -28,14 +28,18 @@ namespace szakmajDusza
         //public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
         //public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
 
-        public static MediaPlayer sp;
-        public static MediaPlayer se;
+        public static MediaPlayer sp = new MediaPlayer();
+        public static MediaPlayer se = new MediaPlayer();
+
+        public static float spVolume = 0.3f;
         public MainWindow()
         {
             InitializeComponent();
             string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "playing-card.ico");
             this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
-            PakliOssze_Grid.Visibility = Visibility.Visible;
+            Menu_Grid.Visibility = Visibility.Visible;
+            Options_Grid.Visibility = Visibility.Collapsed;
+            PakliOssze_Grid.Visibility = Visibility.Collapsed;
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
@@ -45,7 +49,7 @@ namespace szakmajDusza
 
             se = new MediaPlayer();
             sp = new MediaPlayer();
-            sp.Volume = 0.3f;
+            sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
             {
@@ -654,6 +658,46 @@ namespace szakmajDusza
             };
             wrap.Children.Add(kartya.GetVisual());
             return wrap;
+        }
+
+        private void Exit_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void GoToGame_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Menu_Grid.Visibility = Visibility.Collapsed;
+            PakliOssze_Grid.Visibility = Visibility.Visible;
+        }
+
+        private void GoToOptions_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Menu_Grid.Visibility = Visibility.Collapsed;
+            PakliOssze_Grid.Visibility = Visibility.Collapsed;
+            Options_Grid.Visibility = Visibility.Visible;
+        }
+
+        private void BackToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Menu_Grid.Visibility = Visibility.Visible;
+            Options_Grid.Visibility = Visibility.Collapsed;
+        }
+
+        private void SFX_On(object sender, RoutedEventArgs e)
+        {
+            se.Volume = 1;
+        }
+
+        private void SFX_Off(object sender, RoutedEventArgs e)
+        {
+            se.Volume = 0;
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            spVolume = (float)Sl.Value * 0.006f;
+            sp.Volume = spVolume;
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

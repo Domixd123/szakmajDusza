@@ -218,7 +218,7 @@ namespace szakmajDusza
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.newcard:
-						foreach (var item in MainWindow.AllCards)
+						foreach (var item in MainWindow.AllCardsDict.Values)
 						{
 							bool found = false;
 							for (int i = 0; i < gyujt.Count; i++)
@@ -243,9 +243,9 @@ namespace szakmajDusza
 								//MessageBox.Show($"Játékos nyert! Nyeremény: {item.Name} kártya hozzáadva a gyűjteményhez!");
                                 l.Content = $"Nyertél!";
 								//l2.Content =item.Name;
-								WrapPanel w = MainWindow.CreateCenteredWrapPanel(160, 200, 5,item);
-								grid.Children.Add(w);
-
+								WrapPanel rewardCard = MainWindow.CreateCenteredWrapPanel(160, 200, 5,item);
+								grid.Children.Add(rewardCard);
+								rewardCard.Name = "rewardCard";
 
 
                                 return;

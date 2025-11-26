@@ -25,7 +25,7 @@ namespace szakmajDusza
                     obtainedVezer.Add(item);
                 }
             }
-            if (obtainedVezer.Count>=MainWindow.AllLeaders.Count)
+            if (obtainedVezer.Count>=MainWindow.AllCardsDict.Values.Count)
             {
                 return;
                 //Kristóf implement error vmessage in UI
@@ -45,19 +45,19 @@ namespace szakmajDusza
                 }
             }
             //int x = 0;
-            for (int i = 0; i < MainWindow.AllLeaders.Count; i++)
+            foreach (var item in MainWindow.AllCardsDict.Values)
             {
                 int x = 0;
                 for (int j = 0; j < obtainedVezer.Count; j++)
                 {
-                    if (MainWindow.AllLeaders[i].Name==obtainedVezer[j].Name)
+                    if (item.Name == obtainedVezer[j].Name)
                     {
                         x++;
                     }
                 }
-                if (x==0)
+                if (x == 0)
                 {
-                    Card ujVezer = new Card(MainWindow.AllLeaders[i].Name, MainWindow.AllLeaders[i].Damage, MainWindow.AllLeaders[i].HP, MainWindow.AllLeaders[i].Tipus.ToString(),true);
+                    Card ujVezer = new Card(item.Name, item.Damage, item.HP, item.Tipus.ToString(), true);
                     MainWindow.Gyujtemeny.Add(ujVezer);
                     break;
                 }

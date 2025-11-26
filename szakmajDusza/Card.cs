@@ -44,7 +44,11 @@ namespace szakmajDusza
 
             Tipus=StringToTipus(tipus);
 
-
+            UpdateAllVisual();
+            
+        }
+        public void UpdateAllVisual()
+        {
             visualGroup = new Grid
             {
                 Width = 140,
@@ -128,7 +132,7 @@ namespace szakmajDusza
                 IsHitTestVisible = false,
                 MaxWidth = 90,                // max szélesség
                 HorizontalContentAlignment = HorizontalAlignment.Center,
-                
+
             };
             if (Name.Split(' ').Length > 1)
             {
@@ -149,7 +153,7 @@ namespace szakmajDusza
                 };
                 visualGroup.Children.Add(Name2Label);
             }
-            
+
 
 
             // statok
@@ -203,7 +207,7 @@ namespace szakmajDusza
                     brush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\water.jpg"));
 
                     break;
-                
+
             }
             brush.Stretch = Stretch.UniformToFill;
 
@@ -229,7 +233,7 @@ namespace szakmajDusza
                 Background = Brushes.Transparent,
                 BorderThickness = new Thickness(0),
                 Cursor = Cursors.Hand,
-                
+
             };
             But.Click += (sender, e) => Clicked?.Invoke(this, this);
 
@@ -238,7 +242,6 @@ namespace szakmajDusza
             visualGroup.Children.Add(DamageAndHPLabel);
             visualGroup.Children.Add(But);
         }
-
         public void UpdateVisual()
         {
 			if (HP <= 0)

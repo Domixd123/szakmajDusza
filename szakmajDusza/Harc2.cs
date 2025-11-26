@@ -15,20 +15,15 @@ namespace szakmajDusza
         //vizuáls gotta make it work
         public static double playSpeedMultiplier = 1d;
 		public static double basePlaySpeed = 750;//in miliseconds
-		public static double rnd()
-		{
-			return random.Next(0, 1_000_001) / 1_000_000.0;
-
-        }
 
 		public static int kazDamage(float damage, int difficulty)
 		{
-            double roll = rnd(); // 0.0 .. 1.0 inclusive
+            double roll = random.NextDouble(); // 0.0 .. 1.0 inclusive
             return (int)Math.Round(damage * (1 + (roll * difficulty/10)));
         }
         public static int plyDamage(float damage, int difficulty)
         {
-            double roll = rnd(); // 0.0 .. 1.0 inclusive
+            double roll = random.NextDouble(); // 0.0 .. 1.0 inclusive
             return (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
         }
         public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata, int difficulty)

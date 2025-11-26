@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using System.IO;
 using System.Media;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -22,8 +23,11 @@ namespace szakmajDusza
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
         public static List<Card> AllCards = new List<Card>();
-		public static Dictionary<string,Card> AllCardsDict = new Dictionary<string,Card>();
-        public static Dictionary<string, Kazamata> AllKazamata = new Dictionary<string, Kazamata>();
+        public static List<Card> AllLeaders=new List<Card>();
+        public static Dictionary<string,Card> AllLeadersDict = new Dictionary<string, Card>();
+        public static Dictionary<string,Card> AllCardsDict = new Dictionary<string,Card>();
+        public static List<Kazamata> AllKazamata = new List<Kazamata>();
+        public static Dictionary<string, Kazamata> AllKazamataDict = new Dictionary<string, Kazamata>();
         //public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
         //public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
         //public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
@@ -45,9 +49,9 @@ namespace szakmajDusza
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Collapsed;
-            UploadKazamata();
-            UploadCards();
-
+            /*UploadKazamata();
+            UploadCards();*/
+            LoadData("");//add path selector
             sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
@@ -57,77 +61,94 @@ namespace szakmajDusza
             };
             sp.Play();
         }
-
-        
-        private void UploadCards()
+        public void LoadData(string path)
         {
-            AllCardsDict.Add("Arin", new Card("Arin", 2, 5, "fold", false));
-			AllCardsDict.Add("Liora", new Card("Liora", 2, 4, "levego", false));
-			AllCardsDict.Add("Nerun", new Card("Nerun", 3, 3, "tuz", false));
-			AllCardsDict.Add("Selia", new Card("Selia", 2, 6, "viz", false));
-			AllCardsDict.Add("Torak", new Card("Torak", 3, 4, "fold", false));
-			AllCardsDict.Add("Emera", new Card("Emera", 2, 5, "levego", false));
-			AllCardsDict.Add("Vorn", new Card("Vorn", 2, 7, "viz", false));
-			AllCardsDict.Add("Kael", new Card("Kael", 3, 5, "tuz", false));
-			AllCardsDict.Add("Myra", new Card("Myra", 2, 6, "fold", false));
-			AllCardsDict.Add("Thalen", new Card("Thalen", 3, 5, "levego", false));
-			AllCardsDict.Add("Isara", new Card("Isara", 2, 6, "viz", false));
-
-            AllCards.Add(AllCardsDict["Arin"]);
-			AllCards.Add(AllCardsDict["Liora"]);
-			AllCards.Add(AllCardsDict["Nerun"]);
-			AllCards.Add(AllCardsDict["Selia"]);
-			AllCards.Add(AllCardsDict["Torak"]);
-			AllCards.Add(AllCardsDict["Emera"]);
-			AllCards.Add(AllCardsDict["Vorn"]);
-			AllCards.Add(AllCardsDict["Kael"]);
-			AllCards.Add(AllCardsDict["Myra"]);
-			AllCards.Add(AllCardsDict["Thalen"]);
-			AllCards.Add(AllCardsDict["Isara"]);
-
-            Gyujtemeny.Add(AllCardsDict["Arin"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Liora"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Selia"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Nerun"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Torak"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Emera"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Kael"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Myra"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Thalen"].GetCopy());
-			Gyujtemeny.Add(AllCardsDict["Isara"].GetCopy());
-
-            //leader cards, kazamata fix would be great
-            AllKazamata["Barlangi portya"].Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
-
-            AllKazamata["Osi szentely"].Defenders.Add(new Card("Arin", 2, 5, "fold", false));
-            AllKazamata["Osi szentely"].Defenders.Add(new Card("Emera", 2, 5, "levego", false));
-            AllKazamata["Osi szentely"].Defenders.Add(new Card("Selia", 2, 6, "viz", false));
-            AllKazamata["Osi szentely"].Defenders.Add(new Card("Lord Torak", 6, 4, "fold", true));
-
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Liora", 2, 4, "levego", false));
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Arin", 2, 5, "fold", false));
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Selia", 2, 6, "viz", false));
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Nerun", 3, 3, "tuz", false));
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Torak", 3, 4, "fold", false));
-            AllKazamata["A melyseg kiralynoje"].Defenders.Add(new Card("Priestess Selia", 2, 12, "fold", true));
-
-
-            foreach (var item in Gyujtemeny)
+            StreamReader sr = new StreamReader(path);
+            while (!sr.EndOfStream)
             {
-                item.Clicked += AddToPakli;
-                Cards_Wrap.Children.Add(item.GetVisual());
+                string? line = sr.ReadLine();
+                if (line == null || line == "")
+                {
+                    continue;
+                }
+                string[] data = line.Split(';');
+
+                if (data[0] == "uj kartya")
+                {
+                    AllCards.Add(new Card(data[1], int.Parse(data[2]), int.Parse(data[3]), data[4], false));
+                    AllCardsDict.Add(data[1], AllCards[AllCards.Count - 1]);
+                }
+                else if (data[0] == "uj vezer")
+                {
+                    Card vezer = AllCardsDict[data[2]].GetCopy();
+                    if (data[3] == "sebzes") vezer.Damage *= 2;
+                    else if (data[3] == "eletero") vezer.HP *= 2;
+                    vezer.Vezer = true;
+                    vezer.Name = data[1];
+                    AllLeaders.Add(vezer);
+                    AllLeadersDict.Add(data[1], AllLeaders[AllLeaders.Count - 1]);
+                }
+                else if (data[0] == "uj kazamata")
+                {
+                    if (data[1] == "egyszeru")
+                    {
+                        AllKazamata.Add(new Kazamata(data[2], data[1], data[4], new List<Card>() { AllCardsDict[data[3]] }));
+                    }
+                    else if (data[1] == "kis")
+                    {
+                        List<Card> defenders = new List<Card>();
+                        string[] def = data[3].Split(",");
+                        for (int i = 0; i < def.Length; i++)
+                        {
+                            defenders.Add(AllCardsDict[def[i]]);
+                        }
+                        defenders.Add(AllLeadersDict[data[4]]);
+                        AllKazamata.Add(new Kazamata(data[2], data[1], data[5], defenders));
+                    }
+                    else if (data[1] == "nagy")
+                    {
+                        List<Card> defenders = new List<Card>();
+                        string[] def = data[3].Split(",");
+                        for (int i = 0; i < def.Length; i++)
+                        {
+                            defenders.Add(AllCardsDict[def[i]]);
+                        }
+                        defenders.Add(AllLeadersDict[data[4]]);
+                        AllKazamata.Add(new Kazamata(data[2], data[1], "newcard", defenders));
+                    }
+                    AllKazamataDict.Add(AllKazamata[AllKazamata.Count - 1].Name, AllKazamata[AllKazamata.Count - 1]);
+
+
+                }
+                else if (data[0] == "felvetel gyujtemenybe")
+                {
+                    if (AllCardsDict.ContainsKey(data[1]))
+                    {
+                        Jatekos.Add(AllCardsDict[data[1]].GetCopy());
+                    }
+                    else if (AllLeadersDict.ContainsKey(data[1]))
+                    {
+                        Jatekos.Add(AllLeadersDict[data[1]].GetCopy());
+                    }
+                }
+                else if (data[0] == "uj pakli")
+                {
+                    string[] kartyanevek = data[1].Split(',');
+                    for (int i = 0; i < kartyanevek.Length; i++)
+                    {
+                        if (AllCardsDict.ContainsKey(kartyanevek[i]))
+                        {
+                            Jatekos.Add(AllCardsDict[kartyanevek[i]]);
+                        }
+                        else if (AllLeadersDict.ContainsKey(kartyanevek[i]))
+                        {
+                            Jatekos.Add(AllCardsDict[kartyanevek[i]]);
+                        }
+                    }
+                }
             }
-
-            SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
-
-
         }
-        private void UploadKazamata()
-        {
-            AllKazamata.Add("Barlangi portya", new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>()));
-            AllKazamata.Add("Osi szentely", new Kazamata("Osi szentely", "kis", "eletero", new List<Card>()));
-            AllKazamata.Add("A melyseg kiralynoje", new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>()));
-        }
+        
 
         private void AddToPakli(object? sender, Card clicked)
         {
@@ -211,21 +232,21 @@ namespace szakmajDusza
 			FightPlayerEgyszeri_Wrap.Children.Clear();
             FightKazamataEgyszeri_Wrap.Children.Clear();
             List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-            List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+            List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
 
             foreach (var c in playerCopies)
                 FightPlayerEgyszeri_Wrap.Children.Add(c.GetVisual());
             foreach (var c in kazamataCopies)
                 FightKazamataEgyszeri_Wrap.Children.Add(c.GetVisual());
-            if (AllKazamata[Alsovonas(b.Name)].reward==KazamataReward.sebzes)
+            if (AllKazamataDict[Alsovonas(b.Name)].reward==KazamataReward.sebzes)
             {
                 Jutalom.Content = "Jutalom: +1⚔";
             }
-            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
             {
                 Jutalom.Content = "Jutalom: +2❤";
             }
-            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
             {
                 Jutalom.Content = "Jutalom: Új kártya";
             }
@@ -259,7 +280,7 @@ namespace szakmajDusza
             Vissza.Visibility = Visibility.Collapsed;
             //MainRoom_Grid.Visibility = Visibility.Collapsed;
             //EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(EgyszeriKazamata_Grid,Vissza,Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label,AttackDeployEgyszeri_Label ,DefendDeployEgyszeri_Label,FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
+            await Harc2.StartFight(EgyszeriKazamata_Grid,Vissza,Gyujtemeny, AllKazamataDict["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label,AttackDeployEgyszeri_Label ,DefendDeployEgyszeri_Label,FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap, 0);
             /*MainRoom_Grid.Visibility = Visibility.Visible;
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();*/
@@ -284,21 +305,21 @@ namespace szakmajDusza
 			FightPlayerKis_Wrap.Children.Clear();
             FightKazamataKis_Wrap.Children.Clear();
             List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-            List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+            List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
 
             foreach (var c in playerCopies)
                 FightPlayerKis_Wrap.Children.Add(c.GetVisual());
             foreach (var c in kazamataCopies)
                 FightKazamataKis_Wrap.Children.Add(c.GetVisual());
-            if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
+            if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
             {
                 Jutalom.Content = "Jutalom: +1⚔";
             }
-            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
             {
                 Jutalom.Content = "Jutalom: +2❤";
             }
-            else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
             {
                 Jutalom.Content = "Jutalom: Új kártya";
             }
@@ -344,21 +365,21 @@ namespace szakmajDusza
 					FightPlayerNagy_Wrap.Children.Clear();
                     FightKazamataNagy_Wrap.Children.Clear();
                     List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-                    List<Card> kazamataCopies = AllKazamata[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
+                    List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
 
                     foreach (var c in playerCopies)
                         FightPlayerNagy_Wrap.Children.Add(c.GetVisual());
                     foreach (var c in kazamataCopies)
                         FightKazamataNagy_Wrap.Children.Add(c.GetVisual());
-                    if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
+                    if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
                     {
                         Jutalom.Content = "Jutalom: +1⚔";
                     }
-                    else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.eletero)
+                    else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
                     {
                         Jutalom.Content = "Jutalom: +2❤";
                     }
-                    else if (AllKazamata[Alsovonas(b.Name)].reward == KazamataReward.newcard)
+                    else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
                     {
                         Jutalom.Content = $"Jutalom: {item.Name}"; //show acutal card if time
                         while (Jutalom.Width<Jutalom.ActualWidth)
@@ -555,7 +576,7 @@ namespace szakmajDusza
             VisszaK.Visibility = Visibility.Collapsed;
             /*MainRoom_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Visible;*/
-            await Harc2.StartFight(KisKazamata_Grid,VisszaK,Gyujtemeny, AllKazamata["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, AttackDeployKis_Label,DefendDeployKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap);
+            await Harc2.StartFight(KisKazamata_Grid,VisszaK,Gyujtemeny, AllKazamataDict["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, AttackDeployKis_Label,DefendDeployKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap,0);
             /*MainRoom_Grid.Visibility = Visibility.Visible;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();*/
@@ -579,7 +600,7 @@ namespace szakmajDusza
             VisszaN.Visibility = Visibility.Collapsed;
             //MainRoom_Grid.Visibility = Visibility.Collapsed;
             //NagyKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(NagyKazamata_Grid,VisszaN,Gyujtemeny, AllKazamata["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label,AttackDeployNagy_Label,DefendDeployNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap);
+            await Harc2.StartFight(NagyKazamata_Grid,VisszaN,Gyujtemeny, AllKazamataDict["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label,AttackDeployNagy_Label,DefendDeployNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap,0);
             /*MainRoom_Grid.Visibility = Visibility.Visible;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             ShowPakli();*/

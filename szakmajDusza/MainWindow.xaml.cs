@@ -96,6 +96,29 @@ namespace szakmajDusza
             KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
             KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
+        public void DisableNagyKazamata()
+        {
+            foreach (var item in AllCards)
+            {
+                bool found = false;
+                foreach (var item2 in Gyujtemeny)
+                {
+                    if (item.Name == item2.Name)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return;//there are cards that can still be acquired
+            }
+            foreach (var item in DynamicButtonsPanel.Children)//only runs if all normal cards are already acquired
+            {
+                if (item.GetType() == typeof(Button) && AllKazamataDict.ContainsKey((item as Button).Content.ToString()) && AllKazamataDict[(item as Button).Content.ToString()].Tipus == KazamataType.nagy)
+                {
+                    (item as Button).IsEnabled = false;
+                }
+            }
+        }
         public void LoadData(string path)
         {
             Gyujtemeny.Clear();
@@ -380,7 +403,7 @@ namespace szakmajDusza
 
         }
 
-        public static void RemoveShitFomrShit()
+        public void RemoveShitFomrShit()
         {
             FightGrid.Children.Remove(FightPlayer_Wrap);
             FightGrid.Children.Remove(FightKazamata_Wrap);
@@ -395,6 +418,7 @@ namespace szakmajDusza
             FightGrid.Children.Remove(Vissza);
             FightGrid.Children.Remove(ChangeSpeed);
             FightGrid.Children.Remove(Speed_Label);
+            DisableNagyKazamata();
         }
 
         private void AddToPakli(object? sender, Card clicked)
@@ -499,6 +523,7 @@ namespace szakmajDusza
             {
                 PakliOssze_Grid.Visibility = Visibility.Collapsed;
                 MainRoom_Grid.Visibility = Visibility.Visible;
+                DisableNagyKazamata();
                 se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
                 se.Play();
                 ShowPakli();
@@ -665,7 +690,7 @@ namespace szakmajDusza
             }
             MainRoom_Grid.Visibility = Visibility.Visible;
             FightGrid.Visibility = Visibility.Collapsed;
-
+            DisableNagyKazamata();
             sp.Stop();
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.Play();

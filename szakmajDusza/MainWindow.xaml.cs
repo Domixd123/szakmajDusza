@@ -63,6 +63,14 @@ namespace szakmajDusza
         }
         public void LoadData(string path)
         {
+            Gyujtemeny.Clear();
+            Jatekos.Clear();
+            AllCards.Clear();
+            AllLeaders.Clear();
+            AllCardsDict.Clear();
+            AllLeadersDict.Clear();
+            AllKazamata.Clear();
+            AllKazamataDict.Clear();
             StreamReader sr = new StreamReader(path);
             while (!sr.EndOfStream)
             {

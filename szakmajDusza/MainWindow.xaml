@@ -9,20 +9,26 @@
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920">
             <Grid Name="Menu_Grid" Visibility="Collapsed">
-                <Button FontSize="60" Name="GoToGame_Button" Content="Játék" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
-                <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
+                <Button FontSize="60" Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
+                <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
                 <Button FontSize="60" Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
                 <Button FontSize="60" Name="Exit_Button" Content="Kilépés" HorizontalAlignment="Center" Margin="0,160,0,160" VerticalAlignment="Bottom" Width="724" Height="132" Click="Exit_Button_Click"/>
 
 
             </Grid>
 
-            <Grid Name="JatekMester_Grid" Visibility="Visible">
-                <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,960,0"/>
-                <Button Content="Hozzáadás" HorizontalAlignment="Left" Margin="1240,250,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <Button Content="Módosítás" HorizontalAlignment="Left" Margin="1240,440,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <Button Content="Törlés" HorizontalAlignment="Left" Margin="1240,674,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+            <Grid Name="JatekMester_Grid" Visibility="Collapsed">
+                <ListBox x:Name="KornyezetekMester_List" Margin="0,0,960,0"/>
+                <Button Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="1240,250,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
+                <Button Name="ModifyKornyezet_Button" Content="Módosítás" HorizontalAlignment="Left" Margin="1240,490,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="ModifyKornyezet_Button_Click"/>
+                <Button Name="DeleteKornyezet_Button" Content="Törlés" HorizontalAlignment="Left" Margin="1240,674,0,250" VerticalAlignment="Bottom" Width="400" Height="100" FontSize="50" Click="DeleteKornyezet_Button_Click"/>
 
+            </Grid>
+
+            <Grid Name="ChooseKornyezet_Grid" Visibility="Collapsed">
+                <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,960,0"/>
+                <Button Name="PlayInKornyezet" Content="Kiválasztás" HorizontalAlignment="Left" Margin="1240,400,0,0" VerticalAlignment="Top" FontSize="60" Height="100" Width="400" Click="PlayInKornyezet_Click"/>
+                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1240,0,0,400" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
             
             <Grid Name="Options_Grid" Visibility="Collapsed">
@@ -93,11 +99,11 @@
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
 
             </Grid>
-            <Grid Name="MainRoom_Grid" Visibility="Collapsed">
+            <Grid Name="MainRoom_Grid" Visibility="Visible">
                 <WrapPanel Name="PakliCards_Wrap" Margin="100,594,648,20"/>
-                <Button Name="Barlangi_portya" Content="Barlangi portya" HorizontalAlignment="Left" Margin="150,142,0,0" VerticalAlignment="Top" Height="335" Width="500" Click="Egyszeri_Button_Click"/>
-                <Button Name="Osi_szentely" Content="Ősi Szentély" HorizontalAlignment="Center" Margin="0,142,0,0" VerticalAlignment="Top" Height="335" Width="400" Click="Kis_Button_Click"/>
-                <Button Name="A_melyseg_kiralynoje" Content="A mélység királynője" HorizontalAlignment="Right" Margin="0,142,150,0" VerticalAlignment="Top" Height="335" Width="500" Click="Nagy_Button_Click"/>
+                <WrapPanel Name="DynamicButtonsPanel"
+           Margin="100,142,100,100"
+           SizeChanged="DynamicButtonsPanel_SizeChanged"/>
                 <Button Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
                 <Label Content="Kazamaták:" HorizontalAlignment="Left" Height="87" Margin="100,50,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
                 <Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
@@ -105,41 +111,9 @@
 
             </Grid>
 
-            <Grid Name="EgyszeriKazamata_Grid" Visibility="Collapsed" d:IsHidden="True">
-                <Label Content="Játékos" FontSize="60" HorizontalAlignment="Left" Margin="144,116,0,0" VerticalAlignment="Top"/>
-                <Label Content="Kazamata" FontSize="60" HorizontalAlignment="Right" Margin="0,116,144,0" VerticalAlignment="Top"/>
-                <WrapPanel Name="FightPlayerEgyszeri_Wrap" Margin="115,263,1343,37" Width="400"/>
-                <WrapPanel Name="FightKazamataEgyszeri_Wrap" Margin="1386,263,146,37" Width="400"/>
-                <Label Name="DefendEgyszeri_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="AttackEgyszeri_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="DefendDeployEgyszeri_Label" Content="Kazamata kijátszik" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="AttackDeployEgyszeri_Label" Content="Játékos kijátszik" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <WrapPanel Name="FightPlayerAttackerEgyszeri_Wrap" Margin="740,310,965,362"/>
-                <WrapPanel Name="FightKazamataAttackerEgyszeri_Wrap" Margin="960,310,746,362"/>
-                <Button Name ="Harc" Content="Harc" HorizontalAlignment="Center" Height="100" Margin="0,650,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="HarcE_Button_Click"/>
-                <Button Name="Vissza" Content="Vissza" HorizontalAlignment="Center" Height="100" Margin="0,794,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="Vissza_Button_Click"/>
+            
 
-                <Button Click="ChangeSpeed_Click" Content="Harc gyorsítása" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
-                <Label Name="SpeedEgyszeri_Label" FontStyle="Oblique" FontSize="50" Content="1x" HorizontalAlignment="Left" Margin="1746,71,0,0" VerticalAlignment="Top"/>
-            </Grid>
-
-            <Grid Name="KisKazamata_Grid" Visibility="Visible" d:IsHidden="True">
-                <WrapPanel Name="FightPlayerKis_Wrap" Margin="115,263,1343,37" Width="400"/>
-                <WrapPanel Name="FightKazamataKis_Wrap" Margin="1386,263,146,37" Width="400"/>
-                <Label Name="DefendKis_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="AttackKis_Label" Content="Játékos támad" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="DefendDeployKis_Label" Content="Kazamata kijátszik" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <Label Name="AttackDeployKis_Label" Content="Játékos kijátszik" Foreground="Green" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
-                <WrapPanel Name="FightKis_Wrap" Margin="665,310,665,362"/>
-                <WrapPanel Name="FightPlayerAttackerKis_Wrap" Margin="740,310,965,362"/>
-                <WrapPanel Name="FightKazamataAttackerKis_Wrap" Margin="960,310,746,362"/>
-                <Button x:Name ="HarcK" Content="Harc" HorizontalAlignment="Center" Height="100" Margin="0,650,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="HarcK_Button_Click"/>
-                <Button x:Name="VisszaK" Content="Vissza" HorizontalAlignment="Center" Height="100" Margin="0,794,0,0" VerticalAlignment="Top" Width="300" FontSize="60" Click="Vissza_Button_Click"/>
-                <Button Click="ChangeSpeed_Click" Content="Harc gyorsítása" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
-                <Label Name="SpeedKis_Label" FontStyle="Oblique" FontSize="50" Content="1x" HorizontalAlignment="Left" Margin="1746,71,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.515,2.395"/>
-            </Grid>
-
-            <Grid Name="NagyKazamata_Grid" Visibility="Collapsed" d:IsHidden="True">
+            <!--<Grid Name="NagyKazamata_Grid" Visibility="Collapsed" d:IsHidden="True">
                 <WrapPanel Name="FightPlayerNagy_Wrap" Margin="115,263,1343,37" Width="400"/>
                 <WrapPanel Name="FightKazamataNagy_Wrap" Margin="1386,263,146,37" Width="400"/>
                 <Label Name="DefendNagy_Label" Content="Kazamata támad" Foreground="Red" FontSize="60" HorizontalAlignment="Center" Margin="0,116,0,0" VerticalAlignment="Top"/>
@@ -154,7 +128,7 @@
 
                 <Button Click="ChangeSpeed_Click" Content="Harc gyorsítása" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
                 <Label Name="SpeedNagy_Label" FontStyle="Oblique" FontSize="50" Content="1x" HorizontalAlignment="Left" Margin="1746,71,0,0" VerticalAlignment="Top"/>
-            </Grid>
+            </Grid>-->
 
         </Grid>
     </Viewbox>

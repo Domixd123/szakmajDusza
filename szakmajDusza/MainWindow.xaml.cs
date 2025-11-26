@@ -35,6 +35,8 @@ namespace szakmajDusza
         public static MediaPlayer sp = new MediaPlayer();
         public static MediaPlayer se = new MediaPlayer();
 
+
+
         public static float spVolume = 0.3f;
         public MainWindow()
         {
@@ -45,13 +47,9 @@ namespace szakmajDusza
             Options_Grid.Visibility = Visibility.Collapsed;
             PakliOssze_Grid.Visibility = Visibility.Collapsed;
             MainRoom_Grid.Visibility = Visibility.Collapsed;
-            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
-            KisKazamata_Grid.Visibility = Visibility.Collapsed;
-            NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Collapsed;
-            /*UploadKazamata();
-            UploadCards();*/
-            LoadData("");//add path selector
+            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
+            
             sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
@@ -60,6 +58,8 @@ namespace szakmajDusza
                 sp.Play();
             };
             sp.Play();
+
+            KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
         public void LoadData(string path)
         {
@@ -211,190 +211,7 @@ namespace szakmajDusza
             SelectedCards_Label.Content = Jatekos.Count;
         }
 
-        private void Egyszeri_Button_Click(object sender, RoutedEventArgs e)
-        {
-            sp.Stop();
-
-            sp.Open(new Uri("Sounds/KisHarc.wav", UriKind.Relative));
-            sp.Play();
-
-            Harc.Visibility = Visibility.Visible;
-			Vissza.Visibility = Visibility.Visible;
-			Button? b = sender as Button;
-            Label Jutalom = CreateJutalom(EgyszeriKazamata_Grid);
-
-            MainRoom_Grid.Visibility = Visibility.Collapsed;
-            EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            AttackEgyszeri_Label.Visibility = Visibility.Collapsed;
-            DefendEgyszeri_Label.Visibility = Visibility.Collapsed;
-            AttackDeployEgyszeri_Label.Visibility=Visibility.Collapsed;
-			DefendDeployEgyszeri_Label.Visibility = Visibility.Collapsed;
-			FightPlayerEgyszeri_Wrap.Children.Clear();
-            FightKazamataEgyszeri_Wrap.Children.Clear();
-            List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-            List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
-
-            foreach (var c in playerCopies)
-                FightPlayerEgyszeri_Wrap.Children.Add(c.GetVisual());
-            foreach (var c in kazamataCopies)
-                FightKazamataEgyszeri_Wrap.Children.Add(c.GetVisual());
-            if (AllKazamataDict[Alsovonas(b.Name)].reward==KazamataReward.sebzes)
-            {
-                Jutalom.Content = "Jutalom: +1⚔";
-            }
-            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
-            {
-                Jutalom.Content = "Jutalom: +2❤";
-            }
-            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
-            {
-                Jutalom.Content = "Jutalom: Új kártya";
-            }
-
-            /*MainRoom_Grid.Visibility = Visibility.Collapsed;
-            EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(Gyujtemeny, AllKazamata["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label, FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap);
-            MainRoom_Grid.Visibility = Visibility.Visible;
-            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
-            ShowPakli();*/
-        }
-
-        private async void HarcE_Button_Click(object sender, RoutedEventArgs e)
-        {
-            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
-            se.Play();
-
-            foreach (var item in ((sender as Button).Parent as Grid).Children)
-            {
-                if (item.GetType()==typeof(Label))
-                {
-                    if ((item as Label).Name=="Jutalom")
-                    {
-                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
-                        break;
-
-                    }
-                }
-            }
-            Harc.Visibility = Visibility.Collapsed;
-            Vissza.Visibility = Visibility.Collapsed;
-            //MainRoom_Grid.Visibility = Visibility.Collapsed;
-            //EgyszeriKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(EgyszeriKazamata_Grid,Vissza,Gyujtemeny, AllKazamataDict["Barlangi portya"], Jatekos, FightPlayerEgyszeri_Wrap, FightKazamataEgyszeri_Wrap, AttackEgyszeri_Label, DefendEgyszeri_Label,AttackDeployEgyszeri_Label ,DefendDeployEgyszeri_Label,FightPlayerAttackerEgyszeri_Wrap, FightKazamataAttackerEgyszeri_Wrap, 0);
-            /*MainRoom_Grid.Visibility = Visibility.Visible;
-            EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
-            ShowPakli();*/
-        }
-
-
-        private void Kis_Button_Click(object sender, RoutedEventArgs e)
-        {
-            sp.Stop();
-            sp.Open(new Uri("Sounds/KozepesHarc.wav", UriKind.Relative));
-            sp.Play();
-            HarcK.Visibility = Visibility.Visible;
-			VisszaK.Visibility = Visibility.Visible;
-			Button? b = sender as Button;
-            Label Jutalom = CreateJutalom(KisKazamata_Grid);
-            MainRoom_Grid.Visibility = Visibility.Collapsed;
-            KisKazamata_Grid.Visibility = Visibility.Visible;
-            AttackKis_Label.Visibility = Visibility.Collapsed;
-            DefendKis_Label.Visibility = Visibility.Collapsed;
-			AttackDeployKis_Label.Visibility = Visibility.Collapsed;
-			DefendDeployKis_Label.Visibility = Visibility.Collapsed;
-			FightPlayerKis_Wrap.Children.Clear();
-            FightKazamataKis_Wrap.Children.Clear();
-            List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-            List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
-
-            foreach (var c in playerCopies)
-                FightPlayerKis_Wrap.Children.Add(c.GetVisual());
-            foreach (var c in kazamataCopies)
-                FightKazamataKis_Wrap.Children.Add(c.GetVisual());
-            if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
-            {
-                Jutalom.Content = "Jutalom: +1⚔";
-            }
-            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
-            {
-                Jutalom.Content = "Jutalom: +2❤";
-            }
-            else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
-            {
-                Jutalom.Content = "Jutalom: Új kártya";
-            }
-        }
-
-        private async void Nagy_Button_Click(object sender, RoutedEventArgs e)
-        {
-            sp.Stop();
-            sp.Open(new Uri("Sounds/NagyHarc.wav", UriKind.Relative));
-            sp.Play();
-            HarcN.Visibility = Visibility.Visible;
-            VisszaN.Visibility = Visibility.Visible;
-            bool anythingpossible=false;
-            //string talal;
-            foreach (var item in AllCards)
-            {
-                bool found=false;
-                for (int i = 0; i < Gyujtemeny.Count; i++)
-                {
-                    if (Gyujtemeny[i].Name==item.Name)
-                    {
-                        found= true; break;
-                    }
-                }
-				for (int i = 0; i < Jatekos.Count; i++)
-				{
-					if (Jatekos[i].Name == item.Name)
-					{
-						found = true; break;
-					}
-				}
-				if (!found)
-                {
-                    anythingpossible= true;
-                    Button? b = sender as Button;
-                    Label Jutalom = CreateJutalom(NagyKazamata_Grid);
-                    MainRoom_Grid.Visibility = Visibility.Collapsed;
-                    NagyKazamata_Grid.Visibility = Visibility.Visible;
-                    AttackNagy_Label.Visibility = Visibility.Collapsed;
-                    DefendNagy_Label.Visibility = Visibility.Collapsed;
-					AttackDeployNagy_Label.Visibility = Visibility.Collapsed;
-					DefendDeployNagy_Label.Visibility = Visibility.Collapsed;
-					FightPlayerNagy_Wrap.Children.Clear();
-                    FightKazamataNagy_Wrap.Children.Clear();
-                    List<Card> playerCopies = Jatekos.Select(c => c.GetCopy()).ToList();
-                    List<Card> kazamataCopies = AllKazamataDict[Alsovonas(b.Name)].Defenders.Select(c => c.GetCopy()).ToList();
-
-                    foreach (var c in playerCopies)
-                        FightPlayerNagy_Wrap.Children.Add(c.GetVisual());
-                    foreach (var c in kazamataCopies)
-                        FightKazamataNagy_Wrap.Children.Add(c.GetVisual());
-                    if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.sebzes)
-                    {
-                        Jutalom.Content = "Jutalom: +1⚔";
-                    }
-                    else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.eletero)
-                    {
-                        Jutalom.Content = "Jutalom: +2❤";
-                    }
-                    else if (AllKazamataDict[Alsovonas(b.Name)].reward == KazamataReward.newcard)
-                    {
-                        Jutalom.Content = $"Jutalom: {item.Name}"; //show acutal card if time
-                        while (Jutalom.Width<Jutalom.ActualWidth)
-                        {
-                            Jutalom.FontSize--;
-                        }
-                    }
-                    break;
-                }
-            }
-            if (!anythingpossible)
-            {
-                MessageBox.Show("Már minden kartyát megszereztél!");
-            }
-        }
+        
 
 
         static private string Alsovonas(string soveg)
@@ -521,9 +338,7 @@ namespace szakmajDusza
                     break;
             }
 
-            SpeedEgyszeri_Label.Content = $"{Harc2.playSpeedMultiplier}x";
-            SpeedKis_Label.Content = $"{Harc2.playSpeedMultiplier}x";
-            SpeedNagy_Label.Content = $"{Harc2.playSpeedMultiplier}x";
+            //Speed_Label.Content = $"{Harc2.playSpeedMultiplier}x";
 
 
         }
@@ -557,60 +372,7 @@ namespace szakmajDusza
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
         }
 
-        private async void HarcK_Button_Click(object sender, RoutedEventArgs e)
-        {
-            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
-            se.Play();
-            foreach (var item in ((sender as Button).Parent as Grid).Children)
-            {
-                if (item.GetType() == typeof(Label))
-                {
-                    if ((item as Label).Name == "Jutalom")
-                    {
-                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
-                        break;
-                    }
-                }
-            }
-            HarcK.Visibility = Visibility.Collapsed;
-            VisszaK.Visibility = Visibility.Collapsed;
-            /*MainRoom_Grid.Visibility = Visibility.Collapsed;
-            KisKazamata_Grid.Visibility = Visibility.Visible;*/
-            await Harc2.StartFight(KisKazamata_Grid,VisszaK,Gyujtemeny, AllKazamataDict["Osi szentely"], Jatekos, FightPlayerKis_Wrap, FightKazamataKis_Wrap, AttackKis_Label, DefendKis_Label, AttackDeployKis_Label,DefendDeployKis_Label,FightPlayerAttackerKis_Wrap, FightKazamataAttackerKis_Wrap,0);
-            /*MainRoom_Grid.Visibility = Visibility.Visible;
-            KisKazamata_Grid.Visibility = Visibility.Collapsed;
-            ShowPakli();*/
-        }
-        private async void HarcN_Button_Click(object sender, RoutedEventArgs e)
-        {
-            se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
-            se.Play();
-            foreach (var item in ((sender as Button).Parent as Grid).Children)
-            {
-                if (item.GetType() == typeof(Label))
-                {
-                    if ((item as Label).Name == "Jutalom")
-                    {
-                        ((sender as Button).Parent as Grid).Children.Remove(item as Label);
-                        break;
-                    }
-                }
-            }
-            HarcN.Visibility = Visibility.Collapsed;
-            VisszaN.Visibility = Visibility.Collapsed;
-            //MainRoom_Grid.Visibility = Visibility.Collapsed;
-            //NagyKazamata_Grid.Visibility = Visibility.Visible;
-            await Harc2.StartFight(NagyKazamata_Grid,VisszaN,Gyujtemeny, AllKazamataDict["A melyseg kiralynoje"], Jatekos, FightPlayerNagy_Wrap, FightKazamataNagy_Wrap, AttackNagy_Label, DefendNagy_Label,AttackDeployNagy_Label,DefendDeployNagy_Label, FightPlayerAttackerNagy_Wrap, FightKazamataAttackerNagy_Wrap,0);
-            /*MainRoom_Grid.Visibility = Visibility.Visible;
-            NagyKazamata_Grid.Visibility = Visibility.Collapsed;
-            ShowPakli();*/
-            if (AllCards.Count == Gyujtemeny.Count)
-            {
-                A_melyseg_kiralynoje.Opacity = 0.5f;
-                A_melyseg_kiralynoje.IsEnabled = false;
-                EveryCard_Label.Visibility = Visibility.Visible;
-            }
-        }
+        
         public static Label CreateJutalom(Grid Parent)
         {
             Label Jutalom = new Label();
@@ -655,9 +417,6 @@ namespace szakmajDusza
                 }
             }
             MainRoom_Grid.Visibility = Visibility.Visible;
-            KisKazamata_Grid.Visibility = Visibility.Collapsed;
-            EgyszeriKazamata_Grid.Visibility= Visibility.Collapsed;
-            NagyKazamata_Grid.Visibility=Visibility.Collapsed;
 
             sp.Stop();
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
@@ -688,7 +447,7 @@ namespace szakmajDusza
         private void GoToGame_Button_Click(object sender, RoutedEventArgs e)
         {
             Menu_Grid.Visibility = Visibility.Collapsed;
-            PakliOssze_Grid.Visibility = Visibility.Visible;
+            ChooseKornyezet_Grid.Visibility = Visibility.Visible;
         }
 
         private void GoToOptions_Button_Click(object sender, RoutedEventArgs e)
@@ -702,6 +461,7 @@ namespace szakmajDusza
         {
             Menu_Grid.Visibility = Visibility.Visible;
             Options_Grid.Visibility = Visibility.Collapsed;
+            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
         }
 
         private void SFX_On(object sender, RoutedEventArgs e)
@@ -724,6 +484,52 @@ namespace szakmajDusza
         {
             Menu_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModifyKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
+        {
+            LoadData($"kornyezet\\{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
+            PakliOssze_Grid.Visibility = Visibility.Visible;
+            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
+        }
+
+        private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AutoResizeButtons();
+        }
+
+        private void AutoResizeButtons()
+        {
+            if (DynamicButtonsPanel.Children.Count == 0)
+                return;
+
+            double panelWidth = DynamicButtonsPanel.ActualWidth;
+            double minButtonWidth = 250; // minimális gombszélesség
+            int buttonsPerRow = Math.Max(1, (int)(panelWidth / minButtonWidth));
+
+            double buttonWidth = (panelWidth / buttonsPerRow) - 20; // 20 = margin
+
+            foreach (Button b in DynamicButtonsPanel.Children)
+            {
+                b.Width = buttonWidth;
+                b.Height = buttonWidth * 0.6; // arányos magasság
+                b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
+            }
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

@@ -35,6 +35,8 @@ namespace szakmajDusza
         public static MediaPlayer sp = new MediaPlayer();
         public static MediaPlayer se = new MediaPlayer();
 
+
+
         public static float spVolume = 0.3f;
         public MainWindow()
         {
@@ -49,9 +51,8 @@ namespace szakmajDusza
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Collapsed;
-            /*UploadKazamata();
-            UploadCards();*/
-            LoadData("");//add path selector
+            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
+            
             sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
@@ -60,6 +61,8 @@ namespace szakmajDusza
                 sp.Play();
             };
             sp.Play();
+
+            KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
         public void LoadData(string path)
         {
@@ -688,7 +691,7 @@ namespace szakmajDusza
         private void GoToGame_Button_Click(object sender, RoutedEventArgs e)
         {
             Menu_Grid.Visibility = Visibility.Collapsed;
-            PakliOssze_Grid.Visibility = Visibility.Visible;
+            ChooseKornyezet_Grid.Visibility = Visibility.Visible;
         }
 
         private void GoToOptions_Button_Click(object sender, RoutedEventArgs e)
@@ -702,6 +705,7 @@ namespace szakmajDusza
         {
             Menu_Grid.Visibility = Visibility.Visible;
             Options_Grid.Visibility = Visibility.Collapsed;
+            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
         }
 
         private void SFX_On(object sender, RoutedEventArgs e)
@@ -724,6 +728,26 @@ namespace szakmajDusza
         {
             Menu_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ModifyKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
+        {
+            LoadData($"kornyezet\\{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

@@ -9,20 +9,26 @@
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920">
             <Grid Name="Menu_Grid" Visibility="Collapsed">
-                <Button FontSize="60" Name="GoToGame_Button" Content="Játék" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
-                <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
+                <Button FontSize="60" Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
+                <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
                 <Button FontSize="60" Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
                 <Button FontSize="60" Name="Exit_Button" Content="Kilépés" HorizontalAlignment="Center" Margin="0,160,0,160" VerticalAlignment="Bottom" Width="724" Height="132" Click="Exit_Button_Click"/>
 
 
             </Grid>
 
-            <Grid Name="JatekMester_Grid" Visibility="Visible">
-                <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,960,0"/>
-                <Button Content="Hozzáadás" HorizontalAlignment="Left" Margin="1240,250,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <Button Content="Módosítás" HorizontalAlignment="Left" Margin="1240,440,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <Button Content="Törlés" HorizontalAlignment="Left" Margin="1240,674,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+            <Grid Name="JatekMester_Grid" Visibility="Collapsed">
+                <ListBox x:Name="KornyezetekMester_List" Margin="0,0,960,0"/>
+                <Button Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="1240,250,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
+                <Button Name="ModifyKornyezet_Button" Content="Módosítás" HorizontalAlignment="Left" Margin="1240,490,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="ModifyKornyezet_Button_Click"/>
+                <Button Name="DeleteKornyezet_Button" Content="Törlés" HorizontalAlignment="Left" Margin="1240,674,0,250" VerticalAlignment="Bottom" Width="400" Height="100" FontSize="50" Click="DeleteKornyezet_Button_Click"/>
 
+            </Grid>
+
+            <Grid Name="ChooseKornyezet_Grid" Visibility="Visible">
+                <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,960,0"/>
+                <Button Name="PlayInKornyezet" Content="Kiválasztás" HorizontalAlignment="Left" Margin="1240,400,0,0" VerticalAlignment="Top" FontSize="60" Height="100" Width="400" Click="PlayInKornyezet_Click"/>
+                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1240,0,0,400" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
             
             <Grid Name="Options_Grid" Visibility="Collapsed">

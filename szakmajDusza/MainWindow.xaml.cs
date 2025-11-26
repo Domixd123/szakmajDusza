@@ -68,7 +68,7 @@ namespace szakmajDusza
 
         public static Grid FightGrid = new Grid();
 
-        public static float spVolume = 0.3f;
+        public static float spVolume = 0.2f;
         public MainWindow()
         {
             InitializeComponent();
@@ -224,7 +224,12 @@ namespace szakmajDusza
                 Button b = new Button();
                 b.Click += (s, e) =>
                 {
+
                     ShowKazamata(AllKazamataDict[item.Name]);
+                    if (new Random().Next(2) == 1)
+                    {
+                        sp.Open(new Uri("Sounds/Nehez.wav", UriKind.Relative));
+                    }
                 };
                 b.Content = item.Name;
                 b.Margin = new Thickness(10,0,0,0);
@@ -749,7 +754,7 @@ namespace szakmajDusza
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            spVolume = (float)Sl.Value * 0.006f;
+            spVolume = (float)Sl.Value * 0.004f;
             sp.Volume = spVolume;
         }
 

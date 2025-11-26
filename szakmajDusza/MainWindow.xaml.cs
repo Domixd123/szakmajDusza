@@ -44,11 +44,10 @@ namespace szakmajDusza
             EgyszeriKazamata_Grid.Visibility = Visibility.Collapsed;
             KisKazamata_Grid.Visibility = Visibility.Collapsed;
             NagyKazamata_Grid.Visibility = Visibility.Collapsed;
+            JatekMester_Grid.Visibility = Visibility.Collapsed;
             UploadKazamata();
             UploadCards();
 
-            se = new MediaPlayer();
-            sp = new MediaPlayer();
             sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
@@ -698,6 +697,12 @@ namespace szakmajDusza
         {
             spVolume = (float)Sl.Value * 0.006f;
             sp.Volume = spVolume;
+        }
+
+        private void GoToMaster_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Menu_Grid.Visibility = Visibility.Collapsed;
+            JatekMester_Grid.Visibility = Visibility.Visible;
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

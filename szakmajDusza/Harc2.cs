@@ -1,18 +1,37 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.IO;
+
 
 namespace szakmajDusza
 {
 	public class Harc2
 	{
-		//vizuáls gotta make it work
-		public static double playSpeedMultiplier = 1d;
+		public static Random random = new Random();
+        //vizuáls gotta make it work
+        public static double playSpeedMultiplier = 1d;
 		public static double basePlaySpeed = 750;//in miliseconds
-		public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata)
+		public static double rnd()
+		{
+			return random.Next(0, 1_000_001) / 1_000_000.0;
+
+        }
+
+		public static int kazDamage(float damage, int difficulty)
+		{
+            double roll = rnd(); // 0.0 .. 1.0 inclusive
+            return (int)Math.Round(damage * (1 + (roll * difficulty/10)));
+        }
+        public static int plyDamage(float damage, int difficulty)
+        {
+            double roll = rnd(); // 0.0 .. 1.0 inclusive
+            return (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
+        }
+        public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata, int difficulty)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
 			List<Card> kazamataCopies = k.Defenders.Select(c => c.GetCopy()).ToList();
@@ -68,8 +87,8 @@ namespace szakmajDusza
 				}
 				else if (kaz != null)
 				{
-					kaz.HP -= (int)Math.Floor(play.Damage * Multiplier(play, kaz));
-					kaz.UpdateVisualDamage((int)Math.Floor(play.Damage * Multiplier(play, kaz)));
+					kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)),difficulty);
+					await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
@@ -127,8 +146,8 @@ namespace szakmajDusza
 				}
 				else if (play != null)
 				{
-					play.HP -= (int)Math.Floor(kaz.Damage * Multiplier(kaz, play));
-					play.UpdateVisualDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)));
+					play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)),difficulty);
+					await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					play.UpdateVisual();
 					attack.Visibility = Visibility.Collapsed;

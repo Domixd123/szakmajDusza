@@ -248,19 +248,21 @@ namespace szakmajDusza
 		//tesztes
 		static public void StartFight(Kazamata k, List<Card> pakli, StreamWriter w)
 		{
-			Card? kaz = null;
+			List<Card> kazPak = k.GetCopy().Defenders;
+			List<Card> playPak = Card.GetListCopy(pakli);	
+            Card? kaz = null;
 			Card? play = null;
 			bool kazWin = false;
 			int kor = 1;
 			w.WriteLine($"harc kezdodik;{k.Name}");
-			while ((k.Defenders.Count != 0 || kaz != null))
+			while ((kazPak.Count != 0 || kaz != null))
 			{
 				w.WriteLine();
 				if (kaz == null)
 				{
-					kaz = k.Defenders[0].GetCopy();
+					kaz = kazPak[0];
 					w.WriteLine($"{kor}.kor;kazamata;kijatszik;{kaz.Name};{kaz.Damage};{kaz.HP};{kaz.Tipus.ToString()}");
-					k.Defenders.RemoveAt(0);
+					kazPak.RemoveAt(0);
 				}
 				else
 				{
@@ -272,14 +274,14 @@ namespace szakmajDusza
 					}
 				}
 
-				if (play == null && pakli.Count != 0)
+				if (play == null && playPak.Count != 0)
 				{
-					play = pakli[0].GetCopy();
+					play = playPak[0];
 					w.WriteLine($"{kor}.kor;jatekos;kijatszik;{play.Name};{play.Damage};{play.HP};{play.Tipus.ToString()}");
 
-					pakli.RemoveAt(0);
+					playPak.RemoveAt(0);
 				}
-				else if (play == null && pakli.Count == 0)
+				else if (play == null && playPak.Count == 0)
 				{
 					kazWin = true;
 					break;

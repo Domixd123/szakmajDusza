@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -80,6 +81,7 @@ namespace szakmajDusza
             JatekMester_Grid.Visibility = Visibility.Collapsed;
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
             FightGrid.Visibility = Visibility.Collapsed;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
 
             idk.Children.Add(FightGrid);
             sp.Volume = spVolume;
@@ -92,6 +94,7 @@ namespace szakmajDusza
             sp.Play();
 
             KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
+            KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
         public void LoadData(string path)
         {
@@ -743,7 +746,8 @@ namespace szakmajDusza
 
         private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            JatekMester_Grid.Visibility = Visibility.Collapsed;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;
         }
 
         private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
@@ -775,6 +779,42 @@ namespace szakmajDusza
                 b.Height = buttonWidth * 0.6; // arányos magasság
                 b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
             }
+        }
+
+        private void KornyezetekMester_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            JatekMester_Grid.Visibility = Visibility.Collapsed;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;
+        }
+
+        private void BackToJatekMester(object sender, RoutedEventArgs e)
+        {
+            JatekMester_Grid.Visibility = Visibility.Visible;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+        }
+
+        private void ListKartya_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MindenKartya_List.Visibility = Visibility.Visible;
+            foreach (var item in AllCards)
+            {
+                MindenKartya_List.Children.Add(item.GetCopy().GetVisual());
+                item.Clicked += (s, e) => { SelectForModify(item); };
+            }
+            CreateNewCard_Button.Visibility = Visibility.Visible;
+        }
+
+        private void SelectForModify(Card k)
+        {
+            MindenKartya_List.Visibility = Visibility.Collapsed;
+            SelectedCard_Wrap.Visibility = Visibility.Visible;
+            SelectedCard_Wrap.Children.Add(k.GetVisual());
+            TypeAttack.Visibility = Visibility.Visible;
+            TypeDefense.Visibility = Visibility.Visible;
+            TypeCardName.Visibility = Visibility.Visible;
+            SelectType.Visibility  = Visibility.Visible;
+
+            SelectType.ItemsSource = new string[] { "Tűz", "Víz", "Föld", "Szél"}; 
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

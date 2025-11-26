@@ -61,7 +61,7 @@ namespace szakmajDusza
         //public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
         //public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
         //public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
-
+         
         public static MediaPlayer sp = new MediaPlayer();
         public static MediaPlayer se = new MediaPlayer();
 

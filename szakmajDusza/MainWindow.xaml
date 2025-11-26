@@ -8,7 +8,7 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" Name="idk">
-            <Grid Name="Menu_Grid" Visibility="Collapsed">
+            <Grid Name="Menu_Grid" Visibility="Visible" d:IsHidden="True">
                 <Button FontSize="60" Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
                 <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
                 <Button FontSize="60" Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
@@ -17,7 +17,7 @@
 
             </Grid>
 
-            <Grid Name="JatekMester_Grid" Visibility="Collapsed">
+            <Grid Name="JatekMester_Grid" Visibility="Visible" d:IsHidden="True">
                 <ListBox x:Name="KornyezetekMester_List" Margin="0,0,960,0"/>
                 <Button Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="1240,250,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
                 <Button Name="ModifyKornyezet_Button" Content="Módosítás" HorizontalAlignment="Left" Margin="1240,490,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="ModifyKornyezet_Button_Click"/>
@@ -25,13 +25,13 @@
 
             </Grid>
 
-            <Grid Name="ChooseKornyezet_Grid" Visibility="Collapsed">
+            <Grid Name="ChooseKornyezet_Grid" Visibility="Collapsed" d:IsHidden="True">
                 <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,960,0"/>
                 <Button Name="PlayInKornyezet" Content="Kiválasztás" HorizontalAlignment="Left" Margin="1240,400,0,0" VerticalAlignment="Top" FontSize="60" Height="100" Width="400" Click="PlayInKornyezet_Click"/>
                 <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1240,0,0,400" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
-            
-            <Grid Name="Options_Grid" Visibility="Collapsed">
+
+            <Grid Name="Options_Grid" Visibility="Visible" d:IsHidden="True">
 
                 <StackPanel Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
 
@@ -83,8 +83,8 @@
 
 
 
-            <Grid Name="PakliOssze_Grid" Visibility="Collapsed">
-                
+            <Grid Name="PakliOssze_Grid" Visibility="Collapsed" d:IsHidden="True">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="335*"/>
                     <RowDefinition Height="197*"/>
@@ -108,10 +108,11 @@
                 <Label Content="Kazamaták:" HorizontalAlignment="Left" Height="87" Margin="100,50,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
                 <Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
                 <Label Name="EveryCard_Label" Visibility="Collapsed" Foreground="Red" Content="Már minden kártyát megszereztél!" HorizontalAlignment="Left" Margin="1290,482,0,0" VerticalAlignment="Top"/>
+                <Button Content="Button" Name="mentes" HorizontalAlignment="Left" Height="202" Margin="1317,403,0,0" VerticalAlignment="Top" Width="278"/>
 
             </Grid>
 
-            
+
 
             <!--<Grid Name="NagyKazamata_Grid" Visibility="Collapsed" d:IsHidden="True">
                 <WrapPanel Name="FightPlayerNagy_Wrap" Margin="115,263,1343,37" Width="400"/>

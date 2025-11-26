@@ -19,7 +19,37 @@ namespace szakmajDusza
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
+        static WrapPanel FightPlayer_Wrap = new WrapPanel();
+
+        static WrapPanel FightKazamata_Wrap = new WrapPanel();
+
+       static  Label Defend_Label = new Label();
+
+        static Label Attack_Label = new Label();
+
+        static Label DefendDeploy_Label = new Label();
+
+       static  Label AttackDeploy_Label = new Label();
+
+       static  WrapPanel Fight_Wrap = new WrapPanel();
+
+        static WrapPanel FightPlayerAttacker_Wrap = new WrapPanel();
+
+        static WrapPanel FightKazamataAttacker_Wrap = new WrapPanel();
+
+        static Button Harc = new Button();
+        static Button Vissza = new Button();
+
+        static Button ChangeSpeed = new Button();
+
+        static Label Speed_Label = new Label();
+
+
+
+
+
+
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
         public static List<Card> AllCards = new List<Card>();
@@ -35,7 +65,7 @@ namespace szakmajDusza
         public static MediaPlayer sp = new MediaPlayer();
         public static MediaPlayer se = new MediaPlayer();
 
-
+        public static Grid FightGrid = new Grid();
 
         public static float spVolume = 0.3f;
         public MainWindow()
@@ -49,7 +79,9 @@ namespace szakmajDusza
             MainRoom_Grid.Visibility = Visibility.Collapsed;
             JatekMester_Grid.Visibility = Visibility.Collapsed;
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
-            
+            FightGrid.Visibility = Visibility.Collapsed;
+
+            idk.Children.Add(FightGrid);
             sp.Volume = spVolume;
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.MediaEnded += (s, e) =>
@@ -161,9 +193,206 @@ namespace szakmajDusza
                 Cards_Wrap.Children.Add(item.GetVisual());
             }
 
+            foreach (var item in AllKazamata)
+            {
+                Button b = new Button();
+                b.Click += (s, e) =>
+                {
+                    ShowKazamata(AllKazamataDict[item.Name]);
+                };
+                b.Content = item.Name;
+                b.Margin = new Thickness(10,0,0,0);
+                DynamicButtonsPanel.Children.Add(b);
+            }
+
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
         }
         
+        private void ShowKazamata(Kazamata k)
+        {
+             FightPlayer_Wrap = new WrapPanel()
+            {
+                Name = "FightPlayer_Wrap",
+                Margin = new Thickness(115, 263, 1343, 37),
+                Width = 400
+            };
+
+             FightKazamata_Wrap = new WrapPanel()
+            {
+                Name = "FightKazamata_Wrap",
+                Margin = new Thickness(1386, 263, 146, 37),
+                Width = 400
+            };
+
+            Defend_Label = new Label()
+            {
+                Name = "Defend_Label",
+                Content = "Kazamata támad",
+                Foreground = Brushes.Red,
+                FontSize = 60,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 116, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                Visibility = Visibility.Collapsed
+            };
+
+             Attack_Label = new Label()
+            {
+                Name = "Attack_Label",
+                Content = "Játékos támad",
+                Foreground = Brushes.Green,
+                FontSize = 60,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 116, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                 Visibility = Visibility.Collapsed
+             };
+
+             DefendDeploy_Label = new Label()
+            {
+                Name = "DefendDeploy_Label",
+                Content = "Kazamata kijátszik",
+                Foreground = Brushes.Red,
+                FontSize = 60,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 116, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                 Visibility = Visibility.Collapsed
+             };
+
+             AttackDeploy_Label = new Label()
+            {
+                Name = "AttackDeploy_Label",
+                Content = "Játékos kijátszik",
+                Foreground = Brushes.Green,
+                FontSize = 60,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Margin = new Thickness(0, 116, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                 Visibility = Visibility.Collapsed
+             };
+
+             Fight_Wrap = new WrapPanel()
+            {
+                Name = "Fight_Wrap",
+                Margin = new Thickness(665, 310, 665, 362)
+            };
+
+             FightPlayerAttacker_Wrap = new WrapPanel()
+            {
+                Name = "FightPlayerAttacker_Wrap",
+                Margin = new Thickness(740, 310, 965, 362)
+            };
+
+             FightKazamataAttacker_Wrap = new WrapPanel()
+            {
+                Name = "FightKazamataAttacker_Wrap",
+                Margin = new Thickness(960, 310, 746, 362)
+            };
+
+             Harc = new Button()
+            { 
+                Name = "Harc",
+                Content = "Harc",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 100,
+                Margin = new Thickness(0, 650, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                Width = 300,
+                FontSize = 60
+            };
+
+             Vissza = new Button()
+            {
+                Name = "Vissza",
+                Content = "Vissza",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 100,
+                Margin = new Thickness(0, 794, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                Width = 300,
+                FontSize = 60
+            };
+            Vissza.Click += Vissza_Button_Click;
+
+             ChangeSpeed = new Button()
+            {
+                Content = "Harc gyorsítása",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Height = 77,
+                Margin = new Thickness(1641, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                Width = 279,
+                FontSize = 30
+            };
+            ChangeSpeed.Click += ChangeSpeed_Click;
+
+             Speed_Label = new Label()
+            {
+                Name = "Speed_Label",
+                FontStyle = FontStyles.Oblique,
+                FontSize = 50,
+                Content = "1x",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(1746, 71, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top
+            };
+
+            FightGrid.Height = 1080;
+            FightGrid.Width = 1920;
+            FightGrid.Visibility = Visibility.Visible;
+            MainRoom_Grid.Visibility = Visibility.Collapsed;
+
+
+            foreach (var item in Jatekos)
+            {
+                FightPlayer_Wrap.Children.Add(item.GetCopy().GetVisual());
+            }
+            foreach (var item in k.Defenders)
+            {
+                FightKazamata_Wrap.Children.Add(item.GetCopy().GetVisual());
+            }
+
+            FightGrid.Children.Add(FightPlayer_Wrap);
+            FightGrid.Children.Add(FightKazamata_Wrap);
+            FightGrid.Children.Add(Defend_Label);
+            FightGrid.Children.Add(Attack_Label);
+            FightGrid.Children.Add(DefendDeploy_Label);
+            FightGrid.Children.Add(AttackDeploy_Label);
+            FightGrid.Children.Add(Fight_Wrap);
+            FightGrid.Children.Add(FightPlayerAttacker_Wrap);
+            FightGrid.Children.Add(FightKazamataAttacker_Wrap);
+            FightGrid.Children.Add(Harc);
+            FightGrid.Children.Add(Vissza);
+            FightGrid.Children.Add(ChangeSpeed);
+            FightGrid.Children.Add(Speed_Label);
+
+            Harc.Click += (s, e) =>
+            {
+                Harc.Visibility = Visibility.Collapsed;
+                Vissza.Visibility = Visibility.Collapsed;
+                Harc2.StartFight(FightGrid,Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label,AttackDeploy_Label,DefendDeploy_Label,FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, 0);
+                
+            };
+
+        }
+
+        public static void RemoveShitFomrShit()
+        {
+            FightGrid.Children.Remove(FightPlayer_Wrap);
+            FightGrid.Children.Remove(FightKazamata_Wrap);
+            FightGrid.Children.Remove(Defend_Label);
+            FightGrid.Children.Remove(Attack_Label);
+            FightGrid.Children.Remove(DefendDeploy_Label);
+            FightGrid.Children.Remove(AttackDeploy_Label);
+            FightGrid.Children.Remove(Fight_Wrap);
+            FightGrid.Children.Remove(FightPlayerAttacker_Wrap);
+            FightGrid.Children.Remove(FightKazamataAttacker_Wrap);
+            FightGrid.Children.Remove(Harc);
+            FightGrid.Children.Remove(Vissza);
+            FightGrid.Children.Remove(ChangeSpeed);
+            FightGrid.Children.Remove(Speed_Label);
+        }
 
         private void AddToPakli(object? sender, Card clicked)
         {
@@ -353,7 +582,7 @@ namespace szakmajDusza
                     break;
             }
 
-            //Speed_Label.Content = $"{Harc2.playSpeedMultiplier}x";
+            Speed_Label.Content = $"{Harc2.playSpeedMultiplier}x";
 
 
         }
@@ -432,11 +661,12 @@ namespace szakmajDusza
                 }
             }
             MainRoom_Grid.Visibility = Visibility.Visible;
+            FightGrid.Visibility = Visibility.Collapsed;
 
             sp.Stop();
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.Play();
-
+            RemoveShitFomrShit();
             ShowPakli();
         }
         public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)

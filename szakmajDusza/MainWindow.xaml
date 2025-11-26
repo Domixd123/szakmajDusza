@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
-        <Grid Height="1080" Width="1920">
+        <Grid Height="1080" Width="1920" Name="idk">
             <Grid Name="Menu_Grid" Visibility="Collapsed">
                 <Button FontSize="60" Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
                 <Button FontSize="60" Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>

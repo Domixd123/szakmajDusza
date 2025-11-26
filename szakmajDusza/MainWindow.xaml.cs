@@ -124,11 +124,11 @@ namespace szakmajDusza
                 {
                     if (AllCardsDict.ContainsKey(data[1]))
                     {
-                        Jatekos.Add(AllCardsDict[data[1]].GetCopy());
+                        Gyujtemeny.Add(AllCardsDict[data[1]].GetCopy());
                     }
                     else if (AllLeadersDict.ContainsKey(data[1]))
                     {
-                        Jatekos.Add(AllLeadersDict[data[1]].GetCopy());
+                        Gyujtemeny.Add(AllLeadersDict[data[1]].GetCopy());
                     }
                 }
                 else if (data[0] == "uj pakli")
@@ -138,15 +138,22 @@ namespace szakmajDusza
                     {
                         if (AllCardsDict.ContainsKey(kartyanevek[i]))
                         {
-                            Jatekos.Add(AllCardsDict[kartyanevek[i]]);
+                            Gyujtemeny.Add(AllCardsDict[kartyanevek[i]]);
                         }
                         else if (AllLeadersDict.ContainsKey(kartyanevek[i]))
                         {
-                            Jatekos.Add(AllCardsDict[kartyanevek[i]]);
+                            Gyujtemeny.Add(AllCardsDict[kartyanevek[i]]);
                         }
                     }
                 }
             }
+            foreach (var item in Gyujtemeny)
+            {
+                item.Clicked += AddToPakli;
+                Cards_Wrap.Children.Add(item.GetVisual());
+            }
+
+            SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
         }
         
 
@@ -503,7 +510,7 @@ namespace szakmajDusza
 
         private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
         {
-            LoadData($"kornyezet\\{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
+            LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
             PakliOssze_Grid.Visibility = Visibility.Visible;
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
         }

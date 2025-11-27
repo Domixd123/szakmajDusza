@@ -13,6 +13,7 @@ namespace szakmajDusza
     /// </summary>
     public partial class MainWindow : Window
     {
+        static Stack<Grid> elozoGrid = new Stack<Grid>();
         static Label Jutalom = new Label();
         static WrapPanel FightPlayer_Wrap = new WrapPanel();
 
@@ -75,6 +76,8 @@ namespace szakmajDusza
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
             FightGrid.Visibility = Visibility.Collapsed;
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+
             
 
             idk.Children.Add(FightGrid);

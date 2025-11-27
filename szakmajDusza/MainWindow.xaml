@@ -8,6 +8,16 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
+            <Grid x:Name="Shop_Grid" HorizontalAlignment="Center" Height="1070" VerticalAlignment="Top" Width="1920">
+                <WrapPanel x:Name="CardMerge" Margin="100,102,856,535"/>
+                <WrapPanel x:Name="Shop_Wrap" HorizontalAlignment="Left" Height="239" Margin="100,723,0,0" VerticalAlignment="Top" Width="1332"/>
+                <Button x:Name="Shop_Refresh" Content="Újra pörgetés" HorizontalAlignment="Left" Height="190" Margin="1544,772,0,0" VerticalAlignment="Top" Width="296"/>
+                <Button x:Name="Shop_Merge" Content="Kártyák eggyesítése" HorizontalAlignment="Left" Height="190" Margin="1396,128,0,0" VerticalAlignment="Top" Width="296"/>
+                <WrapPanel x:Name="Shop_Merging_Cards" HorizontalAlignment="Left" Height="212" Margin="1396,323,0,0" VerticalAlignment="Top" Width="296"/>
+            </Grid>
+
+
+
             <Grid x:Name="Menu_Grid" Visibility="Collapsed">
                 <Button FontSize="60" x:Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
                 <Button FontSize="60" x:Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
@@ -111,9 +121,10 @@
                 <Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
                 <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
+                <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1293,358,0,0" VerticalAlignment="Top" Width="315" Height="85"/>
 
             </Grid>
-            <Grid x:Name="MainRoom_Grid" Visibility="Visible">
+            <Grid x:Name="MainRoom_Grid" Visibility="Collapsed">
                 <WrapPanel x:Name="PakliCards_Wrap" Margin="100,594,648,20"/>
                 <WrapPanel x:Name="DynamicButtonsPanel"
            Margin="100,142,502,578"

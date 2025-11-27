@@ -75,6 +75,7 @@ namespace szakmajDusza
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
             FightGrid.Visibility = Visibility.Collapsed;
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            
 
             idk.Children.Add(FightGrid);
             sp.Volume = spVolume;
@@ -119,6 +120,8 @@ namespace szakmajDusza
             AllCardsDict.Clear();
             AllLeadersDict.Clear();
             AllKazamataDict.Clear();
+            Cards_Wrap.Children.Clear();
+            PlayerCards_Wrap.Children.Clear();
             StreamReader sr = new StreamReader(path);
             while (!sr.EndOfStream)
             {

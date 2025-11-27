@@ -6,244 +6,244 @@
         xmlns:local="clr-namespace:szakmajDusza"
         mc:Ignorable="d"
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
-    <Viewbox Stretch="Fill" StretchDirection="Both">
-        <Grid Height="1080" Width="1920" x:Name="idk">
-            <Grid x:Name="Menu_Grid" Visibility="Collapsed">
-                <Button FontSize="60" x:Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
-                <Button FontSize="60" x:Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
-                <Button FontSize="60" x:Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
-                <Button FontSize="60" x:Name="Exit_Button" Content="Kilépés" HorizontalAlignment="Center" Margin="0,160,0,160" VerticalAlignment="Bottom" Width="724" Height="132" Click="Exit_Button_Click"/>
+	<Viewbox Stretch="Fill" StretchDirection="Both">
+		<Grid Height="1080" Width="1920" x:Name="idk">
+			<Grid x:Name="Menu_Grid" Visibility="Collapsed" d:IsHidden="True">
+				<Button FontSize="60" x:Name="GoToGame_Button" Content="Játékos mód" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" Width="1056" Height="150" Click="GoToGame_Button_Click"/>
+				<Button FontSize="60" x:Name="GoToMaster_Button" Content="Játékmester mód" HorizontalAlignment="Center" VerticalAlignment="Top" Width="1056" Height="150" Margin="0,350,0,0" Click="GoToMaster_Button_Click"/>
+				<Button FontSize="60" x:Name="GoToOptions_Button" Content="Beállítások" HorizontalAlignment="Center" Margin="0,540,0,0" VerticalAlignment="Top" Width="1056" Height="132" Click="GoToOptions_Button_Click"/>
+				<Button FontSize="60" x:Name="Exit_Button" Content="Kilépés" HorizontalAlignment="Center" Margin="0,160,0,160" VerticalAlignment="Bottom" Width="724" Height="132" Click="Exit_Button_Click"/>
 
 
-            </Grid>
+			</Grid>
 
-            <Grid x:Name="JatekMester_Grid" Visibility="Visible" d:IsHidden="True">
-                <ListBox x:Name="KornyezetekMester_List" SelectionChanged="KornyezetekMester_List_SelectionChanged" Margin="0,0,0,341"/>
-                <Button x:Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="560,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+			<Grid x:Name="JatekMester_Grid" Visibility="Visible" d:IsHidden="True">
+				<ListBox x:Name="KornyezetekMester_List" SelectionChanged="KornyezetekMester_List_SelectionChanged" Margin="0,0,0,341"/>
+				<Button x:Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="560,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
+				<Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
-            </Grid>
-            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed" d:IsHidden="True">
-                <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="143,190,1420,329"/>
-                <Label x:Name="KartyaSzerkesztoCardName" Visibility="Visible" HorizontalAlignment="Left" Margin="700,201,0,0" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="TypeAttack" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="TypeDefense" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,415,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" d:IsHidden="True"/>
-                <ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,0,0,0" VerticalAlignment="Center" Width="120"/>
-                <Button Click="BackToKornyezetSzerkeszto_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="464,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-            </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
-                <Button Click="BackToJatekMester" Content="Vissza" HorizontalAlignment="Left" Margin="143,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
-                <Button x:Name="KornyezetMentes_Button" Content="Mentés" HorizontalAlignment="Left" Margin="1490,866,0,0" VerticalAlignment="Top" Height="139" Width="292" FontSize="60"/>
-                <Button x:Name="Kazamata_Button" Content="Kazamata" HorizontalAlignment="Left" Margin="700,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
-                <Button x:Name="ListKartya_Button" Content="Kártya" HorizontalAlignment="Left" Margin="1030,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60" Click="ListKartya_Button_Click"/>
-                <WrapPanel x:Name="MindenKartya_List" Visibility="Collapsed" Margin="143,0,138,358"/>
-                <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="143,65,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
-            </Grid>
+			</Grid>
+			<Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed">
+				<WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="143,190,1420,329"/>
+				<Label x:Name="KartyaSzerkesztoCardName" Visibility="Visible" HorizontalAlignment="Left" Margin="700,201,0,0" VerticalAlignment="Top" Width="120"/>
+				<TextBox x:Name="TypeAttack" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,285,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+				<TextBox x:Name="TypeDefense" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,390,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.455,-2.049"/>
+				<ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="700,525,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.544,-2.681"/>
+				<Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+				<Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+			</Grid>
+			<Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
+				<Button Click="BackToJatekMester" Content="Vissza" HorizontalAlignment="Left" Margin="143,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
+				<Button x:Name="KornyezetMentes_Button" Content="Mentés" HorizontalAlignment="Left" Margin="1490,866,0,0" VerticalAlignment="Top" Height="139" Width="292" FontSize="60"/>
+				<Button x:Name="Kazamata_Button" Content="Kazamata" HorizontalAlignment="Left" Margin="700,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
+				<Button x:Name="ListKartya_Button" Content="Kártya" HorizontalAlignment="Left" Margin="1030,866,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60" Click="ListKartya_Button_Click"/>
+				<WrapPanel x:Name="MindenKartya_List" Visibility="Collapsed" Margin="143,0,138,358"/>
+				<Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="143,65,0,0" VerticalAlignment="Top" Height="139" Width="460" FontSize="60"/>
+			</Grid>
 
-            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed" d:IsHidden="True">
-                <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,960,0"/>
-                <Button x:Name="PlayInKornyezet" Content="Kiválasztás" HorizontalAlignment="Left" Margin="1240,400,0,0" VerticalAlignment="Top" FontSize="60" Height="100" Width="400" Click="PlayInKornyezet_Click"/>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1240,0,0,400" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
-            </Grid>
+			<Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed" d:IsHidden="True">
+				<ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,960,0"/>
+				<Button x:Name="PlayInKornyezet" Content="Kiválasztás" HorizontalAlignment="Left" Margin="1240,400,0,0" VerticalAlignment="Top" FontSize="60" Height="100" Width="400" Click="PlayInKornyezet_Click"/>
+				<Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1240,0,0,400" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
+			</Grid>
 
-            <Grid x:Name="Options_Grid" Visibility="Collapsed" d:IsHidden="True">
+			<Grid x:Name="Options_Grid" Visibility="Collapsed" d:IsHidden="True">
 
-                <Grid.Resources>
-                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-                    <Style TargetType="{x:Type RadioButton}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Grid Width="28" Height="28" Margin="5">
-                                            <Ellipse Stroke="Gold" StrokeThickness="3"/>
-                                            <Ellipse Fill="Gold" Margin="6" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                        </Grid>
+				<Grid.Resources>
+					<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+					<Style TargetType="{x:Type RadioButton}">
+						<Setter Property="Template">
+							<Setter.Value>
+								<ControlTemplate TargetType="{x:Type RadioButton}">
+									<StackPanel Orientation="Horizontal">
+										<Grid Width="28" Height="28" Margin="5">
+											<Ellipse Stroke="Gold" StrokeThickness="3"/>
+											<Ellipse Fill="Gold" Margin="6" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+										</Grid>
 
-                                        <ContentPresenter VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="Gold"/>
-                        <Setter Property="FontSize" Value="28"/>
-                        <Setter Property="Cursor" Value="Hand"/>
-                    </Style>
-                </Grid.Resources>
+										<ContentPresenter VerticalAlignment="Center"/>
+									</StackPanel>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+						<Setter Property="Foreground" Value="Gold"/>
+						<Setter Property="FontSize" Value="28"/>
+						<Setter Property="Cursor" Value="Hand"/>
+					</Style>
+				</Grid.Resources>
 
-                <StackPanel Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
+				<StackPanel Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
 
 
-                    <StackPanel Orientation="Horizontal" Margin="0 20">
-                        <TextBlock Text="Hangeffektek:" Foreground="Gold" FontSize="60"
+					<StackPanel Orientation="Horizontal" Margin="0 20">
+						<TextBlock Text="Hangeffektek:" Foreground="Gold" FontSize="60"
                        Width="406" VerticalAlignment="Center"/>
-                        <RadioButton Content="Be" GroupName="SFX" FontSize="60"
+						<RadioButton Content="Be" GroupName="SFX" FontSize="60"
                          Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On"/>
-                        <RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
+						<RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
                          Foreground="Gold"/>
-                    </StackPanel>
+					</StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0 20">
-                        <TextBlock Text="Hangerő:" Foreground="Gold" FontSize="60"
+					<StackPanel Orientation="Horizontal" Margin="0 20">
+						<TextBlock Text="Hangerő:" Foreground="Gold" FontSize="60"
                        Width="298" VerticalAlignment="Center"/>
-                        <Slider x:Name="Sl" Minimum="0" Maximum="100" Width="300" Value="50"
+						<Slider x:Name="Sl" Minimum="0" Maximum="100" Width="300" Value="50"
                     Height="30" ValueChanged="Slider_ValueChanged"/>
-                    </StackPanel>
+					</StackPanel>
 
-                </StackPanel>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Center" Margin="0,790,0,0" VerticalAlignment="Top" FontSize="60" Width="768" Height="120"/>
+				</StackPanel>
+				<Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Center" Margin="0,790,0,0" VerticalAlignment="Top" FontSize="60" Width="768" Height="120"/>
 
-            </Grid>
+			</Grid>
 
 
 
-            <Grid x:Name="PakliOssze_Grid" Visibility="Collapsed" d:IsHidden="True">
+			<Grid x:Name="PakliOssze_Grid" Visibility="Collapsed" d:IsHidden="True">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="335*"/>
-                    <RowDefinition Height="197*"/>
-                </Grid.RowDefinitions>
-                <WrapPanel x:Name="Cards_Wrap" Margin="100,102,100,171"/>
-                <WrapPanel x:Name="PlayerCards_Wrap" Margin="100,5,100,0" Grid.Row="1"/>
-                <Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,504,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
-                <Label x:Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top"/>
-                <Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
-                <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
-                <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="335*"/>
+					<RowDefinition Height="197*"/>
+				</Grid.RowDefinitions>
+				<WrapPanel x:Name="Cards_Wrap" Margin="100,102,100,171"/>
+				<WrapPanel x:Name="PlayerCards_Wrap" Margin="100,5,100,0" Grid.Row="1"/>
+				<Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
+				<Button x:Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,504,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
+				<Label x:Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top"/>
+				<Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
+				<Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
+				<Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
 
-            </Grid>
-            <Grid x:Name="MainRoom_Grid" Visibility="Collapsed" d:IsHidden="True">
-                <WrapPanel x:Name="PakliCards_Wrap" Margin="100,594,648,20"/>
-                <WrapPanel x:Name="DynamicButtonsPanel"
+			</Grid>
+			<Grid x:Name="MainRoom_Grid" Visibility="Collapsed" d:IsHidden="True">
+				<WrapPanel x:Name="PakliCards_Wrap" Margin="100,594,648,20"/>
+				<WrapPanel x:Name="DynamicButtonsPanel"
            Margin="100,142,100,100"
            SizeChanged="DynamicButtonsPanel_SizeChanged"/>
-                <Button x:Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
-                <Label Content="Kazamaták:" HorizontalAlignment="Left" Height="87" Margin="100,50,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
-                <Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
-                <Label x:Name="EveryCard_Label" Visibility="Collapsed" Foreground="Red" Content="Már minden kártyát megszereztél!" HorizontalAlignment="Left" Margin="1290,482,0,0" VerticalAlignment="Top"/>
-                <Button Content="Button" x:Name="mentes" HorizontalAlignment="Left" Height="202" Margin="1317,403,0,0" VerticalAlignment="Top" Width="278"/>
+				<Button x:Name="PakliChange_Button" Content="Pakli megváltoztatása" HorizontalAlignment="Left" Margin="1464,768,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="PakliChange_Button_Click"/>
+				<Label Content="Kazamaták:" HorizontalAlignment="Left" Height="87" Margin="100,50,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
+				<Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
+				<Label x:Name="EveryCard_Label" Visibility="Collapsed" Foreground="Red" Content="Már minden kártyát megszereztél!" HorizontalAlignment="Left" Margin="1290,482,0,0" VerticalAlignment="Top"/>
+				<Button Content="Button" x:Name="mentes" HorizontalAlignment="Left" Height="202" Margin="1317,403,0,0" VerticalAlignment="Top" Width="278"/>
 
-            </Grid>
-
-
+			</Grid>
 
 
 
-        </Grid>
-    </Viewbox>
 
 
-    <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Foreground" Value="Gold"></Setter>
-        </Style>
+		</Grid>
+	</Viewbox>
+
+
+	<Window.Resources>
+		<Style TargetType="Label">
+			<Setter Property="Foreground" Value="Gold"></Setter>
+		</Style>
 
 
 
-        <Style TargetType="Button">
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Padding" Value="15,8"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#3C2A5E" Offset="0"/>
-                        <GradientStop Color="#241B36" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="20" ShadowDepth="4" Color="Black" Opacity="0.6"/>
-                </Setter.Value>
-            </Setter>
+		<Style TargetType="Button">
+			<Setter Property="Cursor" Value="Hand"/>
+			<Setter Property="Foreground" Value="Gold"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="FontSize" Value="20"/>
+			<Setter Property="Padding" Value="15,8"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Background">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Color="#3C2A5E" Offset="0"/>
+						<GradientStop Color="#241B36" Offset="1"/>
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Effect">
+				<Setter.Value>
+					<DropShadowEffect BlurRadius="20" ShadowDepth="4" Color="Black" Opacity="0.6"/>
+				</Setter.Value>
+			</Setter>
 
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border 
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border 
                     Background="{TemplateBinding Background}" 
                     CornerRadius="15"
                     SnapsToDevicePixels="True">
-                            <ContentPresenter 
+							<ContentPresenter 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
                         RecognizesAccessKey="True"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 
-            <!-- Hover -->
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#5C47A1" Offset="0"/>
-                                <GradientStop Color="#3A2A60" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
+			<!-- Hover -->
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background">
+						<Setter.Value>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#5C47A1" Offset="0"/>
+								<GradientStop Color="#3A2A60" Offset="1"/>
+							</LinearGradientBrush>
+						</Setter.Value>
 
-                    </Setter>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect BlurRadius="25" ShadowDepth="2" Color="#FFD9A600" Opacity="0.9"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
+					</Setter>
+					<Setter Property="Effect">
+						<Setter.Value>
+							<DropShadowEffect BlurRadius="25" ShadowDepth="2" Color="#FFD9A600" Opacity="0.9"/>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
 
-                <!-- Nyomva tartás -->
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="#1F172D" Offset="0"/>
-                                <GradientStop Color="#3B2C5A" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="RenderTransform">
-                        <Setter.Value>
-                            <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
+				<!-- Nyomva tartás -->
+				<Trigger Property="IsPressed" Value="True">
+					<Setter Property="Background">
+						<Setter.Value>
+							<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+								<GradientStop Color="#1F172D" Offset="0"/>
+								<GradientStop Color="#3B2C5A" Offset="1"/>
+							</LinearGradientBrush>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
 
-                <!-- Tiltott állapot -->
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.5"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+				<!-- Tiltott állapot -->
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="Opacity" Value="0.5"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 
-        <Style TargetType="Grid">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#14141A" Offset="0"/>
-                        <GradientStop Color="#322C3C" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Window">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#14141A" Offset="0"/>
-                        <GradientStop Color="#322C3C" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
+		<Style TargetType="Grid">
+			<Setter Property="Background">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Color="#14141A" Offset="0"/>
+						<GradientStop Color="#322C3C" Offset="1"/>
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style TargetType="Window">
+			<Setter Property="Background">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Color="#14141A" Offset="0"/>
+						<GradientStop Color="#322C3C" Offset="1"/>
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
+		</Style>
 
 
-    </Window.Resources>
+	</Window.Resources>
 </Window>
     

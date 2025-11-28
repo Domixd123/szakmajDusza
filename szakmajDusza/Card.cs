@@ -14,9 +14,8 @@ namespace szakmajDusza
 		public int Damage { get; set; }
 		public int HP { get; set; }
 		public KartyaTipus Tipus { get; set; }
-		public Item Item { get; set; }
+		public List<Item> Items { get; set; }
 		public bool Vezer { get; set; }
-		public Item VezerItem { get; set; }
 		public bool Disabled { get; set; } = false;
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
@@ -32,14 +31,14 @@ namespace szakmajDusza
 
 		public event EventHandler<Card> Clicked;
 
-		public Card(string n, int d, int h, string tipus, bool vezer, Item item=null, Item vezerItem=null)
+		public Card(string n, int d, int h, string tipus, bool vezer, List<Item> items=null)
 		{
 			Name = n;
 			Damage = d;
 			HP = h;
 			Vezer = vezer;
-			Item = item;
-			VezerItem = vezerItem;
+			if (items == null) items = new List<Item>();
+			Items = items;
 			Tipus = StringToTipus(tipus);
 
 			UpdateAllVisual();

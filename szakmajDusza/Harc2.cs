@@ -26,6 +26,22 @@ namespace szakmajDusza
             double roll = random.NextDouble(); // 0.0 .. 1.0 inclusive
             return (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
         }
+		public static void calculateDamage(Card attacker, Card defender)
+		{
+			int damage = attacker.Damage;
+			foreach (var item in attacker.Items.)
+			{
+
+			}
+		}
+		public static void calculateAttackerHealAfter(Card attacker, Card defender)
+		{
+
+		}
+		public static void calculateDefenderHealAfter(Card attacker,Card defender)
+		{
+
+		}
         public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata, int difficulty)
 		{
 			List<Card> playerCopies = pakli.Select(c => c.GetCopy()).ToList();
@@ -83,6 +99,7 @@ namespace szakmajDusza
 				else if (kaz != null)
 				{
 					kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)),difficulty);
+
 					await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					kaz.UpdateVisual();

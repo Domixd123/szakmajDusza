@@ -42,7 +42,7 @@
                 <Button Click="Back" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Collapsed">
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="140,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
                 <Button x:Name="KornyezetMentes_Button" Content="Mentés" HorizontalAlignment="Right" Margin="0,866,140,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
                 <Button x:Name="Kazamata_Button" Content="Kazamata" HorizontalAlignment="Left" Margin="600,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
@@ -107,21 +107,22 @@
 
 
 
-            <Grid x:Name="PakliOssze_Grid" Visibility="Collapsed">
+            <Grid x:Name="PakliOssze_Grid" Visibility="Visible">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="335*"/>
-                    <RowDefinition Height="197*"/>
+                    <RowDefinition Height="721*"/>
+                    <RowDefinition Height="359*"/>
                 </Grid.RowDefinitions>
                 <WrapPanel x:Name="Cards_Wrap" Margin="100,102,100,171"/>
-                <WrapPanel x:Name="PlayerCards_Wrap" Margin="100,5,100,0" Grid.Row="1"/>
-                <Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top"/>
+                <WrapPanel x:Name="PlayerCards_Wrap" Margin="100,39,100,0" Grid.Row="1"/>
+                <Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top" Height="77" Width="122"/>
                 <Button x:Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,504,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
-                <Label x:Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top"/>
-                <Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top"/>
-                <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top" Height="77" Width="37"/>
+                <Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top" Height="77" Width="10"/>
+                <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top" Height="77" Width="284"/>
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
                 <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1293,358,0,0" VerticalAlignment="Top" Width="315" Height="85"/>
+                <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1293,630,0,0" VerticalAlignment="Top" Width="315" Height="85"/>
 
             </Grid>
             <Grid x:Name="MainRoom_Grid" Visibility="Collapsed">

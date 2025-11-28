@@ -468,28 +468,30 @@ namespace szakmajDusza
 
         public void RemoveShitFomrShit()
         {
+            // Remove static combat UI
             FightGrid.Children.Remove(FightPlayer_Wrap);
             FightGrid.Children.Remove(FightKazamata_Wrap);
-            FightGrid.Children.Remove(Defend_Label);
-            FightGrid.Children.Remove(Attack_Label);
-            FightGrid.Children.Remove(DefendDeploy_Label);
-            FightGrid.Children.Remove(AttackDeploy_Label);
             FightGrid.Children.Remove(Fight_Wrap);
             FightGrid.Children.Remove(FightPlayerAttacker_Wrap);
             FightGrid.Children.Remove(FightKazamataAttacker_Wrap);
+            FightGrid.Children.Remove(Attack_Label);
+            FightGrid.Children.Remove(Defend_Label);
+            FightGrid.Children.Remove(AttackDeploy_Label);
+            FightGrid.Children.Remove(DefendDeploy_Label);
             FightGrid.Children.Remove(Harc);
             FightGrid.Children.Remove(Vissza);
             FightGrid.Children.Remove(ChangeSpeed);
             FightGrid.Children.Remove(Speed_Label);
-            foreach (var item in FightGrid.Children)
+            FightGrid.Children.Remove(Jutalom);
+
+            // Remove reward card if exists
+            foreach (var item in FightGrid.Children.OfType<WrapPanel>().ToList())
             {
-                if (item.GetType() == typeof(WrapPanel) && (item as WrapPanel).Name == "rewardCard")
-                {
-                    (item as WrapPanel).Children.RemoveRange(0, (item as WrapPanel).Children.Count);
-                }
+                if (item.Name == "rewardCard")
+                    FightGrid.Children.Remove(item);
             }
-            DisableNagyKazamata();
         }
+
 
         private void AddToPakli(object? sender, Card clicked)
         {
@@ -1016,14 +1018,15 @@ namespace szakmajDusza
 
             Grid vissza = elozoGrid.Pop();
 
-            // minden gridet elrejtünk
+            // minden grid elrejtése
             foreach (var g in idk.Children.OfType<Grid>())
                 g.Visibility = Visibility.Collapsed;
 
             vissza.Visibility = Visibility.Visible;
 
-            // --- SPECIÁLIS LOGIKA A VISSZÁNAK ---
+            // --- SPECIÁLIS LOGIKA ---
 
+            // 1) Menü → zenét visszakapcsol
             if (vissza == Menu_Grid)
             {
                 sp.Stop();
@@ -1031,23 +1034,20 @@ namespace szakmajDusza
                 sp.Play();
             }
 
-            if (vissza == MainRoom_Grid)
+            // 2) Visszatérés a harcból → harc elemeinek törlése
+            if (vissza == MainRoom_Grid || vissza == PakliOssze_Grid)
             {
                 DisableNagyKazamata();
                 ShowPakli();
             }
 
-            if (vissza == PakliOssze_Grid)
+            // 3) Ha a HARCBÓL lépünk vissza
+            if (vissza != FightGrid)
             {
-                ShowPakli();
-            }
-
-            if (vissza == FightGrid)
-            {
-                // töröljük a harc UI maradékát
-                RemoveShitFomrShit();
+                RemoveShitFomrShit();   // harc UI eltakarítása
             }
         }
+
 
         private void GoToGrid(Grid kovetkezo)
         {

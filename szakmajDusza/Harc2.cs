@@ -29,7 +29,8 @@ namespace szakmajDusza
 		public static void calculateDamage(Card attacker, Card defender)
 		{
 			int damage = attacker.Damage;
-			foreach (var item in attacker.Items.)
+			int magicResistLevel = 0;
+			foreach (var item in defender.Items)
 			{
 
 			}

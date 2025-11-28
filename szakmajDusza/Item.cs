@@ -21,7 +21,7 @@ namespace szakmajDusza
 			{"Krit ütés", new Item("Krit ütés","(Szint*10)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5) },
 			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*5)%-át visszaüti ellenfelére",true,5,5) },
 			{"Kikerülés", new Item("Kikerülés","(Szint*5)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
-			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét",true,5,5) },
+			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5) },
 		};
 		public string Name { get; set; }
 		public string Description { get; set; }

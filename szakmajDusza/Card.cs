@@ -297,7 +297,15 @@ namespace szakmajDusza
 			}
 			DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
 		}
-
+		public async Task UpdateVisualHeal(int heal)
+		{
+			int previousHP = HP - heal;
+			if (HP - heal <= 0)
+			{
+				previousHP = 0;
+			}
+			DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {heal} ❤";
+		}
 
 		public UIElement GetVisual()
 		{

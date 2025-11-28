@@ -1,13 +1,325 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace szakmajDusza
 {
 	public class Item
 	{
+		public static int GoldOwned = 0;
+		public static int shopItemCount = 5;
+		public static int shopRefreshPrice = 2;
+		public static Dictionary<string, Item> Items = new Dictionary<string, Item>();
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool Buyable { get; set; }
+		public bool InRotation { get; set; }
+		public int Price { get; set; }
+		public int OwnedCount { get; set; }
+		public int Level { get; set; }
+		public int MaxLevel { get; set; }
+		public Rectangle Rec { get; private set; }
+		public Button But { get; private set; }
 
+		public Label NameLabel;
+		public Label Name2Label;
+		public Label LevelLabel;
+		public Label MaxLevelLabel;
+		public Label PriceLabel;
+		public Label InfoLabel;      // price / gold  VAGY  level / maxlevel
+		public Label OwnedLabel;     // ownedcount
+		public Label DescLabel;      // description hover alatt
+		public Label NewLabel;
+
+		public Grid visualGroup;
+
+		public event EventHandler<Item> Clicked;
+		public Item(string name, string description, bool buyable, int maxlevel, int price, int level = 0, int ownedcount = 0, bool inRotation = false)
+		{
+			Name = name;
+			Description = description;
+			Buyable = buyable;
+			MaxLevel = maxlevel;
+			Price = price;
+			Level = level;
+			OwnedCount = ownedcount;
+			InRotation = inRotation;
+		}
+		public void Buy()
+		{
+			GoldOwned -= Price;
+			OwnedCount++;
+			InRotation = false;
+		}
+		public static void RefreshShop(bool isFree)
+		{
+			if (!isFree)
+			{
+				GoldOwned -= shopRefreshPrice;
+			}
+			List<string> itemPool = new List<string>();
+			foreach (var item in Items.Values)
+			{
+				item.TryLevelUp();
+				if (item.Buyable && !item.InRotation && item.Level != item.MaxLevel)
+				{
+					itemPool.Add(item.Name);
+				}
+				if (item.InRotation) item.InRotation = false;
+			}
+			Random r = new Random();
+			for (int i = 0; i < Math.Min(itemPool.Count, shopItemCount); i++)
+			{
+				int randomID = r.Next(0, itemPool.Count);
+				Items[itemPool[randomID]].InRotation = true;
+				itemPool.RemoveAt(randomID);
+			}
+		}
+		public static int LevelUpRequirement(int level)
+		{
+			return (int)Math.Pow(1.5, level);
+		}
+		public int CurrentLevelOwned()
+		{
+			int owned = OwnedCount;
+			int x = 1;
+			while (owned > LevelUpRequirement(x))
+			{
+				owned -= LevelUpRequirement(x);
+				x++;
+			}
+			return owned;
+		}
+		public void TryLevelUp()
+		{
+			int owned = OwnedCount;
+			int x = 1;
+			while (owned > LevelUpRequirement(x))
+			{
+				owned -= LevelUpRequirement(x);
+				x++;
+			}
+			Level = x;
+		}
+		public Item GetCopy()
+		{
+			return new Item(Name, Description, Buyable, MaxLevel, Price, Level, OwnedCount, InRotation);
+		}
+		public void UpdateAllVisual()
+		{
+			visualGroup = new Grid
+			{
+				Width = 140,
+				Height = 180,
+				Margin = new Thickness(10),
+
+			};
+			visualGroup.Effect = new System.Windows.Media.Effects.DropShadowEffect
+			{
+				BlurRadius = 15,
+				ShadowDepth = 5,
+				Color = Colors.Black,
+				Opacity = 0.7
+			};
+			visualGroup.MouseEnter += (s, e) =>
+			{
+				if (NewLabel != null) NewLabel.Visibility = Visibility.Collapsed;
+				visualGroup.Background = new LinearGradientBrush(
+					Color.FromRgb(92, 71, 161),
+					Color.FromRgb(58, 42, 96),
+					90);
+
+				// --- UI elrejtése hover alatt ---
+				if (InfoLabel != null) InfoLabel.Visibility = Visibility.Collapsed;
+				if (OwnedLabel != null) OwnedLabel.Visibility = Visibility.Collapsed;
+				if (LevelLabel != null) LevelLabel.Visibility = Visibility.Collapsed;
+				if (MaxLevelLabel != null) MaxLevelLabel.Visibility = Visibility.Collapsed;
+
+				// csak name + description
+				if (DescLabel != null) DescLabel.Visibility = Visibility.Visible;
+			};
+
+			visualGroup.MouseLeave += (s, e) =>
+			{
+				if (NewLabel != null) NewLabel.Visibility = Visibility.Visible;
+				visualGroup.Background = new LinearGradientBrush(
+					Color.FromRgb(25, 20, 30),
+					Color.FromRgb(45, 35, 55),
+					90);
+
+				// --- UI visszaállítása ---
+				if (InfoLabel != null) InfoLabel.Visibility = Visibility.Visible;
+				if (OwnedLabel != null) OwnedLabel.Visibility = Visibility.Visible;
+				if (LevelLabel != null) LevelLabel.Visibility = Visibility.Visible;
+				if (MaxLevelLabel != null) MaxLevelLabel.Visibility = Visibility.Visible;
+
+				if (DescLabel != null) DescLabel.Visibility = Visibility.Collapsed;
+			};
+
+
+			// keret
+			var border = new Border
+			{
+				CornerRadius = new CornerRadius(12),
+				BorderBrush = new LinearGradientBrush(
+					Color.FromRgb(255, 215, 100),
+					Color.FromRgb(180, 120, 30),
+					45),
+				BorderThickness = new Thickness(3),
+				Background = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255))
+			};
+			visualGroup.Children.Add(border);
+
+			NameLabel = new Label
+			{
+				Content = Name.Split(' ')[0],
+				Foreground = Brushes.Gold,
+				FontWeight = FontWeights.Bold,
+				FontSize = 16,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Top,
+				Margin = new Thickness(10, 8, 0, 0),
+				IsHitTestVisible = false,
+				MaxWidth = 90,                // max szélesség
+				HorizontalContentAlignment = HorizontalAlignment.Center,
+
+			};
+			if (Name.Split(' ').Length > 1)
+			{
+				Name2Label = new Label
+				{
+
+					Content = Name.Split(' ')[1],
+					Foreground = Brushes.Gold,
+					FontWeight = FontWeights.Bold,
+					FontSize = 16,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Top,
+					Margin = new Thickness(10, 24, 0, 0),
+					IsHitTestVisible = false,
+					MaxWidth = 90,                // max szélesség
+					HorizontalContentAlignment = HorizontalAlignment.Center,
+
+				};
+				visualGroup.Children.Add(Name2Label);
+			}
+			if (Items[Name].Level == 0)
+			{
+				border.BorderBrush = new LinearGradientBrush(
+		Color.FromRgb(180, 80, 255),   // világos lila
+		Color.FromRgb(110, 40, 180),   // sötétebb lila
+		45);
+
+				border.BorderThickness = new Thickness(4);
+
+				visualGroup.Background = new LinearGradientBrush(
+					Color.FromRgb(45, 35, 60),
+					Color.FromRgb(80, 60, 100),
+					90);
+
+				// NEW címke
+				NewLabel = new Label
+				{
+					Content = "NEW",
+					Foreground = Brushes.Gold,
+					FontWeight = FontWeights.ExtraBold,
+					FontSize = 14,
+					HorizontalAlignment = HorizontalAlignment.Left,
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Margin = new Thickness(8, 0, 0, 8),
+					IsHitTestVisible = false
+				};
+
+				visualGroup.Children.Add(NewLabel);
+			}
+			But = new Button
+			{
+				Background = Brushes.Transparent,
+				BorderThickness = new Thickness(0),
+				Cursor = Cursors.Hand,
+
+			};
+			But.Click += (sender, e) => Clicked?.Invoke(this, this);
+
+			//visualGroup.Children.Add(ellipse);
+			visualGroup.Children.Add(NameLabel);
+			//visualGroup.Children.Add(DamageAndHPLabel);
+			visualGroup.Children.Add(But);
+		}
+		public UIElement GetVisual(bool shopMode)
+		{
+			// név már létre lett hozva az UpdateAllVisual-ban
+			// Itt hozzuk létre a shop vagy non-shop info label-eket
+
+			// Description (hover alatt jelenjen meg)
+			DescLabel = new Label
+			{
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Margin = new Thickness(5),
+				Visibility = Visibility.Collapsed,
+				MaxWidth = 120
+			};
+
+			DescLabel.Content = new TextBlock
+			{
+				Text = Description,
+				TextWrapping = TextWrapping.Wrap,
+				Foreground = Brushes.White,
+				FontSize = 12,
+				TextAlignment = TextAlignment.Center
+			};
+
+			visualGroup.Children.Add(DescLabel);
+
+
+			if (shopMode)
+			{
+				// ár kiírása
+				InfoLabel = new Label
+				{
+					FontSize = 10,
+					Content = $"Ár: {GoldOwned} / {Price}",
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Margin = new Thickness(0, 0, 0, 10),
+					FontWeight = FontWeights.Bold,
+					Foreground = (GoldOwned >= Price) ? Brushes.LightGreen : Brushes.Red
+				};
+
+				visualGroup.Children.Add(InfoLabel);
+			}
+			else
+			{
+				// level / maxlevel
+				InfoLabel = new Label
+				{
+					FontSize = 10,
+					Content = $"Szint: {Level} / {MaxLevel}",
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Margin = new Thickness(0, 0, 0, 28),
+					FontWeight = FontWeights.Bold,
+					Foreground = Brushes.Gold
+				};
+				visualGroup.Children.Add(InfoLabel);
+
+				// ownedcount
+				OwnedLabel = new Label
+				{
+					FontSize = 10,
+					Content = $":Szintlépés: {OwnedCount} / {LevelUpRequirement(Level + 1)}",
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Margin = new Thickness(0, 0, 0, 8),
+					Foreground = Brushes.LightGray
+				};
+				visualGroup.Children.Add(OwnedLabel);
+			}
+
+			return visualGroup;
+		}
 	}
 }

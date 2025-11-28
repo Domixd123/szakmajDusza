@@ -1038,7 +1038,7 @@ namespace szakmajDusza
             if (vissza == MainRoom_Grid || vissza == PakliOssze_Grid)
             {
                 DisableNagyKazamata();
-                ShowPakli();
+                
             }
 
             // 3) Ha a HARCBÓL lépünk vissza
@@ -1075,16 +1075,18 @@ namespace szakmajDusza
                 sp.Play();
             }
 
-            if (kovetkezo == PakliOssze_Grid)
-            {
-                ShowPakli();
-            }
+            
 
             if (kovetkezo == MainRoom_Grid)
             {
                 DisableNagyKazamata();
-                ShowPakli();
+                
             }
+        }
+
+        private void GoToShop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            GoToGrid(Shop_Grid);
         }
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

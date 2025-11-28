@@ -20,6 +20,7 @@ namespace szakmajDusza
 		public bool Disabled { get; set; } = false;
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
+		public string Bonus { get; set; }
 
 		public Label NameLabel;
 		public Label Name2Label;

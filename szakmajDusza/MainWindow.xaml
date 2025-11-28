@@ -177,6 +177,7 @@
                     <Label Content="Vezér név:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
                     <TextBox x:Name="VezerNev" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0"/>
                     <Label Content="Bónusz típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+                    <ComboBox x:Name="VezerBonusTipus" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0"/>
                     <Label Content="Gyűjteményben:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
                     <CheckBox x:Name="Gyujtemeny_Check1" Content="" Height="15" Width="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Margin="0,-44,10,0" BorderThickness="0.333333333333333,0.333333333333333,0.333333333333333,0.333333333333333" Click="UpdateKartyaSelectionCard">
                         <CheckBox.RenderTransform>
@@ -204,7 +205,7 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
 
-            <Grid x:Name="Options_Grid" Visibility="Collapsed">
+            <Grid x:Name="Options_Grid" Visibility="Visible" d:IsHidden="True">
 
                 <Grid.Resources>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -236,7 +237,7 @@
                         <TextBlock Text="Hangeffektek:" Foreground="Gold" FontSize="60"
                        Width="406" VerticalAlignment="Center"/>
                         <RadioButton Content="Be" GroupName="SFX" FontSize="60"
-                         Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On" IsChecked="True"/>
+                         Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On" IsChecked="True" Background="{x:Null}"/>
                         <RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
                          Foreground="Gold"/>
                     </StackPanel>

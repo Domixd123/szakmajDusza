@@ -152,6 +152,7 @@ namespace szakmajDusza
                     else if (data[3] == "eletero") vezer.HP *= 2;
                     vezer.Vezer = true;
                     vezer.Name = data[1];
+                    vezer.Bonus = data[3];
                     vezer.UpdateAllVisual();
                     AllLeadersDict.Add(data[1], vezer);
                     AllLeadersDict[data[1]].UpdateAllVisual();
@@ -1003,20 +1004,33 @@ namespace szakmajDusza
             if (k.Vezer)
             {
                 VezerCheck.IsChecked = true;
+                string vAlap = k.Name2Label.Content.ToString();
+                int index = -1;
+                foreach (var item in AllCardsDict.Keys)
+                {
+                    index++;
+                    if (vAlap==item)
+                    {
+                        break;
+                    }
+                }
+                VezerAlapKartya.SelectedIndex=index;
+                VezerNev.Text=k.NameLabel.Content.ToString();
             }
             else
             {
                 VezerCheck.IsChecked = false;
+                KartyaSzerkesztoCardName.Text = k.Name;
+                SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
+                TypeAttack.Text = k.Damage.ToString();
+                TypeDefense.Text = k.HP.ToString();
+                if (k.Tipus == KartyaTipus.fold) SelectType.SelectedIndex = 0;
+                else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
+                else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
+                else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
             }
                 GoToGrid(KartyaSzerkeszto_Grid);
-            KartyaSzerkesztoCardName.Text = k.Name;
-            SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
-            TypeAttack.Text = k.Damage.ToString();
-            TypeDefense.Text = k.HP.ToString();
-            if (k.Tipus == KartyaTipus.fold) SelectType.SelectedIndex = 0;
-            else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
-            else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
-            else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
+            
             internalEdits = false;
             UpdateKartyaSelectionCard(null, null);
         }
@@ -1026,6 +1040,7 @@ namespace szakmajDusza
             {
                 if ((bool)VezerCheck.IsChecked)
                 {
+
                     if ((bool)Gyujtemeny_Check.IsChecked)
                     {
                         Gyujtemeny.Add(AllLeadersDict[cardEditName].GetCopy());
@@ -1499,13 +1514,34 @@ namespace szakmajDusza
 
         private void VezerCheck_Checked(object sender, RoutedEventArgs e)
         {
+            AllCardsDict.Remove(cardEditName);
+            SelectedCard_Wrap.Children.Clear();
             BasicCardPanel.Visibility = Visibility.Collapsed;
+            LeaderCardPanel.Visibility = Visibility.Visible;
+            VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
+            VezerAlapKartya.SelectedIndex = 0;
+            VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
+            VezerBonusTipus.SelectedIndex = 0;
+            Card k = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
+            SelectedCard_Wrap.Children.Add(k.GetVisual());
+            if (VezerBonusTipus.SelectedIndex==0)
+            {
+                k.HP *= 2;
+                k.UpdateAllVisual();
+            }
+            else
+            {
+
+            }
+            
         }
 
         private void VezerCheck_Unchecked(object sender, RoutedEventArgs e)
         {
+            SelectedCard_Wrap.Children.Clear();
             AllLeadersDict.Remove(cardEditName);
             BasicCardPanel.Visibility= Visibility.Visible;
+            LeaderCardPanel.Visibility = Visibility.Collapsed;
             string cardName = "ÚjKártya";
             bool goodName = false;
             int bonusIndex = -1;

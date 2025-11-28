@@ -42,7 +42,7 @@ namespace szakmajDusza
         static Label Speed_Label = new Label();
 
         static public string cardEditName = "";
-
+        static public bool internalEdits = false;
 
 
         public static List<Card> Gyujtemeny = new List<Card>();
@@ -924,11 +924,19 @@ namespace szakmajDusza
         private void ListKartya_Button_Click(object sender, RoutedEventArgs e)
         {
             MindenKartya_List.Children.Clear();
-            MindenKartya_List.Visibility = Visibility.Visible;
+            if (sender!=null)
+            {
+                MindenKartya_List.Visibility = Visibility.Visible;
+            }
+            
             foreach (var item in AllCardsDict.Values)
             {
                 MindenKartya_List.Children.Add(item.GetVisual());
-                item.Clicked += (s, e) => { SelectForModify(item); };
+                if (sender!=null)
+                {
+                    item.Clicked += (s, e) => { SelectForModify(item); };
+                }
+                
             }
             CreateNewCard_Button.Visibility = Visibility.Visible;
         }
@@ -959,13 +967,24 @@ namespace szakmajDusza
         }
         private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
         {
-            ListKartya_Button_Click(sender, e);
+            ListKartya_Button_Click(null, e);
+            Back(sender, e);
             /*KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;*/
         }
         private void SelectForModify(Card k)
         {
+            internalEdits = true;
             cardEditName = k.Name;
+            Gyujtemeny_Check.IsChecked = false;
+            foreach (Card item in Gyujtemeny)
+            {
+                if (item.Name==k.Name)
+                {
+                    Gyujtemeny_Check.IsChecked = true;
+                    break;
+                }
+            }
             GoToGrid(KartyaSzerkeszto_Grid);
             KartyaSzerkesztoCardName.Text = k.Name;
             SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
@@ -975,34 +994,55 @@ namespace szakmajDusza
             else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
             else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
             else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
-
+            internalEdits = false;
             UpdateKartyaSelectionCard(null, null);
         }
         private void UpdateKartyaSelectionCard(object sender, RoutedEventArgs es)
         {
-            try
+            if (!internalEdits)
             {
-                if (int.Parse(TypeAttack.Text) > 0) AllCardsDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
-                else {
-                    MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                } //kristof make error message
+                if ((bool)Gyujtemeny_Check.IsChecked)
+                {
+                    Gyujtemeny.Add(AllCardsDict[cardEditName].GetCopy());
+                }
+                else
+                {
+                    for (int i = 0; i < Gyujtemeny.Count; i++)
+                    {
+                        if (Gyujtemeny[i].Name == cardEditName)
+                        {
+                            Gyujtemeny.RemoveAt(i);
+                            break;
+                        }
+                    }
+                }
+                try
+                {
+                    if (int.Parse(TypeAttack.Text) > 0) AllCardsDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
+                    else
+                    {
+                        MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    } //kristof make error message
+                }
+                catch { }
+                try
+                {
+                    if (int.Parse(TypeDefense.Text) > 0) AllCardsDict[cardEditName.ToString()].HP = int.Parse(TypeDefense.Text);
+                    else
+                    {
+                        MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }//kristof make error message
+                }
+                catch { }
+                if (SelectType.SelectedIndex == 0) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
+                else if (SelectType.SelectedIndex == 1) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
+                else if (SelectType.SelectedIndex == 2) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
+                else if (SelectType.SelectedIndex == 3) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
+                AllCardsDict[cardEditName.ToString()].UpdateAllVisual();
+                SelectedCard_Wrap.Children.Clear();
+                SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
+
             }
-            catch { }
-            try
-            {
-                if (int.Parse(TypeDefense.Text) > 0) AllCardsDict[cardEditName.ToString()].HP = int.Parse(TypeDefense.Text);
-                else {
-                    MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                }//kristof make error message
-            }
-            catch { }
-            if (SelectType.SelectedIndex == 0) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
-            else if (SelectType.SelectedIndex == 1) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
-            else if (SelectType.SelectedIndex == 2) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
-            else if (SelectType.SelectedIndex == 3) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
-            AllCardsDict[cardEditName.ToString()].UpdateAllVisual();
-            SelectedCard_Wrap.Children.Clear();
-            SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
         }
 
         private void KornyezetekJatekos_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1327,6 +1367,8 @@ namespace szakmajDusza
                 }
             }
         }
+
+        
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
     }

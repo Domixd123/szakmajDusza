@@ -225,12 +225,12 @@ namespace szakmajDusza
 					Content = "NEW",
 					Foreground = Brushes.Gold,
 					FontWeight = FontWeights.ExtraBold,
-					FontSize = 14,
-					HorizontalAlignment = HorizontalAlignment.Left,
-					VerticalAlignment = VerticalAlignment.Bottom,
-					Margin = new Thickness(8, 0, 0, 8),
+					FontSize = 18,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Center,
 					IsHitTestVisible = false
 				};
+
 
 				visualGroup.Children.Add(NewLabel);
 			}
@@ -250,6 +250,7 @@ namespace szakmajDusza
 		}
 		public UIElement GetVisual(bool shopMode)
 		{
+			UpdateAllVisual();
 			// név már létre lett hozva az UpdateAllVisual-ban
 			// Itt hozzuk létre a shop vagy non-shop info label-eket
 
@@ -310,7 +311,7 @@ namespace szakmajDusza
 				OwnedLabel = new Label
 				{
 					FontSize = 10,
-					Content = $":Szintlépés: {OwnedCount} / {LevelUpRequirement(Level + 1)}",
+					Content = $"Szintlépés: {OwnedCount} / {LevelUpRequirement(Level + 1)}",
 					HorizontalAlignment = HorizontalAlignment.Center,
 					VerticalAlignment = VerticalAlignment.Bottom,
 					Margin = new Thickness(0, 0, 0, 8),

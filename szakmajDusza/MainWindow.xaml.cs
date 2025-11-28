@@ -1101,28 +1101,50 @@ namespace szakmajDusza
 
         private void GoToShop_Button_Click(object sender, RoutedEventArgs e)
         {
+            All_Vezer_Obtained.Visibility = Visibility.Collapsed;
             CardMerge_Wrap.Children.Clear();
             Shop_Merging_Cards.Children.Clear();
             GoToGrid(Shop_Grid);
-            foreach (var item in Gyujtemeny)
+            int vezCount=0;
+            foreach (Card item in Gyujtemeny)
             {
-                var card = item.GetCopy();
-                if (card.Vezer||Jatekos.Contains(item as Card))
+
+                if (item.Vezer)
                 {
-                    card.Disabled = true;
-                    card.UpdateAllVisual();
-                    CardMerge_Wrap.Children.Add(card.GetVisual());
+                    vezCount++;
                 }
-                else
-                {
-                    card.Clicked += CardToMerge_Card_Click;
-                    CardMerge_Wrap.Children.Add(card.GetVisual());
-                   
-                }
-                    
-                
-                
             }
+            if (vezCount == AllLeadersDict.Count)
+            {
+                Shop_Merge.IsEnabled = false;
+                All_Vezer_Obtained.Visibility = Visibility.Visible;
+                Obtained_Label.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                foreach (var item in Gyujtemeny)
+                {
+                    var card = item.GetCopy();
+                    if (card.Vezer || Jatekos.Contains(item as Card))
+                    {
+
+                        card.Disabled = true;
+                        card.UpdateAllVisual();
+                        CardMerge_Wrap.Children.Add(card.GetVisual());
+                    }
+                    else
+                    {
+                        card.Clicked += CardToMerge_Card_Click;
+                        CardMerge_Wrap.Children.Add(card.GetVisual());
+
+                    }
+
+
+
+                }
+            }
+               
+           
         }
         private void CardToMerge_Card_Click(object? sender, Card clicked)
         {
@@ -1200,7 +1222,23 @@ namespace szakmajDusza
             CardMerge_Wrap.Children.Add(card.GetVisual());
 
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            int vezCount = 0;
+            foreach (Card item in Gyujtemeny)
+            {
 
+                if (item.Vezer)
+                {
+                    vezCount++;
+                }
+            }
+            if (vezCount == AllLeadersDict.Count)
+            {
+                Shop_Merge.IsEnabled = false;
+                Obtained_Label.Visibility = Visibility.Collapsed;
+                All_Vezer_Obtained.Visibility = Visibility.Visible;
+                CardMerge_Wrap.Children.Clear();
+            }
+            
             /*for (int i = 0; i < Gyujtemeny.Count; i++)
             {
                 if (Gyujtemeny[i].Name == Merging[0].Name)

@@ -137,7 +137,18 @@
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
                 <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
-                <StackPanel HorizontalAlignment="Left" Height="281" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
+                <Label Content="Vezér:" FontWeight="Bold" Margin="1233,147,487,884"/>
+                <CheckBox x:Name="VezerCheck" Content="" RenderTransformOrigin="0.5,0.5" BorderThickness="0.333333333333333,0.333333333333333,0.333333333333333,0.333333333333333" Margin="1658,171,247,894" Checked="VezerCheck_Checked" Unchecked="VezerCheck_Unchecked">
+                    <CheckBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </CheckBox.RenderTransform>
+                </CheckBox>
+                <StackPanel x:Name="BasicCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455" d:IsHidden="True">
 
                     <Label Content="Név:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
                     <TextBox x:Name="KartyaSzerkesztoCardName" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
@@ -159,6 +170,25 @@
                     <Label Content="Típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
                     <ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" Width="120" RenderTransformOrigin="0.544,-2.681" HorizontalAlignment="Right" Margin="0,-44,0,0"/>
                 </StackPanel>
+                <StackPanel x:Name="LeaderCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
+
+                    <Label Content="Alap kártya:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
+                    <ComboBox x:Name="VezerAlapKartya" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Vezér név:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+                    <TextBox x:Name="VezerNev" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0"/>
+                    <Label Content="Bónusz típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+                    <Label Content="Gyűjteményben:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
+                    <CheckBox x:Name="Gyujtemeny_Check1" Content="" Height="15" Width="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Margin="0,-44,10,0" BorderThickness="0.333333333333333,0.333333333333333,0.333333333333333,0.333333333333333" Click="UpdateKartyaSelectionCard">
+                        <CheckBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </CheckBox.RenderTransform>
+                    </CheckBox>
+                </StackPanel>
             </Grid>
             <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Collapsed">
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="140,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
@@ -166,7 +196,7 @@
                 <Button x:Name="Kazamata_Button" Content="Kazamata" HorizontalAlignment="Left" Margin="600,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
                 <Button x:Name="ListKartya_Button" Content="Kártya" HorizontalAlignment="Right" Margin="0,866,600,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="ListKartya_Button_Click"/>
                 <WrapPanel x:Name="MindenKartya_List" Visibility="Collapsed" Margin="143,0,138,358"/>
-                <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,654,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
+                <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,654,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="CreateNewCard_Button_Click"/>
             </Grid>
 
             <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed">

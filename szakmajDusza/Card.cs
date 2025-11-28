@@ -86,10 +86,21 @@ namespace szakmajDusza
 			{
 				if (!Disabled)
 				{
-					visualGroup.Background = new LinearGradientBrush(
-					Color.FromRgb(25, 20, 30),
-					Color.FromRgb(45, 35, 55),
-					90);
+					if (Vezer)
+					{
+                        visualGroup.Background = new LinearGradientBrush(
+                            Color.FromRgb(45, 35, 60),
+                            Color.FromRgb(80, 60, 100),
+                            90);
+                    }
+					else
+					{
+                        visualGroup.Background = new LinearGradientBrush(
+                        Color.FromRgb(25, 20, 30),
+                        Color.FromRgb(45, 35, 55),
+                        90);
+                    }
+						
 					visualGroup.Effect = new DropShadowEffect
 					{
 						BlurRadius = 15,
@@ -244,7 +255,7 @@ namespace szakmajDusza
 					Color.FromRgb(255, 255, 200),
 					45);
 				border.BorderThickness = new Thickness(4);
-				visualGroup.Background = new LinearGradientBrush(
+                visualGroup.Background = new LinearGradientBrush(
 					Color.FromRgb(45, 35, 60),
 					Color.FromRgb(80, 60, 100),
 					90);

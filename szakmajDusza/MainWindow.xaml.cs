@@ -152,7 +152,9 @@ namespace szakmajDusza
                     else if (data[3] == "eletero") vezer.HP *= 2;
                     vezer.Vezer = true;
                     vezer.Name = data[1];
+                    vezer.UpdateAllVisual();
                     AllLeadersDict.Add(data[1], vezer);
+                    AllLeadersDict[data[1]].UpdateAllVisual();
                 }
                 else if (data[0] == "uj kazamata")
                 {
@@ -931,12 +933,24 @@ namespace szakmajDusza
             
             foreach (var item in AllCardsDict.Values)
             {
-                MindenKartya_List.Children.Add(item.GetVisual());
-                if (sender!=null)
+                Card c = item.GetCopy();
+                MindenKartya_List.Children.Add(c.GetVisual());
+               // if (sender!=null)
                 {
-                    item.Clicked += (s, e) => { SelectForModify(item); };
+                    c.Clicked += (s, e) => { SelectForModify(c); };
                 }
                 
+            }
+            foreach (var item in AllLeadersDict.Values)
+            {
+                Card c = item.GetCopy();
+                MindenKartya_List.Children.Add(c.GetVisual());
+                //if (sender != null)
+                {
+                    c.Clicked += (s, e) => { SelectForModify(c); };
+                }
+                //c.UpdateAllVisual();
+
             }
             CreateNewCard_Button.Visibility = Visibility.Visible;
         }
@@ -963,6 +977,7 @@ namespace szakmajDusza
 
 
             AllCardsDict.Remove(cardName);
+            AllLeadersDict.Remove(cardName);
             MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
@@ -985,7 +1000,15 @@ namespace szakmajDusza
                     break;
                 }
             }
-            GoToGrid(KartyaSzerkeszto_Grid);
+            if (k.Vezer)
+            {
+                VezerCheck.IsChecked = true;
+            }
+            else
+            {
+                VezerCheck.IsChecked = false;
+            }
+                GoToGrid(KartyaSzerkeszto_Grid);
             KartyaSzerkesztoCardName.Text = k.Name;
             SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
             TypeAttack.Text = k.Damage.ToString();
@@ -1001,46 +1024,94 @@ namespace szakmajDusza
         {
             if (!internalEdits)
             {
-                if ((bool)Gyujtemeny_Check.IsChecked)
+                if ((bool)VezerCheck.IsChecked)
                 {
-                    Gyujtemeny.Add(AllCardsDict[cardEditName].GetCopy());
+                    if ((bool)Gyujtemeny_Check.IsChecked)
+                    {
+                        Gyujtemeny.Add(AllLeadersDict[cardEditName].GetCopy());
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Gyujtemeny.Count; i++)
+                        {
+                            if (Gyujtemeny[i].Name == cardEditName)
+                            {
+                                Gyujtemeny.RemoveAt(i);
+                                break;
+                            }
+                        }
+                    }
+                    try
+                    {
+                        if (int.Parse(TypeAttack.Text) > 0) AllLeadersDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
+                        else
+                        {
+                            MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        } //kristof make error message
+                    }
+                    catch { }
+                    try
+                    {
+                        if (int.Parse(TypeDefense.Text) > 0) AllLeadersDict[cardEditName.ToString()].HP = int.Parse(TypeDefense.Text);
+                        else
+                        {
+                            MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }//kristof make error message
+                    }
+                    catch { }
+                    if (SelectType.SelectedIndex == 0) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
+                    else if (SelectType.SelectedIndex == 1) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
+                    else if (SelectType.SelectedIndex == 2) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
+                    else if (SelectType.SelectedIndex == 3) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
+                    AllLeadersDict[cardEditName.ToString()].UpdateAllVisual();
+                    SelectedCard_Wrap.Children.Clear();
+                    SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
+
                 }
                 else
                 {
-                    for (int i = 0; i < Gyujtemeny.Count; i++)
+                    if ((bool)Gyujtemeny_Check.IsChecked)
                     {
-                        if (Gyujtemeny[i].Name == cardEditName)
+                        Gyujtemeny.Add(AllCardsDict[cardEditName].GetCopy());
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Gyujtemeny.Count; i++)
                         {
-                            Gyujtemeny.RemoveAt(i);
-                            break;
+                            if (Gyujtemeny[i].Name == cardEditName)
+                            {
+                                Gyujtemeny.RemoveAt(i);
+                                break;
+                            }
                         }
                     }
-                }
-                try
-                {
-                    if (int.Parse(TypeAttack.Text) > 0) AllCardsDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
-                    else
+                    try
                     {
-                        MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                    } //kristof make error message
-                }
-                catch { }
-                try
-                {
-                    if (int.Parse(TypeDefense.Text) > 0) AllCardsDict[cardEditName.ToString()].HP = int.Parse(TypeDefense.Text);
-                    else
+                        if (int.Parse(TypeAttack.Text) > 0) AllCardsDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
+                        else
+                        {
+                            MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        } //kristof make error message
+                    }
+                    catch { }
+                    try
                     {
-                        MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }//kristof make error message
+                        if (int.Parse(TypeDefense.Text) > 0) AllCardsDict[cardEditName.ToString()].HP = int.Parse(TypeDefense.Text);
+                        else
+                        {
+                            MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }//kristof make error message
+                    }
+                    catch { }
+                    if (SelectType.SelectedIndex == 0) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
+                    else if (SelectType.SelectedIndex == 1) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
+                    else if (SelectType.SelectedIndex == 2) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
+                    else if (SelectType.SelectedIndex == 3) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
+                    AllCardsDict[cardEditName.ToString()].UpdateAllVisual();
+                    SelectedCard_Wrap.Children.Clear();
+                    SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
+
                 }
-                catch { }
-                if (SelectType.SelectedIndex == 0) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
-                else if (SelectType.SelectedIndex == 1) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
-                else if (SelectType.SelectedIndex == 2) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
-                else if (SelectType.SelectedIndex == 3) AllCardsDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
-                AllCardsDict[cardEditName.ToString()].UpdateAllVisual();
-                SelectedCard_Wrap.Children.Clear();
-                SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
 
             }
         }
@@ -1336,7 +1407,7 @@ namespace szakmajDusza
         private void KartyaSzerkeszto_TextChange(object sender, RoutedEventArgs e)
         {
             string edits = KartyaSzerkesztoCardName.Text;
-            if (!AllCardsDict.ContainsKey(edits))
+            if (!AllCardsDict.ContainsKey(edits)&&(bool)!VezerCheck.IsChecked)
             {
                 AllCardsDict.Add(edits, AllCardsDict[cardEditName]);
                 AllCardsDict.Remove(cardEditName);
@@ -1368,7 +1439,128 @@ namespace szakmajDusza
             }
         }
 
-        
+        private void CreateNewCard_Button_Click(object sender, RoutedEventArgs e)
+        {
+            GoToGrid(KartyaSzerkeszto_Grid);
+            string cardName = "ÚjKártya";
+            bool goodName = false;
+            int bonusIndex = -1;
+            while (!goodName)
+            {
+                bonusIndex++;
+                goodName = true;
+                foreach (Card item in AllCardsDict.Values)
+                {
+                    if (bonusIndex<=0)
+                    {
+                        if (item.Name == cardName)
+                        {
+                            //bonusIndex++;
+                            goodName = false;
+                        }
+                    }
+                    else if (item.Name==cardName + bonusIndex)
+                    {
+                        //bonusIndex++;
+                        goodName = false;
+                    }
+                }
+            }
+            if (bonusIndex>0)
+            {
+                cardName += bonusIndex;
+            }
+            Card k = new Card(cardName,1,1,"fold",false);
+            internalEdits = true;
+            cardEditName = k.Name;
+            Gyujtemeny_Check.IsChecked = false;
+            foreach (Card item in Gyujtemeny)
+            {
+                if (item.Name == k.Name)
+                {
+                    Gyujtemeny_Check.IsChecked = true;
+                    break;
+                }
+            }
+            //GoToGrid(KartyaSzerkeszto_Grid);
+            KartyaSzerkesztoCardName.Text = k.Name;
+            SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
+            TypeAttack.Text = k.Damage.ToString();
+            TypeDefense.Text = k.HP.ToString();
+            if (k.Tipus == KartyaTipus.fold) SelectType.SelectedIndex = 0;
+            else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
+            else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
+            else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
+            AllCardsDict.Add(cardName,k);
+            internalEdits = false;
+            UpdateKartyaSelectionCard(null, null);
+
+        }
+
+        private void VezerCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            BasicCardPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void VezerCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            AllLeadersDict.Remove(cardEditName);
+            BasicCardPanel.Visibility= Visibility.Visible;
+            string cardName = "ÚjKártya";
+            bool goodName = false;
+            int bonusIndex = -1;
+            while (!goodName)
+            {
+                bonusIndex++;
+                goodName = true;
+                foreach (Card item in AllCardsDict.Values)
+                {
+                    if (bonusIndex <= 0)
+                    {
+                        if (item.Name == cardName)
+                        {
+                            //bonusIndex++;
+                            goodName = false;
+                        }
+                    }
+                    else if (item.Name == cardName + bonusIndex)
+                    {
+                        //bonusIndex++;
+                        goodName = false;
+                    }
+                }
+            }
+            if (bonusIndex > 0)
+            {
+                cardName += bonusIndex;
+            }
+            Card k = new Card(cardName, 1, 1, "fold", false);
+            internalEdits = true;
+            cardEditName = k.Name;
+            Gyujtemeny_Check.IsChecked = false;
+            foreach (Card item in Gyujtemeny)
+            {
+                if (item.Name == k.Name)
+                {
+                    Gyujtemeny_Check.IsChecked = true;
+                    break;
+                }
+            }
+            //GoToGrid(KartyaSzerkeszto_Grid);
+            KartyaSzerkesztoCardName.Text = k.Name;
+            SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
+            TypeAttack.Text = k.Damage.ToString();
+            TypeDefense.Text = k.HP.ToString();
+            if (k.Tipus == KartyaTipus.fold) SelectType.SelectedIndex = 0;
+            else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
+            else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
+            else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
+            AllCardsDict.Add(cardName, k);
+            internalEdits = false;
+            UpdateKartyaSelectionCard(null, null);
+        }
+
+
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
     }

@@ -9,10 +9,10 @@
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
             <Grid x:Name="Shop_Grid" Visibility="Visible"
-      Width="1920" Height="1070">
+      Width="1910" Height="1070" Margin="5,5,5,5">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -21,14 +21,26 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" BorderBrush="White" BorderThickness="2"/>
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="White" BorderThickness="2"/>
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="White" BorderThickness="2"/>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="2"/>
+
+
+
 
                 <!-- 1) Shop felső rész - kártyák megjelenése -->
-                <WrapPanel x:Name="CardMerge_Wrap"
+
+                <StackPanel x:Name="Shop_Inv_Panel"
                HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               Orientation="Horizontal"
-               ItemWidth="160"
-               ItemHeight="200" Height="auto" Grid.RowSpan="2" Width="auto" />
+               VerticalAlignment="Center"
+               Height="790" Width="1400" >
+                    <Label x:Name="Obtained_Label" Content="Megszerzett Kártyák:" Height="53" HorizontalAlignment="Left" VerticalAlignment="Top" Width="285"/>
+
+                    <WrapPanel x:Name="CardMerge_Wrap" ItemWidth="160" Margin="0,80,47,0" ItemHeight="200" VerticalAlignment="Top" Width="1348" Height="400" HorizontalAlignment="Left"/>
+                    <Label x:Name="All_Vezer_Obtained" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Minden vezér kártya meg lett már szerezve!" Height="252" Width="972" Foreground="Red" FontSize="50" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-500,0,0"/>
+
+                </StackPanel>
 
                 <!-- 2) Jobb oldali vezérlőpanel -->
                 <StackPanel x:Name="CardMerge_Panel" Grid.Row="0"
@@ -48,8 +60,8 @@
                 Margin="0,20,0,20"
                 FontSize="26" IsEnabled="False" Click="Merge_To_Vezer" Width="350"/>
 
-                    <Label Content="Kijelölt kártyák:"
-               FontSize="22"
+                    <Label Content="Kijelölt kártyák az egyesítéshez:"
+               FontSize="24"
                Margin="0,20,0,5"
                HorizontalAlignment="Center"/>
 
@@ -67,13 +79,23 @@
                 </StackPanel>
 
                 <!-- 3) Shop alsó része -->
-                <WrapPanel x:Name="Shop_Wrap"
-               Grid.Row="2"
+
+                <StackPanel x:Name="Shop_Panel"
+               Grid.Row="1"
                Height="260"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               ItemWidth="160"
-               ItemHeight="240" Width="0"/>
+                Width="Auto" RenderTransformOrigin="0.5,0.5">
+
+                    <Label x:Name="Shop_Label" Content="Bolt:" Height="53"/>
+
+                    <WrapPanel x:Name="Shop_Wrap" Height="150"
+                               Width="1350"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               ItemWidth="160"
+                               ItemHeight="150" Margin="0,0,50,0"/>
+                </StackPanel>
                 <!-- Bal alsó sarok-->
                 <StackPanel x:Name="ShopRefresh_Panel"
                     Grid.Row="2"
@@ -85,8 +107,9 @@
                     <Button x:Name="Shop_Refresh"
                         Content="Újra pörgetés"
                         Height="110"
+                        Width="350"
                         Margin="0,0,0,20"
-                        FontSize="26" />
+                        FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 </StackPanel>
 
@@ -133,7 +156,7 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
 
-            <Grid x:Name="Options_Grid" Visibility="Collapsed">
+            <Grid x:Name="Options_Grid" Visibility="Visible">
 
                 <Grid.Resources>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -165,7 +188,7 @@
                         <TextBlock Text="Hangeffektek:" Foreground="Gold" FontSize="60"
                        Width="406" VerticalAlignment="Center"/>
                         <RadioButton Content="Be" GroupName="SFX" FontSize="60"
-                         Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On"/>
+                         Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On" IsChecked="True"/>
                         <RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
                          Foreground="Gold"/>
                     </StackPanel>

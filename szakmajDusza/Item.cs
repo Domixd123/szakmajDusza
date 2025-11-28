@@ -20,7 +20,7 @@ namespace szakmajDusza
 			{"Újraéledés", new Item("Újraéledés","(Szint*15)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5) },
 			{"Krit ütés", new Item("Krit ütés","(Szint*10)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5) },
 			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*5)%-át visszaüti ellenfelére",true,5,5) },
-			{"Kikerülés", new Item("Kikerülés","(Szint*10)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
+			{"Kikerülés", new Item("Kikerülés","(Szint*5)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
 			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét",true,5,5) },
 		};
 		public string Name { get; set; }

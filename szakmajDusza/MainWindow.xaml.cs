@@ -1,4 +1,5 @@
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -219,10 +220,7 @@ namespace szakmajDusza
                 {
 
                     ShowKazamata(AllKazamataDict[item.Name]);
-                    if (new Random().Next(2) == 1)
-                    {
-                        sp.Open(new Uri("Sounds/Nehez.wav", UriKind.Relative));
-                    }
+                    
                 };
                 b.Content = item.Name;
                 b.Margin = new Thickness(10, 0, 0, 0);
@@ -349,7 +347,7 @@ namespace szakmajDusza
                 Width = 300,
                 FontSize = 60
             };
-            Vissza.Click += Vissza_Button_Click;
+            Vissza.Click += (s, e) => Back(s, e);
 
             ChangeSpeed = new Button()
             {
@@ -453,6 +451,18 @@ namespace szakmajDusza
                 Harc2.StartFight(FightGrid, Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label, AttackDeploy_Label, DefendDeploy_Label, FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, 0);
 
             };
+
+
+            if (new Random().Next(2) == 1)
+            {
+                sp.Open(new Uri("Sounds/Nehez.wav", UriKind.Relative));
+                sp.Play();
+            }
+            else
+            {
+                sp.Open(new Uri("Sounds/Kozepes.wav", UriKind.Relative));
+                sp.Play();
+            }
 
         }
 
@@ -581,8 +591,7 @@ namespace szakmajDusza
         {
             if (Jatekos.Count != 0)
             {
-                PakliOssze_Grid.Visibility = Visibility.Collapsed;
-                MainRoom_Grid.Visibility = Visibility.Visible;
+                GoToGrid(MainRoom_Grid);
                 DisableNagyKazamata();
                 se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));
                 se.Play();
@@ -677,8 +686,7 @@ namespace szakmajDusza
 
         private void PakliChange_Button_Click(object sender, RoutedEventArgs e)
         {
-            MainRoom_Grid.Visibility = Visibility.Collapsed;
-            PakliOssze_Grid.Visibility = Visibility.Visible;
+            GoToGrid(PakliOssze_Grid);
 
             foreach (var item in Jatekos)
             {
@@ -766,8 +774,8 @@ namespace szakmajDusza
                     (item as WrapPanel).Children.RemoveRange(0, (item as WrapPanel).Children.Count);
                 }
             }
-            MainRoom_Grid.Visibility = Visibility.Visible;
-            FightGrid.Visibility = Visibility.Collapsed;
+            
+            GoToGrid(MainRoom_Grid);
             DisableNagyKazamata();
             sp.Stop();
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
@@ -799,13 +807,13 @@ namespace szakmajDusza
         {
             Menu_Grid.Visibility = Visibility.Collapsed;
             ChooseKornyezet_Grid.Visibility = Visibility.Visible;
+            GoToGrid(ChooseKornyezet_Grid);
         }
 
         private void GoToOptions_Button_Click(object sender, RoutedEventArgs e)
         {
-            Menu_Grid.Visibility = Visibility.Collapsed;
-            PakliOssze_Grid.Visibility = Visibility.Collapsed;
-            Options_Grid.Visibility = Visibility.Visible;
+            
+            GoToGrid(Options_Grid);
         }
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
@@ -834,8 +842,8 @@ namespace szakmajDusza
 
         private void GoToMaster_Button_Click(object sender, RoutedEventArgs e)
         {
-            Menu_Grid.Visibility = Visibility.Collapsed;
-            JatekMester_Grid.Visibility = Visibility.Visible;
+            
+            GoToGrid(JatekMester_Grid);
         }
 
         private void DeleteKornyezet_Button_Click(object sender, RoutedEventArgs e)
@@ -850,15 +858,15 @@ namespace szakmajDusza
 
         private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
         {
-            JatekMester_Grid.Visibility = Visibility.Collapsed;
-            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;
+            
+            GoToGrid(KornyezetSzerkeszto_Grid);
         }
 
         private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
         {
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-            PakliOssze_Grid.Visibility = Visibility.Visible;
-            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
+            
+            GoToGrid(PakliOssze_Grid);
         }
 
         private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -892,9 +900,8 @@ namespace szakmajDusza
                 return;
             }
             LoadData($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
-            JatekMester_Grid.Visibility = Visibility.Collapsed;
-            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;
-            KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            
+            GoToGrid(KornyezetSzerkeszto_Grid);
             KornyezetekMester_List.SelectedItem = null;
         }
 
@@ -937,7 +944,9 @@ namespace szakmajDusza
                 }
             }
 
+
             AllCardsDict.Remove(cardName);
+            MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
         {
@@ -947,8 +956,8 @@ namespace szakmajDusza
         }
         private void SelectForModify(Card k)
         {
-            KartyaSzerkeszto_Grid.Visibility = Visibility.Visible;
-            KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            
+            GoToGrid(KartyaSzerkeszto_Grid);
             KartyaSzerkesztoCardName.Content = k.Name;
 
             SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
@@ -966,13 +975,17 @@ namespace szakmajDusza
             try
             {
                 if (int.Parse(TypeAttack.Text) > 0) AllCardsDict[KartyaSzerkesztoCardName.Content.ToString()].Damage = int.Parse(TypeAttack.Text);
-                else { } //kristof make error message
+                else {
+                    MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                } //kristof make error message
             }
             catch { }
             try
             {
                 if (int.Parse(TypeDefense.Text) > 0) AllCardsDict[KartyaSzerkesztoCardName.Content.ToString()].HP = int.Parse(TypeDefense.Text);
-                else { }//kristof make error message
+                else {
+                    MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }//kristof make error message
             }
             catch { }
             if (SelectType.SelectedIndex == 0) AllCardsDict[KartyaSzerkesztoCardName.Content.ToString()].Tipus = KartyaTipus.fold;
@@ -991,10 +1004,89 @@ namespace szakmajDusza
                 return;
             }
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-            ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
-            PakliOssze_Grid.Visibility = Visibility.Visible;
+            
+            GoToGrid(PakliOssze_Grid);
             KornyezetekJatekos_List.SelectedItem = null;
         }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            if (elozoGrid.Count == 0)
+                return;
+
+            Grid vissza = elozoGrid.Pop();
+
+            // minden gridet elrejtünk
+            foreach (var g in idk.Children.OfType<Grid>())
+                g.Visibility = Visibility.Collapsed;
+
+            vissza.Visibility = Visibility.Visible;
+
+            // --- SPECIÁLIS LOGIKA A VISSZÁNAK ---
+
+            if (vissza == Menu_Grid)
+            {
+                sp.Stop();
+                sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                sp.Play();
+            }
+
+            if (vissza == MainRoom_Grid)
+            {
+                DisableNagyKazamata();
+                ShowPakli();
+            }
+
+            if (vissza == PakliOssze_Grid)
+            {
+                ShowPakli();
+            }
+
+            if (vissza == FightGrid)
+            {
+                // töröljük a harc UI maradékát
+                RemoveShitFomrShit();
+            }
+        }
+
+        private void GoToGrid(Grid kovetkezo)
+        {
+            // aktuális grid
+            Grid akt = idk.Children
+                           .OfType<Grid>()
+                           .FirstOrDefault(g => g.Visibility == Visibility.Visible);
+
+            if (akt != null)
+                elozoGrid.Push(akt);  // mentés
+
+            // minden grid elrejtése
+            foreach (var g in idk.Children.OfType<Grid>())
+                g.Visibility = Visibility.Collapsed;
+
+            // új grid megjelenítése
+            kovetkezo.Visibility = Visibility.Visible;
+
+            // --- SPECIÁLIS LOGIKA ---
+
+            if (kovetkezo == Menu_Grid)
+            {
+                sp.Stop();
+                sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                sp.Play();
+            }
+
+            if (kovetkezo == PakliOssze_Grid)
+            {
+                ShowPakli();
+            }
+
+            if (kovetkezo == MainRoom_Grid)
+            {
+                DisableNagyKazamata();
+                ShowPakli();
+            }
+        }
+
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
     }

@@ -8,7 +8,7 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
-            <Grid x:Name="Shop_Grid" HorizontalAlignment="Center" Height="1070" VerticalAlignment="Top" Width="1920">
+            <Grid x:Name="Shop_Grid" HorizontalAlignment="Center" Visibility="Collapsed" Height="1070" VerticalAlignment="Top" Width="1920">
                 <WrapPanel x:Name="CardMerge" Margin="100,102,856,535"/>
                 <WrapPanel x:Name="Shop_Wrap" HorizontalAlignment="Left" Height="239" Margin="100,723,0,0" VerticalAlignment="Top" Width="1332"/>
                 <Button x:Name="Shop_Refresh" Content="Újra pörgetés" HorizontalAlignment="Left" Height="190" Margin="1544,772,0,0" VerticalAlignment="Top" Width="296"/>
@@ -30,7 +30,7 @@
             <Grid x:Name="JatekMester_Grid" Visibility="Collapsed">
                 <ListBox x:Name="KornyezetekMester_List" SelectionChanged="KornyezetekMester_List_SelectionChanged" Margin="0,0,0,341"/>
                 <Button x:Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="560,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+                <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
             </Grid>
             <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed">
@@ -39,21 +39,21 @@
                 <TextBox x:Name="TypeAttack" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,313,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                 <TextBox x:Name="TypeDefense" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,418,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.455,-2.049"/>
                 <ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,553,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.544,-2.681"/>
-                <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+                <Button Click="Back" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Collapsed">
-                <Button Click="BackToJatekMester" Content="Vissza" HorizontalAlignment="Left" Margin="140,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
-                <Button x:Name="KornyezetMentes_Button" Content="Mentés" HorizontalAlignment="Right" Margin="1490,866,140,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
+                <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="140,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
+                <Button x:Name="KornyezetMentes_Button" Content="Mentés" HorizontalAlignment="Right" Margin="0,866,140,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
                 <Button x:Name="Kazamata_Button" Content="Kazamata" HorizontalAlignment="Left" Margin="600,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
-                <Button x:Name="ListKartya_Button" Content="Kártya" HorizontalAlignment="Right" Margin="1030,866,600,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="ListKartya_Button_Click"/>
+                <Button x:Name="ListKartya_Button" Content="Kártya" HorizontalAlignment="Right" Margin="0,866,600,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="ListKartya_Button_Click"/>
                 <WrapPanel x:Name="MindenKartya_List" Visibility="Collapsed" Margin="143,0,138,358"/>
                 <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,654,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
             </Grid>
 
             <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed">
                 <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged"/>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
+                <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
 
             <Grid x:Name="Options_Grid" Visibility="Collapsed">
@@ -101,7 +101,7 @@
                     </StackPanel>
 
                 </StackPanel>
-                <Button Click="BackToMenu_Click" Content="Vissza" HorizontalAlignment="Center" Margin="0,790,0,0" VerticalAlignment="Top" FontSize="60" Width="768" Height="120"/>
+                <Button Click="Back" Content="Vissza" HorizontalAlignment="Center" Margin="0,790,0,0" VerticalAlignment="Top" FontSize="60" Width="768" Height="120"/>
 
             </Grid>
 
@@ -253,6 +253,86 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="ListBox">
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#1A1A22"/>
+            <Setter Property="Padding" Value="10"/>
+
+            <!-- Scrollbar style -->
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border Background="{TemplateBinding Background}" 
+                        CornerRadius="10">
+                            <ScrollViewer Focusable="False">
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ListBoxItem stílus -->
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Bd"
+                        Background="#2B2338"
+                        CornerRadius="10"
+                        Padding="10">
+                            <ContentPresenter/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- Hover -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" 
+                                Value="#3C2A5E"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="20"
+                                                  Opacity="0.6"
+                                                  ShadowDepth="0"
+                                                  Color="#FFD9A600"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!-- Kijelölt elem -->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#5C47A1" Offset="0"/>
+                                            <GradientStop Color="#3A2A60" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="Gold"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
 
 
     </Window.Resources>

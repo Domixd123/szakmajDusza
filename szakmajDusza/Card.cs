@@ -22,7 +22,7 @@ namespace szakmajDusza
         public int HP { get; set; }
         public KartyaTipus Tipus { get; set; }
         public bool Vezer { get; set; }
-
+        public bool Disabled { get; set; } = false;
         public Rectangle Rec { get; private set; }
         public Button But { get; private set; }
 
@@ -30,6 +30,7 @@ namespace szakmajDusza
         public Label Name2Label;
         public Label DamageAndHPLabel;
         private Label TypeLabel;
+        public Label DisLabel;
 
         public Grid visualGroup;
 
@@ -68,32 +69,41 @@ namespace szakmajDusza
             };
             visualGroup.MouseEnter += (s, e) =>
             {
-                visualGroup.Background = new LinearGradientBrush(
+                if (!Disabled)
+                {
+                    visualGroup.Background = new LinearGradientBrush(
                     Color.FromRgb(92, 71, 161),
                     Color.FromRgb(58, 42, 96),
                     90);
-                visualGroup.Effect = new DropShadowEffect
-                {
-                    BlurRadius = 25,
-                    ShadowDepth = 2,
-                    Color = Color.FromRgb(217, 166, 0),
-                    Opacity = 0.9
-                };
+                    visualGroup.Effect = new DropShadowEffect
+                    {
+                        BlurRadius = 25,
+                        ShadowDepth = 2,
+                        Color = Color.FromRgb(217, 166, 0),
+                        Opacity = 0.9
+                    };
+                }
+                
             };
 
             visualGroup.MouseLeave += (s, e) =>
             {
-                visualGroup.Background = new LinearGradientBrush(
+                if (!Disabled)
+                {
+                    visualGroup.Background = new LinearGradientBrush(
                     Color.FromRgb(25, 20, 30),
                     Color.FromRgb(45, 35, 55),
                     90);
-                visualGroup.Effect = new DropShadowEffect
-                {
-                    BlurRadius = 15,
-                    ShadowDepth = 5,
-                    Color = Colors.Black,
-                    Opacity = 0.7
-                };
+                    visualGroup.Effect = new DropShadowEffect
+                    {
+                        BlurRadius = 15,
+                        ShadowDepth = 5,
+                        Color = Colors.Black,
+                        Opacity = 0.7
+                    };
+
+                }
+               
             };
 
             // keret
@@ -153,20 +163,37 @@ namespace szakmajDusza
                 };
                 visualGroup.Children.Add(Name2Label);
             }
-
-
-
-            // statok
-            DamageAndHPLabel = new Label
+            if (Disabled)
             {
-                Content = $"{Damage} ⚔ / {HP} ❤",
-                Foreground = Brushes.WhiteSmoke,
-                FontSize = 14,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(0, 0, 0, 10),
-                IsHitTestVisible = false
-            };
+                DisLabel = new Label
+                {
+                    FontSize = 16,
+                    Margin = new Thickness(0, 0, 0, 28),
+                    Foreground = Brushes.Red,
+                    FontWeight=FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Content="Pakliban van!"
+                };
+                visualGroup.Children.Add(DisLabel);
+                if (Vezer)
+                {
+                    DisLabel.Content = "Már vezér!";
+                }
+            }
+
+
+                // statok
+                DamageAndHPLabel = new Label
+                {
+                    Content = $"{Damage} ⚔ / {HP} ❤",
+                    Foreground = Brushes.WhiteSmoke,
+                    FontSize = 14,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Margin = new Thickness(0, 0, 0, 10),
+                    IsHitTestVisible = false
+                };
 
             // típus indikátor
             var ellipse = new Ellipse
@@ -236,7 +263,10 @@ namespace szakmajDusza
 
             };
             But.Click += (sender, e) => Clicked?.Invoke(this, this);
-
+            if (Disabled)
+            {
+                visualGroup.Background = new LinearGradientBrush(Color.FromRgb(10, 5, 15), Color.FromRgb(30, 20, 40), 90);
+            }
             visualGroup.Children.Add(ellipse);
             visualGroup.Children.Add(NameLabel);
             visualGroup.Children.Add(DamageAndHPLabel);

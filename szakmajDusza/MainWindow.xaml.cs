@@ -45,7 +45,6 @@ namespace szakmajDusza
 
 
 
-
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
         //public static List<Card> AllCards = new List<Card>();
@@ -63,7 +62,11 @@ namespace szakmajDusza
 
         public static Grid FightGrid = new Grid();
 
+        public static List<Card> Merging = new List<Card>();
+
+
         public static float spVolume = 0.2f;
+        public static float spMult = 0.0f;
         public MainWindow()
         {
             InitializeComponent();
@@ -83,15 +86,16 @@ namespace szakmajDusza
             elozoGrid.Push(Menu_Grid);
 
             idk.Children.Add(FightGrid);
-            sp.Volume = spVolume;
+            
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+            
             sp.MediaEnded += (s, e) =>
             {
                 sp.Position = TimeSpan.Zero;
                 sp.Play();
             };
             sp.Play();
-
+            sp.Volume = spVolume;
             KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
             KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
@@ -841,7 +845,7 @@ namespace szakmajDusza
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            spVolume = (float)Sl.Value * 0.004f;
+            spVolume = (float)Sl.Value *spMult;
             sp.Volume = spVolume;
         }
 
@@ -1021,6 +1025,12 @@ namespace szakmajDusza
             if (elozoGrid.Count == 0)
                 return;
 
+            /*if (elozoGrid.Peek().Name== "Shop_Grid")
+            {
+                CardMerge_Wrap.Children.Clear();
+                Shop_Merging_Cards.Children.Clear();
+            }*/
+
             Grid vissza = elozoGrid.Pop();
 
             // minden grid elrejtése
@@ -1091,9 +1101,158 @@ namespace szakmajDusza
 
         private void GoToShop_Button_Click(object sender, RoutedEventArgs e)
         {
+            CardMerge_Wrap.Children.Clear();
+            Shop_Merging_Cards.Children.Clear();
             GoToGrid(Shop_Grid);
+            foreach (var item in Gyujtemeny)
+            {
+                var card = item.GetCopy();
+                if (card.Vezer||Jatekos.Contains(item as Card))
+                {
+                    card.Disabled = true;
+                    card.UpdateAllVisual();
+                    CardMerge_Wrap.Children.Add(card.GetVisual());
+                }
+                else
+                {
+                    card.Clicked += CardToMerge_Card_Click;
+                    CardMerge_Wrap.Children.Add(card.GetVisual());
+                   
+                }
+                    
+                
+                
+            }
+        }
+        private void CardToMerge_Card_Click(object? sender, Card clicked)
+        {
+            //clicked.GetVisual().IsEnabled = false;
+            for (int i = 0; i < Jatekos.Count; i++)
+            {
+                if (Jatekos[i].Name==clicked.Name)
+                {
+                    //Implement error mnessage
+                    return;
+                }
+            }
+            if (Shop_Merging_Cards.Children.Count<3)
+            {
+                CardMerge_Wrap.Children.Remove(clicked.GetVisual());
+                clicked.Clicked -= CardToMerge_Card_Click;
+                clicked.Clicked += CardToMergeRemove_Card_Click;
+                Shop_Merging_Cards.Children.Add(clicked.GetVisual());
+                Merging.Add(clicked);
+
+            }
+            if (Shop_Merging_Cards.Children.Count == 3)
+            {
+                Shop_Merge.IsEnabled = true;
+            }
+            //Button b = sender as Button;
+            
+        }
+        private void CardToMergeRemove_Card_Click(object? sender, Card clicked)
+        {
+            
+                Shop_Merging_Cards.Children.Remove(clicked.GetVisual());
+                CardMerge_Wrap.Children.Add(clicked.GetVisual());
+                clicked.Clicked -= CardToMergeRemove_Card_Click;
+                clicked.Clicked += CardToMerge_Card_Click;
+            Merging.Remove(clicked);
+                
+           
+            Shop_Merge.IsEnabled = false;
+            
+            //Button b = sender as Button;
+
         }
 
+        private void Merge_To_Vezer(object sender, RoutedEventArgs e)
+        {
+            MergeToVezet.haromToVezer(Merging[0], Merging[1], Merging[2]);
+            Shop_Merge.IsEnabled = false;
+
+            Shop_Merging_Cards.Children.Clear();
+            Cards_Wrap.Children.Clear();
+            //DynamicButtonsPanel.Children.Clear();
+            PlayerCards_Wrap.Children.Clear();
+            PakliCards_Wrap.Children.Clear();
+            foreach (Card item in Gyujtemeny)
+            {
+                if (!Jatekos.Contains(item))
+                {
+                    Cards_Wrap.Children.Add(item.GetVisual());
+                    /*item.Clicked -= RemoveFromPakli;
+                    item.Clicked += AddToPakli;*/
+                }
+                else
+                {
+                    PlayerCards_Wrap.Children.Add(item.GetVisual());
+                    /*item.Clicked += RemoveFromPakli;
+                    item.Clicked -= AddToPakli;*/
+                }
+                
+            }
+            //Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
+            Card card = Gyujtemeny[Gyujtemeny.Count - 1].GetCopy();
+            card.Disabled = true;
+            card.UpdateAllVisual();
+            CardMerge_Wrap.Children.Add(card.GetVisual());
+
+            SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+
+            /*for (int i = 0; i < Gyujtemeny.Count; i++)
+            {
+                if (Gyujtemeny[i].Name == Merging[0].Name)
+                {
+                    PlayerCards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Cards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Gyujtemeny.RemoveAt(i);
+                    i--;
+                }
+                else if (Gyujtemeny[i].Name == Merging[1].Name)
+                {
+                    PlayerCards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Cards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Gyujtemeny.RemoveAt(i);
+                    i--;
+
+                }
+                else if (Gyujtemeny[i].Name == Merging[2].Name)
+                {
+                    PlayerCards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Cards_Wrap.Children.Remove(Gyujtemeny[i].GetVisual());
+                    Gyujtemeny.RemoveAt(i);
+                    i--;
+
+                }
+            }*/
+            /*Gyujtemeny.Remove(Merging[0]); 
+            Gyujtemeny.Remove(Merging[1]); 
+            Gyujtemeny.Remove(Merging[2]);
+            for (int i = 0; i < Jatekos.Count; i++)
+            {
+                if (Jatekos[i] == Merging[0] )
+                {
+                    PlayerCards_Wrap.Children.Remove(Merging[0].GetVisual());
+                    Jatekos.Remove(Merging[0]);
+                   
+                }
+                else if (Jatekos[i] == Merging[1])
+                {
+                    PlayerCards_Wrap.Children.Remove(Merging[1].GetVisual());
+                    Jatekos.Remove(Merging[0]);
+
+                }
+                else if (Jatekos[i] == Merging[2])
+                {
+                    PlayerCards_Wrap.Children.Remove(Merging[2].GetVisual());
+                    Jatekos.Remove(Merging[0]);
+
+                }
+            }*/
+            Merging.Clear();
+        }
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
     }

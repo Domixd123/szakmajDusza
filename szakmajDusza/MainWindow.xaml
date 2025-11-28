@@ -23,37 +23,30 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- 1) Shop felső rész - kártyák megjelenése -->
-                <WrapPanel x:Name="CardMerge"
-               Grid.Row="0"
-               Grid.Column="0"
-               Margin="40"
+                <WrapPanel x:Name="CardMerge_Wrap"
                HorizontalAlignment="Center"
-               VerticalAlignment="Center"
+               VerticalAlignment="Top"
                Orientation="Horizontal"
                ItemWidth="160"
-               ItemHeight="240" />
+               ItemHeight="200" Height="auto" Grid.RowSpan="2" Width="auto" />
 
                 <!-- 2) Jobb oldali vezérlőpanel -->
-                <StackPanel Grid.Row="0"
+                <StackPanel x:Name="CardMerge_Panel" Grid.Row="0"
                 Grid.RowSpan="2"
                 Grid.Column="1"
-                Margin="40"
+                Margin="0,40,0,0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
-                Width="350"
+                Width="480" Height="770"
                 >
 
-                    <Button x:Name="Shop_Refresh"
-                Content="Újra pörgetés"
-                Height="110"
-                Margin="0,0,0,20"
-                FontSize="26" />
+
 
                     <Button x:Name="Shop_Merge"
                 Content="Kártyák egyesítése"
                 Height="110"
-                Margin="0,0,0,20"
-                FontSize="26"/>
+                Margin="0,20,0,20"
+                FontSize="26" IsEnabled="False" Click="Merge_To_Vezer" Width="350"/>
 
                     <Label Content="Kijelölt kártyák:"
                FontSize="22"
@@ -61,24 +54,41 @@
                HorizontalAlignment="Center"/>
 
                     <WrapPanel x:Name="Shop_Merging_Cards"
-                   Height="200"
+                   Height="400"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
-                   ItemWidth="130"
+                   ItemWidth="160"
                    ItemHeight="200"
                    />
+                    <Button x:Name="Shop_Back"
+                        Content="Vissza"
+                        Height="110"
+                        FontSize="26" Width="350" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,20,0,0" Click="Back" />
                 </StackPanel>
 
                 <!-- 3) Shop alsó része -->
                 <WrapPanel x:Name="Shop_Wrap"
                Grid.Row="2"
-               Grid.Column="0"
-               Margin="40"
                Height="260"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                ItemWidth="160"
-               ItemHeight="240"/>
+               ItemHeight="240" Width="0"/>
+                <!-- Bal alsó sarok-->
+                <StackPanel x:Name="ShopRefresh_Panel"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,40,0,0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Width="350" Height="130">
+                    <Button x:Name="Shop_Refresh"
+                        Content="Újra pörgetés"
+                        Height="110"
+                        Margin="0,0,0,20"
+                        FontSize="26" />
+
+                </StackPanel>
 
             </Grid>
 
@@ -118,7 +128,7 @@
                 <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,654,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
             </Grid>
 
-            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Visible">
+            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed">
                 <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
@@ -174,7 +184,7 @@
 
 
 
-            <Grid x:Name="PakliOssze_Grid" Visibility="Visible">
+            <Grid x:Name="PakliOssze_Grid" Visibility="Collapsed">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="721*"/>
@@ -188,7 +198,7 @@
                 <Label FontSize="50" x:Name="SelectableCounter_Label" Content="/0" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top" Height="77" Width="189"/>
                 <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top" Height="77" Width="284"/>
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
-                <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1293,358,0,0" VerticalAlignment="Top" Width="315" Height="85"/>
+                <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1293,358,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="GoToShop_Button_Click"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1293,630,0,0" VerticalAlignment="Top" Width="315" Height="85"/>
 
             </Grid>
@@ -202,7 +212,6 @@
                 <Label Content="Pakli:" HorizontalAlignment="Left" Height="87" Margin="100,502,0,0" VerticalAlignment="Top" Width="320" FontSize="60"/>
                 <Label x:Name="EveryCard_Label" Visibility="Collapsed" Foreground="Red" Content="Már minden kártyát megszereztél!" HorizontalAlignment="Left" Margin="1290,482,0,0" VerticalAlignment="Top"/>
                 <Button Content="Mentés" x:Name="mentes" HorizontalAlignment="Left" Margin="1464,600,0,0" VerticalAlignment="Top" Height="109" Width="306"/>
-                <Button Content="Bolt" x:Name="GoToShop_Button" HorizontalAlignment="Left" Margin="1464,450,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="GoToShop_Button_Click"/>
 
             </Grid>
 

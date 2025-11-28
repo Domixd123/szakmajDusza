@@ -34,7 +34,10 @@ namespace szakmajDusza
             {
                 if (MainWindow.Gyujtemeny[i].Name==elso.Name|| MainWindow.Gyujtemeny[i].Name == masodik.Name|| MainWindow.Gyujtemeny[i].Name == harmaid.Name)
                 {
+                  
                     MainWindow.Gyujtemeny.RemoveAt(i);
+                    i--;
+
                 }
             }
             for (int i = 0; i < MainWindow.Jatekos.Count; i++)
@@ -42,10 +45,12 @@ namespace szakmajDusza
                 if (MainWindow.Jatekos[i].Name == elso.Name || MainWindow.Jatekos[i].Name == masodik.Name || MainWindow.Jatekos[i].Name == harmaid.Name)
                 {
                     MainWindow.Jatekos.RemoveAt(i);
+                    i--;
+
                 }
             }
             //int x = 0;
-            foreach (var item in MainWindow.AllCardsDict.Values)
+            foreach (var item in MainWindow.AllLeadersDict.Values)
             {
                 int x = 0;
                 for (int j = 0; j < obtainedVezer.Count; j++)

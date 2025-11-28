@@ -118,7 +118,7 @@
                 <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,654,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
             </Grid>
 
-            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed">
+            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Visible">
                 <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
@@ -174,7 +174,7 @@
 
 
 
-            <Grid x:Name="PakliOssze_Grid" Visibility="Collapsed">
+            <Grid x:Name="PakliOssze_Grid" Visibility="Visible">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="721*"/>
@@ -185,7 +185,7 @@
                 <Label FontSize="50" Content="Pakli:" HorizontalAlignment="Left" Margin="100,504,0,0" VerticalAlignment="Top" Height="77" Width="122"/>
                 <Button x:Name="ConfirmPakli_Button" Content="Tovább" HorizontalAlignment="Left" Margin="1293,504,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="ConfirmPakli_Button_Click"/>
                 <Label x:Name="SelectedCards_Label" FontSize="50" Content="0" HorizontalAlignment="Left" Margin="223,504,0,0" VerticalAlignment="Top" Height="77" Width="37"/>
-                <Label FontSize="50" x:Name="SelectableCounter_Label" Content="" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top" Height="77" Width="10"/>
+                <Label FontSize="50" x:Name="SelectableCounter_Label" Content="/0" HorizontalAlignment="Left" Margin="259,504,0,0" VerticalAlignment="Top" Height="77" Width="189"/>
                 <Label FontSize="50" Content="Gyűjtemény:" HorizontalAlignment="Left" Margin="100,25,0,0" VerticalAlignment="Top" Height="77" Width="284"/>
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
                 <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1293,358,0,0" VerticalAlignment="Top" Width="315" Height="85"/>

@@ -713,9 +713,11 @@ namespace szakmajDusza
             }
 
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            
+
         }
 
-
+        
         public static Label CreateJutalom(Grid Parent)
         {
             Label Jutalom = new Label();
@@ -808,8 +810,8 @@ namespace szakmajDusza
 
         private void GoToGame_Button_Click(object sender, RoutedEventArgs e)
         {
-            Menu_Grid.Visibility = Visibility.Collapsed;
-            ChooseKornyezet_Grid.Visibility = Visibility.Visible;
+            //Menu_Grid.Visibility = Visibility.Collapsed;
+            //ChooseKornyezet_Grid.Visibility = Visibility.Visible;
             GoToGrid(ChooseKornyezet_Grid);
         }
 
@@ -821,10 +823,10 @@ namespace szakmajDusza
 
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
-            Menu_Grid.Visibility = Visibility.Visible;
+            /*Menu_Grid.Visibility = Visibility.Visible;
             Options_Grid.Visibility = Visibility.Collapsed;
             ChooseKornyezet_Grid.Visibility = Visibility.Collapsed;
-            JatekMester_Grid.Visibility = Visibility.Collapsed;
+            JatekMester_Grid.Visibility = Visibility.Collapsed;*/
         }
 
         private void SFX_On(object sender, RoutedEventArgs e)
@@ -868,7 +870,7 @@ namespace szakmajDusza
         private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
         {
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-            
+
             GoToGrid(PakliOssze_Grid);
         }
 
@@ -910,9 +912,9 @@ namespace szakmajDusza
 
         private void BackToJatekMester(object sender, RoutedEventArgs e)
         {
-            JatekMester_Grid.Visibility = Visibility.Visible;
+            /*JatekMester_Grid.Visibility = Visibility.Visible;
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
-            KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;*/
         }
 
         private void ListKartya_Button_Click(object sender, RoutedEventArgs e)
@@ -954,8 +956,8 @@ namespace szakmajDusza
         private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
         {
             ListKartya_Button_Click(sender, e);
-            KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
-            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;
+            /*KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;*/
         }
         private void SelectForModify(Card k)
         {
@@ -1007,8 +1009,10 @@ namespace szakmajDusza
                 return;
             }
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-            
+           
+
             GoToGrid(PakliOssze_Grid);
+           // SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
             KornyezetekJatekos_List.SelectedItem = null;
         }
 

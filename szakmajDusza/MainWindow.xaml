@@ -8,7 +8,7 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
-            <Grid x:Name="Shop_Grid" Visibility="Visible"
+            <Grid x:Name="Shop_Grid" Visibility="Collapsed"
       Width="1910" Height="1070" Margin="5,5,5,5">
 
                 <Grid.RowDefinitions>
@@ -133,14 +133,32 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
             </Grid>
-            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed">
+            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible">
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
-                <Label x:Name="KartyaSzerkesztoCardName" Visibility="Visible" HorizontalAlignment="Left" Margin="700,201,0,0" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="TypeAttack" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,313,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="TypeDefense" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,418,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.455,-2.049"/>
-                <ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" HorizontalAlignment="Left" Margin="960,553,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.544,-2.681"/>
                 <Button Click="Back" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+                <StackPanel HorizontalAlignment="Left" Height="281" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
+
+                    <Label Content="Név:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
+                    <TextBox x:Name="KartyaSzerkesztoCardName" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Sebzés:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+                    <TextBox x:Name="TypeAttack" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0"/>
+                    <Label Content="Életerő:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
+                    <TextBox x:Name="TypeDefense" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" TextWrapping="Wrap" Text="" Width="120" RenderTransformOrigin="0.455,-2.049" HorizontalAlignment="Right" Margin="0,-44,0,0"/>
+                    <Label Content="Gyűjteményben:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
+                    <CheckBox x:Name="Gyujtemeny_Check" Content="" Height="15" Width="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Margin="0,-44,10,0" BorderThickness="0.333333333333333,0.333333333333333,0.333333333333333,0.333333333333333">
+                        <CheckBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </CheckBox.RenderTransform>
+                    </CheckBox>
+                    <Label Content="Típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
+                    <ComboBox x:Name="SelectType" Visibility="Visible" SelectionChanged="UpdateKartyaSelectionCard" Width="120" RenderTransformOrigin="0.544,-2.681" HorizontalAlignment="Right" Margin="0,-44,0,0"/>
+                </StackPanel>
             </Grid>
             <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Collapsed">
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="140,866,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60"/>
@@ -156,7 +174,7 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
 
-            <Grid x:Name="Options_Grid" Visibility="Visible">
+            <Grid x:Name="Options_Grid" Visibility="Collapsed">
 
                 <Grid.Resources>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

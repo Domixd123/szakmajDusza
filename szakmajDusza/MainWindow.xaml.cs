@@ -83,7 +83,7 @@ namespace szakmajDusza
             KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             Shop_Grid.Visibility = Visibility.Collapsed;
 
-            elozoGrid.Push(Menu_Grid);
+            //elozoGrid.Push(Menu_Grid);
 
             idk.Children.Add(FightGrid);
             

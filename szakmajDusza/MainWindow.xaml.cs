@@ -96,10 +96,7 @@ namespace szakmajDusza
 
             //elozoGrid.Push(Menu_Grid);
 
-            for (int i = 0; i < 10; i++)
-            {
-                DifSelect_Combo.Items.Add(i);
-            }
+            
 
             Difficulty_Stack.Visibility = Visibility.Collapsed;
 
@@ -1258,27 +1255,43 @@ namespace szakmajDusza
             Difficulty_Stack.Visibility = Visibility.Visible;
         }
 
-        private void DifSelect_Combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ConfirmDif_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (DifSelect_Combo.SelectedItem == null)
-                return;
+            LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedValue}.txt");
 
-            Difficulty = (int)DifSelect_Combo.SelectedValue;
-
-            // A listában kijelölt elem meghatározása
-            var selected = KornyezetekJatekos_List.SelectedItem?.ToString();
-            if (selected == null)
-                return;
-
-            LoadData($"kornyezet/{selected}.txt");
-
-            // Most mehetsz a következő gridre
-            GoToGrid(PakliOssze_Grid);
-
-            // Reset
+            Difficulty = int.Parse((string)Dif_Label.Content);
             KornyezetekJatekos_List.SelectedItem = null;
-            DifSelect_Combo.SelectedItem = null;
-            Difficulty_Stack.Visibility = Visibility.Collapsed;
+            GoToGrid(PakliOssze_Grid);
+        }
+
+        private void DifPlus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.Parse(Dif_Label.Content.ToString()) == 0)
+            {
+                
+                DifMinus_Button.IsEnabled = true;
+            }
+            else if (int.Parse(Dif_Label.Content.ToString()) == 9)
+            {
+                DifPlus_Button.IsEnabled = false;
+            }
+
+            Dif_Label.Content = (int.Parse(Dif_Label.Content.ToString()) + 1).ToString();
+        }
+
+        private void DifMinus_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.Parse(Dif_Label.Content.ToString()) == 1)
+            {
+                
+                DifMinus_Button.IsEnabled = false;
+            }
+            else if (int.Parse(Dif_Label.Content.ToString()) == 10)
+            {
+                DifPlus_Button.IsEnabled = true;
+            }
+
+            Dif_Label.Content = (int.Parse(Dif_Label.Content.ToString()) - 1).ToString();
         }
 
         private void Back(object sender, RoutedEventArgs e)
@@ -1303,12 +1316,7 @@ namespace szakmajDusza
             // --- SPECIÁLIS LOGIKA ---
 
             // 1) Menü → zenét visszakapcsol
-            if (vissza == Menu_Grid)
-            {
-                sp.Stop();
-                sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-                sp.Play();
-            }
+            
 
             // 2) Visszatérés a harcból → harc elemeinek törlése
             if (vissza == MainRoom_Grid || vissza == PakliOssze_Grid)
@@ -1317,6 +1325,11 @@ namespace szakmajDusza
 
             }
 
+            if (vissza != ChooseKornyezet_Grid)
+            {
+                Difficulty_Stack.Visibility = Visibility.Collapsed;
+                KornyezetekJatekos_List.SelectedItem = null;
+            }
             // 3) Ha a HARCBÓL lépünk vissza
             /*if (vissza != FightGrid)
             {
@@ -2250,7 +2263,13 @@ namespace szakmajDusza
 
 
         }
-		// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
-	}
+        
+
+
+
+
+        // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+
+    }
 }

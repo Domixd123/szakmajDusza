@@ -257,11 +257,18 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
 
                 </ListBox>
                 <StackPanel x:Name="Difficulty_Stack" Visibility="Visible" Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
-                    <StackPanel Orientation="Horizontal" Margin="0 20" Width="450">
+                    <StackPanel Orientation="Horizontal" Margin="0 20" Width="420">
                         <Label Content="Nehézség:" VerticalAlignment="Center" FontWeight="Bold" FontSize="60"/>
-                        <ComboBox Name="DifSelect_Combo" SelectionChanged="DifSelect_Combo_SelectionChanged" Height="100" Width="200" VerticalContentAlignment="Center"/>
+                        <Label Name="Dif_Label" Content="0" FontWeight="Bold" FontSize="60" HorizontalAlignment="Right"/>
+                        <StackPanel Height="60">
+                            <Button Name="DifPlus_Button" Content="+" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="20" Click="DifPlus_Button_Click"></Button>
+                            <Button Name="DifMinus_Button" IsEnabled="false" Content="-" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="20" Click="DifMinus_Button_Click"></Button>
+                        </StackPanel>
+                        
                     </StackPanel>
-                    
+                    <StackPanel>
+                        <Button Name="ConfirmDif_Button" HorizontalAlignment="Center" Content="Megerősítés" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400" Click="ConfirmDif_Button_Click"/>
+                    </StackPanel>
                 </StackPanel>
                 
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>

@@ -14,15 +14,16 @@ namespace szakmajDusza
 		public static int shopRefreshPrice = 2;
 		public static Dictionary<string, Item> Items = new Dictionary<string, Item>()
 		{
-			{ "Életerőlopás",new Item("Életerőlopás","(Szint*#)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,5)},
-			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,2) },
-			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,2) },
-			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,8) },
-			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,15) },
-			{"Krit csapás", new Item("Krit csapás","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,10) },
-			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,5) },
-			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,5) },
-			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,8) },
+			//DoItDOminik
+			{ "Életerőlopás",new Item("Életerőlopás","(Szint*#)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,"lifesteal.png",5)},
+			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,"healing.png",2) },
+			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,"strength.png",2) },
+			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,"armor.png",8) },
+			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,"revive.png",15) },
+			{"Krit csapás", new Item("Krit csapás","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,"crit.png",10) },
+			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,"thorns.png",5) },
+			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,"dodge.png",5) },
+			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,"magic.png",8) },
 		};
 		public bool Disabled {  get; set; }=false;
 		public string Name { get; set; }
@@ -36,7 +37,7 @@ namespace szakmajDusza
 		public int BaseVariable {  get; set; }
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
-
+		public string IconPath { get; set; }
 		public Label NameLabel;
 		public Label Name2Label;
 		public Label LevelLabel;
@@ -52,8 +53,9 @@ namespace szakmajDusza
 		public Grid visualGroup;
 
 		public event EventHandler<Item> Clicked;
-		public Item(string name, string description, bool buyable, int maxlevel, int price,int baseVariable, int level = 0, int ownedcount = 0, bool inRotation = false)
+		public Item(string name, string description, bool buyable, int maxlevel, int price, string ico,int baseVariable, int level = 0, int ownedcount = 0, bool inRotation = false )
 		{
+			IconPath=(ico);
 			Name = name;
 			Description = description;
 			Buyable = buyable;
@@ -154,7 +156,7 @@ namespace szakmajDusza
 		}
 		public Item GetCopy()
 		{
-			return new Item(Name, Description, Buyable, MaxLevel, Price,BaseVariable, Level, OwnedCount, InRotation);
+			return new Item(Name, Description, Buyable, MaxLevel, Price, IconPath, BaseVariable, Level, OwnedCount, InRotation);
 		}
 		public void UpdateAllVisual()
 		{

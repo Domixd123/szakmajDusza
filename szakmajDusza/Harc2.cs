@@ -26,22 +26,145 @@ namespace szakmajDusza
             double roll = random.NextDouble(); // 0.0 .. 1.0 inclusive
             return (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
         }
-		public static void calculateDamage(Card attacker, Card defender)
+		static int respawnTimesPlayer = 0;
+		static string respawnedNamePlayer="";
+		static int respawnTimesKazamata = 0;
+		static string respawnedNameKazamata = "";
+		public static void calculateDamage(Card attacker, Card defender,bool attackerIsPlayer, int difficulty)
 		{
+			double roll = random.NextDouble();
+
 			int damage = attacker.Damage;
-			int magicResistLevel = 0;
+			int lifestealLevel = 0;
+			foreach (var item in attacker.Items)//apply all damage boosts
+			{
+				if (MagicRes(defender))
+				{
+					continue;
+				}
+				if (item.Name == "Életerőlopás")
+				{
+					lifestealLevel += item.Level;
+				}
+				else if(item.Name =="Erő")
+				{
+					damage += 2 * item.Level;
+					//strength animation
+				}
+				else if (item.Name == "Krit ütés")
+				{
+					if (random.Next(0,100)<item.Level*10)
+					{
+						damage+=(int)(item.Level*0.4*attacker.Damage);
+						//crit animation
+					}
+				}
+			}
+			foreach (var item in defender.Items)//apply all damage reductions
+			{
+				if (!MagicRes(attacker))
+				{
+					if(item.Name =="Páncél")
+					{
+						damage/=(item.Level*8);
+						//armor animation
+					}
+					else if (item.Name == "Kikerülés")
+					{
+						if (random.Next(0, 100) < item.Level * 5)
+						{
+							damage = 0;
+							//dodge animation
+							break;
+						}
+					}
+				}
+			}
+			if (attackerIsPlayer)
+			{
+				damage= (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
+			}
+			else
+			{
+				damage= (int)Math.Round(damage * (1 + (roll * difficulty / 10)));
+			}
+			defender.HP -= damage;
+			//damage animation
+			if(defender.HP < 0)
+			{
+				RespawnItem(attacker,defender,attackerIsPlayer);
+			}
+			attacker.HP += (int)(lifestealLevel * Math.Round(damage * (1 - (roll * difficulty / 20))));
+			//lifesteal animation
+
+			if (defender.HP < 0) return;
+
+
 			foreach (var item in defender.Items)
 			{
-
+				if (MagicRes(attacker)) continue;
+				if(item.Name == "Tüskék")
+				{
+					int damage2=(int)(damage*item.Level*0.05);
+					if (attackerIsPlayer)
+					{
+						damage2 = (int)Math.Round(damage2 * (1 - (roll * difficulty / 20)));
+					}
+					else
+					{
+						damage2 = (int)Math.Round(damage2 * (1 + (roll * difficulty / 10)));
+					}
+					attacker.HP -= damage2;
+					//thorns animation
+				}
+			}
+			if (defender.HP < 0)
+			{
+				RespawnItem(defender, attacker, !attackerIsPlayer);
 			}
 		}
-		public static void calculateAttackerHealAfter(Card attacker, Card defender)
+		static void RespawnItem(Card attacker,Card defender,bool attackerIsPlayer)
 		{
-
+			foreach (var item in defender.Items)
+			{
+				if (MagicRes(attacker)) continue;
+				if (item.Name == "Újraéledés")
+				{
+					int respawntimes = 0;
+					if (attackerIsPlayer && respawnedNameKazamata == defender.Name)
+					{
+						respawntimes = respawnTimesKazamata;
+					}
+					else if (!attackerIsPlayer && respawnedNamePlayer == defender.Name)
+					{
+						respawntimes=respawnTimesPlayer;
+					}
+					if (random.Next(0, 100) < (item.Level-respawntimes) * 15)
+					{
+						if (!defender.Vezer)
+						{
+							defender.HP=MainWindow.AllCardsDict[defender.Name].HP;
+						}
+						else
+						{
+							defender.HP = MainWindow.AllLeadersDict[defender.Name].HP;
+						}
+						//respawn animation
+						return;
+					}
+				}
+			}
 		}
-		public static void calculateDefenderHealAfter(Card attacker,Card defender)
+		public static bool MagicRes(Card resistor)
 		{
-
+			int magicResistLevel = 0;
+			foreach (var item in resistor.Items)
+			{
+				if (item.Name == "Mágikus") magicResistLevel += item.Level;
+			}
+			bool magicResist = random.Next(0, 100) < magicResistLevel * 8;
+			//magicres animation
+			return magicResist;
 		}
         public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata, int difficulty)
 		{

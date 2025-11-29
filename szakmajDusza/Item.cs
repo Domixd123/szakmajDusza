@@ -13,13 +13,13 @@ namespace szakmajDusza
 		public static int shopRefreshPrice = 2;
 		public static Dictionary<string, Item> Items = new Dictionary<string, Item>()
 		{
-			{ "Életerőlopás",new Item("Életerőlopás","(Szint) életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5)},
+			{ "Életerőlopás",new Item("Életerőlopás","(Szint*5)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5)},
 			{"Gyógyítás", new Item("Gyógyítás","(Szint*2) életerővel gyógyítja magát minden kör végén",true,5,5) },
 			{"Erő", new Item("Erő","(Szint*2)-vel erősebben üt",true,5,5) },
 			{"Páncél", new Item("Páncél","(Szint*8)%-kal kevesebbet sebződik",true,5,5) },
 			{"Újraéledés", new Item("Újraéledés","(Szint*15)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5) },
 			{"Krit ütés", new Item("Krit ütés","(Szint*10)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5) },
-			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*5)%-át visszaüti ellenfelére",true,5,5) },
+			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*5)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5) },
 			{"Kikerülés", new Item("Kikerülés","(Szint*5)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
 			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5) },
 		};

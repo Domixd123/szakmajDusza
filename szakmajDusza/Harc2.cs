@@ -48,12 +48,12 @@ namespace szakmajDusza
 				}
 				else if(item.Name =="Erő")
 				{
-					damage += 2 * item.Level;
+					damage += item.BaseVariable * item.Level;
 					//strength animation
 				}
 				else if (item.Name == "Krit ütés")
 				{
-					if (random.Next(0,100)<item.Level*10)
+					if (random.Next(0,100)<item.Level*item.BaseVariable)
 					{
 						damage+=(int)(item.Level*0.4*attacker.Damage);
 						//crit animation
@@ -66,12 +66,12 @@ namespace szakmajDusza
 				{
 					if(item.Name =="Páncél")
 					{
-						damage/=(item.Level*8);
+						damage/=(item.Level*item.BaseVariable);
 						//armor animation
 					}
 					else if (item.Name == "Kikerülés")
 					{
-						if (random.Next(0, 100) < item.Level * 5)
+						if (random.Next(0, 100) < item.Level * item.BaseVariable)
 						{
 							damage = 0;
 							//dodge animation
@@ -105,7 +105,7 @@ namespace szakmajDusza
 				if (MagicRes(attacker)) continue;
 				if(item.Name == "Tüskék")
 				{
-					int damage2=(int)(damage*item.Level*0.05);
+					int damage2=(int)(damage*item.Level*0.01*item.BaseVariable);
 					if (attackerIsPlayer)
 					{
 						damage2 = (int)Math.Round(damage2 * (1 - (roll * difficulty / 20)));
@@ -139,7 +139,7 @@ namespace szakmajDusza
 					{
 						respawntimes=respawnTimesPlayer;
 					}
-					if (random.Next(0, 100) < (item.Level-respawntimes) * 15)
+					if (random.Next(0, 100) < (item.Level-respawntimes) * item.BaseVariable)
 					{
 						if (!defender.Vezer)
 						{
@@ -158,11 +158,16 @@ namespace szakmajDusza
 		public static bool MagicRes(Card resistor)
 		{
 			int magicResistLevel = 0;
+			int baseVariable = 0;
 			foreach (var item in resistor.Items)
 			{
-				if (item.Name == "Mágikus") magicResistLevel += item.Level;
+				if (item.Name == "Mágikus")
+				{
+					magicResistLevel += item.Level;
+					baseVariable=item.BaseVariable;
+				}
 			}
-			bool magicResist = random.Next(0, 100) < magicResistLevel * 8;
+			bool magicResist = random.Next(0, 100) < magicResistLevel * baseVariable;
 			//magicres animation
 			return magicResist;
 		}

@@ -14,15 +14,15 @@ namespace szakmajDusza
 		public static int shopRefreshPrice = 2;
 		public static Dictionary<string, Item> Items = new Dictionary<string, Item>()
 		{
-			{ "Életerőlopás",new Item("Életerőlopás","(Szint*5)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5)},
-			{"Gyógyítás", new Item("Gyógyítás","(Szint*2) életerővel gyógyítja magát minden kör végén",true,5,5) },
-			{"Erő", new Item("Erő","(Szint*2)-vel erősebben üt",true,5,5) },
-			{"Páncél", new Item("Páncél","(Szint*8)%-kal kevesebbet sebződik",true,5,5) },
-			{"Újraéledés", new Item("Újraéledés","(Szint*15)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5) },
-			{"Krit ütés", new Item("Krit ütés","(Szint*10)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5) },
-			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*5)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5) },
-			{"Kikerülés", new Item("Kikerülés","(Szint*5)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
-			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5) },
+			{ "Életerőlopás",new Item("Életerőlopás","(Szint*#)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,5)},
+			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,2) },
+			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,2) },
+			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,8) },
+			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,15) },
+			{"Krit ütés", new Item("Krit ütés","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,10) },
+			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,5) },
+			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,5) },
+			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,8) },
 		};
 		public bool Disabled {  get; set; }=false;
 		public string Name { get; set; }
@@ -33,6 +33,7 @@ namespace szakmajDusza
 		public int OwnedCount { get; set; }
 		public int Level { get; set; }
 		public int MaxLevel { get; set; }
+		public int BaseVariable {  get; set; }
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
 
@@ -51,7 +52,7 @@ namespace szakmajDusza
 		public Grid visualGroup;
 
 		public event EventHandler<Item> Clicked;
-		public Item(string name, string description, bool buyable, int maxlevel, int price, int level = 0, int ownedcount = 0, bool inRotation = false)
+		public Item(string name, string description, bool buyable, int maxlevel, int price,int baseVariable, int level = 0, int ownedcount = 0, bool inRotation = false)
 		{
 			Name = name;
 			Description = description;
@@ -60,6 +61,7 @@ namespace szakmajDusza
 			Price = price;
 			Level = level;
 			OwnedCount = ownedcount;
+			BaseVariable = baseVariable;
 			InRotation = inRotation;
 		}
 		public void Buy()
@@ -152,7 +154,7 @@ namespace szakmajDusza
 		}
 		public Item GetCopy()
 		{
-			return new Item(Name, Description, Buyable, MaxLevel, Price, Level, OwnedCount, InRotation);
+			return new Item(Name, Description, Buyable, MaxLevel, Price,BaseVariable, Level, OwnedCount, InRotation);
 		}
 		public void UpdateAllVisual()
 		{
@@ -341,7 +343,7 @@ namespace szakmajDusza
 
 			DescLabel.Content = new TextBlock
 			{
-				Text = Description,
+				Text = Description.Replace("#",$"{BaseVariable}"),
 				TextWrapping = TextWrapping.Wrap,
 				Foreground = Brushes.White,
 				FontSize = 12,
@@ -368,7 +370,7 @@ namespace szakmajDusza
 				};
 
 				visualGroup.Children.Add(InfoLabel);
-				if (LevelUpRequirement(Level + 1) == CurrentLevelOwned() + 1)
+				if (LevelUpRequirement(Level + 1) == CurrentLevelOwned() + 1&&OwnedCount!=0)
 				{
 					border.BorderBrush = new LinearGradientBrush(
 		Color.FromRgb(100, 180, 255),   // világos kék

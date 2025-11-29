@@ -20,6 +20,7 @@ namespace szakmajDusza
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
 		public string Bonus { get; set; }
+		public string OriginName {  get; set; }
 
 		public Label NameLabel;
 		public Label Name2Label;
@@ -31,12 +32,13 @@ namespace szakmajDusza
 
 		public event EventHandler<Card> Clicked;
 
-		public Card(string n, int d, int h, string tipus, bool vezer, List<Item> items=null)
+		public Card(string n, int d, int h, string tipus, bool vezer, string originName="",List<Item> items=null)
 		{
 			Name = n;
 			Damage = d;
 			HP = h;
 			Vezer = vezer;
+			OriginName = originName;
 			if (items == null) items = new List<Item>();
 			Items = items;
 			Tipus = StringToTipus(tipus);
@@ -355,7 +357,7 @@ namespace szakmajDusza
 		}
 		public Card GetCopy()
 		{
-			return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer);
+			return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer,OriginName,Items);
 		}
 		public static List<Card> GetListCopy(List<Card> cards)
 		{

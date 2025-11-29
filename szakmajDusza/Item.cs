@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -44,6 +45,8 @@ namespace szakmajDusza
 		public Label OwnedLabel;     // ownedcount
 		public Label DescLabel;      // description hover alatt
 		public Label NewLabel;
+		public Label LevelUpLabel;
+		public Border border;
 
 		public Grid visualGroup;
 
@@ -204,7 +207,7 @@ namespace szakmajDusza
 
 
 			// keret
-			var border = new Border
+			border = new Border
 			{
 				CornerRadius = new CornerRadius(12),
 				BorderBrush = new LinearGradientBrush(
@@ -278,13 +281,37 @@ namespace szakmajDusza
 
 				visualGroup.Children.Add(NewLabel);
 			}
-			But = new Button
+			/*else if(LevelUpRequirement(Level+1)==CurrentLevelOwned()+1)
 			{
-				Background = Brushes.Transparent,
-				BorderThickness = new Thickness(0),
-				Cursor = Cursors.Hand,
+				border.BorderBrush = new LinearGradientBrush(
+	Color.FromRgb(100, 180, 255),   // világos kék
+	Color.FromRgb(30, 90, 180),     // sötétebb kék
+	45);
+				border.BorderThickness = new Thickness(4);
 
-			};
+				visualGroup.Background = new LinearGradientBrush(
+					Color.FromRgb(45, 35, 60),
+					Color.FromRgb(80, 60, 100),
+					90);
+				LevelUpLabel = new Label
+				{
+					Content = "Level Up",
+					Foreground = Brushes.Gold,
+					FontWeight = FontWeights.ExtraBold,
+					FontSize = 18,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Center,
+					IsHitTestVisible = false
+				};
+				visualGroup.Children.Add(LevelUpLabel);
+			}*/
+				But = new Button
+				{
+					Background = Brushes.Transparent,
+					BorderThickness = new Thickness(0),
+					Cursor = Cursors.Hand,
+
+				};
 			But.Click += (sender, e) => Clicked?.Invoke(this, this);
 			if (Disabled)
 			{
@@ -341,6 +368,30 @@ namespace szakmajDusza
 				};
 
 				visualGroup.Children.Add(InfoLabel);
+				if (LevelUpRequirement(Level + 1) == CurrentLevelOwned() + 1)
+				{
+					border.BorderBrush = new LinearGradientBrush(
+		Color.FromRgb(100, 180, 255),   // világos kék
+		Color.FromRgb(30, 90, 180),     // sötétebb kék
+		45);
+					border.BorderThickness = new Thickness(4);
+
+					visualGroup.Background = new LinearGradientBrush(
+						Color.FromRgb(45, 35, 60),
+						Color.FromRgb(80, 60, 100),
+						90);
+					LevelUpLabel = new Label
+					{
+						Content = "Level Up",
+						Foreground = Brushes.Gold,
+						FontWeight = FontWeights.ExtraBold,
+						FontSize = 18,
+						HorizontalAlignment = HorizontalAlignment.Center,
+						VerticalAlignment = VerticalAlignment.Center,
+						IsHitTestVisible = false
+					};
+					visualGroup.Children.Add(LevelUpLabel);
+				}
 			}
 			else
 			{

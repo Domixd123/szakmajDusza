@@ -311,7 +311,83 @@
             <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="Cursor" Value="Hand"/>
+            
         </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid Height="30">
+
+                            <!-- Track (pálya) -->
+                            <Grid Margin="10,0">
+                                <Rectangle x:Name="PART_TrackBackground"
+                                   Height="10"
+                                   RadiusX="3" RadiusY="3"
+                                   Fill="#443300"/>
+
+                                <!-- Töltött rész -->
+                                <Rectangle x:Name="PART_TrackProgress"
+                                   Height="10"
+                                   RadiusX="3" RadiusY="3"
+                                   Fill="Gold"
+                                   HorizontalAlignment="Left"
+                                   Width="0"/>
+                            </Grid>
+
+                            <!-- Hivatalos Track -->
+                            <Track x:Name="PART_Track"
+                           Height="10"
+                           Margin="10,0"
+                           IsDirectionReversed="False">
+
+                                <!-- Kitöltött rész a Track-ben -->
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="Slider.DecreaseLarge"
+                                          Background="Transparent"
+                                          IsHitTestVisible="False"/>
+                                </Track.DecreaseRepeatButton>
+
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="Slider.IncreaseLarge"
+                                          Background="Transparent"
+                                          IsHitTestVisible="False"/>
+                                </Track.IncreaseRepeatButton>
+
+                                <!-- THUMB (fogantyú) -->
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb"
+                                   Width="20" Height="10"
+                                   Background="Gold"
+                                   BorderBrush="#CCAA00"
+                                   BorderThickness="2"/>
+                                </Track.Thumb>
+
+                            </Track>
+
+                        </Grid>
+
+                        <!-- Progress animálása a Value alapján -->
+                        <ControlTemplate.Triggers>
+
+                            
+
+                            
+
+                            <!-- Hover Thumb -->
+                            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="True">
+                                 
+                                <Setter TargetName="Thumb" Property="BorderBrush" Value="White"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
 
 
         <Style TargetType="Button">
@@ -353,6 +429,7 @@
 
             <!-- Hover -->
             <Style.Triggers>
+                
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background">
                         <Setter.Value>
@@ -368,6 +445,7 @@
                             <DropShadowEffect BlurRadius="25" ShadowDepth="2" Color="#FFD9A600" Opacity="0.9"/>
                         </Setter.Value>
                     </Setter>
+                    
                 </Trigger>
 
                 <!-- Nyomva tartás -->

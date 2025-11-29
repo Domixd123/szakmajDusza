@@ -226,7 +226,7 @@ namespace szakmajDusza
 				else if (data[0] == "harc")
 				{
 					StreamWriter sw = new StreamWriter(v + data[2]);
-					Harc.StartFight(KazamatakDict[data[1]].GetCopy(), Card.GetListCopy(Pakli), sw);
+					Harc2.StartFight(KazamatakDict[data[1]].GetCopy(), Card.GetListCopy(Pakli), sw);
 					sw.Close();
 				}
 			}

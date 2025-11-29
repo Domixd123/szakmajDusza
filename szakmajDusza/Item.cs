@@ -19,7 +19,7 @@ namespace szakmajDusza
 			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,2) },
 			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,8) },
 			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,15) },
-			{"Krit ütés", new Item("Krit ütés","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,10) },
+			{"Krit csapás", new Item("Krit csapás","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,10) },
 			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,5) },
 			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,5) },
 			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,8) },

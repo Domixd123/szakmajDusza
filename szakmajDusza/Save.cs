@@ -43,7 +43,7 @@ namespace szakmajDusza
 					{
 						defenderItems += $"{item.Name}-{item.Level},";
 					}
-					defenderItems=defenderItems.Substring(0,defenderItems.Length - 1);
+					if (defenderItems.Length != 0) defenderItems = defenderItems.Substring(0, defenderItems.Length - 1);
 					kazamataString += $"{defender.Name}:{defenderItems};";
 				}
 				if (kazamata.Tipus == KazamataType.egyszeru || kazamata.Tipus == KazamataType.kis)
@@ -101,7 +101,8 @@ namespace szakmajDusza
 				{
 					itemString += item2.Name+",";
 				}
-				itemString=itemString.Substring(0,itemString.Length-1);
+				if(itemString.Length > 0) itemString = itemString.Substring(0, itemString.Length - 1);
+
 				sw.WriteLine($"jatekos kartya items;{item.Name};{itemString}");
 			}
 			sw.Close();

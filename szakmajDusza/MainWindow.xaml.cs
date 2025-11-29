@@ -2206,19 +2206,23 @@ namespace szakmajDusza
                 Save.SaveProgress();
             }
         }
-        private void Save_World_Button_Click(object sender,RoutedEventArgs e)
+        private async void Save_World_Button_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists($"saves/{FileName_TextBox.Text}.txt"))
             {
-
+				UsedFileNameError_Label.Visibility = Visibility.Visible;
+                await Task.Delay(2000);
+				UsedFileNameError_Label.Visibility = Visibility.Collapsed;
             }
             else
             {
-
+                Save.fileName = $"{FileName_TextBox.Text}.txt";
+                Save.SaveProgress();
+                Back(sender,e);
             }
 
 
-
+        }
 		// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
 	}

@@ -2214,7 +2214,8 @@ namespace szakmajDusza
             }
             else
             {
-
+                Save.fileName = $"{FileName_TextBox.Text}.txt";
+				Save.SaveProgress();
             }
 
 

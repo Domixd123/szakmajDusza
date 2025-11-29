@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿//using System.Reflection.Emit;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -29,6 +31,7 @@ namespace szakmajDusza
 		public Label HPLabel;
 		private Label TypeLabel;
 		public Label DisLabel;
+		public Label ImportantLabel;
 
 		public Grid visualGroup;
 
@@ -277,6 +280,23 @@ namespace szakmajDusza
             visualGroup.Children.Add(DamageLabel);
 
 
+			ImportantLabel = new Label
+			{
+				Content = "",
+                Foreground = Brushes.IndianRed,
+                FontSize = 24,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(0, 0, 25, 50),
+                IsHitTestVisible = false,
+                HorizontalContentAlignment = HorizontalAlignment.Right,
+                FontWeight = FontWeights.Bold
+            };
+			visualGroup.Children.Add(ImportantLabel);
+
+
+            
+
             // típus indikátor
             var ellipse = new Ellipse
 			{
@@ -435,7 +455,10 @@ namespace szakmajDusza
 			//visualGroup.Children.Add(DamageAndHPLabel);
 			visualGroup.Children.Add(But);
 		}
-		public void UpdateVisual()
+
+        
+
+        public void UpdateVisual()
 		{
 			if (HP <= 0)
 			{
@@ -449,14 +472,35 @@ namespace szakmajDusza
         }
 		public async Task UpdateVisualDamage(int dmg)
 		{
-			int previousHP = HP + dmg;
+            ImportantLabel.Visibility = Visibility.Visible;
+			Panel.SetZIndex(ImportantLabel,-1);
+
+            ImportantLabel.Content = $"-{dmg}";
+            
+            var anim = new ThicknessAnimation
+            {
+                From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
+				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 0), 
+                Duration = TimeSpan.FromSeconds(0.4f),
+                FillBehavior = FillBehavior.Stop
+            };
+            anim.Completed += (s, e) =>
+            {
+                // hide once it’s slid away
+                ImportantLabel.Visibility = Visibility.Hidden;
+				HPLabel.Content = HP;
+            };
+
+            int previousHP = HP + dmg;
+			 ImportantLabel.BeginAnimation(Label.MarginProperty,anim);
 			if (HP + dmg <= 0)
 			{
 				previousHP = 0;
 			}
 			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
-			HPLabel.Content = $"{previousHP} - {dmg}";
+			HPLabel.Content = $"{previousHP}";
             HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+			//ImportantLabel.Visibility = Visibility.Hidden;
         }
 		public async Task UpdateVisualHeal(int heal)
 		{

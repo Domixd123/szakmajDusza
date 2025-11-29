@@ -1287,16 +1287,82 @@ namespace szakmajDusza
                     {
                         card.Clicked += CardToMerge_Card_Click;
                         CardMerge_Wrap.Children.Add(card.GetVisual());
-
                     }
-
-
-
                 }
             }
-               
-           
+            bool isShopEmpty = true;
+            foreach (var item in Item.Items.Values)
+            {
+                if (item.InRotation)
+                {
+                    isShopEmpty = false;
+                    break;
+                }
+            }
+            if (isShopEmpty) Item.RefreshShop(true);
+			
+            ShopRerollPrice_Label.Content = $"Ár: {Item.shopRefreshPrice}";
+            if (Item.shopRefreshPrice > Item.GoldOwned)
+            {
+                ShopRerollPrice_Label.Foreground = Brushes.Red;
+				Shop_Refresh.IsEnabled = false;
+			}
+            else
+            {
+				ShopRerollPrice_Label.Foreground = Brushes.LightGreen;
+			}
+            UpdateGoldOwnedLabel();
+            UpdateShopWrapChildren();
+		}
+        public void UpdateShopWrapChildren()
+        {
+			Shop_Wrap.Children.Clear();
+            bool isAnythingBuyable=false;
+			foreach (var item in Item.Items.Values)
+			{
+				if (item.InRotation)
+				{
+					item.Clicked -= BuyItem;
+					item.Clicked += BuyItem;
+					if (item.Price > Item.GoldOwned)
+					{
+						item.Disabled = true;
+					}
+                    item.UpdateAllVisual();
+					Shop_Wrap.Children.Add(item.GetVisual(true));
+                    isAnythingBuyable = true;
+				}
+			}
+            if (isAnythingBuyable) AllItemsMaxedError_Label.Visibility = Visibility.Collapsed;
+			else AllItemsMaxedError_Label.Visibility = Visibility.Visible;
+		}
+        public void UpdateGoldOwnedLabel()
+        {
+			GoldOwned_Label.Content = $"Arany: {Item.GoldOwned}";
+		}
+
+        public void BuyItem(object? sender,Item selected)
+        {
+            //kristof do anymation here
+			selected.Buy();
+			UpdateShopWrapChildren();
+            UpdateGoldOwnedLabel();
         }
+        private void RefreshShop_Button_Click(object sender, RoutedEventArgs e)
+        {
+			Shop_Wrap.Children.Clear();
+			Item.RefreshShop(false);
+			foreach (var item in Item.Items.Values)
+			{
+				if (item.InRotation)
+				{
+					Shop_Wrap.Children.Add(item.GetVisual(true));
+				}
+			}
+            
+			UpdateGoldOwnedLabel();
+			UpdateShopWrapChildren();
+		}
         private void CardToMerge_Card_Click(object? sender, Card clicked)
         {
             //clicked.GetVisual().IsEnabled = false;

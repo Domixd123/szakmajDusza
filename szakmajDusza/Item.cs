@@ -8,8 +8,8 @@ namespace szakmajDusza
 {
 	public class Item
 	{
-		public static int GoldOwned = 0;
-		public static int shopItemCount = 5;
+		public static int GoldOwned = 100000;
+		public static int shopItemCount = 3;
 		public static int shopRefreshPrice = 2;
 		public static Dictionary<string, Item> Items = new Dictionary<string, Item>()
 		{
@@ -23,6 +23,7 @@ namespace szakmajDusza
 			{"Kikerülés", new Item("Kikerülés","(Szint*5)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5) },
 			{"Mágikus", new Item("Mágikus","(Szint*8)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5) },
 		};
+		public bool Disabled {  get; set; }=false;
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool Buyable { get; set; }
@@ -63,8 +64,19 @@ namespace szakmajDusza
 			GoldOwned -= Price;
 			OwnedCount++;
 			InRotation = false;
+			//UpdateAllVisual();
+			bool isShopEmpty = true;
+			foreach (var item in Items.Values)
+			{
+				if (item.InRotation)
+				{
+					isShopEmpty = false;
+					break;
+				}
+			}
+			if(isShopEmpty)RefreshShop(true);
 		}
-		public static void RefreshShop(bool isFree=true)
+		public static void RefreshShop(bool isFree)
 		{
 			if (!isFree)
 			{
@@ -81,11 +93,30 @@ namespace szakmajDusza
 				if (item.InRotation) item.InRotation = false;
 			}
 			Random r = new Random();
-			for (int i = 0; i < Math.Min(itemPool.Count, shopItemCount); i++)
+			int itemPoolCount=itemPool.Count;
+			for (int i = 0; i < Math.Min(itemPoolCount, shopItemCount); i++)
 			{
 				int randomID = r.Next(0, itemPool.Count);
 				Items[itemPool[randomID]].InRotation = true;
 				itemPool.RemoveAt(randomID);
+			}
+			if (itemPoolCount<shopItemCount)
+			{
+				int needed=shopItemCount-itemPoolCount;
+				itemPool = new List<string>();
+				foreach (var item in Items.Values)
+				{
+					if (item.Buyable && !item.InRotation && item.Level != item.MaxLevel)
+					{
+						itemPool.Add(item.Name);
+					}
+				}
+				for (int i = 0; i < Math.Min(itemPool.Count, needed); i++)
+				{
+					int randomID = r.Next(0, itemPool.Count);
+					Items[itemPool[randomID]].InRotation = true;
+					itemPool.RemoveAt(randomID);
+				}
 			}
 		}
 		public static int LevelUpRequirement(int level)
@@ -105,6 +136,7 @@ namespace szakmajDusza
 		}
 		public void TryLevelUp()
 		{
+			if(OwnedCount==0) return;
 			int owned = OwnedCount;
 			int x = 1;
 			while (owned > LevelUpRequirement(x))
@@ -113,6 +145,7 @@ namespace szakmajDusza
 				x++;
 			}
 			Level = x;
+			UpdateAllVisual();
 		}
 		public Item GetCopy()
 		{
@@ -193,7 +226,7 @@ namespace szakmajDusza
 				VerticalAlignment = VerticalAlignment.Top,
 				Margin = new Thickness(10, 8, 0, 0),
 				IsHitTestVisible = false,
-				MaxWidth = 90,                // max szélesség
+				MaxWidth = 120,                // max szélesség
 				HorizontalContentAlignment = HorizontalAlignment.Center,
 
 			};
@@ -253,7 +286,10 @@ namespace szakmajDusza
 
 			};
 			But.Click += (sender, e) => Clicked?.Invoke(this, this);
-
+			if (Disabled)
+			{
+				visualGroup.Background = new LinearGradientBrush(Color.FromRgb(10, 5, 15), Color.FromRgb(30, 20, 40), 90);
+			}
 			//visualGroup.Children.Add(ellipse);
 			visualGroup.Children.Add(NameLabel);
 			//visualGroup.Children.Add(DamageAndHPLabel);
@@ -272,7 +308,8 @@ namespace szakmajDusza
 				VerticalAlignment = VerticalAlignment.Center,
 				Margin = new Thickness(5),
 				Visibility = Visibility.Collapsed,
-				MaxWidth = 120
+				MaxWidth = 120,
+				IsHitTestVisible = false
 			};
 
 			DescLabel.Content = new TextBlock
@@ -281,6 +318,7 @@ namespace szakmajDusza
 				TextWrapping = TextWrapping.Wrap,
 				Foreground = Brushes.White,
 				FontSize = 12,
+				IsHitTestVisible = false,
 				TextAlignment = TextAlignment.Center
 			};
 
@@ -292,12 +330,13 @@ namespace szakmajDusza
 				// ár kiírása
 				InfoLabel = new Label
 				{
-					FontSize = 10,
-					Content = $"Ár: {GoldOwned} / {Price}",
+					FontSize = 16,
+					Content = $"Ár: {Price}",
 					HorizontalAlignment = HorizontalAlignment.Center,
 					VerticalAlignment = VerticalAlignment.Bottom,
 					Margin = new Thickness(0, 0, 0, 10),
 					FontWeight = FontWeights.Bold,
+					IsHitTestVisible = false,
 					Foreground = (GoldOwned >= Price) ? Brushes.LightGreen : Brushes.Red
 				};
 
@@ -314,6 +353,7 @@ namespace szakmajDusza
 					VerticalAlignment = VerticalAlignment.Bottom,
 					Margin = new Thickness(0, 0, 0, 28),
 					FontWeight = FontWeights.Bold,
+					IsHitTestVisible = false,
 					Foreground = Brushes.Gold
 				};
 				visualGroup.Children.Add(InfoLabel);
@@ -321,11 +361,12 @@ namespace szakmajDusza
 				// ownedcount
 				OwnedLabel = new Label
 				{
-					FontSize = 10,
+					FontSize = 12,
 					Content = $"Szintlépés: {OwnedCount} / {LevelUpRequirement(Level + 1)}",
 					HorizontalAlignment = HorizontalAlignment.Center,
 					VerticalAlignment = VerticalAlignment.Bottom,
 					Margin = new Thickness(0, 0, 0, 8),
+					IsHitTestVisible = false,
 					Foreground = Brushes.LightGray
 				};
 				visualGroup.Children.Add(OwnedLabel);

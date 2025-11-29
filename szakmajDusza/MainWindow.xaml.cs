@@ -95,41 +95,6 @@ namespace szakmajDusza
 			//elozoGrid.Push(Menu_Grid);
 
 
-                }
-                else if (data[0] == "felvetel gyujtemenybe")
-                {
-                    if (AllCardsDict.ContainsKey(data[1]))
-                    {
-                        Gyujtemeny.Add(AllCardsDict[data[1]].GetCopy());
-                    }
-                    else if (AllLeadersDict.ContainsKey(data[1]))
-                    {
-                        Gyujtemeny.Add(AllLeadersDict[data[1]].GetCopy());
-                    }
-                }
-                else if (data[0] == "uj pakli")
-                {
-                    string[] kartyanevek = data[1].Split(',');
-                    for (int i = 0; i < kartyanevek.Length; i++)
-                    {
-                        if (AllCardsDict.ContainsKey(kartyanevek[i]))
-                        {
-                            Gyujtemeny.Add(AllCardsDict[kartyanevek[i]]);
-                        }
-                        else if (AllLeadersDict.ContainsKey(kartyanevek[i]))
-                        {
-                            Gyujtemeny.Add(AllCardsDict[kartyanevek[i]]);
-                        }
-                    }
-                }
-            }
-            foreach (var item in Gyujtemeny)
-            {
-                
-                item.Clicked += AddToPakli;
-                Cards_Wrap.Children.Add(item.GetVisual());
-             
-            }
 
 			Difficulty_Stack.Visibility = Visibility.Collapsed;
 
@@ -223,7 +188,7 @@ namespace szakmajDusza
 				}
 				else if (data[0] == "uj kazamata")
 				{
-					if (data[1] == "egyszeru")//i gotta finish this
+					if (data[1] == "egyszeru")
 					{
 						List<Card> defender = new List<Card>();
 						defender.Add(AllCardsDict[data[3].Split(':')[0]].GetCopy());
@@ -773,18 +738,16 @@ namespace szakmajDusza
 		}
 
 
-        private void AddToPakli(object? sender, Card clicked)
-        {
-
-
-            if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
-            {
-                se.Open(new Uri("Sounds/Decline.wav", UriKind.Relative));
-                se.Play();
-                int flashCount = 0;
-                bool isRed = false;
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromMilliseconds(100);
+		private void AddToPakli(object? sender, Card clicked)
+		{
+			if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
+			{
+				se.Open(new Uri("Sounds/Decline.wav", UriKind.Relative));
+				se.Play();
+				int flashCount = 0;
+				bool isRed = false;
+				DispatcherTimer timer = new DispatcherTimer();
+				timer.Interval = TimeSpan.FromMilliseconds(100);
 
 				timer.Tick += (s, e) =>
 				{
@@ -820,12 +783,10 @@ namespace szakmajDusza
 
 				SelectedCards_Label.Content = Jatekos.Count;
 
-                se.Open(new Uri("Sounds/KartyaClick.wav", UriKind.Relative));
-                se.Play();
-            }
-
-           
-        }
+				se.Open(new Uri("Sounds/KartyaClick.wav", UriKind.Relative));
+				se.Play();
+			}
+		}
 
 		private void RemoveFromPakli(object? sender, Card clicked)
 		{

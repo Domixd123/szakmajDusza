@@ -21,6 +21,7 @@ namespace szakmajDusza
 		public Button But { get; private set; }
 		public string Bonus { get; set; }
 		public string OriginName {  get; set; }
+		
 
 		public Label NameLabel;
 		public Label Name2Label;
@@ -261,16 +262,76 @@ namespace szakmajDusza
 					Color.FromRgb(45, 35, 60),
 					Color.FromRgb(80, 60, 100),
 					90);
+				var ellips1 = new Ellipse
+				{
+                    Width = 30,
+                    Height = 30,
+                    //Fill = Brushes.see,
+                    Stroke = Brushes.Gold,
+                    StrokeThickness = 1.5,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Margin = new Thickness(30, 0, 0, 40),
+                    Effect = new System.Windows.Media.Effects.DropShadowEffect
+                    {
+                        BlurRadius = 5,
+                        Color = Colors.Black,
+                        Opacity = 0.6
+                    },
+                    IsHitTestVisible = false
+                };
+				var ellips2 = new Ellipse
+				{
+                    Width = 30,
+                    Height = 30,
+                    //Fill = typeColor,
+                    Stroke = Brushes.Gold,
+                    StrokeThickness = 1.5,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Margin = new Thickness(0, 0, 30, 40),
+                    Effect = new System.Windows.Media.Effects.DropShadowEffect
+                    {
+                        BlurRadius = 5,
+                        Color = Colors.Black,
+                        Opacity = 0.6
+                    },
+                    IsHitTestVisible = false
+                };
+				visualGroup.Children.Add(ellips2);
+				visualGroup.Children.Add(ellips1);
 			}
-
-			// gomb (láthatatlan, de kattintható)
-			But = new Button
+			else
 			{
-				Background = Brushes.Transparent,
-				BorderThickness = new Thickness(0),
-				Cursor = Cursors.Hand,
+                var ellips1 = new Ellipse
+                {
+                    Width = 30,
+                    Height = 30,
+                    //Fill = Brushes.see,
+                    Stroke = Brushes.Gold,
+                    StrokeThickness = 1.5,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Margin = new Thickness(0, 0, 0, 40),
+                    Effect = new System.Windows.Media.Effects.DropShadowEffect
+                    {
+                        BlurRadius = 5,
+                        Color = Colors.Black,
+                        Opacity = 0.6
+                    },
+                    IsHitTestVisible = false
+                };
+                visualGroup.Children.Add(ellips1);
+            }
 
-			};
+				// gomb (láthatatlan, de kattintható)
+				But = new Button
+				{
+					Background = Brushes.Transparent,
+					BorderThickness = new Thickness(0),
+					Cursor = Cursors.Hand,
+
+				};
 			But.Click += (sender, e) => Clicked?.Invoke(this, this);
 			if (Disabled)
 			{

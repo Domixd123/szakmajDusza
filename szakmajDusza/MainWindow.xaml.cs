@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.VisualBasic;
 
 namespace szakmajDusza
 {
@@ -45,6 +46,7 @@ namespace szakmajDusza
         static public string kazamataEditNmae = "";
         static public bool internalEdits = false;
 
+        public static int Difficulty = 0;
 
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
@@ -93,6 +95,13 @@ namespace szakmajDusza
             KazamataSzerkeszto_Grid.Visibility = Visibility.Collapsed;
 
             //elozoGrid.Push(Menu_Grid);
+
+            for (int i = 0; i < 10; i++)
+            {
+                DifSelect_Combo.Items.Add(i);
+            }
+
+            Difficulty_Stack.Visibility = Visibility.Collapsed;
 
             idk.Children.Add(FightGrid);
 
@@ -501,7 +510,7 @@ namespace szakmajDusza
                 Harc.Visibility = Visibility.Collapsed;
                 Jutalom.Visibility = Visibility.Collapsed;
                 Vissza.Visibility = Visibility.Collapsed;
-                Harc2.StartFight(FightGrid, Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label, AttackDeploy_Label, DefendDeploy_Label, FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, 0);
+                Harc2.StartFight(FightGrid, Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label, AttackDeploy_Label, DefendDeploy_Label, FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, Difficulty);
 
             };
 
@@ -1243,15 +1252,33 @@ namespace szakmajDusza
         private void KornyezetekJatekos_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (KornyezetekJatekos_List.SelectedItem == null)
-            {
                 return;
-            }
-            LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
 
+            // Csak megjelenítjük a nehézségi választót
+            Difficulty_Stack.Visibility = Visibility.Visible;
+        }
 
+        private void DifSelect_Combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DifSelect_Combo.SelectedItem == null)
+                return;
+
+            Difficulty = (int)DifSelect_Combo.SelectedValue;
+
+            // A listában kijelölt elem meghatározása
+            var selected = KornyezetekJatekos_List.SelectedItem?.ToString();
+            if (selected == null)
+                return;
+
+            LoadData($"kornyezet/{selected}.txt");
+
+            // Most mehetsz a következő gridre
             GoToGrid(PakliOssze_Grid);
-            // SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+
+            // Reset
             KornyezetekJatekos_List.SelectedItem = null;
+            DifSelect_Combo.SelectedItem = null;
+            Difficulty_Stack.Visibility = Visibility.Collapsed;
         }
 
         private void Back(object sender, RoutedEventArgs e)

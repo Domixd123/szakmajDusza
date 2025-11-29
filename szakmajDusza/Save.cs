@@ -21,7 +21,8 @@ namespace szakmajDusza
 			}
 			Directory.CreateDirectory("saves");
 			StreamWriter sw =new StreamWriter("saves/"+fileName);
-
+			sw.WriteLine("difficulty;");
+			sw.WriteLine();
 			foreach (var item in MainWindow.AllCardsDict.Values)
 			{
 				sw.WriteLine($"uj kartya;{item.Name};{item.Damage};{item.HP};{Card.TipusToString(item.Tipus)}");

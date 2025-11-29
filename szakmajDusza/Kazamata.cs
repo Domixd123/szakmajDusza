@@ -38,6 +38,7 @@
 			{
 				KazamataReward.eletero => "eletero",
 				KazamataReward.sebzes => "sebzes",
+				KazamataReward.arany => "arany",
 				_ => ""
 			};
 			return Reward;
@@ -49,6 +50,7 @@
 			{
 				"eletero" => KazamataReward.eletero,
 				"sebzes" => KazamataReward.sebzes,
+				"arany"=>KazamataReward.arany,
 				_ => KazamataReward.newcard
 			};
 			return Reward;
@@ -94,6 +96,7 @@
 	{
 		eletero,
 		sebzes,
+		arany,
 		newcard
 	}
 }

@@ -10,11 +10,13 @@
 
   <ItemGroup>
     <None Remove="images\armor.png" />
+    <None Remove="images\attackbg.png" />
     <None Remove="images\crit.png" />
     <None Remove="images\dodge.png" />
     <None Remove="images\earth.jpg" />
     <None Remove="images\fire.jpg" />
     <None Remove="images\healing.png" />
+    <None Remove="images\heartbg.png" />
     <None Remove="images\lifesteal.png" />
     <None Remove="images\magic.png" />
     <None Remove="images\revive.png" />
@@ -26,6 +28,7 @@
 
   <ItemGroup>
     <Resource Include="images\armor.png" />
+    <Resource Include="images\attackbg.png" />
     <Resource Include="images\crit.png" />
     <Resource Include="images\dodge.png" />
     <Resource Include="images\earth.jpg">
@@ -35,6 +38,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\healing.png" />
+    <Resource Include="images\heartbg.png" />
     <Resource Include="images\lifesteal.png" />
     <Resource Include="images\magic.png" />
     <Resource Include="images\revive.png" />

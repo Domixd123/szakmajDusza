@@ -25,7 +25,8 @@ namespace szakmajDusza
 
 		public Label NameLabel;
 		public Label Name2Label;
-		public Label DamageAndHPLabel;
+		public Label DamageLabel;
+		public Label HPLabel;
 		private Label TypeLabel;
 		public Label DisLabel;
 
@@ -194,7 +195,7 @@ namespace szakmajDusza
 
 
 			// statok
-			DamageAndHPLabel = new Label
+			/*DamageAndHPLabel = new Label
 			{
 				Content = $"{Damage} ⚔ / {HP} ❤",
 				Foreground = Brushes.WhiteSmoke,
@@ -203,10 +204,81 @@ namespace szakmajDusza
 				VerticalAlignment = VerticalAlignment.Bottom,
 				Margin = new Thickness(0, 0, 0, 10),
 				IsHitTestVisible = false
+			};*/
+			var aBG = new ImageBrush();
+            aBG.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\attackbg.png"));
+            aBG.Stretch = Stretch.UniformToFill;
+            var DMGEllipse = new Ellipse
+			{
+				Width = 90,
+				Height = 90,
+				//Fill = typeColor,
+				//Stroke = Brushes.Gold,
+				HorizontalAlignment = HorizontalAlignment.Left,
+				VerticalAlignment = VerticalAlignment.Bottom,
+				Margin = new Thickness(-12, 0, 0, -5),
+				IsHitTestVisible = false
 			};
+            DMGEllipse.Fill = aBG;
+			visualGroup.Children.Add(DMGEllipse);
 
-			// típus indikátor
-			var ellipse = new Ellipse
+            var hBG = new ImageBrush();
+            hBG.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\heartbg.png"));
+            hBG.Stretch = Stretch.UniformToFill;
+            var HPEllipse = new Ellipse
+            {
+                Width = 65,
+                Height = 65,
+                //Fill = typeColor,
+                //Stroke = Brushes.Gold,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(0, 0, 00, 0),
+                IsHitTestVisible = false
+            };
+            HPEllipse.Fill = hBG;
+            visualGroup.Children.Add(HPEllipse);
+			
+
+			HPLabel = new Label
+			{
+				Content = HP,
+				Foreground = Brushes.WhiteSmoke,
+				FontSize = 24,
+				HorizontalAlignment = HorizontalAlignment.Right,
+				VerticalAlignment = VerticalAlignment.Bottom,
+				Margin = new Thickness(0, 0, 25, 17),
+				IsHitTestVisible = false,
+				HorizontalContentAlignment = HorizontalAlignment.Right,
+				FontWeight = FontWeights.Bold
+
+			};
+			HPLabel.Margin = new Thickness(0, 0, 25-5.5*HPLabel.Content.ToString().Length, 17);
+
+			visualGroup.Children.Add(HPLabel);
+
+
+
+            DamageLabel = new Label
+            {
+                Content = Damage,
+                Foreground = Brushes.WhiteSmoke,
+                FontSize = 24,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(25, 0, 0, 17),
+                IsHitTestVisible = false,
+                HorizontalContentAlignment = HorizontalAlignment.Left,
+                FontWeight = FontWeights.Bold
+
+            };
+            DamageLabel.Margin = new Thickness(25 - 5.5 * DamageLabel.Content.ToString().Length, 0, 0, 17);
+
+            visualGroup.Children.Add(DamageLabel);
+
+
+            // típus indikátor
+            var ellipse = new Ellipse
 			{
 
 				Width = 30,
@@ -271,7 +343,7 @@ namespace szakmajDusza
                     StrokeThickness = 1.5,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Bottom,
-                    Margin = new Thickness(30, 0, 0, 40),
+                    Margin = new Thickness(30, 0, 0, 90),
                     Effect = new System.Windows.Media.Effects.DropShadowEffect
                     {
                         BlurRadius = 5,
@@ -289,7 +361,7 @@ namespace szakmajDusza
                     StrokeThickness = 1.5,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom,
-                    Margin = new Thickness(0, 0, 30, 40),
+                    Margin = new Thickness(0, 0, 30, 90),
                     Effect = new System.Windows.Media.Effects.DropShadowEffect
                     {
                         BlurRadius = 5,
@@ -326,7 +398,7 @@ namespace szakmajDusza
                     StrokeThickness = 1.5,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Bottom,
-                    Margin = new Thickness(0, 0, 0, 40),
+                    Margin = new Thickness(0, 0, 0, 90),
                     Effect = new System.Windows.Media.Effects.DropShadowEffect
                     {
                         BlurRadius = 5,
@@ -360,7 +432,7 @@ namespace szakmajDusza
 			}
 			visualGroup.Children.Add(ellipse);
 			visualGroup.Children.Add(NameLabel);
-			visualGroup.Children.Add(DamageAndHPLabel);
+			//visualGroup.Children.Add(DamageAndHPLabel);
 			visualGroup.Children.Add(But);
 		}
 		public void UpdateVisual()
@@ -370,8 +442,11 @@ namespace szakmajDusza
 				HP = 0;
 				visualGroup.Opacity = 0.4;
 			}
-			DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
-		}
+			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
+			HPLabel.Content= HP;
+			DamageLabel.Content= Damage;
+            HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+        }
 		public async Task UpdateVisualDamage(int dmg)
 		{
 			int previousHP = HP + dmg;
@@ -379,8 +454,10 @@ namespace szakmajDusza
 			{
 				previousHP = 0;
 			}
-			DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
-		}
+			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
+			HPLabel.Content = $"{previousHP} - {dmg}";
+            HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+        }
 		public async Task UpdateVisualHeal(int heal)
 		{
 			int previousHP = HP - heal;
@@ -388,8 +465,10 @@ namespace szakmajDusza
 			{
 				previousHP = 0;
 			}
-			DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {heal} ❤";
-		}
+            //DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} + {heal} ❤";
+            HPLabel.Content = $"{previousHP} + {heal}";
+            HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+        }
 
 		public UIElement GetVisual()
 		{

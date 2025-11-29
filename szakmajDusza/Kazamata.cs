@@ -6,6 +6,16 @@
 		public List<Card> Defenders { get; set; }
 		public KazamataType Tipus { get; set; }
 		public KazamataReward reward {  get; set; }
+		public List<string> GetDefenderNames()
+		{
+			 List<string> rat = new List<string>();
+			foreach (Card card in Defenders)
+			{
+				rat.Add(card.Name);
+			}
+			return rat;
+
+		}
 		public Kazamata(string name, string type, string reward,List<Card> defenders)
 		{
 			Name = name;
@@ -63,6 +73,8 @@
 				"egyszeru" => KazamataType.egyszeru,
 				"kis" => KazamataType.kis,
 				"nagy" => KazamataType.nagy,
+				"egyszerű"=> KazamataType.egyszeru,
+				
 				_ => KazamataType.kis
 			};
 			return Type;

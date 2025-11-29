@@ -42,6 +42,7 @@ namespace szakmajDusza
         static Label Speed_Label = new Label();
 
         static public string cardEditName = "";
+        static public string kazamataEditNmae = "";
         static public bool internalEdits = false;
 
 
@@ -72,6 +73,8 @@ namespace szakmajDusza
         public MainWindow()
         {
             InitializeComponent();
+            KazamataTipus.ItemsSource = new string[] { "egyszerű","kis", "nagy"};
+            KazamataTipus.SelectedIndex = 0;
             string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "playing-card.ico");
             this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
             Menu_Grid.Visibility = Visibility.Visible;
@@ -84,6 +87,7 @@ namespace szakmajDusza
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             Shop_Grid.Visibility = Visibility.Collapsed;
+            KazamataSzerkeszto_Grid.Visibility=Visibility.Collapsed;
 
             //elozoGrid.Push(Menu_Grid);
 
@@ -239,7 +243,7 @@ namespace szakmajDusza
             }
             if (DynamicButtonsPanel.ActualWidth!=0)
             {
-                AutoResizeButtons();
+                AutoResizeButtons(DynamicButtonsPanel);
             }
             
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
@@ -966,6 +970,7 @@ namespace szakmajDusza
 
         private void ListKartya_Button_Click(object sender, RoutedEventArgs e)
         {
+            MindenKazamata_List.Children.Clear();
             MindenKartya_List.Children.Clear();
             if (sender!=null)
             {
@@ -1201,22 +1206,23 @@ namespace szakmajDusza
 
         private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            AutoResizeButtons();
+            AutoResizeButtons(sender as WrapPanel);
         }
 
-        private void AutoResizeButtons()
+        private void AutoResizeButtons(WrapPanel wrap)
         {
-            if (DynamicButtonsPanel.Children.Count == 0)
+            if (wrap.Children.Count == 0)
                 return;
 
-            double panelWidth = DynamicButtonsPanel.ActualWidth;
+            //double panelWidth = wrap.ActualWidth;
+            double panelWidth = 700;
             double minButtonWidth = 250; // minimális gombszélesség
             int buttonsPerRow = Math.Max(1, (int)(panelWidth / minButtonWidth));
 
             double buttonWidth = (panelWidth / buttonsPerRow) - 20; // 20 = margin
 
 
-            foreach (Button b in DynamicButtonsPanel.Children)
+            foreach (Button b in wrap.Children)
             {
                 b.Width = buttonWidth;
                 b.Height = buttonWidth * 0.6; // arányos magasság
@@ -1282,7 +1288,7 @@ namespace szakmajDusza
         }
 
 
-        private void GoToGrid(Grid kovetkezo)
+        public void GoToGrid(Grid kovetkezo)
         {
             // aktuális grid
             Grid akt = idk.Children
@@ -1477,7 +1483,7 @@ namespace szakmajDusza
         {
             MergeToVezet.haromToVezer(Merging[0], Merging[1], Merging[2]);
             Shop_Merge.IsEnabled = false;
-
+            Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
             Shop_Merging_Cards.Children.Clear();
             Cards_Wrap.Children.Clear();
             //DynamicButtonsPanel.Children.Clear();
@@ -1844,8 +1850,118 @@ namespace szakmajDusza
 
         }
 
-        
+        private void Kazamata_Button_Click(object sender, RoutedEventArgs e)
+        {
+             CreateNewCard_Button.Visibility = Visibility.Collapsed;
+            MindenKazamata_List.Children.Clear();
+            MindenKartya_List.Children.Clear();
+            if (sender != null)
+            {
+                MindenKazamata_List.Visibility = Visibility.Visible;
+            }
+            foreach (var item in AllKazamataDict.Values)
+            {
+                Button b = new Button();
+                b.Click += EditKazamata;
+               
+                b.Content = item.Name;
+                b.Margin = new Thickness(10, 0, 0, 0);
+                MindenKazamata_List.Children.Add(b);
+            }
+            
+                AutoResizeButtons(MindenKazamata_List);
+            
+            /*foreach (var item in AllCardsDict.Values)
+            {
+                Card c = item.GetCopy();
+                MindenKartya_List.Children.Add(c.GetVisual());
+                // if (sender!=null)
+                {
+                    c.Clicked += (s, e) => { SelectForModify(c); };
+                }
 
+            }
+            foreach (var item in AllLeadersDict.Values)
+            {
+                Card c = item.GetCopy();
+                MindenKartya_List.Children.Add(c.GetVisual());
+                //if (sender != null)
+                {
+                    c.Clicked += (s, e) => { SelectForModify(c); };
+                }
+                //c.UpdateAllVisual();
+
+            }
+            CreateNewCard_Button.Visibility = Visibility.Visible;*/
+
+        }
+
+        public void EditKazamata(object sender, RoutedEventArgs e)
+        {
+            internalEdits = true;
+            GoToGrid(KazamataSzerkeszto_Grid);
+            MindenKartya_ListKazamata.Children.Clear();
+            KazamataDeffenders_List.Children.Clear();
+            Kazamata k = AllKazamataDict[(sender as Button).Content.ToString()];
+            foreach (var item in AllCardsDict.Keys)
+            {
+                if (k.GetDefenderNames().Contains(item))
+                {
+                    KazamataDeffenders_List.Children.Add(AllCardsDict[item].GetCopy().GetVisual());
+                }
+                else
+                {
+                    MindenKartya_ListKazamata.Children.Add(AllCardsDict[item].GetCopy().GetVisual());
+                }
+            }
+            int vezerCount = 0;
+            foreach (var item in AllLeadersDict.Keys)
+            {
+                if (k.GetDefenderNames().Contains(item))
+                {
+                    KazamataDeffenders_List.Children.Add(AllLeadersDict[item].GetCopy().GetVisual());
+                    vezerCount++;
+                }
+                else
+                {
+                    MindenKartya_ListKazamata.Children.Add(AllLeadersDict[item].GetCopy().GetVisual());
+                }
+            }
+            if (k.Tipus==KazamataType.egyszeru)
+            {
+                KazamataTipus.SelectedIndex = 0;
+                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count}/1";
+            }
+            else if (k.Tipus == KazamataType.kis)
+            {
+                KazamataTipus.SelectedIndex = 1;
+                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count-vezerCount}/3 és {vezerCount}/1 vezér";
+
+            }
+            else
+            {
+                KazamataTipus.SelectedIndex = 2;
+                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count-vezerCount}/5 és {vezerCount}/1 vezér";
+
+            }
+            kazamataEditNmae = k.Name;
+
+
+
+            internalEdits = false;
+        }
+
+        public void UpdateKazamata()
+        {
+            
+        }
+
+        private void KazamataTipus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AllKazamataDict[kazamataEditNmae].Tipus =Kazamata.StringToKazamataType(KazamataTipus.SelectedItem.ToString());
+            UpdateKazamata();
+
+        }
 
 
 

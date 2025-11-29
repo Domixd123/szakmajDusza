@@ -233,8 +233,10 @@ namespace szakmajDusza
             }
             foreach (var item in Gyujtemeny)
             {
+                
                 item.Clicked += AddToPakli;
                 Cards_Wrap.Children.Add(item.GetVisual());
+             
             }
 
             foreach (var item in AllKazamataDict.Values)
@@ -554,6 +556,8 @@ namespace szakmajDusza
 
         private void AddToPakli(object? sender, Card clicked)
         {
+
+
             if (Jatekos.Count >= Math.Ceiling((float)Gyujtemeny.Count / 2f) || Jatekos.Contains(clicked))
             {
                 se.Open(new Uri("Sounds/Decline.wav", UriKind.Relative));
@@ -600,6 +604,8 @@ namespace szakmajDusza
                 se.Open(new Uri("Sounds/KartyaClick.wav", UriKind.Relative));
                 se.Play();
             }
+
+           
         }
 
         private void RemoveFromPakli(object? sender, Card clicked)

@@ -50,6 +50,7 @@ namespace szakmajDusza
 				{
 					damage += item.BaseVariable * item.Level;
 					//strength animation
+					
 				}
 				else if (item.Name == "Krit ütés")
 				{

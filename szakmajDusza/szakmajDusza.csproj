@@ -9,19 +9,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\armor.png" />
+    <None Remove="images\crit.png" />
+    <None Remove="images\dodge.png" />
     <None Remove="images\earth.jpg" />
     <None Remove="images\fire.jpg" />
+    <None Remove="images\healing.png" />
+    <None Remove="images\lifesteal.png" />
+    <None Remove="images\magic.png" />
+    <None Remove="images\revive.png" />
+    <None Remove="images\strength.png" />
+    <None Remove="images\thorns.png" />
     <None Remove="images\water.jpg" />
     <None Remove="images\wind.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\armor.png" />
+    <Resource Include="images\crit.png" />
+    <Resource Include="images\dodge.png" />
     <Resource Include="images\earth.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\fire.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\healing.png" />
+    <Resource Include="images\lifesteal.png" />
+    <Resource Include="images\magic.png" />
+    <Resource Include="images\revive.png" />
+    <Resource Include="images\strength.png" />
+    <Resource Include="images\thorns.png" />
     <Resource Include="images\water.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

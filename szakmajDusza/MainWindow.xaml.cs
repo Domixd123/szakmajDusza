@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.VisualBasic;
 
 namespace szakmajDusza
 {
@@ -45,6 +46,7 @@ namespace szakmajDusza
         static public string kazamataEditNmae = "";
         static public bool internalEdits = false;
 
+        public static int Difficulty = 0;
 
         public static List<Card> Gyujtemeny = new List<Card>();
         public static List<Card> Jatekos = new List<Card>();
@@ -501,7 +503,7 @@ namespace szakmajDusza
                 Harc.Visibility = Visibility.Collapsed;
                 Jutalom.Visibility = Visibility.Collapsed;
                 Vissza.Visibility = Visibility.Collapsed;
-                Harc2.StartFight(FightGrid, Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label, AttackDeploy_Label, DefendDeploy_Label, FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, 0);
+                Harc2.StartFight(FightGrid, Vissza, Gyujtemeny, k, Jatekos, FightPlayer_Wrap, FightKazamata_Wrap, Attack_Label, Defend_Label, AttackDeploy_Label, DefendDeploy_Label, FightPlayerAttacker_Wrap, FightKazamataAttacker_Wrap, Difficulty);
 
             };
 
@@ -1246,6 +1248,15 @@ namespace szakmajDusza
             {
                 return;
             }
+
+            string valasz = Interaction.InputBox("Írd be a nehézséget ( 0 - 10 ):", "Nehézség", "");
+            while (!int.TryParse(valasz, out int ertek) || int.Parse(valasz) > 10)
+            {
+                MessageBox.Show("Csak 10-nél kisebb, szám formátumú szöveget írhatsz be!", "Hiba!",MessageBoxButton.OK, MessageBoxImage.Error);
+                valasz = Interaction.InputBox("Írd be a nehézséget:", "Nehézség", "");
+            }
+
+            Difficulty = int.Parse(valasz);
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
 
 

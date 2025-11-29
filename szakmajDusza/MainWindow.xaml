@@ -8,7 +8,7 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
-			<Grid x:Name="Save_Grid" Visibility="Visible" Width="1910" Height="1070" Margin="5,5,5,5">
+			<Grid x:Name="Save_Grid" Visibility="Collapsed" Width="1910" Height="1070" Margin="5,5,5,5">
 				<Label Content="Mentési név:" FontSize="64" Margin="612,338,612,632"/>
 				
 			    <TextBox Margin="612,497,612,498" x:Name="FileName_TextBox"></TextBox>
@@ -173,7 +173,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
             </Grid>
-            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed" d:IsHidden="True">
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
                 <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
@@ -251,10 +251,13 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,676,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="CreateNewCard_Button_Click"/>
             </Grid>
 
-            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Collapsed" d:IsHidden="True">
+            <Grid x:Name="ChooseKornyezet_Grid" Visibility="Visible">
                 <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
+                
             </Grid>
+
+            
 
             <Grid x:Name="Options_Grid" Visibility="Collapsed" d:IsHidden="True">
 

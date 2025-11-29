@@ -67,8 +67,8 @@ namespace szakmajDusza
 
         public static float spVolume = 0.25f;
         public static float seVolume = 0.5f;
-        public static float spMult = 0.002f;
-        public static float seMult = 0.004f;
+        public static float spMult = 0f;
+        public static float seMult = 0f;
         public MainWindow()
         {
             InitializeComponent();
@@ -126,6 +126,7 @@ namespace szakmajDusza
         }
         public void LoadData(string path)
         {
+            DynamicButtonsPanel.Children.Clear();
             Gyujtemeny.Clear();
             Jatekos.Clear();
             AllCardsDict.Clear();
@@ -727,8 +728,8 @@ namespace szakmajDusza
 
         private void PakliChange_Button_Click(object sender, RoutedEventArgs e)
         {
-            GoToGrid(PakliOssze_Grid);
-
+            //GoToGrid(PakliOssze_Grid);
+            Back(sender, e);
             foreach (var item in Jatekos)
             {
                 PakliCards_Wrap.Children.Remove(item.GetVisual());
@@ -1187,6 +1188,31 @@ namespace szakmajDusza
 
                 }
 
+            }
+        }
+
+        private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            AutoResizeButtons();
+        }
+
+        private void AutoResizeButtons()
+        {
+            if (DynamicButtonsPanel.Children.Count == 0)
+                return;
+
+            double panelWidth = DynamicButtonsPanel.ActualWidth;
+            double minButtonWidth = 250; // minimális gombszélesség
+            int buttonsPerRow = Math.Max(1, (int)(panelWidth / minButtonWidth));
+
+            double buttonWidth = (panelWidth / buttonsPerRow) - 20; // 20 = margin
+
+
+            foreach (Button b in DynamicButtonsPanel.Children)
+            {
+                b.Width = buttonWidth;
+                b.Height = buttonWidth * 0.6; // arányos magasság
+                b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
             }
         }
 

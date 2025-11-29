@@ -220,7 +220,7 @@
 					</CheckBox>
 				</StackPanel>
 			</Grid>
-			<Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
+			<Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="331*"/>
 					<RowDefinition Height="29*"/>
@@ -317,7 +317,7 @@
 				<Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1595,264,0,0" VerticalAlignment="Top" Width="315" Height="85" Grid.Row="1"/>
 
 			</Grid>
-			<Grid x:Name="MainRoom_Grid" Visibility="Collapsed" d:IsHidden="True">
+			<Grid x:Name="MainRoom_Grid" Visibility="Visible">
 				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 					<Grid Background="Transparent">
 						<!-- A Grid kitölti a ScrollViewer látható területét -->
@@ -329,7 +329,7 @@
 					<Grid Background="Transparent">
 						<!-- A Grid kitölti a ScrollViewer látható területét -->
 						<WrapPanel x:Name="DynamicButtonsPanel"
-           Margin="100,142,502,578"/>
+           Margin="100,142,502,578" SizeChanged="DynamicButtonsPanel_SizeChanged"/>
 					</Grid>
 				</ScrollViewer>
 

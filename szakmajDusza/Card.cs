@@ -480,7 +480,7 @@ namespace szakmajDusza
             var anim = new ThicknessAnimation
             {
                 From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
-				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 0), 
+				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5), 
                 Duration = TimeSpan.FromSeconds(0.4f),
                 FillBehavior = FillBehavior.Stop
             };

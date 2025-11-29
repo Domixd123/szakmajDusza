@@ -14,7 +14,7 @@ namespace szakmajDusza
 		public static Random random = new Random();
         //vizuáls gotta make it work
         public static double playSpeedMultiplier = 1d;
-		public static double basePlaySpeed = 1000;//in miliseconds
+		public static double basePlaySpeed = 1500;//in miliseconds
 
 		public static int kazDamage(float damage, int difficulty)
 		{

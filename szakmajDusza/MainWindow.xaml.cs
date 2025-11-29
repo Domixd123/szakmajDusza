@@ -2206,7 +2206,7 @@ namespace szakmajDusza
                 Save.SaveProgress();
             }
         }
-        private void Save_World_Button_Click(object sender,RoutedEventArgs e)
+        private void Save_World_Button_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists($"saves/{FileName_TextBox.Text}.txt"))
             {
@@ -2215,11 +2215,11 @@ namespace szakmajDusza
             else
             {
                 Save.fileName = $"{FileName_TextBox.Text}.txt";
-				Save.SaveProgress();
+                Save.SaveProgress();
             }
 
 
-
+        }
 		// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
 	}

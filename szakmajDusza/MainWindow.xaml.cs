@@ -96,6 +96,13 @@ namespace szakmajDusza
 
             //elozoGrid.Push(Menu_Grid);
 
+            for (int i = 0; i < 10; i++)
+            {
+                DifSelect_Combo.Items.Add(i);
+            }
+
+            Difficulty_Stack.Visibility = Visibility.Collapsed;
+
             idk.Children.Add(FightGrid);
 
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
@@ -1245,24 +1252,33 @@ namespace szakmajDusza
         private void KornyezetekJatekos_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (KornyezetekJatekos_List.SelectedItem == null)
-            {
                 return;
-            }
 
-            string valasz = Interaction.InputBox("Írd be a nehézséget ( 0 - 10 ):", "Nehézség", "");
-            while (!int.TryParse(valasz, out int ertek) || int.Parse(valasz) > 10)
-            {
-                MessageBox.Show("Csak 10-nél kisebb, szám formátumú szöveget írhatsz be!", "Hiba!",MessageBoxButton.OK, MessageBoxImage.Error);
-                valasz = Interaction.InputBox("Írd be a nehézséget:", "Nehézség", "");
-            }
+            // Csak megjelenítjük a nehézségi választót
+            Difficulty_Stack.Visibility = Visibility.Visible;
+        }
 
-            Difficulty = int.Parse(valasz);
-            LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
+        private void DifSelect_Combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DifSelect_Combo.SelectedItem == null)
+                return;
 
+            Difficulty = (int)DifSelect_Combo.SelectedValue;
 
+            // A listában kijelölt elem meghatározása
+            var selected = KornyezetekJatekos_List.SelectedItem?.ToString();
+            if (selected == null)
+                return;
+
+            LoadData($"kornyezet/{selected}.txt");
+
+            // Most mehetsz a következő gridre
             GoToGrid(PakliOssze_Grid);
-            // SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+
+            // Reset
             KornyezetekJatekos_List.SelectedItem = null;
+            DifSelect_Combo.SelectedItem = null;
+            Difficulty_Stack.Visibility = Visibility.Collapsed;
         }
 
         private void Back(object sender, RoutedEventArgs e)

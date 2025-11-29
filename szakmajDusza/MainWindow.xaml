@@ -252,7 +252,18 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
             </Grid>
 
             <Grid x:Name="ChooseKornyezet_Grid" Visibility="Visible">
-                <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged"/>
+                <ListBox x:Name="KornyezetekJatekos_List" Margin="0,0,10,199" SelectionChanged="KornyezetekJatekos_List_SelectionChanged">
+
+
+                </ListBox>
+                <StackPanel x:Name="Difficulty_Stack" Visibility="Visible" Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
+                    <StackPanel Orientation="Horizontal" Margin="0 20" Width="450">
+                        <Label Content="Nehézség:" VerticalAlignment="Center" FontWeight="Bold" FontSize="60"/>
+                        <ComboBox Name="DifSelect_Combo" SelectionChanged="DifSelect_Combo_SelectionChanged" Height="100" Width="200" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+                
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
                 
             </Grid>

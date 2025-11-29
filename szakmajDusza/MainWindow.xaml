@@ -8,9 +8,11 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
-			<Grid x:Name="Save_Grid" Visibility="Collapsed" Width="1910" Height="1070" Margin="5,5,5,5">
+			<Grid x:Name="Save_Grid" Visibility="Visible" Width="1910" Height="1070" Margin="5,5,5,5">
 				<Label Content="Mentési név:" FontSize="64" Margin="612,338,612,632"/>
-				<TextBox Margin="612,497,612,498" x:Name="FileName_TextBox"></TextBox>
+				
+			    <TextBox Margin="612,497,612,498" x:Name="FileName_TextBox"></TextBox>
+				<Label  Content="Ez a név már foglalt!" Foreground="Red" x:Name="UsedFileNameError_Label" FontSize="45" Margin="746,803,746,169" Visibility="Collapsed"/>
 				<Button
 Content="Mentés"
 Height="110"

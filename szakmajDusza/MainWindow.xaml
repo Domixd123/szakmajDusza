@@ -133,7 +133,7 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
             </Grid>
-            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible">
+            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed">
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
                 <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
@@ -205,30 +205,9 @@
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
             </Grid>
 
-            <Grid x:Name="Options_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="Options_Grid" Visibility="Visible">
 
-                <Grid.Resources>
-                    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-                    <Style TargetType="{x:Type RadioButton}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type RadioButton}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Grid Width="28" Height="28" Margin="5">
-                                            <Ellipse Stroke="Gold" StrokeThickness="3"/>
-                                            <Ellipse Fill="Gold" Margin="6" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                        </Grid>
-
-                                        <ContentPresenter VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="Gold"/>
-                        <Setter Property="FontSize" Value="28"/>
-                        <Setter Property="Cursor" Value="Hand"/>
-                    </Style>
-                </Grid.Resources>
+                
 
                 <StackPanel Orientation="Vertical" Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center" Width="900">
 
@@ -240,6 +219,14 @@
                          Margin="0 0 30 0" Foreground="Gold" Checked="SFX_On" IsChecked="True" Background="{x:Null}"/>
                         <RadioButton Checked="SFX_Off" Content="Ki" GroupName="SFX" FontSize="60"
                          Foreground="Gold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0 20">
+                        <TextBlock Text="Zene:" Foreground="Gold" FontSize="60"
+   Width="406" VerticalAlignment="Center"/>
+                        <RadioButton Content="Be" GroupName="MUSIC" FontSize="60"
+     Margin="0 0 30 0" Foreground="Gold" Checked="MUSIC_On" IsChecked="True" Background="{x:Null}"/>
+                        <RadioButton Checked="MUSIC_Off" Content="Ki" GroupName="MUSIC" FontSize="60"
+     Foreground="Gold"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0 20">
@@ -299,7 +286,32 @@
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="Gold"></Setter>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Border Background="Transparent">
+                            <!-- EZ TESZI KATTINTHATÓVÁ AZ EGÉSZET -->
+                            <StackPanel Orientation="Horizontal">
+                                <Grid Width="28" Height="28" Margin="5">
+                                    <Ellipse Stroke="Gold" StrokeThickness="3"/>
+                                    <Ellipse Fill="Gold" Margin="6"
+                                     Visibility="{Binding IsChecked,
+                                     Converter={StaticResource BooleanToVisibilityConverter},
+                                     RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                </Grid>
 
+                                <ContentPresenter VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
 
 
         <Style TargetType="Button">

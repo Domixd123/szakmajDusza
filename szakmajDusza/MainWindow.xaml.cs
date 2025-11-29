@@ -65,8 +65,8 @@ namespace szakmajDusza
         public static List<Card> Merging = new List<Card>();
 
 
-        public static float spVolume = 0.2f;
-        public static float spMult = 0.0f;
+        public static float spVolume = 0.25f;
+        public static float spMult = 0.002f;
         public MainWindow()
         {
             InitializeComponent();
@@ -88,14 +88,14 @@ namespace szakmajDusza
             idk.Children.Add(FightGrid);
             
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-            
+            sp.Volume = spVolume;
+
             sp.MediaEnded += (s, e) =>
             {
                 sp.Position = TimeSpan.Zero;
                 sp.Play();
             };
             sp.Play();
-            sp.Volume = spVolume;
             KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
             KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
         }
@@ -849,7 +849,7 @@ namespace szakmajDusza
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            spVolume = (float)Sl.Value *spMult;
+            spVolume = (float)Sl.Value * spMult;
             sp.Volume = spVolume;
         }
 
@@ -1707,6 +1707,17 @@ namespace szakmajDusza
 
 
         }
+
+        private void MUSIC_On(object sender, RoutedEventArgs e)
+        {
+            sp.Volume = spVolume;
+        }
+
+        private void MUSIC_Off(object sender, RoutedEventArgs e)
+        {
+            sp.Volume = 0;
+        }
+
 
 
 

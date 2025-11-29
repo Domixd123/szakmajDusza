@@ -73,8 +73,11 @@ namespace szakmajDusza
         public MainWindow()
         {
             InitializeComponent();
-            KazamataTipus.ItemsSource = new string[] { "egyszerű","kis", "nagy"};
-            KazamataTipus.SelectedIndex = 0;
+            internalEdits = true;
+            KazamataTipus.ItemsSource = new string[] { "egyszerű", "kis", "nagy" }; KazamataTipus.SelectedIndex = 0;
+            KazamataJutalom.ItemsSource = new string[] { "életerő", "sebzés" }; KazamataJutalom.SelectedIndex=0;
+            internalEdits = false;
+
             string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "playing-card.ico");
             this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
             Menu_Grid.Visibility = Visibility.Visible;
@@ -87,12 +90,12 @@ namespace szakmajDusza
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             Shop_Grid.Visibility = Visibility.Collapsed;
-            KazamataSzerkeszto_Grid.Visibility=Visibility.Collapsed;
+            KazamataSzerkeszto_Grid.Visibility = Visibility.Collapsed;
 
             //elozoGrid.Push(Menu_Grid);
 
             idk.Children.Add(FightGrid);
-            
+
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.Volume = spVolume;
 
@@ -235,17 +238,17 @@ namespace szakmajDusza
                 {
 
                     ShowKazamata(AllKazamataDict[item.Name]);
-                    
+
                 };
                 b.Content = item.Name;
                 b.Margin = new Thickness(10, 0, 0, 0);
                 DynamicButtonsPanel.Children.Add(b);
             }
-            if (DynamicButtonsPanel.ActualWidth!=0)
+            if (DynamicButtonsPanel.ActualWidth != 0)
             {
                 AutoResizeButtons(DynamicButtonsPanel);
             }
-            
+
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
             SelectedCards_Label.Content = Jatekos.Count;
         }
@@ -641,7 +644,7 @@ namespace szakmajDusza
 
         private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Jatekos.Count != 0&& Jatekos.Count<= Math.Ceiling((float)Gyujtemeny.Count / 2f))
+            if (Jatekos.Count != 0 && Jatekos.Count <= Math.Ceiling((float)Gyujtemeny.Count / 2f))
             {
                 //implement hiba
                 GoToGrid(MainRoom_Grid);
@@ -763,11 +766,11 @@ namespace szakmajDusza
             }
 
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
-            
+
 
         }
 
-        
+
         public static Label CreateJutalom(Grid Parent)
         {
             Label Jutalom = new Label();
@@ -867,7 +870,7 @@ namespace szakmajDusza
 
         private void GoToOptions_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             GoToGrid(Options_Grid);
         }
 
@@ -903,22 +906,22 @@ namespace szakmajDusza
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
-                spVolume = (float)Sl.Value * spMult;
-                sp.Volume = spVolume;
-            
-            
-                seVolume = (float)Sl.Value * seMult;
 
-                se.Volume = seVolume;
-            
-            
-            
+            spVolume = (float)Sl.Value * spMult;
+            sp.Volume = spVolume;
+
+
+            seVolume = (float)Sl.Value * seMult;
+
+            se.Volume = seVolume;
+
+
+
         }
 
         private void GoToMaster_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             GoToGrid(JatekMester_Grid);
         }
 
@@ -934,7 +937,7 @@ namespace szakmajDusza
 
         private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             GoToGrid(KornyezetSzerkeszto_Grid);
         }
 
@@ -945,9 +948,9 @@ namespace szakmajDusza
             GoToGrid(PakliOssze_Grid);
         }
 
-        
 
-        
+
+
 
         private void KornyezetekMester_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -956,7 +959,7 @@ namespace szakmajDusza
                 return;
             }
             LoadData($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
-            
+
             GoToGrid(KornyezetSzerkeszto_Grid);
             KornyezetekMester_List.SelectedItem = null;
         }
@@ -972,20 +975,20 @@ namespace szakmajDusza
         {
             MindenKazamata_List.Children.Clear();
             MindenKartya_List.Children.Clear();
-            if (sender!=null)
+            if (sender != null)
             {
                 MindenKartya_List.Visibility = Visibility.Visible;
             }
-            
+
             foreach (var item in AllCardsDict.Values)
             {
                 Card c = item.GetCopy();
                 MindenKartya_List.Children.Add(c.GetVisual());
-               // if (sender!=null)
+                // if (sender!=null)
                 {
                     c.Clicked += (s, e) => { SelectForModify(c); };
                 }
-                
+
             }
             foreach (var item in AllLeadersDict.Values)
             {
@@ -1034,6 +1037,13 @@ namespace szakmajDusza
             /*KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
             KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;*/
         }
+        private void BackToKornyezetSzerkesztoKazamata_Click(object sender, RoutedEventArgs e)
+        {
+            Kazamata_Button_Click(null, e);
+            Back(sender, e);
+            /*KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+            KornyezetSzerkeszto_Grid.Visibility = Visibility.Visible;*/
+        }
         private void SelectForModify(Card k)
         {
             VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
@@ -1044,7 +1054,7 @@ namespace szakmajDusza
             LeaderCardPanel.Visibility = Visibility.Collapsed;
             foreach (Card item in Gyujtemeny)
             {
-                if (item.Name==k.Name)
+                if (item.Name == k.Name)
                 {
                     Gyujtemeny_Check.IsChecked = true;
                     break;
@@ -1061,13 +1071,13 @@ namespace szakmajDusza
                 foreach (var item in AllCardsDict.Keys)
                 {
                     index++;
-                    if (vAlap==item)
+                    if (vAlap == item)
                     {
                         break;
                     }
                 }
-                VezerAlapKartya.SelectedIndex=index;
-                VezerNev.Text=k.NameLabel.Content.ToString();
+                VezerAlapKartya.SelectedIndex = index;
+                VezerNev.Text = k.NameLabel.Content.ToString();
                 if (AllLeadersDict[cardEditName].HP != AllCardsDict[vAlap].HP)
                 {
                     VezerBonusTipus.SelectedIndex = 0;
@@ -1088,8 +1098,8 @@ namespace szakmajDusza
                 else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
                 else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
             }
-                GoToGrid(KartyaSzerkeszto_Grid);
-            
+            GoToGrid(KartyaSzerkeszto_Grid);
+
             internalEdits = false;
             UpdateKartyaSelectionCard(null, null);
         }
@@ -1237,10 +1247,10 @@ namespace szakmajDusza
                 return;
             }
             LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-           
+
 
             GoToGrid(PakliOssze_Grid);
-           // SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            // SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
             KornyezetekJatekos_List.SelectedItem = null;
         }
 
@@ -1277,7 +1287,7 @@ namespace szakmajDusza
             if (vissza == MainRoom_Grid || vissza == PakliOssze_Grid)
             {
                 DisableNagyKazamata();
-                
+
             }
 
             // 3) Ha a HARCBÓL lépünk vissza
@@ -1314,12 +1324,12 @@ namespace szakmajDusza
                 sp.Play();
             }
 
-            
+
 
             if (kovetkezo == MainRoom_Grid)
             {
                 DisableNagyKazamata();
-                
+
             }
         }
 
@@ -1329,7 +1339,7 @@ namespace szakmajDusza
             CardMerge_Wrap.Children.Clear();
             Shop_Merging_Cards.Children.Clear();
             GoToGrid(Shop_Grid);
-            int vezCount=0;
+            int vezCount = 0;
             foreach (Card item in Gyujtemeny)
             {
 
@@ -1373,81 +1383,81 @@ namespace szakmajDusza
                 }
             }
             if (isShopEmpty) Item.RefreshShop(true);
-			
+
             ShopRerollPrice_Label.Content = $"Ár: {Item.shopRefreshPrice}";
             if (Item.shopRefreshPrice > Item.GoldOwned)
             {
                 ShopRerollPrice_Label.Foreground = Brushes.Red;
-				Shop_Refresh.IsEnabled = false;
-			}
+                Shop_Refresh.IsEnabled = false;
+            }
             else
             {
-				ShopRerollPrice_Label.Foreground = Brushes.LightGreen;
-			}
+                ShopRerollPrice_Label.Foreground = Brushes.LightGreen;
+            }
             UpdateGoldOwnedLabel();
             UpdateShopWrapChildren();
-		}
+        }
         public void UpdateShopWrapChildren()
         {
-			Shop_Wrap.Children.Clear();
-            bool isAnythingBuyable=false;
-			foreach (var item in Item.Items.Values)
-			{
-				if (item.InRotation)
-				{
-					item.Clicked -= BuyItem;
-					item.Clicked += BuyItem;
-					if (item.Price > Item.GoldOwned)
-					{
-						item.Disabled = true;
-					}
+            Shop_Wrap.Children.Clear();
+            bool isAnythingBuyable = false;
+            foreach (var item in Item.Items.Values)
+            {
+                if (item.InRotation)
+                {
+                    item.Clicked -= BuyItem;
+                    item.Clicked += BuyItem;
+                    if (item.Price > Item.GoldOwned)
+                    {
+                        item.Disabled = true;
+                    }
                     item.UpdateAllVisual();
-					Shop_Wrap.Children.Add(item.GetVisual(true));
+                    Shop_Wrap.Children.Add(item.GetVisual(true));
                     isAnythingBuyable = true;
-				}
-			}
+                }
+            }
             if (isAnythingBuyable) AllItemsMaxedError_Label.Visibility = Visibility.Collapsed;
-			else AllItemsMaxedError_Label.Visibility = Visibility.Visible;
-		}
+            else AllItemsMaxedError_Label.Visibility = Visibility.Visible;
+        }
         public void UpdateGoldOwnedLabel()
         {
-			GoldOwned_Label.Content = $"Arany: {Item.GoldOwned}";
-		}
+            GoldOwned_Label.Content = $"Arany: {Item.GoldOwned}";
+        }
 
-        public void BuyItem(object? sender,Item selected)
+        public void BuyItem(object? sender, Item selected)
         {
             //kristof do anymation here
-			selected.Buy();
-			UpdateShopWrapChildren();
+            selected.Buy();
+            UpdateShopWrapChildren();
             UpdateGoldOwnedLabel();
         }
         private void RefreshShop_Button_Click(object sender, RoutedEventArgs e)
         {
-			Shop_Wrap.Children.Clear();
-			Item.RefreshShop(false);
-			foreach (var item in Item.Items.Values)
-			{
-				if (item.InRotation)
-				{
-					Shop_Wrap.Children.Add(item.GetVisual(true));
-				}
-			}
-            
-			UpdateGoldOwnedLabel();
-			UpdateShopWrapChildren();
-		}
+            Shop_Wrap.Children.Clear();
+            Item.RefreshShop(false);
+            foreach (var item in Item.Items.Values)
+            {
+                if (item.InRotation)
+                {
+                    Shop_Wrap.Children.Add(item.GetVisual(true));
+                }
+            }
+
+            UpdateGoldOwnedLabel();
+            UpdateShopWrapChildren();
+        }
         private void CardToMerge_Card_Click(object? sender, Card clicked)
         {
             //clicked.GetVisual().IsEnabled = false;
             for (int i = 0; i < Jatekos.Count; i++)
             {
-                if (Jatekos[i].Name==clicked.Name)
+                if (Jatekos[i].Name == clicked.Name)
                 {
                     //Implement error mnessage
                     return;
                 }
             }
-            if (Shop_Merging_Cards.Children.Count<3)
+            if (Shop_Merging_Cards.Children.Count < 3)
             {
                 CardMerge_Wrap.Children.Remove(clicked.GetVisual());
                 clicked.Clicked -= CardToMerge_Card_Click;
@@ -1461,20 +1471,20 @@ namespace szakmajDusza
                 Shop_Merge.IsEnabled = true;
             }
             //Button b = sender as Button;
-            
+
         }
         private void CardToMergeRemove_Card_Click(object? sender, Card clicked)
         {
-            
-                Shop_Merging_Cards.Children.Remove(clicked.GetVisual());
-                CardMerge_Wrap.Children.Add(clicked.GetVisual());
-                clicked.Clicked -= CardToMergeRemove_Card_Click;
-                clicked.Clicked += CardToMerge_Card_Click;
+
+            Shop_Merging_Cards.Children.Remove(clicked.GetVisual());
+            CardMerge_Wrap.Children.Add(clicked.GetVisual());
+            clicked.Clicked -= CardToMergeRemove_Card_Click;
+            clicked.Clicked += CardToMerge_Card_Click;
             Merging.Remove(clicked);
-                
-           
+
+
             Shop_Merge.IsEnabled = false;
-            
+
             //Button b = sender as Button;
 
         }
@@ -1503,7 +1513,7 @@ namespace szakmajDusza
                     /*item.Clicked += RemoveFromPakli;
                     item.Clicked -= AddToPakli;*/
                 }
-                
+
             }
             //Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
             Card card = Gyujtemeny[Gyujtemeny.Count - 1].GetCopy();
@@ -1528,7 +1538,7 @@ namespace szakmajDusza
                 All_Vezer_Obtained.Visibility = Visibility.Visible;
                 CardMerge_Wrap.Children.Clear();
             }
-            
+
             /*for (int i = 0; i < Gyujtemeny.Count; i++)
             {
                 if (Gyujtemeny[i].Name == Merging[0].Name)
@@ -1582,7 +1592,7 @@ namespace szakmajDusza
             Merging.Clear();
         }
 
-        
+
 
         private void KartyaSzerkeszto_TextChange(object sender, RoutedEventArgs e)
         {
@@ -1614,8 +1624,8 @@ namespace szakmajDusza
                     SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
                 }
             }
-               
-            
+
+
             //AllCardsDict[cardEditName].Name = KartyaSzerkesztoCardName.Text;
         }
 
@@ -1642,7 +1652,7 @@ namespace szakmajDusza
             {
                 if (e.Key == System.Windows.Input.Key.Enter)
                 {
-                    string edits = VezerNev.Text+" "+VezerAlapKartya.SelectedItem.ToString();
+                    string edits = VezerNev.Text + " " + VezerAlapKartya.SelectedItem.ToString();
                     if (!AllLeadersDict.ContainsKey(edits))
                     {
                         AllLeadersDict.Add(edits, AllLeadersDict[cardEditName]);
@@ -1655,7 +1665,7 @@ namespace szakmajDusza
                     }
                 }
             }
-           
+
         }
 
         private void CreateNewCard_Button_Click(object sender, RoutedEventArgs e)
@@ -1673,7 +1683,7 @@ namespace szakmajDusza
                 goodName = true;
                 foreach (Card item in AllCardsDict.Values)
                 {
-                    if (bonusIndex<=0)
+                    if (bonusIndex <= 0)
                     {
                         if (item.Name == cardName)
                         {
@@ -1681,18 +1691,18 @@ namespace szakmajDusza
                             goodName = false;
                         }
                     }
-                    else if (item.Name==cardName + bonusIndex)
+                    else if (item.Name == cardName + bonusIndex)
                     {
                         //bonusIndex++;
                         goodName = false;
                     }
                 }
             }
-            if (bonusIndex>0)
+            if (bonusIndex > 0)
             {
                 cardName += bonusIndex;
             }
-            Card k = new Card(cardName,1,1,"fold",false);
+            Card k = new Card(cardName, 1, 1, "fold", false);
             internalEdits = true;
             cardEditName = k.Name;
             Gyujtemeny_Check.IsChecked = false;
@@ -1713,7 +1723,7 @@ namespace szakmajDusza
             else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
             else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
             else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
-            AllCardsDict.Add(cardName,k);
+            AllCardsDict.Add(cardName, k);
             internalEdits = false;
             UpdateKartyaSelectionCard(null, null);
 
@@ -1739,34 +1749,34 @@ namespace szakmajDusza
                 Card k = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
                 k.Vezer = true;
                 VezerNev.Text = "Vezér";
-                cardEditName =VezerNev.Text+" "+VezerAlapKartya.SelectedItem.ToString();
-                AllLeadersDict.Add(cardEditName,k);
+                cardEditName = VezerNev.Text + " " + VezerAlapKartya.SelectedItem.ToString();
+                AllLeadersDict.Add(cardEditName, k);
                 AllLeadersDict[cardEditName].Name = cardEditName;
                 SelectedCard_Wrap.Children.Add(k.GetVisual());
                 if (VezerBonusTipus.SelectedIndex == 0)
                 {
                     AllLeadersDict[cardEditName].HP *= 2;
-                    
+
                 }
                 else
                 {
                     AllLeadersDict[cardEditName].Damage *= 2;
-                    
+
                 }
                 AllLeadersDict[cardEditName].UpdateAllVisual();
                 SelectedCard_Wrap.Children.Clear();
                 SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName].GetVisual());
                 internalEdits = false;
             }
-               
-            
+
+
         }
 
         private void VezerCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             SelectedCard_Wrap.Children.Clear();
             AllLeadersDict.Remove(cardEditName);
-            BasicCardPanel.Visibility= Visibility.Visible;
+            BasicCardPanel.Visibility = Visibility.Visible;
             LeaderCardPanel.Visibility = Visibility.Collapsed;
             string cardName = "ÚjKártya";
             bool goodName = false;
@@ -1845,14 +1855,14 @@ namespace szakmajDusza
                 SelectedCard_Wrap.Children.Add(c.GetVisual());
                 cardEditName = edits;
             }
-            
+
 
 
         }
 
         private void Kazamata_Button_Click(object sender, RoutedEventArgs e)
         {
-             CreateNewCard_Button.Visibility = Visibility.Collapsed;
+            CreateNewCard_Button.Visibility = Visibility.Collapsed;
             MindenKazamata_List.Children.Clear();
             MindenKartya_List.Children.Clear();
             if (sender != null)
@@ -1863,14 +1873,14 @@ namespace szakmajDusza
             {
                 Button b = new Button();
                 b.Click += EditKazamata;
-               
+
                 b.Content = item.Name;
                 b.Margin = new Thickness(10, 0, 0, 0);
                 MindenKazamata_List.Children.Add(b);
             }
-            
-                AutoResizeButtons(MindenKazamata_List);
-            
+
+            AutoResizeButtons(MindenKazamata_List);
+
             /*foreach (var item in AllCardsDict.Values)
             {
                 Card c = item.GetCopy();
@@ -1903,15 +1913,20 @@ namespace szakmajDusza
             MindenKartya_ListKazamata.Children.Clear();
             KazamataDeffenders_List.Children.Clear();
             Kazamata k = AllKazamataDict[(sender as Button).Content.ToString()];
+            KazamataName.Text = k.Name;
             foreach (var item in AllCardsDict.Keys)
             {
                 if (k.GetDefenderNames().Contains(item))
                 {
-                    KazamataDeffenders_List.Children.Add(AllCardsDict[item].GetCopy().GetVisual());
+                    Card c = AllCardsDict[item].GetCopy();
+                    c.Clicked += RemoveFromKazamata;
+                    KazamataDeffenders_List.Children.Add(c.GetVisual());
                 }
                 else
                 {
-                    MindenKartya_ListKazamata.Children.Add(AllCardsDict[item].GetCopy().GetVisual());
+                    Card c = AllCardsDict[item].GetCopy();
+                    c.Clicked += AddToKazamata;
+                    MindenKartya_ListKazamata.Children.Add(c.GetVisual());
                 }
             }
             int vezerCount = 0;
@@ -1919,32 +1934,50 @@ namespace szakmajDusza
             {
                 if (k.GetDefenderNames().Contains(item))
                 {
-                    KazamataDeffenders_List.Children.Add(AllLeadersDict[item].GetCopy().GetVisual());
+                    Card c = AllLeadersDict[item].GetCopy();
+                    c.Clicked += RemoveFromKazamata;
+                    KazamataDeffenders_List.Children.Add(c.GetVisual());
                     vezerCount++;
                 }
                 else
                 {
-                    MindenKartya_ListKazamata.Children.Add(AllLeadersDict[item].GetCopy().GetVisual());
+                    Card c = AllLeadersDict[item].GetCopy();
+                    c.Clicked += AddToKazamata;
+                    MindenKartya_ListKazamata.Children.Add(c.GetVisual());
                 }
             }
-            if (k.Tipus==KazamataType.egyszeru)
+            if (k.Tipus == KazamataType.egyszeru)
             {
+                KazamataJutalom.Visibility = Visibility.Visible;
+                KazamataJutalom_Label.Visibility = Visibility.Visible;
                 KazamataTipus.SelectedIndex = 0;
                 KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count}/1";
             }
             else if (k.Tipus == KazamataType.kis)
             {
+                KazamataJutalom.Visibility = Visibility.Visible;
+                KazamataJutalom_Label.Visibility = Visibility.Visible;
                 KazamataTipus.SelectedIndex = 1;
-                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count-vezerCount}/3 és {vezerCount}/1 vezér";
+                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count - vezerCount}/3 és {vezerCount}/1 vezér";
 
             }
             else
             {
+                KazamataJutalom.Visibility = Visibility.Collapsed;
+                KazamataJutalom_Label.Visibility = Visibility.Collapsed;
                 KazamataTipus.SelectedIndex = 2;
-                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count-vezerCount}/5 és {vezerCount}/1 vezér";
+                KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count - vezerCount}/5 és {vezerCount}/1 vezér";
 
             }
-            kazamataEditNmae = k.Name;
+            if (k.reward==KazamataReward.eletero)
+            {
+                KazamataJutalom.SelectedIndex = 0;
+            }
+            else if(k.reward == KazamataReward.sebzes)
+            {
+                KazamataJutalom.SelectedIndex = 1;
+            }
+                kazamataEditNmae = k.Name;
 
 
 
@@ -1953,17 +1986,215 @@ namespace szakmajDusza
 
         public void UpdateKazamata()
         {
-            
+            if (!internalEdits)
+            {
+                MindenKartya_ListKazamata.Children.Clear();
+                KazamataDeffenders_List.Children.Clear();
+                Kazamata k = AllKazamataDict[kazamataEditNmae];
+                foreach (var item in AllCardsDict.Keys)
+                {
+                    if (k.GetDefenderNames().Contains(item))
+                    {
+                        Card c = AllCardsDict[item].GetCopy();
+                        c.Clicked -= AddToKazamata;
+                        c.Clicked += RemoveFromKazamata;
+                        KazamataDeffenders_List.Children.Add(c.GetVisual());
+                    }
+                    else
+                    {
+                        Card c = AllCardsDict[item].GetCopy();
+                        c.Clicked -= RemoveFromKazamata;
+                        c.Clicked += AddToKazamata;
+                        MindenKartya_ListKazamata.Children.Add(c.GetVisual());
+                    }
+                }
+                int vezerCount = 0;
+                foreach (var item in AllLeadersDict.Keys)
+                {
+                    if (k.GetDefenderNames().Contains(item))
+                    {
+                        Card c = AllLeadersDict[item].GetCopy();
+                        c.Clicked -= AddToKazamata;
+                        c.Clicked += RemoveFromKazamata;
+                        KazamataDeffenders_List.Children.Add(c.GetVisual());
+                        vezerCount++;
+                    }
+                    else
+                    {
+                        Card c = AllLeadersDict[item].GetCopy();
+                        c.Clicked -= RemoveFromKazamata;
+                        c.Clicked += AddToKazamata;
+                        MindenKartya_ListKazamata.Children.Add(c.GetVisual());
+                    }
+                }
+
+
+
+                if (k.Tipus == KazamataType.egyszeru)
+                {
+                    KazamataTipus.SelectedIndex = 0;
+                    KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count}/1";
+                }
+                else if (k.Tipus == KazamataType.kis)
+                {
+                    KazamataTipus.SelectedIndex = 1;
+                    KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count - vezerCount}/3 és {vezerCount}/1 vezér";
+
+                }
+                else
+                {
+                    KazamataTipus.SelectedIndex = 2;
+                    KazamataKartya.Content = $"{KazamataDeffenders_List.Children.Count - vezerCount}/5 és {vezerCount}/1 vezér";
+
+                }
+            }
+           
+
         }
 
         private void KazamataTipus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AllKazamataDict[kazamataEditNmae].Tipus =Kazamata.StringToKazamataType(KazamataTipus.SelectedItem.ToString());
-            UpdateKazamata();
+            if (!internalEdits)
+            {
+                AllKazamataDict[kazamataEditNmae].Tipus = Kazamata.StringToKazamataType(KazamataTipus.SelectedItem.ToString());
+                AllKazamataDict[kazamataEditNmae].Defenders.Clear();
+                MindenKartya_ListKazamata.Children.Clear();
+                KazamataDeffenders_List.Children.Clear();
+                Kazamata k = AllKazamataDict[kazamataEditNmae];
+                if (k.Tipus == KazamataType.egyszeru)
+                {
+                    KazamataJutalom.Visibility = Visibility.Visible;
+                    KazamataJutalom_Label.Visibility = Visibility.Visible;
+                    KazamataTipus.SelectedIndex = 0;
+                    KazamataKartya.Content = $"{0}/1";
+                }
+                else if (k.Tipus == KazamataType.kis)
+                {
+                    KazamataJutalom.Visibility = Visibility.Visible;
+                    KazamataJutalom_Label.Visibility = Visibility.Visible;
+                   
+                    KazamataTipus.SelectedIndex = 1;
+                    KazamataKartya.Content = $"{0}/3 és {0}/1 vezér";
+
+                }
+                else
+                {
+                    KazamataJutalom.Visibility = Visibility.Collapsed;
+                    KazamataJutalom_Label.Visibility = Visibility.Collapsed;
+                    AllKazamataDict[kazamataEditNmae].reward = KazamataReward.newcard;
+                    KazamataTipus.SelectedIndex = 2;
+                    KazamataKartya.Content = $"{0}/5 és {0}/1 vezér";
+
+                }
+                UpdateKazamata();
+
+            }
 
         }
 
+        private void AddToKazamata(object? sender, Card clicked)
+        {
+            clicked.Clicked -= AddToKazamata;
+            clicked.Clicked += RemoveFromKazamata;
+            int vezer = 0;
+            int kazamataDef = KazamataDeffenders_List.Children.Count;
+            int kazamataMaxDef = 0;
+            foreach (Card item in AllKazamataDict[kazamataEditNmae].Defenders)
+            {
+                if (item.Vezer)
+                {
+                    vezer++;
+                }
+            }
+            if (AllKazamataDict[kazamataEditNmae].Tipus == KazamataType.egyszeru)
+            {
+                kazamataMaxDef = 1;
+            }
+            else if (AllKazamataDict[kazamataEditNmae].Tipus == KazamataType.kis)
+            {
+                kazamataMaxDef = 3;
+            }
+            else
+            {
+                kazamataMaxDef = 5;
+            }
+            if (clicked.Vezer && vezer == 0)
+            {
+                AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
+                UpdateKazamata();
+            }
+            else if (kazamataDef - vezer < kazamataMaxDef)
+            {
+                AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
+                UpdateKazamata();
+            }
 
+        }
+        private void RemoveFromKazamata(object? sender, Card clicked)
+        {
+
+
+            clicked.Clicked += AddToKazamata;
+            clicked.Clicked -= RemoveFromKazamata;
+            //AllKazamataDict[kazamataEditNmae].Defenders.Remove(clicked);
+            foreach (Card item in AllKazamataDict[kazamataEditNmae].Defenders)
+            {
+                if (item.Name==clicked.Name)
+                {
+                    AllKazamataDict[kazamataEditNmae].Defenders.Remove(item);
+                    break ;
+                }
+            }
+            UpdateKazamata();
+            
+           
+        }
+
+        private void KazamataName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!internalEdits)
+            {
+                string edits = KazamataName.Text;
+                Kazamata k = AllKazamataDict[kazamataEditNmae];
+                k.Name = edits;
+                AllKazamataDict.Remove(kazamataEditNmae);
+                AllKazamataDict.Add(edits, k);
+                
+                kazamataEditNmae = edits;
+            }
+        }
+
+        private void KazamataName_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key==System.Windows.Input.Key.Enter)
+            {
+                if (!internalEdits)
+                {
+                    string edits = KazamataName.Text;
+                    Kazamata k = AllKazamataDict[kazamataEditNmae];
+                    k.Name = edits;
+                    AllKazamataDict.Remove(kazamataEditNmae);
+                    AllKazamataDict.Add(edits, k);
+                   
+                    kazamataEditNmae = edits;
+                }
+            }
+        }
+
+        private void KazamataJutalom_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!internalEdits)
+            {
+                if (KazamataJutalom.SelectedIndex==0)
+                {
+                    AllKazamataDict[kazamataEditNmae].reward = KazamataReward.eletero;
+                }
+                else
+                {
+                    AllKazamataDict[kazamataEditNmae].reward = KazamataReward.sebzes;
+                }
+            }
+        }
 
 
 

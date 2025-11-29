@@ -177,7 +177,7 @@
                         </TransformGroup>
                     </CheckBox.RenderTransform>
                 </CheckBox>
-                <StackPanel x:Name="BasicCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455" d:IsHidden="True">
+                <StackPanel x:Name="BasicCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
 
                     <Label Content="Név:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
                     <TextBox x:Name="KartyaSzerkesztoCardName" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
@@ -342,7 +342,7 @@
 
             </Grid>
             <Grid x:Name="KazamataSzerkeszto_Grid" Visibility="Visible">
-                <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+                <Button Click="BackToKornyezetSzerkesztoKazamata_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Margin="0,60,748,751" Height="300">
                     <WrapPanel x:Name="MindenKartya_ListKazamata" Visibility="Visible"/>
@@ -354,9 +354,11 @@
                 <Label Content="Kazamata védők:" HorizontalAlignment="Left" Height="53" Margin="10,392,0,0" VerticalAlignment="Top" Width="248"/>
                 <Label Content="Név:" HorizontalAlignment="Left" Height="52" Margin="1233,60,0,0" VerticalAlignment="Top" Width="200"/>
                 <Label Content="Típus:" HorizontalAlignment="Left" Height="52" Margin="1233,112,0,0" VerticalAlignment="Top" Width="200"/>
-                <Label Content="Jutalom:" HorizontalAlignment="Left" Height="52" Margin="1233,164,0,0" VerticalAlignment="Top" Width="200"/>
-                <ComboBox x:Name="KazamataTipus" HorizontalAlignment="Left" Height="52" Margin="1468,60,0,0" VerticalAlignment="Top" Width="239"/>
+                <Label x:Name="KazamataJutalom_Label" Content="Jutalom:" HorizontalAlignment="Left" Height="52" Margin="1233,164,0,0" VerticalAlignment="Top" Width="200"/>
+                <ComboBox x:Name="KazamataTipus" HorizontalAlignment="Left" Height="52" Margin="1469,112,0,0" VerticalAlignment="Top" Width="239" SelectionChanged="KazamataTipus_SelectionChanged"/>
                 <Label x:Name="KazamataKartya" Content="0/0" HorizontalAlignment="Left" Height="53" Margin="246,392,0,0" VerticalAlignment="Top" Width="248"/>
+                <TextBox x:Name="KazamataName" HorizontalAlignment="Left" Height="47" Margin="1469,60,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="239" LostFocus="KazamataName_LostFocus" KeyDown="KazamataName_KeyDown"/>
+                <ComboBox x:Name="KazamataJutalom" HorizontalAlignment="Left" Height="52" Margin="1469,169,0,0" VerticalAlignment="Top" Width="239" SelectionChanged="KazamataJutalom_SelectionChanged"/>
             </Grid>
 
 

@@ -990,9 +990,12 @@ namespace szakmajDusza
         }
         private void SelectForModify(Card k)
         {
+            VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
             internalEdits = true;
             cardEditName = k.Name;
             Gyujtemeny_Check.IsChecked = false;
+            BasicCardPanel.Visibility = Visibility.Visible;
+            LeaderCardPanel.Visibility = Visibility.Collapsed;
             foreach (Card item in Gyujtemeny)
             {
                 if (item.Name==k.Name)
@@ -1003,6 +1006,9 @@ namespace szakmajDusza
             }
             if (k.Vezer)
             {
+                BasicCardPanel.Visibility = Visibility.Collapsed;
+                LeaderCardPanel.Visibility = Visibility.Visible;
+                VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
                 VezerCheck.IsChecked = true;
                 string vAlap = k.Name2Label.Content.ToString();
                 int index = -1;
@@ -1016,6 +1022,11 @@ namespace szakmajDusza
                 }
                 VezerAlapKartya.SelectedIndex=index;
                 VezerNev.Text=k.NameLabel.Content.ToString();
+                if (AllLeadersDict[cardEditName].HP != AllCardsDict[vAlap].HP)
+                {
+                    VezerBonusTipus.SelectedIndex = 0;
+                }
+                else VezerBonusTipus.SelectedIndex = 1;
             }
             else
             {
@@ -1056,7 +1067,7 @@ namespace szakmajDusza
                             }
                         }
                     }
-                    try
+                    /*try
                     {
                         if (int.Parse(TypeAttack.Text) > 0) AllLeadersDict[cardEditName.ToString()].Damage = int.Parse(TypeAttack.Text);
                         else
@@ -1073,14 +1084,28 @@ namespace szakmajDusza
                             MessageBox.Show("Szöveg", "", MessageBoxButton.OK, MessageBoxImage.Error);
                         }//kristof make error message
                     }
-                    catch { }
-                    if (SelectType.SelectedIndex == 0) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
+                    catch { }*/
+                    /*if (SelectType.SelectedIndex == 0) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.fold;
                     else if (SelectType.SelectedIndex == 1) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.viz;
                     else if (SelectType.SelectedIndex == 2) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.levego;
-                    else if (SelectType.SelectedIndex == 3) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;
+                    else if (SelectType.SelectedIndex == 3) AllLeadersDict[cardEditName.ToString()].Tipus = KartyaTipus.tuz;*/
+
+
+                    if (VezerBonusTipus.SelectedIndex == 0)
+                    {
+                        AllLeadersDict[cardEditName].HP = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].HP * 2;
+                        AllLeadersDict[cardEditName].Damage = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].Damage;
+
+                    }
+                    else
+                    {
+                        AllLeadersDict[cardEditName].Damage = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].Damage * 2; AllLeadersDict[cardEditName].HP = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].HP;
+                    }
+
+
                     AllLeadersDict[cardEditName.ToString()].UpdateAllVisual();
                     SelectedCard_Wrap.Children.Clear();
-                    SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
+                    SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetVisual());
 
                 }
                 else
@@ -1421,27 +1446,10 @@ namespace szakmajDusza
 
         private void KartyaSzerkeszto_TextChange(object sender, RoutedEventArgs e)
         {
-            string edits = KartyaSzerkesztoCardName.Text;
-            if (!AllCardsDict.ContainsKey(edits)&&(bool)!VezerCheck.IsChecked)
-            {
-                AllCardsDict.Add(edits, AllCardsDict[cardEditName]);
-                AllCardsDict.Remove(cardEditName);
-                AllCardsDict[edits].Name=edits;
-                AllCardsDict[edits].UpdateAllVisual();
-                cardEditName = edits;
-                SelectedCard_Wrap.Children.Clear();
-                SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
-            }
-            
-            //AllCardsDict[cardEditName].Name = KartyaSzerkesztoCardName.Text;
-        }
-
-        private void KartyaSzerkeszto_TextChange(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key==System.Windows.Input.Key.Enter)
+            if (AllCardsDict.ContainsKey(cardEditName))
             {
                 string edits = KartyaSzerkesztoCardName.Text;
-                if (!AllCardsDict.ContainsKey(edits))
+                if (!AllCardsDict.ContainsKey(edits) && (bool)!VezerCheck.IsChecked)
                 {
                     AllCardsDict.Add(edits, AllCardsDict[cardEditName]);
                     AllCardsDict.Remove(cardEditName);
@@ -1452,6 +1460,62 @@ namespace szakmajDusza
                     SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
                 }
             }
+            else
+            {
+                string edits = VezerNev.Text + " " + VezerAlapKartya.SelectedItem.ToString();
+                if (!AllLeadersDict.ContainsKey(edits) && (bool)!VezerCheck.IsChecked)
+                {
+                    AllLeadersDict.Add(edits, AllLeadersDict[cardEditName]);
+                    AllLeadersDict.Remove(cardEditName);
+                    AllLeadersDict[edits].Name = edits;
+                    AllLeadersDict[edits].UpdateAllVisual();
+                    cardEditName = edits;
+                    SelectedCard_Wrap.Children.Clear();
+                    SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
+                }
+            }
+               
+            
+            //AllCardsDict[cardEditName].Name = KartyaSzerkesztoCardName.Text;
+        }
+
+        private void KartyaSzerkeszto_TextChange(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (AllCardsDict.ContainsKey(cardEditName))
+            {
+                if (e.Key == System.Windows.Input.Key.Enter)
+                {
+                    string edits = KartyaSzerkesztoCardName.Text;
+                    if (!AllCardsDict.ContainsKey(edits))
+                    {
+                        AllCardsDict.Add(edits, AllCardsDict[cardEditName]);
+                        AllCardsDict.Remove(cardEditName);
+                        AllCardsDict[edits].Name = edits;
+                        AllCardsDict[edits].UpdateAllVisual();
+                        cardEditName = edits;
+                        SelectedCard_Wrap.Children.Clear();
+                        SelectedCard_Wrap.Children.Add(AllCardsDict[cardEditName.ToString()].GetCopy().GetVisual());
+                    }
+                }
+            }
+            else
+            {
+                if (e.Key == System.Windows.Input.Key.Enter)
+                {
+                    string edits = VezerNev.Text+" "+VezerAlapKartya.SelectedItem.ToString();
+                    if (!AllLeadersDict.ContainsKey(edits))
+                    {
+                        AllLeadersDict.Add(edits, AllLeadersDict[cardEditName]);
+                        AllLeadersDict.Remove(cardEditName);
+                        AllLeadersDict[edits].Name = edits;
+                        AllLeadersDict[edits].UpdateAllVisual();
+                        cardEditName = edits;
+                        SelectedCard_Wrap.Children.Clear();
+                        SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
+                    }
+                }
+            }
+           
         }
 
         private void CreateNewCard_Button_Click(object sender, RoutedEventArgs e)
@@ -1514,25 +1578,44 @@ namespace szakmajDusza
 
         private void VezerCheck_Checked(object sender, RoutedEventArgs e)
         {
-            AllCardsDict.Remove(cardEditName);
-            SelectedCard_Wrap.Children.Clear();
-            BasicCardPanel.Visibility = Visibility.Collapsed;
-            LeaderCardPanel.Visibility = Visibility.Visible;
-            VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
-            VezerAlapKartya.SelectedIndex = 0;
-            VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
-            VezerBonusTipus.SelectedIndex = 0;
-            Card k = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
-            SelectedCard_Wrap.Children.Add(k.GetVisual());
-            if (VezerBonusTipus.SelectedIndex==0)
-            {
-                k.HP *= 2;
-                k.UpdateAllVisual();
-            }
-            else
+            if (internalEdits)
             {
 
             }
+            else
+            {
+                internalEdits = true;
+                AllCardsDict.Remove(cardEditName);
+                SelectedCard_Wrap.Children.Clear();
+                BasicCardPanel.Visibility = Visibility.Collapsed;
+                LeaderCardPanel.Visibility = Visibility.Visible;
+                VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
+                VezerAlapKartya.SelectedIndex = 0;
+                VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
+                VezerBonusTipus.SelectedIndex = 0;
+                Card k = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
+                k.Vezer = true;
+                VezerNev.Text = "Vezér";
+                cardEditName =VezerNev.Text+" "+VezerAlapKartya.SelectedItem.ToString();
+                AllLeadersDict.Add(cardEditName,k);
+                AllLeadersDict[cardEditName].Name = cardEditName;
+                SelectedCard_Wrap.Children.Add(k.GetVisual());
+                if (VezerBonusTipus.SelectedIndex == 0)
+                {
+                    AllLeadersDict[cardEditName].HP *= 2;
+                    
+                }
+                else
+                {
+                    AllLeadersDict[cardEditName].Damage *= 2;
+                    
+                }
+                AllLeadersDict[cardEditName].UpdateAllVisual();
+                SelectedCard_Wrap.Children.Clear();
+                SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName].GetVisual());
+                internalEdits = false;
+            }
+               
             
         }
 
@@ -1595,6 +1678,38 @@ namespace szakmajDusza
             internalEdits = false;
             UpdateKartyaSelectionCard(null, null);
         }
+
+        private void VezerAlapKartya_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!internalEdits)
+            {
+                string edits = VezerNev.Text + " " + VezerAlapKartya.SelectedItem.ToString();
+                AllLeadersDict.Remove(cardEditName);
+                SelectedCard_Wrap.Children.Clear();
+                Card c = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
+                c.Vezer = true;
+                c.Name = edits;
+                if (VezerBonusTipus.SelectedIndex == 1)
+                {
+                    c.Damage *= 2;
+                }
+                else
+                {
+                    c.HP *= 2;
+                }
+                c.UpdateAllVisual();
+                AllLeadersDict.Add(edits, c);
+                SelectedCard_Wrap.Children.Add(c.GetVisual());
+                cardEditName = edits;
+            }
+            
+
+
+        }
+
+
+
+
 
 
         // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>

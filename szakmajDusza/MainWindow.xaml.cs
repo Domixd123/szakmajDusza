@@ -1062,6 +1062,8 @@ namespace szakmajDusza
             }
             else
             {
+                BasicCardPanel.Visibility = Visibility.Visible;
+                LeaderCardPanel.Visibility = Visibility.Collapsed;
                 VezerCheck.IsChecked = false;
                 KartyaSzerkesztoCardName.Text = k.Name;
                 SelectType.ItemsSource = new string[] { "Föld", "Víz", "Levegő", "Tűz" };
@@ -1618,6 +1620,9 @@ namespace szakmajDusza
 
         private void CreateNewCard_Button_Click(object sender, RoutedEventArgs e)
         {
+            internalEdits = true;
+            VezerCheck.IsChecked = false;
+            internalEdits = false;
             GoToGrid(KartyaSzerkeszto_Grid);
             string cardName = "ÚjKártya";
             bool goodName = false;

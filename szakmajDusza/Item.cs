@@ -12,19 +12,7 @@ namespace szakmajDusza
 		public static int GoldOwned = 100000;
 		public static int shopItemCount = 3;
 		public static int shopRefreshPrice = 2;
-		public static Dictionary<string, Item> Items = new Dictionary<string, Item>()
-		{
-			//DoItDOminik
-			{ "Életerőlopás",new Item("Életerőlopás","(Szint*#)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,"lifesteal.png",5)},
-			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,"healing.png",2) },
-			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,"strength.png",2) },
-			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,"armor.png",8) },
-			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,"revive.png",15) },
-			{"Krit csapás", new Item("Krit csapás","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,"crit.png",10) },
-			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,"thorns.png",5) },
-			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,"dodge.png",5) },
-			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,"magic.png",8) },
-		};
+		public static Dictionary<string, Item> Items;
 		public bool Disabled {  get; set; }=false;
 		public string Name { get; set; }
 		public string Description { get; set; }
@@ -65,6 +53,25 @@ namespace szakmajDusza
 			OwnedCount = ownedcount;
 			BaseVariable = baseVariable;
 			InRotation = inRotation;
+		}
+		public static void ResetItems()
+		{
+			GoldOwned = 0;
+			shopItemCount = 3;
+			shopRefreshPrice = 2;
+			Items = new Dictionary<string, Item>()
+		{
+			//DoItDOminik
+			{ "Életerőlopás",new Item("Életerőlopás","(Szint*#)% életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,"lifesteal.png",5)},
+			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,"healing.png",2) },
+			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,"strength.png",2) },
+			{"Páncél", new Item("Páncél","(Szint*#)%-kal kevesebbet sebződik",true,5,5,"armor.png",8) },
+			{"Újraéledés", new Item("Újraéledés","(Szint*#)% eséllyel újraéled, ez minden újraéledés után csökken 15%-kal",true,5,5,"revive.png",15) },
+			{"Krit csapás", new Item("Krit csapás","(Szint*#)% eséllyel a támadása (Szint*40)%-kal többet sebez",true,5,5,"crit.png",10) },
+			{"Tüskék", new Item("Tüskék","A kapott sebzés (Szint*#)%-át visszaüti ellenfelére (ez csak Mágikussal hárítható)",true,5,5,"thorns.png",5) },
+			{"Kikerülés", new Item("Kikerülés","(Szint*#)% eséllyel immunis lesz az ellenfél következő támadására",true,5,5,"dodge.png",5) },
+			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,"magic.png",8) },
+		};
 		}
 		public void Buy()
 		{

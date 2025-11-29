@@ -21,7 +21,7 @@ namespace szakmajDusza
 			}
 			Directory.CreateDirectory("saves");
 			StreamWriter sw =new StreamWriter("saves/"+fileName);
-			sw.WriteLine("difficulty;");
+			sw.WriteLine($"difficulty;{MainWindow.Difficulty}");
 			sw.WriteLine();
 			foreach (var item in MainWindow.AllCardsDict.Values)
 			{
@@ -90,8 +90,7 @@ namespace szakmajDusza
 			sw.WriteLine();
 			foreach (var item in Item.Items.Values)
 			{
-				string itemBuyable = item.Buyable ? "igen" : "nem";
-				sw.WriteLine($"item;{item.Name};{itemBuyable};{item.MaxLevel};{item.Price};{item.Level};{item.OwnedCount};{item.BaseVariable};{item.InRotation}");
+				sw.WriteLine($"item;{item.Name};{item.Buyable};{item.MaxLevel};{item.Price};{item.Level};{item.OwnedCount};{item.BaseVariable};{item.InRotation}");
 			}
 			sw.WriteLine();
 			foreach(var item in MainWindow.Gyujtemeny)

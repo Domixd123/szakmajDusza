@@ -66,7 +66,9 @@ namespace szakmajDusza
 
 
         public static float spVolume = 0.25f;
+        public static float seVolume = 0.5f;
         public static float spMult = 0.002f;
+        public static float seMult = 0.004f;
         public MainWindow()
         {
             InitializeComponent();
@@ -252,6 +254,19 @@ namespace szakmajDusza
                 HorizontalAlignment = HorizontalAlignment.Center,
                 HorizontalContentAlignment = HorizontalAlignment.Center
             };
+            ScrollViewer scrollViewer1 = new ScrollViewer()
+            {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+            };
+
+            Grid g1 = new Grid()
+            {
+                Background = Brushes.Transparent
+            };
+
+            g1.Children.Add(FightPlayer_Wrap);
+            scrollViewer1.Content = g1;
             FightPlayer_Wrap = new WrapPanel()
             {
                 Name = "FightPlayer_Wrap",
@@ -259,6 +274,19 @@ namespace szakmajDusza
                 Width = 400
             };
 
+            ScrollViewer scrollViewer = new ScrollViewer()
+            {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+            };
+
+            Grid g = new Grid()
+            {
+                Background = Brushes.Transparent
+            };
+
+            g.Children.Add(FightKazamata_Wrap);
+            scrollViewer.Content = g;
             FightKazamata_Wrap = new WrapPanel()
             {
                 Name = "FightKazamata_Wrap",
@@ -444,6 +472,8 @@ namespace szakmajDusza
             FightGrid.Children.Add(ChangeSpeed);
             FightGrid.Children.Add(Speed_Label);
             FightGrid.Children.Add(Jutalom);
+            /*FightGrid.Children.Add(scrollViewer);
+            FightGrid.Children.Add(scrollViewer1);*/
             Harc.Click += (s, e) =>
             {
                 foreach (var item in FightGrid.Children)
@@ -839,18 +869,39 @@ namespace szakmajDusza
 
         private void SFX_On(object sender, RoutedEventArgs e)
         {
-            se.Volume = 1;
+            se.Volume = seVolume;
+            se.IsMuted = false;
         }
 
         private void SFX_Off(object sender, RoutedEventArgs e)
         {
-            se.Volume = 0;
+            se.IsMuted = true;
+        }
+
+        private void MUSIC_On(object sender, RoutedEventArgs e)
+        {
+            sp.Volume = spVolume;
+            sp.IsMuted = false;
+        }
+
+        private void MUSIC_Off(object sender, RoutedEventArgs e)
+        {
+            sp.IsMuted = true;
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            spVolume = (float)Sl.Value * spMult;
-            sp.Volume = spVolume;
+            
+                spVolume = (float)Sl.Value * spMult;
+                sp.Volume = spVolume;
+            
+            
+                seVolume = (float)Sl.Value * seMult;
+
+                se.Volume = seVolume;
+            
+            
+            
         }
 
         private void GoToMaster_Button_Click(object sender, RoutedEventArgs e)
@@ -882,29 +933,9 @@ namespace szakmajDusza
             GoToGrid(PakliOssze_Grid);
         }
 
-        private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            AutoResizeButtons();
-        }
+        
 
-        private void AutoResizeButtons()
-        {
-            if (DynamicButtonsPanel.Children.Count == 0)
-                return;
-
-            double panelWidth = DynamicButtonsPanel.ActualWidth;
-            double minButtonWidth = 250; // minimális gombszélesség
-            int buttonsPerRow = Math.Max(1, (int)(panelWidth / minButtonWidth));
-
-            double buttonWidth = (panelWidth / buttonsPerRow) - 20; // 20 = margin
-
-            foreach (Button b in DynamicButtonsPanel.Children)
-            {
-                b.Width = buttonWidth;
-                b.Height = buttonWidth * 0.6; // arányos magasság
-                b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
-            }
-        }
+        
 
         private void KornyezetekMester_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1774,15 +1805,7 @@ namespace szakmajDusza
 
         }
 
-        private void MUSIC_On(object sender, RoutedEventArgs e)
-        {
-            sp.Volume = spVolume;
-        }
-
-        private void MUSIC_Off(object sender, RoutedEventArgs e)
-        {
-            sp.Volume = 0;
-        }
+        
 
 
 

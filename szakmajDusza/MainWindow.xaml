@@ -162,7 +162,7 @@
 				<Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
 			</Grid>
-			<Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed" d:IsHidden="True">
+			<Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible">
 				<WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
 				<Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 				<Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
@@ -317,7 +317,7 @@
 				<Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1595,264,0,0" VerticalAlignment="Top" Width="315" Height="85" Grid.Row="1"/>
 
 			</Grid>
-			<Grid x:Name="MainRoom_Grid" Visibility="Visible">
+			<Grid x:Name="MainRoom_Grid" Visibility="Visible" d:IsHidden="True">
 				<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 					<Grid Background="Transparent">
 						<!-- A Grid kitölti a ScrollViewer látható területét -->

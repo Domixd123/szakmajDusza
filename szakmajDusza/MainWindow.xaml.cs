@@ -237,8 +237,13 @@ namespace szakmajDusza
                 b.Margin = new Thickness(10, 0, 0, 0);
                 DynamicButtonsPanel.Children.Add(b);
             }
-
+            if (DynamicButtonsPanel.ActualWidth!=0)
+            {
+                AutoResizeButtons();
+            }
+            
             SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
+            SelectedCards_Label.Content = Jatekos.Count;
         }
 
         private void ShowKazamata(Kazamata k)
@@ -385,6 +390,7 @@ namespace szakmajDusza
                 FontSize = 60
             };
             Vissza.Click += (s, e) => Back(s, e);
+            Vissza.Click += (s, e) => Vissza_Button_Click(s, e);
 
             ChangeSpeed = new Button()
             {
@@ -411,8 +417,9 @@ namespace szakmajDusza
 
             FightGrid.Height = 1080;
             FightGrid.Width = 1920;
-            FightGrid.Visibility = Visibility.Visible;
-            MainRoom_Grid.Visibility = Visibility.Collapsed;
+            /*FightGrid.Visibility = Visibility.Visible;
+            MainRoom_Grid.Visibility = Visibility.Collapsed;*/
+            GoToGrid(FightGrid);
             if (k.reward == KazamataReward.newcard)
             {
                 foreach (var item in AllCardsDict.Values)
@@ -818,14 +825,14 @@ namespace szakmajDusza
                     (item as WrapPanel).Children.RemoveRange(0, (item as WrapPanel).Children.Count);
                 }
             }
-            
-            GoToGrid(MainRoom_Grid);
+            RemoveShitFomrShit();
+            //GoToGrid(MainRoom_Grid);
             DisableNagyKazamata();
-            sp.Stop();
+            /*sp.Stop();
             sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
             sp.Play();
             RemoveShitFomrShit();
-            ShowPakli();
+            ShowPakli();*/
         }
         public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)
         {
@@ -838,7 +845,7 @@ namespace szakmajDusza
                 Height = height,
                 Margin = new Thickness(spacing)
             };
-            wrap.Children.Add(kartya.GetVisual());
+            wrap.Children.Add(kartya.GetCopy().GetVisual());
             return wrap;
         }
 
@@ -1013,6 +1020,7 @@ namespace szakmajDusza
             AllCardsDict.Remove(cardName);
             AllLeadersDict.Remove(cardName);
             MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            Back(sender, e);
         }
         private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
         {
@@ -1267,10 +1275,10 @@ namespace szakmajDusza
             }
 
             // 3) Ha a HARCBÓL lépünk vissza
-            if (vissza != FightGrid)
+            /*if (vissza != FightGrid)
             {
-                RemoveShitFomrShit();   // harc UI eltakarítása
-            }
+                ();   // harc UI eltakarítása
+            }*/
         }
 
 

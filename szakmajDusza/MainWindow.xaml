@@ -173,11 +173,11 @@
                 <StackPanel x:Name="LeaderCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
 
                     <Label Content="Alap kártya:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
-                    <ComboBox x:Name="VezerAlapKartya" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="VezerAlapKartya" Visibility="Visible" Width="120" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top" SelectionChanged="VezerAlapKartya_SelectionChanged"/>
                     <Label Content="Vezér név:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
-                    <TextBox x:Name="VezerNev" Visibility="Visible" TextChanged="UpdateKartyaSelectionCard" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0"/>
+                    <TextBox x:Name="VezerNev" Visibility="Visible" TextChanged="KartyaSzerkeszto_TextChange" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0" KeyDown="KartyaSzerkeszto_TextChange"/>
                     <Label Content="Bónusz típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
-                    <ComboBox x:Name="VezerBonusTipus" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0"/>
+                    <ComboBox x:Name="VezerBonusTipus" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" SelectionChanged="UpdateKartyaSelectionCard"/>
                     <Label Content="Gyűjteményben:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="260" FontWeight="Bold"/>
                     <CheckBox x:Name="Gyujtemeny_Check1" Content="" Height="15" Width="15" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Margin="0,-44,10,0" BorderThickness="0.333333333333333,0.333333333333333,0.333333333333333,0.333333333333333" Click="UpdateKartyaSelectionCard">
                         <CheckBox.RenderTransform>

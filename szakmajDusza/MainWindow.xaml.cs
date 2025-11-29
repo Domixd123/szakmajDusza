@@ -2195,14 +2195,31 @@ namespace szakmajDusza
                 }
             }
         }
-        private void SaveProgress(object sender,RoutedEventArgs e)
+        private void SaveProgress_Click(object sender,RoutedEventArgs e)
         {
-
+            if (Save.fileName == null || Save.fileName == "")
+            {
+                GoToGrid(Save_Grid);
+            }
+            else
+            {
+                Save.SaveProgress();
+            }
         }
+        private void Save_World_Button_Click(object sender,RoutedEventArgs e)
+        {
+            if (File.Exists($"saves/{FileName_TextBox.Text}.txt"))
+            {
+
+            }
+            else
+            {
+
+            }
 
 
 
-        // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+		// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
-    }
+	}
 }

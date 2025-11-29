@@ -599,8 +599,9 @@ namespace szakmajDusza
 
         private void ConfirmPakli_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Jatekos.Count != 0)
+            if (Jatekos.Count != 0&& Jatekos.Count<= Math.Ceiling((float)Gyujtemeny.Count / 2f))
             {
+                //implement hiba
                 GoToGrid(MainRoom_Grid);
                 DisableNagyKazamata();
                 se.Open(new Uri("Sounds/Comfirm.wav", UriKind.Relative));

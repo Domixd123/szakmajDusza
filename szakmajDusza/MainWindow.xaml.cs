@@ -2226,7 +2226,16 @@ namespace szakmajDusza
 					AllLeadersDict.Add(edits, AllLeadersDict[cardEditName]);
 					AllLeadersDict.Remove(cardEditName);
 					AllLeadersDict[edits].Name = edits;
-					AllLeadersDict[edits].UpdateAllVisual();
+					if (VezerBonusTipus.SelectedIndex==0)
+					{
+						AllLeadersDict[edits].Bonus = "eletero";
+
+                    }
+					else
+					{
+                        AllLeadersDict[edits].Bonus = "sebzes";
+                    }
+						AllLeadersDict[edits].UpdateAllVisual();
 					cardEditName = edits;
 					SelectedCard_Wrap.Children.Clear();
 					SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
@@ -2986,6 +2995,19 @@ namespace szakmajDusza
             MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
             Kazamata_Button_Click(null, null);
             Back(sender, e);
+        }
+
+        private void UpdateKartyaSelectionCard(object sender, SelectionChangedEventArgs e)
+        {
+            if (VezerBonusTipus.SelectedIndex == 0)
+            {
+                AllLeadersDict[cardEditName].Bonus = "eletero";
+
+            }
+            else
+            {
+                AllLeadersDict[cardEditName].Bonus = "sebzes";
+            }
         }
 
 

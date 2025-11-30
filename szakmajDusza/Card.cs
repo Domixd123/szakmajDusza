@@ -614,6 +614,7 @@ namespace szakmajDusza
 		}
 		public  Task CritShieldAnim(int dmg, int mult, int blocked)
 		{
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -630,6 +631,7 @@ namespace szakmajDusza
 			};
 			anim.Completed += (s, e) =>
 			{
+				animation= false;
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
@@ -639,6 +641,7 @@ namespace szakmajDusza
 		}
 		public  Task DodgeAnim()
 		{
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -656,6 +659,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
+				animation = false;
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
             };
@@ -664,6 +668,7 @@ namespace szakmajDusza
 		}
 		public Task HealAnim(int amount)//same as lifesteal 
 		{
+			animation= true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -681,6 +686,7 @@ namespace szakmajDusza
             };
 			anim.Completed += (s, e) =>
 			{
+				animation = false;
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
@@ -692,6 +698,7 @@ namespace szakmajDusza
 
         public  Task ReviveAnim(int amount) 
         {
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel2.Visibility = Visibility.Visible;
 			ImportantLabel.Visibility = Visibility.Visible;
@@ -720,6 +727,7 @@ namespace szakmajDusza
             };
             anim.Completed += (s, e) =>
             {
+				animation = false;
                 // hide once it’s slid away
                 ImportantLabel2.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
@@ -738,6 +746,7 @@ namespace szakmajDusza
         }
         public  Task MagicAnim()
         {
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
             Panel.SetZIndex(ImportantLabel, -1);
@@ -754,6 +763,7 @@ namespace szakmajDusza
             };
             anim.Completed += (s, e) =>
             {
+				animation = false;
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
@@ -765,6 +775,7 @@ namespace szakmajDusza
 
 		public  Task NormalShieldAnim(int dmg,int blocked)
 		{
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -781,6 +792,7 @@ namespace szakmajDusza
 			};
 			anim.Completed += (s, e) =>
 			{
+				animation = false;
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
@@ -796,6 +808,7 @@ namespace szakmajDusza
 		}
         public Task UpdateVisualDamage(int dmg)
 		{
+			animation= true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			ImportantLabel.Foreground = Brushes.Red;
@@ -813,18 +826,19 @@ namespace szakmajDusza
 			};
 			anim.Completed += (s, e) =>
 			{
+				animation = false;
                 tcs.SetResult(true);
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
 				HPLabel.Content = HP;
 			};
 
-			int previousHP = HP + dmg;
+			//int previousHP = HP + dmg;
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
-			if (HP + dmg <= 0)
+			/*if (HP + dmg <= 0)
 			{
 				previousHP = 0;
-			}
+			}*/
 			return tcs.Task;
 			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
 			//HPLabel.Content = $"{previousHP}";

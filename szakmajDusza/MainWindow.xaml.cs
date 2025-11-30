@@ -134,8 +134,9 @@ namespace szakmajDusza
 			{
 				if (item.OwnedCount > 0)
 				{
-					Item i = item.GetCopy();
-					i.Clicked += (s, e) => AddAbility(i, c);
+					Item i = item;
+
+                    i.Clicked += (s, e) => AddAbility(i, c);
 					Ability_Wrap.Children.Add(i.GetVisual(false));
 				}
 			}
@@ -163,7 +164,8 @@ namespace szakmajDusza
 
 				SelectedCardForAbility.Children.Clear();
 			Ability_Wrap.Children.Clear();
-			Back(null, null);
+
+            Back(null, null);
 
 			PlayerCards_Wrap.Children.Clear();
 			Cards_Wrap.Children.Clear();

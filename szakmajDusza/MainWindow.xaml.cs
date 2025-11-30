@@ -3024,6 +3024,7 @@ namespace szakmajDusza
                     AllLeadersDict[cardEditName].Bonus = "sebzes";
                 }
             }
+			UpdateKartyaSelectionCard(null,null);
            
         }
 

@@ -143,9 +143,25 @@ namespace szakmajDusza
 
 		private void AddAbility(Item item, Card c)
 		{
-			c.Items.Add(item);
-			c.UpdateAllVisual();
-			SelectedCardForAbility.Children.Clear();
+			if (c.Vezer && c.Items.Count <= 1)
+			{
+                c.Items.Add(item);
+                c.UpdateAllVisual();
+            }
+
+			else if (!c.Vezer && c.Items.Count == 0)
+			{
+                c.Items.Add(item);
+                c.UpdateAllVisual();
+            }
+
+			else
+			{
+				c.Items.Remove(item);
+				c.UpdateAllVisual();
+			}
+
+				SelectedCardForAbility.Children.Clear();
 			Ability_Wrap.Children.Clear();
 			Back(null, null);
 

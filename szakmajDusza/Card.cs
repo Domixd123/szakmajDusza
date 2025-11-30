@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -658,7 +659,7 @@ namespace szakmajDusza
 		{
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
-			Panel.SetZIndex(ImportantLabel, 0);
+			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.Green;
 			ImportantLabel.Content = $"+{amount}";
@@ -790,6 +791,8 @@ namespace szakmajDusza
 		{
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
+			ImportantLabel.Foreground = Brushes.Red;
+			ImportantLabel.FontWeight = FontWeights.Bold;
 			Panel.SetZIndex(ImportantLabel, -1);
 
 			ImportantLabel.Content = $"-{dmg}";

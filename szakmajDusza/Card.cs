@@ -636,9 +636,10 @@ namespace szakmajDusza
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
-		public async Task HealAnim(int amount)//same as lifesteal 
+		public Task HealAnim(int amount)//same as lifesteal 
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel2, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.Green;
@@ -655,10 +656,12 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-			};
+                tcs.SetResult(true);
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+            return tcs.Task;
 
-		}
+        }
 
         public async Task ReviveAnim(int amount) 
         {

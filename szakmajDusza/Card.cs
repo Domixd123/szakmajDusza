@@ -736,7 +736,7 @@ namespace szakmajDusza
 
 			var anim = new ThicknessAnimation
 			{
-				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
+				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 80),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
 				Duration = TimeSpan.FromSeconds(0.4f),
 				FillBehavior = FillBehavior.Stop
@@ -745,14 +745,9 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-				HPLabel.Content = HP;
-			};
 
+			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
-			if (HP + dmg <= 0)
-			{
-				previousHP = 0;
-			}
 		}
         public async Task UpdateVisualDamage(int dmg)
 		{

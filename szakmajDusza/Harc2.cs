@@ -27,7 +27,7 @@ namespace szakmajDusza
 		static string respawnedNamePlayer = "";
 		static int respawnTimesKazamata = 0;
 		static string respawnedNameKazamata = "";
-		public static void DamageReductions(Card attacker, Card defender, int damage, string damageType,int critMult=0)
+		public static void DamageReductions(Card attacker, Card defender, int damage, string damageType,double critMult=1)
 		{
 			string reductionType = "";
 			int reduction = 0;
@@ -51,10 +51,40 @@ namespace szakmajDusza
 							break;
 						}
 					}
+					else if (item.Name == "Tüskék")
+					{
+						int damage2 = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable * 0.01, 0);
+						AnimationManager(attacker, "normal", "", damage2);
+						attacker.HP -= damage2;
+						/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
+
+						//thorns animation
+					}
 				}
 			}
-			AnimationManager(defender, damageType, reductionType, damage, reduction, critMult);
-			defender.HP -= damage;
+			if (reductionType != "dodge")
+			{
+				foreach (var item in defender.Items)
+				{
+					if (!MagicRes(attacker))
+					{
+						if (item.Name == "Tüskék")
+						{
+							damage = (int)Math.Round(damage*(1-(item.BaseVariable * item.Level * 0.01)), 0);
+							int damage2 = (int)Math.Round(damage*item.BaseVariable * item.Level * 0.01, 0);
+							AnimationManager(attacker, "normal", "", damage2);
+							attacker.HP -= damage2;
+							reductionType = "shield";
+							/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
+
+							//thorns animation
+						}
+					}
+				}
+			}
+			
+			AnimationManager(defender, damageType, reductionType, damage, reduction, (int)(critMult*100));
+			defender.HP -= (int)Math.Round(damage*critMult,0);
 		}
 		public static async void AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
@@ -140,7 +170,8 @@ namespace szakmajDusza
 			}
 
 			//int damage = attacker.Damage;
-
+			bool critHappened = false;
+			int critLevel = 0;
 			foreach (var item in attacker.Items)//apply all damage boosts
 			{
 				if (MagicRes(defender))
@@ -149,12 +180,15 @@ namespace szakmajDusza
 				}
 				if (item.Name == "Életerőlopás")
 				{
+					int damage = (int)Math.Round(item.BaseVariable * item.Level * damageMultiplier, 0);
+					DamageReductions(attacker, defender, damage, "normal");
+					AnimationManager(attacker, "", "heal", 0, damage);
+					attacker.HP += damage;
 					//lifestealLevel += item.Level;
 				}
 				else if (item.Name == "Erő")
 				{
 					int damage = (int)Math.Round(item.BaseVariable * item.Level*damageMultiplier,0);
-					
 					DamageReductions(attacker,defender,damage,"strength");
 					//strength animation
 				}
@@ -162,12 +196,25 @@ namespace szakmajDusza
 				{
 					if (random.Next(0, 100) < item.Level * item.BaseVariable)
 					{
-						damage += (int)(item.Level * 0.4 * attacker.Damage);
+						critHappened=true;
+						critLevel = item.Level;
+						//int damage = (int)Math.Round(attacker.Damage, 0);
+						//damage += (int)(item.Level * 0.4 * attacker.Damage);
 						//crit animation
 					}
 				}
 			}
-			foreach (var item in defender.Items)//apply all damage reductions
+			if (critHappened)
+			{
+				int damage = (int)Math.Round(attacker.Damage * damageMultiplier, 0);
+				DamageReductions(attacker, defender, damage, "crit",(0.4*critLevel));
+			}
+			else
+			{
+				int damage = (int)Math.Round(attacker.Damage * damageMultiplier, 0);
+				DamageReductions(attacker, defender, damage, "normal");
+			}
+			/*foreach (var item in defender.Items)//apply all damage reductions
 			{
 				if (!MagicRes(attacker))
 				{
@@ -186,8 +233,8 @@ namespace szakmajDusza
 						}
 					}
 				}
-			}
-			if (attackerIsPlayer)
+			}*/
+			/*if (attackerIsPlayer)
 			{
 				damage = (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
 			}
@@ -195,14 +242,12 @@ namespace szakmajDusza
 			{
 				damage = (int)Math.Round(damage * (1 + (roll * difficulty / 10)));
 			}
-			defender.HP -= damage;
+			defender.HP -= damage;*/
 			//damage animation
 			if (defender.HP < 0)
 			{
 				RespawnItem(attacker, defender, attackerIsPlayer);
 			}
-			attacker.HP += (int)(lifestealLevel * Math.Round(damage * (1 - (roll * difficulty / 20))));
-			//lifesteal animation
 
 			if (defender.HP < 0) return;
 
@@ -212,20 +257,15 @@ namespace szakmajDusza
 				if (MagicRes(attacker)) continue;
 				if (item.Name == "Tüskék")
 				{
-					int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);
-					if (attackerIsPlayer)
-					{
-						damage2 = (int)Math.Round(damage2 * (1 - (roll * difficulty / 20)));
-					}
-					else
-					{
-						damage2 = (int)Math.Round(damage2 * (1 + (roll * difficulty / 10)));
-					}
-					attacker.HP -= damage2;
+					int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable*0.01, 0);
+					AnimationManager(attacker,"normal","",damage);
+					attacker.HP -= damage;
+					/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
+
 					//thorns animation
 				}
 			}
-			if (defender.HP < 0)
+			if (attacker.HP < 0)
 			{
 				RespawnItem(defender, attacker, !attackerIsPlayer);
 			}
@@ -248,14 +288,17 @@ namespace szakmajDusza
 					}
 					if (random.Next(0, 100) < (item.Level - respawntimes) * item.BaseVariable)
 					{
-						if (!defender.Vezer)
+						int maxHP = 0;
+						for (int i = 0; i < MainWindow.Gyujtemeny.Count; i++)
 						{
-							defender.HP = MainWindow.AllCardsDict[defender.Name].HP;
+							if (MainWindow.Gyujtemeny[i].Name==defender.Name)
+							{
+								maxHP = MainWindow.Gyujtemeny[i].HP;
+								break;
+							}
 						}
-						else
-						{
-							defender.HP = MainWindow.AllLeadersDict[defender.Name].HP;
-						}
+						AnimationManager(defender,"","revive",0,maxHP);
+						defender.HP= maxHP;
 						//respawn animation
 						return;
 					}
@@ -276,6 +319,8 @@ namespace szakmajDusza
 			}
 			bool magicResist = random.Next(0, 100) < magicResistLevel * baseVariable;
 			//magicres animation
+			if(magicResist)AnimationManager(resistor,"","magic");
+
 			return magicResist;
 		}
 		public static async Task StartFight(Grid grid, Button vissza, List<Card> gyujt, Kazamata k, List<Card> pakli, WrapPanel player, WrapPanel kazamata, Label attack, Label defend, Label attackDeploy, Label defendDeploy, WrapPanel fightPlayer, WrapPanel fightKazamata, int difficulty)
@@ -334,9 +379,9 @@ namespace szakmajDusza
 				}
 				else if (kaz != null)
 				{
-					kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)), difficulty);
-
-					await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
+					//kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)), difficulty);
+					calculateDamage(play,kaz,true,difficulty);
+					//await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
@@ -394,8 +439,9 @@ namespace szakmajDusza
 				}
 				else if (play != null)
 				{
-					play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty);
-					await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
+					calculateDamage(kaz, play, false, difficulty);
+					//play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty);
+					//await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					play.UpdateVisual();
 					attack.Visibility = Visibility.Collapsed;

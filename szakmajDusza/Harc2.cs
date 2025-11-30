@@ -76,6 +76,7 @@ namespace szakmajDusza
 							AnimationManager(attacker, "normal", "", damage2);
 							attacker.HP -= damage2;
 							reductionType = "shield";
+							attacker.UpdateVisual();
 							/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
 
 							//thorns animation
@@ -147,6 +148,7 @@ namespace szakmajDusza
 				}
 			}
 			card.HideAllLabels();
+			card.UpdateVisual();
 		}
 		public static void calculateDamage(Card attacker, Card defender, bool attackerIsPlayer, int difficulty)
 		{
@@ -176,7 +178,7 @@ namespace szakmajDusza
 					DamageReductions(attacker, defender, damage, "normal");
 					AnimationManager(attacker, "", "heal", 0, damage);
 					attacker.HP += damage;
-					attacker.UpdateAllVisual();
+					attacker.UpdateVisual();
 					//lifestealLevel += item.Level;
 				}
 				else if (item.Name == "Erő")
@@ -253,7 +255,7 @@ namespace szakmajDusza
 					int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable*0.01, 0);
 					AnimationManager(attacker,"normal","",damage);
 					attacker.HP -= damage;
-					attacker.UpdateAllVisual();
+					attacker.UpdateVisual();
 					/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
 
 					//thorns animation
@@ -293,7 +295,7 @@ namespace szakmajDusza
 						}
 						AnimationManager(defender,"","revive",0,maxHP);
 						defender.HP= maxHP;
-						defender.UpdateAllVisual();
+						defender.UpdateVisual();
 						//respawn animation
 						return;
 					}
@@ -382,7 +384,7 @@ namespace szakmajDusza
 					int afterHPPlay = play.HP;
 					//await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
-
+					play.UpdateVisual();
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -447,6 +449,7 @@ namespace szakmajDusza
 					//play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty);
 					//await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+					kaz.UpdateVisual();
 					play.UpdateVisual();
 					attack.Visibility = Visibility.Collapsed;
 					defend.Visibility = Visibility.Visible;

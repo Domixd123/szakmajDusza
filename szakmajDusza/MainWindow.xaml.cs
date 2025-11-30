@@ -206,7 +206,7 @@ namespace szakmajDusza
 		}
 		public void LoadSave(string path)
 		{
-			Save.fileName = Path.GetFileName(path);
+			if(Path.GetDirectoryName(path)=="saves") Save.fileName = Path.GetFileName(path);
 			Item.ResetItems();
 			DynamicButtonsPanel.Children.Clear();
 			Gyujtemeny.Clear();
@@ -226,7 +226,7 @@ namespace szakmajDusza
 				}
 
 				string[] data = line.Split(';');
-				if (data[0] == "difficulty")
+				if (data[0] == "difficulty"&& Path.GetDirectoryName(path) == "saves")
 				{
 					Difficulty=int.Parse(data[1]);
 				}

@@ -1541,6 +1541,7 @@ namespace szakmajDusza
 		}
 		private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
 		{
+			SelectedCard_Wrap.Children.Clear();
 			ListKartya_Button_Click(null, e);
 			Back(sender, e);
 			/*KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
@@ -1592,6 +1593,8 @@ namespace szakmajDusza
 					VezerBonusTipus.SelectedIndex = 0;
 				}
 				else VezerBonusTipus.SelectedIndex = 1;
+				SelectedCard_Wrap.Children.Clear();
+				SelectedCard_Wrap.Children.Add(k.GetCopy().GetVisual());
 			}
 			else
 			{
@@ -1606,11 +1609,13 @@ namespace szakmajDusza
 				else if (k.Tipus == KartyaTipus.viz) SelectType.SelectedIndex = 1;
 				else if (k.Tipus == KartyaTipus.levego) SelectType.SelectedIndex = 2;
 				else if (k.Tipus == KartyaTipus.tuz) SelectType.SelectedIndex = 3;
-			}
-			GoToGrid(KartyaSzerkeszto_Grid);
+                SelectedCard_Wrap.Children.Add(k.GetCopy().GetVisual());
+
+            }
+            GoToGrid(KartyaSzerkeszto_Grid);
 
 			internalEdits = false;
-			UpdateKartyaSelectionCard(null, null);
+			//UpdateKartyaSelectionCard(null, null);
 		}
 		private void UpdateKartyaSelectionCard(object sender, RoutedEventArgs es)
 		{
@@ -2235,7 +2240,7 @@ namespace szakmajDusza
 					{
                         AllLeadersDict[edits].Bonus = "sebzes";
                     }
-						AllLeadersDict[edits].UpdateAllVisual();
+					AllLeadersDict[edits].UpdateAllVisual();
 					cardEditName = edits;
 					SelectedCard_Wrap.Children.Clear();
 					SelectedCard_Wrap.Children.Add(AllLeadersDict[cardEditName.ToString()].GetCopy().GetVisual());
@@ -2999,15 +3004,19 @@ namespace szakmajDusza
 
         private void UpdateKartyaSelectionCard(object sender, SelectionChangedEventArgs e)
         {
-            if (VezerBonusTipus.SelectedIndex == 0)
-            {
-                AllLeadersDict[cardEditName].Bonus = "eletero";
+			if (!internalEdits)
+			{
+                if (VezerBonusTipus.SelectedIndex == 0)
+                {
+                    AllLeadersDict[cardEditName].Bonus = "eletero";
 
+                }
+                else
+                {
+                    AllLeadersDict[cardEditName].Bonus = "sebzes";
+                }
             }
-            else
-            {
-                AllLeadersDict[cardEditName].Bonus = "sebzes";
-            }
+           
         }
 
 

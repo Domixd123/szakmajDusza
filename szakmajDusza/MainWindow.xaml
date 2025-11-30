@@ -189,7 +189,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Visible">
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
                 <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
@@ -204,7 +204,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                         </TransformGroup>
                     </CheckBox.RenderTransform>
                 </CheckBox>
-                <StackPanel x:Name="BasicCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
+                <StackPanel x:Name="BasicCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455" d:IsHidden="True">
 
                     <Label Content="Név:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
                     <TextBox x:Name="KartyaSzerkesztoCardName" Visibility="Visible" Width="120" LostFocus="KartyaSzerkeszto_TextChange" KeyDown="KartyaSzerkeszto_TextChange" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top"/>
@@ -247,7 +247,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </CheckBox>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="421*"/>
                     <RowDefinition Height="119*"/>

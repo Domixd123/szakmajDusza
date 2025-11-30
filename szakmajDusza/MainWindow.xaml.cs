@@ -1260,8 +1260,8 @@ namespace szakmajDusza
 
 		private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
 		{
-			LoadData($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
-
+			LoadSave($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
+			//loaddata was here
 			GoToGrid(PakliOssze_Grid);
 		}
 
@@ -1275,8 +1275,8 @@ namespace szakmajDusza
 			{
 				return;
 			}
-			LoadData($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
-
+			LoadSave($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
+			//loaddata was here
 			GoToGrid(KornyezetSzerkeszto_Grid);
 			KornyezetekMester_List.SelectedItem = null;
 		}
@@ -1579,8 +1579,8 @@ namespace szakmajDusza
 		private void ConfirmDif_Button_Click(object sender, RoutedEventArgs e)
 		{
 			string fileName = KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[0][..^1];
-			LoadData($"kornyezet/{fileName}.txt");
-
+			LoadSave($"kornyezet/{fileName}.txt");
+			//loaddata was here
 			Difficulty = int.Parse((string)Dif_Label.Content);
 			KornyezetekJatekos_List.SelectedItem = null;
 			GoToGrid(PakliOssze_Grid);

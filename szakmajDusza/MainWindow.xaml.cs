@@ -91,6 +91,7 @@ namespace szakmajDusza
 			KartyaSzerkeszto_Grid.Visibility = Visibility.Collapsed;
 			Shop_Grid.Visibility = Visibility.Collapsed;
 			KazamataSzerkeszto_Grid.Visibility = Visibility.Collapsed;
+			AddAbility_grid.Visibility = Visibility.Collapsed;
 
 			//elozoGrid.Push(Menu_Grid);
 
@@ -123,9 +124,46 @@ namespace szakmajDusza
 		}
 
 
-		private void RightClick(object sender, Card s)
+		private void RightClick(object sender, Card c)
 		{
-			
+            SelectedCardForAbility.Children.Clear();
+            Ability_Wrap.Children.Clear();
+            GoToGrid(AddAbility_grid);
+			SelectedCardForAbility.Children.Add(c.GetCopy().GetVisual());
+			foreach (var item in Item.Items.Values)
+			{
+				if (item.OwnedCount > 0)
+				{
+					Item i = item.GetCopy();
+					i.Clicked += (s, e) => AddAbility(i, c);
+					Ability_Wrap.Children.Add(i.GetVisual(false));
+				}
+			}
+		}
+
+		private void AddAbility(Item item, Card c)
+		{
+			c.Items.Add(item);
+			c.UpdateAllVisual();
+			SelectedCardForAbility.Children.Clear();
+			Ability_Wrap.Children.Clear();
+			Back(null, null);
+
+			PlayerCards_Wrap.Children.Clear();
+			Cards_Wrap.Children.Clear();
+
+			foreach (var a in Gyujtemeny)
+			{
+				if (!Jatekos.Contains(a))
+				{
+                    Cards_Wrap.Children.Add(a.GetVisual());
+                }
+				
+			}
+			foreach (var a in Jatekos)
+			{
+				PlayerCards_Wrap.Children.Add(a.GetVisual());
+			}
 		}
 		public void DisableNagyKazamata()
 		{
@@ -1579,6 +1617,7 @@ namespace szakmajDusza
 				g.Visibility = Visibility.Collapsed;
 
 			vissza.Visibility = Visibility.Visible;
+			
 
 			// --- SPECIÁLIS LOGIKA ---
 
@@ -2082,6 +2121,8 @@ namespace szakmajDusza
 
 		private void VezerCheck_Unchecked(object sender, RoutedEventArgs e)
 		{
+			if (!internalEdits)
+			{
 			SelectedCard_Wrap.Children.Clear();
 			AllLeadersDict.Remove(cardEditName);
 			BasicCardPanel.Visibility = Visibility.Visible;
@@ -2138,6 +2179,8 @@ namespace szakmajDusza
 			AllCardsDict.Add(cardName, k);
 			internalEdits = false;
 			UpdateKartyaSelectionCard(null, null);
+			}
+			
 		}
 
 		private void VezerAlapKartya_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -173,6 +173,22 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
 
             </Grid>
+
+            <Grid Name="AddAbility_grid" Visibility="Visible">
+                <StackPanel>
+                    <StackPanel>
+                        <WrapPanel Name="SelectedCardForAbility" Height="500" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            
+                        </WrapPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <WrapPanel Height="400" Name="Ability_Wrap"></WrapPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button Click="Back" Width="600" Height="150" Content="Vissza" FontSize="50"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
             <Grid x:Name="KartyaSzerkeszto_Grid" Visibility="Collapsed">
                 <WrapPanel Visibility="Visible" x:Name="SelectedCard_Wrap" Margin="485,201,1146,417"/>
                 <Button Click="BackToKornyezetSzerkeszto_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>

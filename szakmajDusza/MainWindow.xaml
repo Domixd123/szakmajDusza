@@ -8,18 +8,18 @@
         Title="Damareen" Height="1080" Width="1920" WindowState="Maximized" FontSize="30">
     <Viewbox Stretch="Fill" StretchDirection="Both">
         <Grid Height="1080" Width="1920" x:Name="idk">
-			<Grid x:Name="Save_Grid" Visibility="Collapsed" Width="1910" Height="1070" Margin="5,5,5,5" d:IsHidden="True">
-				<Label Content="Mentési név:" FontSize="64" Margin="612,338,612,632"/>
-				
-			    <TextBox Margin="612,497,612,498" x:Name="FileName_TextBox"></TextBox>
-				<Label  Content="Ez a név már foglalt!" Foreground="Red" x:Name="UsedFileNameError_Label" FontSize="45" Margin="746,803,746,169" Visibility="Collapsed"/>
-				<Button
+            <Grid x:Name="Save_Grid" Visibility="Collapsed" Width="1910" Height="1070" Margin="5,5,5,5" d:IsHidden="True">
+                <Label Content="Mentési név:" FontSize="64" Margin="612,338,612,632"/>
+
+                <TextBox Margin="612,497,612,498" x:Name="FileName_TextBox"></TextBox>
+                <Label  Content="Ez a név már foglalt!" Foreground="Red" x:Name="UsedFileNameError_Label" FontSize="45" Margin="746,803,746,169" Visibility="Collapsed"/>
+                <Button
 Content="Mentés"
 Height="110"
 Margin="780,688,780,272"
 FontSize="26" Click="Save_World_Button_Click" Width="350"/>
-			</Grid>
-			<Grid x:Name="Shop_Grid" Visibility="Collapsed"
+            </Grid>
+            <Grid x:Name="Shop_Grid" Visibility="Collapsed"
       Width="1910" Height="1070" Margin="5,5,5,5" d:IsHidden="True">
 
                 <Grid.RowDefinitions>
@@ -178,7 +178,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <StackPanel>
                     <StackPanel>
                         <WrapPanel Name="SelectedCardForAbility" Height="500" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            
+
                         </WrapPanel>
                     </StackPanel>
                     <StackPanel>
@@ -247,7 +247,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </CheckBox>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="421*"/>
                     <RowDefinition Height="119*"/>
@@ -264,7 +264,8 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </Grid>
                 </ScrollViewer>
 
-                <Button x:Name="CreateNewCard_Button" Visibility="Collapsed" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,676,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="CreateNewCard_Button_Click"/>
+                <Button x:Name="CreateNewCard_Button" Visibility="Visible" Content="Új Kártya" HorizontalAlignment="Left" Margin="1480,676,0,0" VerticalAlignment="Top" Height="139" Width="300" FontSize="60" Click="CreateNewCard_Button_Click"/>
+                <Button x:Name="CreateNewKazamata_Button" Visibility="Visible" Content="Új Kazamata" HorizontalAlignment="Left" Margin="1408,676,0,0" VerticalAlignment="Top" Height="139" Width="372" FontSize="60" Click="CreateNewKazamata_Button_Click"/>
             </Grid>
 
             <Grid x:Name="ChooseKornyezet_Grid" Visibility="Visible" d:IsHidden="True">
@@ -280,18 +281,18 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                             <Button Name="DifPlus_Button" Content="+" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="20" Click="DifPlus_Button_Click"></Button>
                             <Button Name="DifMinus_Button" IsEnabled="false" Content="-" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="20" Click="DifMinus_Button_Click"></Button>
                         </StackPanel>
-                        
+
                     </StackPanel>
                     <StackPanel>
                         <Button Name="ConfirmDif_Button" HorizontalAlignment="Center" Content="Megerősítés" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400" Click="ConfirmDif_Button_Click"/>
                     </StackPanel>
                 </StackPanel>
-                
+
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="755,0,0,61" VerticalAlignment="Bottom" FontSize="60" Height="100" Width="400"/>
-                
+
             </Grid>
 
-            
+
 
             <Grid x:Name="Options_Grid" Visibility="Collapsed" d:IsHidden="True">
 
@@ -389,8 +390,8 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button Content="Mentés" x:Name="mentes" HorizontalAlignment="Left" Margin="1464,600,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="SaveProgress_Click"/>
 
             </Grid>
-            <Grid x:Name="KazamataSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
-                <Button Click="BackToKornyezetSzerkesztoKazamata_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
+            <Grid x:Name="KazamataSzerkeszto_Grid" Visibility="Visible">
+                <Button x:Name="KazMent" Click="BackToKornyezetSzerkesztoKazamata_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteCard_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Margin="0,60,748,751" Height="300">
                     <WrapPanel x:Name="MindenKartya_ListKazamata" Visibility="Visible"/>
@@ -407,9 +408,10 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Label x:Name="KazamataKartya" Content="0/0" HorizontalAlignment="Left" Height="53" Margin="246,392,0,0" VerticalAlignment="Top" Width="248"/>
                 <TextBox x:Name="KazamataName" HorizontalAlignment="Left" Height="47" Margin="1469,60,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="239" LostFocus="KazamataName_LostFocus" KeyDown="KazamataName_KeyDown"/>
                 <ComboBox x:Name="KazamataJutalom" HorizontalAlignment="Left" Height="52" Margin="1469,169,0,0" VerticalAlignment="Top" Width="239" SelectionChanged="KazamataJutalom_SelectionChanged"/>
+                <Button Click="Urmom" Content="Törlés" HorizontalAlignment="Left" Margin="1233,699,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
             </Grid>
 
-            
+
 
 
 

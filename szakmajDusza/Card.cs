@@ -301,7 +301,9 @@ namespace szakmajDusza
 				Margin = new Thickness(0, 0, 25, 50),
 				IsHitTestVisible = false,
 				HorizontalContentAlignment = HorizontalAlignment.Right,
-				FontWeight = FontWeights.Bold
+				FontWeight = FontWeights.Bold,
+				Visibility = Visibility.Hidden
+
 			};
 			visualGroup.Children.Add(ImportantLabel);
 			ImportantLabel2 = new Label
@@ -314,8 +316,10 @@ namespace szakmajDusza
 				Margin = new Thickness(25, 0, 0, 50),
 				IsHitTestVisible = false,
 				HorizontalContentAlignment = HorizontalAlignment.Left,
-				FontWeight = FontWeights.Bold
-			};
+				FontWeight = FontWeights.Bold,
+                Visibility = Visibility.Hidden
+
+            };
 			visualGroup.Children.Add(ImportantLabel2);
 
 

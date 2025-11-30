@@ -1888,7 +1888,8 @@ namespace szakmajDusza
 
 		private void GoToShop_Button_Click(object sender, RoutedEventArgs e)
 		{
-			All_Vezer_Obtained.Visibility = Visibility.Collapsed;
+           
+            All_Vezer_Obtained.Visibility = Visibility.Collapsed;
 			CardMerge_Wrap.Children.Clear();
 			Shop_Merging_Cards.Children.Clear();
 			GoToGrid(Shop_Grid);
@@ -1935,7 +1936,13 @@ namespace szakmajDusza
 					break;
 				}
 			}
-			if (isShopEmpty) Item.RefreshShop(true);
+			if (isShopEmpty)
+			{
+				Item.RefreshShop(true);
+                
+
+            }
+			
 
 			ShopRerollPrice_Label.Content = $"Ár: {Item.shopRefreshPrice}";
 			if (Item.shopRefreshPrice > Item.GoldOwned)
@@ -1949,7 +1956,8 @@ namespace szakmajDusza
 			}
 			UpdateGoldOwnedLabel();
 			UpdateShopWrapChildren();
-		}
+            
+        }
 		public void UpdateShopWrapChildren()
 		{
 			Shop_Wrap.Children.Clear();
@@ -1962,9 +1970,10 @@ namespace szakmajDusza
 					item.Clicked += BuyItem;
 					if (item.Price > Item.GoldOwned)
 					{
-						item.Disabled = true;
-					}
-					item.UpdateAllVisual();
+                        item.Clicked -= BuyItem;
+
+                    }
+                    item.UpdateAllVisual();
 					Shop_Wrap.Children.Add(item.GetVisual(true));
 					isAnythingBuyable = true;
 				}
@@ -1988,7 +1997,8 @@ namespace szakmajDusza
 		{
 			Shop_Wrap.Children.Clear();
 			Item.RefreshShop(false);
-			foreach (var item in Item.Items.Values)
+            
+            foreach (var item in Item.Items.Values)
 			{
 				if (item.InRotation)
 				{

@@ -627,7 +627,74 @@ namespace szakmajDusza
 
 		}
 
-		public async Task UpdateVisualDamage(int dmg)
+        public async Task ReviveAnim(int amount) 
+        {
+            ImportantLabel2.Visibility = Visibility.Visible;
+			ImportantLabel.Visibility = Visibility.Visible;
+            Panel.SetZIndex(ImportantLabel2, -1);
+            Panel.SetZIndex(ImportantLabel, -1);
+            ImportantLabel.FontWeight = FontWeights.Bold;
+            ImportantLabel.Foreground = Brushes.White;
+            ImportantLabel2.FontWeight = FontWeights.Bold;
+            ImportantLabel2.Foreground = Brushes.Green;
+            ImportantLabel2.Content = $"+{amount}";
+            ImportantLabel.Content = $"Újraéledve";
+
+            var anim = new ThicknessAnimation
+            {
+                From = new Thickness(25 - 5.5 * ImportantLabel2.Content.ToString().Length, 0, 0, 70),
+                To = new Thickness(25 - 5.5 * ImportantLabel2.Content.ToString().Length, 0, 0, 5),
+                Duration = TimeSpan.FromSeconds(0.6f),
+                FillBehavior = FillBehavior.Stop
+            };
+            var anim2 = new ThicknessAnimation
+            {
+                From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel2.Content.ToString().Length, 5),
+                To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel2.Content.ToString().Length, 70),
+                Duration = TimeSpan.FromSeconds(0.6f),
+                FillBehavior = FillBehavior.Stop
+            };
+            anim.Completed += (s, e) =>
+            {
+                // hide once it’s slid away
+                ImportantLabel2.Visibility = Visibility.Hidden;
+            };
+            anim2.Completed += (s, e) =>
+            {
+                // hide once it’s slid away
+                ImportantLabel.Visibility = Visibility.Hidden;
+            };
+
+            ImportantLabel2.BeginAnimation(Label.MarginProperty, anim);
+			ImportantLabel.BeginAnimation(Label.MarginProperty, anim2);
+
+        }
+        public async Task MagicAnim()
+        {
+            ImportantLabel.Visibility = Visibility.Visible;
+            Panel.SetZIndex(ImportantLabel, -1);
+            ImportantLabel.FontWeight = FontWeights.Bold;
+            ImportantLabel.Foreground = Brushes.White;
+            ImportantLabel.Content = $"Befagyasztva";
+
+            var anim = new ThicknessAnimation
+            {
+                From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 130),
+                To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 65),
+                Duration = TimeSpan.FromSeconds(0.6f),
+                FillBehavior = FillBehavior.Stop
+            };
+            anim.Completed += (s, e) =>
+            {
+                // hide once it’s slid away
+                ImportantLabel.Visibility = Visibility.Hidden;
+            };
+            ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+        }
+
+
+
+        public async Task UpdateVisualDamage(int dmg)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);

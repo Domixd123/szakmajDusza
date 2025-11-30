@@ -47,6 +47,7 @@ namespace szakmajDusza
 						{
 							damage = 0;
 							reductionType = "dodge";
+							damageType = "";
 							//dodge animation
 							break;
 						}
@@ -88,17 +89,16 @@ namespace szakmajDusza
 		}
 		public static async void AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
+			string damagetype2 = damageType;
 			if (damageType == "normal")
 			{
 				if (reductionType == "")
 				{
 					await card.UpdateVisualDamage(damageParam);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.NormalShieldAnim(damageParam, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "strength")
@@ -106,12 +106,10 @@ namespace szakmajDusza
 				if (reductionType == "")
 				{
 					await card.StrengthAnim(damageParam);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.StrengthShieldAnim(damageParam, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "crit")
@@ -119,12 +117,10 @@ namespace szakmajDusza
 				if (reductionType == "")
 				{
 					await card.CritAnim(damageParam, bonusParam1);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.CritShieldAnim(damageParam, bonusParam1, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "")
@@ -132,29 +128,25 @@ namespace szakmajDusza
 				if (reductionType == "dodge")
 				{
 					await card.DodgeAnim();
-					return;
 				}
 				else if (reductionType == "heal")
 				{
 					await card.HealAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "heal")
 				{
 					await card.HealAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "revive")
 				{
 					await card.ReviveAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "magic")
 				{
 					await card.MagicAnim();
-					return;
 				}
 			}
+			card.HideAllLabels();
 		}
 		public static void calculateDamage(Card attacker, Card defender, bool attackerIsPlayer, int difficulty)
 		{
@@ -383,9 +375,14 @@ namespace szakmajDusza
 				else if (kaz != null)
 				{
 					//kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)), difficulty);
+					int beforeHPKaz = kaz.HP;
+					int beforeHPPlay = play.HP;
 					calculateDamage(play,kaz,true,difficulty);
+					int afterHPKaz = kaz.HP;
+					int afterHPPlay = play.HP;
 					//await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -442,7 +439,11 @@ namespace szakmajDusza
 				}
 				else if (play != null)
 				{
+					int beforeHPKaz = kaz.HP;
+					int beforeHPPlay=play.HP;
 					calculateDamage(kaz, play, false, difficulty);
+					int afterHPKaz = kaz.HP;
+					int afterHPPlay = play.HP;
 					//play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty);
 					//await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));

@@ -470,7 +470,8 @@ namespace szakmajDusza
 
 			};
 			But.Click += (sender, e) => Clicked?.Invoke(this, this);
-			if (Disabled)
+            But.MouseRightButtonUp += (sender, e) => RightClicked?.Invoke(this, this);
+            if (Disabled)
 			{
 				visualGroup.Background = new LinearGradientBrush(Color.FromRgb(10, 5, 15), Color.FromRgb(30, 20, 40), 90);
 			}

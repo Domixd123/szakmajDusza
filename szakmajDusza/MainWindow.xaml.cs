@@ -191,21 +191,77 @@ namespace szakmajDusza
 					if (data[1] == "egyszeru")
 					{
 						List<Card> defender = new List<Card>();
-						defender.Add(AllCardsDict[data[3].Split(':')[0]].GetCopy());
+						Card card = AllCardsDict[data[3].Split(':')[0]].GetCopy(true);
+						defender.Add(card);
 						string[] itemNames = data[3].Split(':')[1].Split(',');
-						for (int i = 0; i < itemNames.Length; i++)
+						if (itemNames.Length != 1 || itemNames[0] != "")
 						{
-							//defender[0].Items.Add(Item.Items[]);
+							for (int i = 0; i < itemNames.Length; i++)
+							{
+								Item item = Item.Items[itemNames[i].Split('-')[0]].GetCopy();
+								int level = int.Parse(itemNames[i].Split('-')[1]);
+								item.Level = level;
+								defender[0].Items.Add(item);
+							}
 						}
 						Kazamata kazamata = new Kazamata(data[2], "egyszeru", data[4],defender);
+						AllKazamataDict.Add(data[2],kazamata);
 					}
 					else if (data[1] == "kis")
 					{
-						
+						List<Card>defenders=new List<Card>();
+						for (int i = 3; i < data.Length-1; i++)
+						{
+							string cardName = data[i].Split(':')[0];
+							string[] cardItems= data[i].Split(":")[1].Split(',');
+							if (AllCardsDict.ContainsKey(cardName))
+							{
+								defenders.Add(AllCardsDict[cardName].GetCopy(true));
+							}
+							else
+							{
+								defenders.Add(AllLeadersDict[cardName].GetCopy(true));
+							}
+							if (cardItems.Length == 1 && cardItems[0] == "") continue;
+							for (int j = 0; j < cardItems.Length; j++)
+							{
+								string itemName = cardItems[j].Split('-')[0];
+								int itemLevel = int.Parse(cardItems[j].Split('-')[1]);
+								Item item = Item.Items[itemName];
+								item.Level = itemLevel;
+								defenders[defenders.Count - 1].Items.Add(item);
+							}
+						}
+						Kazamata kazamata = new Kazamata(data[2], "kis", data[data.Length-1], defenders);
+						AllKazamataDict.Add(data[2], kazamata);
 					}
 					else if (data[1] == "nagy")
 					{
-						
+						List<Card> defenders = new List<Card>();
+						for (int i = 3; i < data.Length; i++)
+						{
+							string cardName = data[i].Split(':')[0];
+							string[] cardItems = data[i].Split(":")[1].Split(',');
+							if (AllCardsDict.ContainsKey(cardName))
+							{
+								defenders.Add(AllCardsDict[cardName].GetCopy(true));
+							}
+							else
+							{
+								defenders.Add(AllLeadersDict[cardName].GetCopy(true));
+							}
+							if (cardItems.Length == 1 && cardItems[0] == "") continue;
+							for (int j = 0; j < cardItems.Length; j++)
+							{
+								string itemName = cardItems[j].Split('-')[0];
+								int itemLevel = int.Parse(cardItems[j].Split('-')[1]);
+								Item item = Item.Items[itemName];
+								item.Level = itemLevel;
+								defenders[defenders.Count - 1].Items.Add(item);
+							}
+						}
+						Kazamata kazamata = new Kazamata(data[2], "nagy", "", defenders);
+						AllKazamataDict.Add(data[2], kazamata);
 					}
 
 

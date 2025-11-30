@@ -77,6 +77,7 @@ namespace szakmajDusza
 		{
 			GoldOwned -= Price;
 			OwnedCount++;
+			TryLevelUp();
 			InRotation = false;
 			//UpdateAllVisual();
 			bool isShopEmpty = true;

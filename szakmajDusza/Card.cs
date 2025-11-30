@@ -475,14 +475,14 @@ namespace szakmajDusza
 			return visualGroup;
 		}
 
-		public bool Equals(Card? obj)
+		/*public bool Equals(Card? obj)
 		{
 			if (obj.Name == this.Name && obj.Damage == this.Damage && obj.HP == this.HP && obj.Tipus == this.Tipus)
 			{
 				return true;
 			}
 			return false;
-		}
+		}*/
 
 
 		public void SetPosition(double x, double y)
@@ -516,16 +516,17 @@ namespace szakmajDusza
 			};
 			return Tipus;
 		}
-		public Card GetCopy()
+		public Card GetCopy(bool kazamataCard=false)
 		{
-			return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer,OriginName,Items);
+			if (kazamataCard) return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer, OriginName, Items.Select(x => x.GetCopy()).ToList());
+			else return new Card(Name, Damage, HP, TipusToString(Tipus), Vezer,OriginName,Items);
 		}
-		public static List<Card> GetListCopy(List<Card> cards)
+		public static List<Card> GetListCopy(List<Card> cards,bool kazamataCard)
 		{
 			List<Card> cardsCopy = new List<Card>();
 			for (int i = 0; i < cards.Count; i++)
 			{
-				cardsCopy.Add(cards[i].GetCopy());
+				cardsCopy.Add(cards[i].GetCopy(kazamataCard));
 			}
 			return cardsCopy;
 		}

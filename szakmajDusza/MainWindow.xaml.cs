@@ -483,7 +483,7 @@ namespace szakmajDusza
 				{
 					if (data[1] == "egyszeru")
 					{
-						AllKazamataDict.Add(data[2], new Kazamata(data[2], data[1], data[4], new List<Card>() { AllCardsDict[data[3]] }));
+						AllKazamataDict.Add(data[2], new Kazamata(data[2], data[1], data[4], new List<Card>() { AllCardsDict[data[3]].GetCopy(true) }));
 					}
 					else if (data[1] == "kis")
 					{
@@ -491,7 +491,7 @@ namespace szakmajDusza
 						string[] def = data[3].Split(",");
 						for (int i = 0; i < def.Length; i++)
 						{
-							defenders.Add(AllCardsDict[def[i]]);
+							defenders.Add(AllCardsDict[def[i]].GetCopy(true));
 						}
 						defenders.Add(AllLeadersDict[data[4]]);
 						AllKazamataDict.Add(data[2], new Kazamata(data[2], data[1], data[5], defenders));
@@ -502,7 +502,7 @@ namespace szakmajDusza
 						string[] def = data[3].Split(",");
 						for (int i = 0; i < def.Length; i++)
 						{
-							defenders.Add(AllCardsDict[def[i]]);
+							defenders.Add(AllCardsDict[def[i]].GetCopy(true));
 						}
 						defenders.Add(AllLeadersDict[data[4]]);
 						AllKazamataDict.Add(data[2], new Kazamata(data[2], data[1], "newcard", defenders));

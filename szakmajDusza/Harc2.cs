@@ -184,6 +184,7 @@ namespace szakmajDusza
 					DamageReductions(attacker, defender, damage, "normal");
 					AnimationManager(attacker, "", "heal", 0, damage);
 					attacker.HP += damage;
+					attacker.UpdateAllVisual();
 					//lifestealLevel += item.Level;
 				}
 				else if (item.Name == "Erő")
@@ -260,6 +261,7 @@ namespace szakmajDusza
 					int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable*0.01, 0);
 					AnimationManager(attacker,"normal","",damage);
 					attacker.HP -= damage;
+					attacker.UpdateAllVisual();
 					/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
 
 					//thorns animation
@@ -299,6 +301,7 @@ namespace szakmajDusza
 						}
 						AnimationManager(defender,"","revive",0,maxHP);
 						defender.HP= maxHP;
+						defender.UpdateAllVisual();
 						//respawn animation
 						return;
 					}

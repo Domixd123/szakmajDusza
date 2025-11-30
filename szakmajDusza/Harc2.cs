@@ -519,6 +519,11 @@ namespace szakmajDusza
 						pakli[index].Damage += 1;
 						pakli[index].UpdateVisual();
 						break;
+					case KazamataReward.arany:
+                        l.Content = $"Nyertél!";
+                        l2.Content = $"3arany";
+						Item.GoldOwned += 3;
+                        break;
 					case KazamataReward.newcard:
 						foreach (var item in MainWindow.AllCardsDict.Values)
 						{

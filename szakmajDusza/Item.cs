@@ -63,7 +63,7 @@ namespace szakmajDusza
 			shopRefreshPrice = 2;
 			Items = new Dictionary<string, Item>()
 		{
-			//DoItDOminik
+			//DoItDOminik		
 			{ "Életerőlopás",new Item("Életerőlopás","Szint*# életerőt elvesz ellenfelétől és magát gyógyítja ugyanennyivel",true,5,5,"lifesteal.png",1)},
 			{"Gyógyítás", new Item("Gyógyítás","(Szint*#) életerővel gyógyítja magát minden kör végén",true,5,5,"healing.png",2) },
 			{"Erő", new Item("Erő","(Szint*#)-vel erősebben üt",true,5,5,"strength.png",2) },

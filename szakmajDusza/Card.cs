@@ -524,13 +524,13 @@ namespace szakmajDusza
 			DamageLabel.Content = Damage;
 			HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
 		}
-		public async Task StrengthAnim(int dmg, int bonus)
+		public async Task StrengthAnim(int dmg)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.ExtraBold;
 			ImportantLabel.Foreground = Brushes.OrangeRed;
-			ImportantLabel.Content = $"-{dmg}+{bonus}";
+			ImportantLabel.Content = $"-{dmg}";
 
 			var anim = new ThicknessAnimation
 			{
@@ -547,13 +547,13 @@ namespace szakmajDusza
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
-		public async Task CritAnim(int dmg, int baseMult, int mult)
+		public async Task CritAnim(int dmg, int mult)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.DarkRed;
-			ImportantLabel.Content = $"-{dmg}×{baseMult * mult}";
+			ImportantLabel.Content = $"-{dmg}×{mult}";
 
 			var anim = new ThicknessAnimation
 			{
@@ -569,13 +569,13 @@ namespace szakmajDusza
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
-		public async Task StrengthShieldAnim(int dmg, int bonus, int blocked)
+		public async Task StrengthShieldAnim(int dmg, int blocked)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.ExtraBold;
 			ImportantLabel.Foreground = Brushes.DimGray;
-			ImportantLabel.Content = $"-({dmg + bonus}-{blocked})";
+			ImportantLabel.Content = $"-({dmg}-{blocked})";
 
 			var anim = new ThicknessAnimation
 			{
@@ -592,13 +592,13 @@ namespace szakmajDusza
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
-		public async Task CritShieldAnim(int dmg, int baseMult, int mult, int blocked)
+		public async Task CritShieldAnim(int dmg, int mult, int blocked)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.Gray;
-			ImportantLabel.Content = $"-({dmg}×{baseMult * mult}-{blocked})";
+			ImportantLabel.Content = $"-({dmg}×{mult}-{blocked})";
 
 			var anim = new ThicknessAnimation
 			{
@@ -726,7 +726,34 @@ namespace szakmajDusza
         }
 
 
+		public async Task NormalShieldAnim(int dmg,int blocked)
+		{
+			ImportantLabel.Visibility = Visibility.Visible;
+			Panel.SetZIndex(ImportantLabel, -1);
+			ImportantLabel.FontWeight = FontWeights.ExtraBold;
+			ImportantLabel.Foreground = Brushes.DimGray;
+			ImportantLabel.Content = $"-({dmg}-{blocked})";
 
+			var anim = new ThicknessAnimation
+			{
+				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
+				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
+				Duration = TimeSpan.FromSeconds(0.4f),
+				FillBehavior = FillBehavior.Stop
+			};
+			anim.Completed += (s, e) =>
+			{
+				// hide once it’s slid away
+				ImportantLabel.Visibility = Visibility.Hidden;
+				HPLabel.Content = HP;
+			};
+
+			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			if (HP + dmg <= 0)
+			{
+				previousHP = 0;
+			}
+		}
         public async Task UpdateVisualDamage(int dmg)
 		{
 			ImportantLabel.Visibility = Visibility.Visible;

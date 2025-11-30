@@ -126,6 +126,7 @@ namespace szakmajDusza
 
 		private void RightClick(object sender, Card c)
 		{
+			lastCard = c;
             SelectedCardForAbility.Children.Clear();
             Ability_Wrap.Children.Clear();
             GoToGrid(AddAbility_grid);
@@ -136,14 +137,15 @@ namespace szakmajDusza
 				{
 					Item i = item;
 
-                    i.Clicked += (s, e) => AddAbility(i, c);
+                    i.Clicked += AddAbility;
 					Ability_Wrap.Children.Add(i.GetVisual(false));
 				}
 			}
 		}
-
-		private void AddAbility(Item item, Card c)
+		Card lastCard;
+		private void AddAbility(object sender, Item item)
 		{
+			Card c = lastCard;
 			if (c.Vezer && c.Items.Count <= 1)
 			{
                 c.Items.Add(item);
@@ -161,8 +163,9 @@ namespace szakmajDusza
 				c.Items.Remove(item);
 				c.UpdateAllVisual();
 			}
+            item.Clicked -= AddAbility;
 
-				SelectedCardForAbility.Children.Clear();
+            SelectedCardForAbility.Children.Clear();
 			Ability_Wrap.Children.Clear();
 
             Back(null, null);

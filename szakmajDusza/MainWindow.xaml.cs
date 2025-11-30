@@ -1461,8 +1461,9 @@ namespace szakmajDusza
 				return;
 			}
 			LoadSave($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
-			//loaddata was here
-			GoToGrid(KornyezetSzerkeszto_Grid);
+			Save.fileName = KornyezetekMester_List.SelectedItem.ToString()+".txt";
+            //loaddata was here
+            GoToGrid(KornyezetSzerkeszto_Grid);
 			KornyezetekMester_List.SelectedItem = null;
 		}
 
@@ -1512,7 +1513,11 @@ namespace szakmajDusza
 
 			foreach (var item in AllLeadersDict.Values)
 			{
-
+				if (item.OriginName==cardEditName)
+				{
+                    MessageBox.Show("A kártya törlése előtt töröld az összes vezért ami belőle következik!");
+                    return;
+                }
 			}
 
 			foreach (var item in AllKazamataDict.Values)
@@ -1531,6 +1536,7 @@ namespace szakmajDusza
 			AllCardsDict.Remove(cardName);
 			AllLeadersDict.Remove(cardName);
 			MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+			ListKartya_Button_Click(null,null);
 			Back(sender, e);
 		}
 		private void BackToKornyezetSzerkeszto_Click(object sender, RoutedEventArgs e)
@@ -2965,9 +2971,20 @@ namespace szakmajDusza
 			EditKazamata(MindenKazamata_List.Children[MindenKazamata_List.Children.Count-1],null);
         }
 
-        private void Urmom(object sender, RoutedEventArgs e)
-        {
 
+        private void KornyezetMentes_Button_Click(object sender, RoutedEventArgs e)
+        {
+			
+			Save.Kornyezetrogress();
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string kazName = kazamataEditNmae;
+			AllCardsDict.Remove(kazName);
+            MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            Kazamata_Button_Click(null, null);
+            Back(sender, e);
         }
 
 

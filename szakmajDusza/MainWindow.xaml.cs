@@ -1859,7 +1859,17 @@ namespace szakmajDusza
 				sp.Play();
 			}
 
+			if (kovetkezo==Shop_Grid)
+			{
+                foreach (var item in Item.Items.Values)
+                {
 
+                    Item i = item;
+                    i.Clicked -= AddAbility;
+
+
+                }
+            }
 
 			if (kovetkezo == MainRoom_Grid)
 			{

@@ -332,7 +332,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
 
 
 
-            <Grid x:Name="PakliOssze_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="PakliOssze_Grid" Visibility="Visible">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="721*"/>
@@ -365,6 +365,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button Click="GoToOptions_Button_Click" Content="Beállítások" HorizontalAlignment="Left" Height="77" Margin="1641,0,0,0" VerticalAlignment="Top" Width="279" FontSize="30"/>
                 <Button x:Name="Shop" Content="Bolt" HorizontalAlignment="Left" Margin="1595,713,0,0" VerticalAlignment="Top" Width="315" Height="85" Click="GoToShop_Button_Click" Grid.RowSpan="2"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1595,264,0,0" VerticalAlignment="Top" Width="315" Height="85" Grid.Row="1"/>
+                <Button Content="Mentés" x:Name="mentes_Copy" HorizontalAlignment="Left" Margin="1600,578,0,0" VerticalAlignment="Top" Height="110" Width="306" Click="SaveProgress_Click"/>
 
             </Grid>
             <Grid x:Name="MainRoom_Grid" Visibility="Visible" d:IsHidden="True">
@@ -390,7 +391,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <Button Content="Mentés" x:Name="mentes" HorizontalAlignment="Left" Margin="1464,600,0,0" VerticalAlignment="Top" Height="109" Width="306" Click="SaveProgress_Click"/>
 
             </Grid>
-            <Grid x:Name="KazamataSzerkeszto_Grid" Visibility="Visible">
+            <Grid x:Name="KazamataSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
                 <Button x:Name="KazMent" Click="BackToKornyezetSzerkesztoKazamata_Click" Content="Mentés" HorizontalAlignment="Left" Margin="485,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <Button Click="DeleteButton_Click" Content="Törlés" HorizontalAlignment="Left" Margin="1233,845,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Margin="0,60,748,751" Height="300">

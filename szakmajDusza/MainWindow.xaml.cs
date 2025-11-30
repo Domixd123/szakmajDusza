@@ -73,8 +73,8 @@ namespace szakmajDusza
 		public static bool editor=false;
 		public static float spVolume = 0.25f;
 		public static float seVolume = 0.5f;
-		public static float spMult = 0f;
-		public static float seMult = 0f;
+		public static float spMult = 0.02f;
+		public static float seMult = 0.04f;
 		public MainWindow()
 		{
 			InitializeComponent();

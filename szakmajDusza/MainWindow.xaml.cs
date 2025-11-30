@@ -373,7 +373,7 @@ namespace szakmajDusza
 					Item.Items[data[1]].Level = int.Parse(data[5]);
 					Item.Items[data[1]].OwnedCount = int.Parse(data[6]);
 					Item.Items[data[1]].BaseVariable = int.Parse(data[7]);
-					Item.Items[data[1]].Buyable = bool.Parse(data[8]);
+					Item.Items[data[1]].InRotation = bool.Parse(data[8]);
 				}
 				else if (data[0]=="jatekos kartya items")
 				{

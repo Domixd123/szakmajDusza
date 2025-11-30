@@ -47,6 +47,7 @@ namespace szakmajDusza
 						{
 							damage = 0;
 							reductionType = "dodge";
+							damageType = "";
 							//dodge animation
 							break;
 						}
@@ -88,17 +89,16 @@ namespace szakmajDusza
 		}
 		public static async void AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
+			string damagetype2 = damageType;
 			if (damageType == "normal")
 			{
 				if (reductionType == "")
 				{
 					await card.UpdateVisualDamage(damageParam);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.NormalShieldAnim(damageParam, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "strength")
@@ -106,12 +106,10 @@ namespace szakmajDusza
 				if (reductionType == "")
 				{
 					await card.StrengthAnim(damageParam);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.StrengthShieldAnim(damageParam, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "crit")
@@ -119,12 +117,10 @@ namespace szakmajDusza
 				if (reductionType == "")
 				{
 					await card.CritAnim(damageParam, bonusParam1);
-					return;
 				}
 				else if (reductionType == "shield")
 				{
 					await card.CritShieldAnim(damageParam, bonusParam1, reductionParam);
-					return;
 				}
 			}
 			else if (damageType == "")
@@ -132,29 +128,25 @@ namespace szakmajDusza
 				if (reductionType == "dodge")
 				{
 					await card.DodgeAnim();
-					return;
 				}
 				else if (reductionType == "heal")
 				{
 					await card.HealAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "heal")
 				{
 					await card.HealAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "revive")
 				{
 					await card.ReviveAnim(reductionParam);
-					return;
 				}
 				else if (reductionType == "magic")
 				{
 					await card.MagicAnim();
-					return;
 				}
 			}
+			card.HideAllLabels();
 		}
 		public static void calculateDamage(Card attacker, Card defender, bool attackerIsPlayer, int difficulty)
 		{

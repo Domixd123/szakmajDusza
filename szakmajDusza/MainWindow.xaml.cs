@@ -1,10 +1,14 @@
+using Microsoft.VisualBasic;
+using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace szakmajDusza
 {
@@ -65,7 +69,7 @@ namespace szakmajDusza
 
 		public static List<Card> Merging = new List<Card>();
 
-
+		public static bool editor=false;
 		public static float spVolume = 0.25f;
 		public static float seVolume = 0.5f;
 		public static float spMult = 0f;
@@ -77,6 +81,8 @@ namespace szakmajDusza
 			KazamataTipus.ItemsSource = new string[] { "egyszerű", "kis", "nagy" }; KazamataTipus.SelectedIndex = 0;
 			KazamataJutalom.ItemsSource = new string[] { "életerő", "sebzés" }; KazamataJutalom.SelectedIndex = 0;
 			internalEdits = false;
+			CreateNewCard_Button.Visibility=Visibility.Collapsed;
+			CreateNewKazamata_Button.Visibility = Visibility.Collapsed;
 
 			string iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "playing-card.ico");
 			this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
@@ -126,68 +132,212 @@ namespace szakmajDusza
 
 		private void RightClick(object sender, Card c)
 		{
-			lastCard = c;
-            SelectedCardForAbility.Children.Clear();
-            Ability_Wrap.Children.Clear();
-            GoToGrid(AddAbility_grid);
-			SelectedCardForAbility.Children.Add(c.GetCopy().GetVisual());
-			foreach (var item in Item.Items.Values)
+			if (!editor)
 			{
-				if (item.OwnedCount > 0)
-				{
-					Item i = item;
-                    i.Clicked -= AddAbility;
-
-                    i.Clicked += AddAbility;
-					Ability_Wrap.Children.Add(i.GetVisual(false));
-				}
-			}
-		}
-		Card lastCard;
-		private void AddAbility(object sender, Item item)
-		{
-			Card c = lastCard;
-			if (!c.Items.Contains(item))
-			{
-                if (c.Vezer && c.Items.Count <= 1)
+                lastCard = c;
+                SelectedCardForAbility.Children.Clear();
+                Ability_Wrap.Children.Clear();
+                GoToGrid(AddAbility_grid);
+                SelectedCardForAbility.Children.Add(c.GetCopy().GetVisual());
+                foreach (var item in Item.Items.Values)
                 {
-                    c.Items.Add(item);
-                    c.UpdateAllVisual();
-                }
+                    if (item.OwnedCount > 0)
+                    {
+                        Item i = item;
+                        i.Clicked -= AddAbility;
 
-                else if (!c.Vezer && c.Items.Count == 0)
-                {
-                    c.Items.Add(item);
-                    c.UpdateAllVisual();
+                        i.Clicked += AddAbility;
+                        Ability_Wrap.Children.Add(i.GetVisual(false));
+                    }
                 }
             }
 			else
 			{
-				c.Items.Remove(item);
-				c.UpdateAllVisual();
-			}
-            item.Clicked -= AddAbility;
+                lastCard = c;
+                SelectedCardForAbility.Children.Clear();
+                Ability_Wrap.Children.Clear();
+                GoToGrid(AddAbility_grid);
+                SelectedCardForAbility.Children.Add(c.GetCopy().GetVisual());
+                foreach (var item in Item.Items.Values)
+                {
+                    
+                        Item i = item;
+                        i.Clicked -= AddAbility;
 
-            SelectedCardForAbility.Children.Clear();
-			Ability_Wrap.Children.Clear();
-
-            Back(null, null);
-
-			PlayerCards_Wrap.Children.Clear();
-			Cards_Wrap.Children.Clear();
-
-			foreach (var a in Gyujtemeny)
-			{
-				if (!Jatekos.Contains(a))
-				{
-                    Cards_Wrap.Children.Add(a.GetVisual());
+                        i.Clicked += AddAbility;
+                        Ability_Wrap.Children.Add(i.GetVisual(false));
+                    
                 }
-				
-			}
-			foreach (var a in Jatekos)
+            }
+			
+		}
+		Card lastCard;
+		private void AddAbility(object sender, Item item)
+		{
+			
+
+			if (!editor)
 			{
-				PlayerCards_Wrap.Children.Add(a.GetVisual());
-			}
+                Card c = lastCard;
+                if (!c.Items.Contains(item))
+                {
+                    if (c.Vezer && c.Items.Count <= 1)
+                    {
+                        c.Items.Add(item);
+                        c.UpdateAllVisual();
+                    }
+
+                    else if (!c.Vezer && c.Items.Count == 0)
+                    {
+                        c.Items.Add(item);
+                        c.UpdateAllVisual();
+                    }
+                }
+                else
+                {
+                    c.Items.Remove(item);
+                    c.UpdateAllVisual();
+                }
+                item.Clicked -= AddAbility;
+
+                SelectedCardForAbility.Children.Clear();
+                Ability_Wrap.Children.Clear();
+
+                Back(null, null);
+                PlayerCards_Wrap.Children.Clear();
+                Cards_Wrap.Children.Clear();
+
+                foreach (var a in Gyujtemeny)
+                {
+                    if (!Jatekos.Contains(a))
+                    {
+                        Cards_Wrap.Children.Add(a.GetVisual());
+                    }
+
+                }
+                foreach (var a in Jatekos)
+                {
+                    PlayerCards_Wrap.Children.Add(a.GetVisual());
+                }
+            }
+			else
+			{
+                Card c = lastCard;
+                if (!c.Items.Contains(item))
+                {
+                    if (c.Vezer && c.Items.Count <= 1)
+                    {
+                        string e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
+                        while (!int.TryParse(e, out int number) && number >= 1 && number <= item.MaxLevel)
+                        {
+                            e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
+                        }
+						item.Level = int.Parse(e);
+
+                        c.Items.Add(item);
+                        c.UpdateAllVisual();
+                    }
+
+                    else if (!c.Vezer && c.Items.Count == 0)
+                    {
+                        string e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
+                        while (!int.TryParse(e, out int number) && number >= 1 && number <= item.MaxLevel)
+                        {
+                            e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
+                        }
+                        item.Level = int.Parse(e);
+
+                        c.Items.Add(item);
+                        c.UpdateAllVisual();
+                    }
+                }
+                else
+                {
+                    c.Items.Remove(item);
+                    c.UpdateAllVisual();
+                }
+                item.Clicked -= AddAbility;
+
+                SelectedCardForAbility.Children.Clear();
+                Ability_Wrap.Children.Clear();
+
+               
+                //popup for level
+                Back(null, null);
+
+                KazamataDeffenders_List.Children.Clear();
+				MindenKartya_ListKazamata.Children.Clear();
+				Kazamata k = AllKazamataDict[kazamataEditNmae];
+				foreach (Card ck in k.Defenders)
+				{
+					if (ck.Name==lastCard.Name)
+					{
+						ck.Items = lastCard.Items;
+					}
+				}
+                foreach (var item2 in AllCardsDict.Keys)
+                {
+                    if (k.GetDefenderNames().Contains(item2))
+                    {
+                        //Card c = AllCardsDict[item].GetCopy(true);
+                        foreach (Card ck in k.Defenders)
+                        {
+                            if (ck.Name == item2)
+                            {
+                                ck.RightClicked -= RightClick;
+                                ck.RightClicked += RightClick;
+                                ck.Clicked += RemoveFromKazamata;
+                                ck.UpdateAllVisual();
+
+                                KazamataDeffenders_List.Children.Add(ck.GetVisual());
+                                break;
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        Card ck = AllCardsDict[item2].GetCopy(true);
+                        c.RightClicked -= RightClick;
+                        //c.RightClicked += RightClick;
+
+                        ck.Clicked += AddToKazamata;
+                        MindenKartya_ListKazamata.Children.Add(ck.GetVisual());
+                    }
+                }
+                int vezerCount = 0;
+                foreach (var item2 in AllLeadersDict.Keys)
+                {
+                    if (k.GetDefenderNames().Contains(item2))
+                    {
+                        //Card c = AllLeadersDict[item].GetCopy(true);
+                        foreach (Card ck in k.Defenders)
+                        {
+                            if (ck.Name == item2)
+                            {
+                                ck.RightClicked -= RightClick;
+                                ck.RightClicked += RightClick;
+                                ck.Clicked += RemoveFromKazamata;
+                                ck.UpdateAllVisual();
+                                KazamataDeffenders_List.Children.Add(ck.GetVisual());
+								
+                                break;
+                            }
+                        }
+                        vezerCount++;
+                    }
+                    else
+                    {
+                        Card ck = AllLeadersDict[item2].GetCopy(true);
+                        ck.RightClicked -= RightClick;
+                        //c.RightClicked += RightClick;
+
+                        ck.Clicked += AddToKazamata;
+                        MindenKartya_ListKazamata.Children.Add(ck.GetVisual());
+                    }
+                }
+            }
+			
 		}
 		public void DisableNagyKazamata()
 		{
@@ -1183,7 +1333,7 @@ namespace szakmajDusza
 
 		private void Exit_Button_Click(object sender, RoutedEventArgs e)
 		{
-			Application.Current.Shutdown();
+			System.Windows.Application.Current.Shutdown();
 		}
 
 		private void GoToGame_Button_Click(object sender, RoutedEventArgs e)
@@ -1246,7 +1396,7 @@ namespace szakmajDusza
 
 		private void GoToMaster_Button_Click(object sender, RoutedEventArgs e)
 		{
-
+			editor = true;
 			GoToGrid(JatekMester_Grid);
 		}
 
@@ -1268,6 +1418,7 @@ namespace szakmajDusza
 
 		private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
 		{
+			editor = false;
 			LoadSave($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
 			//loaddata was here
 			GoToGrid(PakliOssze_Grid);
@@ -1327,6 +1478,7 @@ namespace szakmajDusza
 
 			}
 			CreateNewCard_Button.Visibility = Visibility.Visible;
+			CreateNewKazamata_Button.Visibility = Visibility.Collapsed;
 		}
 		private void DeleteCard_Click(object sender, RoutedEventArgs e)
 		{
@@ -2255,6 +2407,7 @@ namespace szakmajDusza
 		private void Kazamata_Button_Click(object sender, RoutedEventArgs e)
 		{
 			CreateNewCard_Button.Visibility = Visibility.Collapsed;
+			CreateNewKazamata_Button.Visibility = Visibility.Visible;
 			MindenKazamata_List.Children.Clear();
 			MindenKartya_List.Children.Clear();
 			if (sender != null)
@@ -2310,14 +2463,27 @@ namespace szakmajDusza
 			{
 				if (k.GetDefenderNames().Contains(item))
 				{
-					Card c = AllCardsDict[item].GetCopy();
-					c.Clicked += RemoveFromKazamata;
-					KazamataDeffenders_List.Children.Add(c.GetVisual());
+					//Card c = AllCardsDict[item].GetCopy(true);
+					foreach (Card c in k.Defenders)
+					{
+						if (c.Name==item)
+						{
+                            c.RightClicked -= RightClick;
+                            c.RightClicked += RightClick;
+                            c.Clicked += RemoveFromKazamata;
+                            KazamataDeffenders_List.Children.Add(c.GetVisual());
+							break;
+                        }
+					}
+					
 				}
 				else
 				{
-					Card c = AllCardsDict[item].GetCopy();
-					c.Clicked += AddToKazamata;
+					Card c = AllCardsDict[item].GetCopy(true);
+                    c.RightClicked -= RightClick;
+                    //c.RightClicked += RightClick;
+
+                    c.Clicked += AddToKazamata;
 					MindenKartya_ListKazamata.Children.Add(c.GetVisual());
 				}
 			}
@@ -2326,15 +2492,27 @@ namespace szakmajDusza
 			{
 				if (k.GetDefenderNames().Contains(item))
 				{
-					Card c = AllLeadersDict[item].GetCopy();
-					c.Clicked += RemoveFromKazamata;
-					KazamataDeffenders_List.Children.Add(c.GetVisual());
-					vezerCount++;
+					//Card c = AllLeadersDict[item].GetCopy(true);
+                    foreach (Card c in k.Defenders)
+                    {
+                        if (c.Name == item)
+                        {
+                            c.RightClicked -= RightClick;
+                            c.RightClicked += RightClick;
+                            c.Clicked += RemoveFromKazamata;
+                            KazamataDeffenders_List.Children.Add(c.GetVisual());
+                            break;
+                        }
+                    }
+                    vezerCount++;
 				}
 				else
 				{
-					Card c = AllLeadersDict[item].GetCopy();
-					c.Clicked += AddToKazamata;
+					Card c = AllLeadersDict[item].GetCopy(true);
+                    c.RightClicked -= RightClick;
+                    //c.RightClicked += RightClick;
+
+                    c.Clicked += AddToKazamata;
 					MindenKartya_ListKazamata.Children.Add(c.GetVisual());
 				}
 			}
@@ -2387,15 +2565,21 @@ namespace szakmajDusza
 				{
 					if (k.GetDefenderNames().Contains(item))
 					{
-						Card c = AllCardsDict[item].GetCopy();
-						c.Clicked -= AddToKazamata;
+						Card c = AllCardsDict[item].GetCopy(true);
+                        c.RightClicked -= RightClick;
+                        c.RightClicked += RightClick;
+
+                        c.Clicked -= AddToKazamata;
 						c.Clicked += RemoveFromKazamata;
 						KazamataDeffenders_List.Children.Add(c.GetVisual());
 					}
 					else
 					{
-						Card c = AllCardsDict[item].GetCopy();
-						c.Clicked -= RemoveFromKazamata;
+						Card c = AllCardsDict[item].GetCopy(true);
+                        c.RightClicked -= RightClick;
+                        //c.RightClicked += RightClick;
+
+                        c.Clicked -= RemoveFromKazamata;
 						c.Clicked += AddToKazamata;
 						MindenKartya_ListKazamata.Children.Add(c.GetVisual());
 					}
@@ -2405,16 +2589,22 @@ namespace szakmajDusza
 				{
 					if (k.GetDefenderNames().Contains(item))
 					{
-						Card c = AllLeadersDict[item].GetCopy();
-						c.Clicked -= AddToKazamata;
+						Card c = AllLeadersDict[item].GetCopy(true);
+                        c.RightClicked -= RightClick;
+                        c.RightClicked += RightClick;
+
+                        c.Clicked -= AddToKazamata;
 						c.Clicked += RemoveFromKazamata;
 						KazamataDeffenders_List.Children.Add(c.GetVisual());
 						vezerCount++;
 					}
 					else
 					{
-						Card c = AllLeadersDict[item].GetCopy();
-						c.Clicked -= RemoveFromKazamata;
+						Card c = AllLeadersDict[item].GetCopy(true);
+                        c.RightClicked -= RightClick;
+                        //c.RightClicked += RightClick;
+
+                        c.Clicked -= RemoveFromKazamata;
 						c.Clicked += AddToKazamata;
 						MindenKartya_ListKazamata.Children.Add(c.GetVisual());
 					}
@@ -2449,6 +2639,10 @@ namespace szakmajDusza
 			if (!internalEdits)
 			{
 				AllKazamataDict[kazamataEditNmae].Tipus = Kazamata.StringToKazamataType(KazamataTipus.SelectedItem.ToString());
+				foreach (Card item in AllKazamataDict[kazamataEditNmae].Defenders)
+				{
+					item.Items.Clear();
+				}
 				AllKazamataDict[kazamataEditNmae].Defenders.Clear();
 				MindenKartya_ListKazamata.Children.Clear();
 				KazamataDeffenders_List.Children.Clear();
@@ -2486,8 +2680,7 @@ namespace szakmajDusza
 
 		private void AddToKazamata(object? sender, Card clicked)
 		{
-			clicked.Clicked -= AddToKazamata;
-			clicked.Clicked += RemoveFromKazamata;
+			
 			int vezer = 0;
 			int kazamataDef = KazamataDeffenders_List.Children.Count;
 			int kazamataMaxDef = 0;
@@ -2510,18 +2703,40 @@ namespace szakmajDusza
 			{
 				kazamataMaxDef = 5;
 			}
-			if (clicked.Vezer && vezer == 0)
+			if (clicked.Vezer && vezer == 0 && AllKazamataDict[kazamataEditNmae].Tipus != KazamataType.egyszeru)
 			{
-				AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
+				vezer++;
+				kazamataDef++;
+                clicked.Clicked -= AddToKazamata;
+                clicked.Clicked += RemoveFromKazamata;
+                AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
 				UpdateKazamata();
 			}
-			else if (kazamataDef - vezer < kazamataMaxDef)
+			else if (!clicked.Vezer&&kazamataDef - vezer < kazamataMaxDef)
 			{
-				AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
+				kazamataDef++;
+                clicked.Clicked -= AddToKazamata;
+                clicked.Clicked += RemoveFromKazamata;
+                AllKazamataDict[kazamataEditNmae].Defenders.Add(clicked);
 				UpdateKazamata();
 			}
+			if (AllKazamataDict[kazamataEditNmae].Tipus != KazamataType.egyszeru && (vezer==1&& kazamataDef - vezer == kazamataMaxDef))
+			{
+				KazMent.IsEnabled = true;
+			}
+			else if (AllKazamataDict[kazamataEditNmae].Tipus == KazamataType.egyszeru&& kazamataDef - vezer == kazamataMaxDef)
+			{
+                KazMent.IsEnabled = true;
 
-		}
+            }
+			else
+			{
+                KazMent.IsEnabled = false;
+
+            }
+
+
+        }
 		private void RemoveFromKazamata(object? sender, Card clicked)
 		{
 
@@ -2536,11 +2751,15 @@ namespace szakmajDusza
 					AllKazamataDict[kazamataEditNmae].Defenders.Remove(item);
 					break;
 				}
-			}
-			UpdateKazamata();
+            }
+            UpdateKazamata();
 
 
-		}
+
+			KazMent.IsEnabled = false;
+
+
+        }
 
 		private void KazamataName_LostFocus(object sender, RoutedEventArgs e)
 		{
@@ -2616,12 +2835,72 @@ namespace szakmajDusza
 
 		}
 
+        private void CreateNewKazamata_Button_Click(object sender, RoutedEventArgs e)
+        {
+            List<Card> c = new List<Card>();
+			string kazName = "új kazamata";
+            bool goodName = false;
+            int bonusIndex = -1;
+            while (!goodName)
+            {
+                bonusIndex++;
+                goodName = true;
+                foreach (Kazamata item in AllKazamataDict.Values)
+                {
+                    if (bonusIndex <= 0)
+                    {
+                        if (item.Name == kazName)
+                        {
+                            //bonusIndex++;
+                            goodName = false;
+                        }
+                    }
+                    else if (item.Name == kazName + bonusIndex)
+                    {
+                        //bonusIndex++;
+                        goodName = false;
+                    }
+                }
+            }
+            if (bonusIndex > 0)
+            {
+                kazName += bonusIndex;
+            }
+            Kazamata k = new Kazamata(kazName,"egyszeru","eletero",c);
+			AllKazamataDict.Add(kazName,k);
+            CreateNewCard_Button.Visibility = Visibility.Collapsed;
+            CreateNewKazamata_Button.Visibility = Visibility.Visible;
+            MindenKazamata_List.Children.Clear();
+            MindenKartya_List.Children.Clear();
+            if (sender != null)
+            {
+                MindenKazamata_List.Visibility = Visibility.Visible;
+            }
+            foreach (var item in AllKazamataDict.Values)
+            {
+                Button b = new Button();
+                b.Click += EditKazamata;
+
+                b.Content = item.Name;
+                b.Margin = new Thickness(10, 0, 0, 0);
+                MindenKazamata_List.Children.Add(b);
+            }
+
+            AutoResizeButtons(MindenKazamata_List);
+			EditKazamata(MindenKazamata_List.Children[MindenKazamata_List.Children.Count-1],null);
+        }
+
+        private void Urmom(object sender, RoutedEventArgs e)
+        {
+
+        }
 
 
 
 
 
-		// <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
 
-	}
+        // <Label Name = "Jutalom" Content="" Height="340" Margin="0,305,0,0" VerticalAlignment="Top" Width="450" FontSize="60" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+
+    }
 }

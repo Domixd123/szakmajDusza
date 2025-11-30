@@ -62,18 +62,10 @@ namespace szakmajDusza
 				sw.WriteLine($"felvetel gyujtemenybe;{item.Name}");
 			}
 			sw.WriteLine();
-			string pakliString = "";
-			foreach (var item in MainWindow.Jatekos)
-			{
-				pakliString += item.Name + ",";
-			}
-			pakliString = pakliString.Substring(0,pakliString.Length-1);
-			sw.WriteLine($"uj pakli;{pakliString}");
-			sw.WriteLine();
 			foreach (var item in MainWindow.Gyujtemeny)
 			{
 				int eleteroAmmount = item.HP - MainWindow.AllCardsDict[item.Name].HP;
-				if(eleteroAmmount > 0)
+				if (eleteroAmmount > 0)
 				{
 					sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
 				}
@@ -93,17 +85,26 @@ namespace szakmajDusza
 				sw.WriteLine($"item;{item.Name};{item.Buyable};{item.MaxLevel};{item.Price};{item.Level};{item.OwnedCount};{item.BaseVariable};{item.InRotation}");
 			}
 			sw.WriteLine();
-			foreach(var item in MainWindow.Gyujtemeny)
+			foreach (var item in MainWindow.Gyujtemeny)
 			{
 				string itemString = "";
 				foreach (var item2 in item.Items)
 				{
-					itemString += item2.Name+",";
+					itemString += item2.Name + ",";
 				}
-				if(itemString.Length > 0) itemString = itemString.Substring(0, itemString.Length - 1);
+				if (itemString.Length > 0) itemString = itemString.Substring(0, itemString.Length - 1);
 
 				sw.WriteLine($"jatekos kartya items;{item.Name};{itemString}");
 			}
+			sw.WriteLine();
+			string pakliString = "";
+			foreach (var item in MainWindow.Jatekos)
+			{
+				pakliString += item.Name + ",";
+			}
+			pakliString = pakliString.Substring(0,pakliString.Length-1);
+			sw.WriteLine($"uj pakli;{pakliString}");
+			
 			sw.Close();
 		}
 	}

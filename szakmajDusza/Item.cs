@@ -75,6 +75,10 @@ namespace szakmajDusza
 		}
 		public void Buy()
 		{
+			if (GoldOwned<Price||!Buyable||Level==MaxLevel)
+			{
+				return;
+			}
 			GoldOwned -= Price;
 			OwnedCount++;
 			TryLevelUp();
@@ -136,13 +140,14 @@ namespace szakmajDusza
 		}
 		public static int LevelUpRequirement(int level)
 		{
+			if (level == 0) return 0;
 			return (int)Math.Pow(1.5, level);
 		}
 		public int CurrentLevelOwned()
 		{
 			int owned = OwnedCount;
 			int x = 1;
-			while (owned > LevelUpRequirement(x))
+			while (owned >= LevelUpRequirement(x))
 			{
 				owned -= LevelUpRequirement(x);
 				x++;
@@ -154,12 +159,12 @@ namespace szakmajDusza
 			if(OwnedCount==0) return;
 			int owned = OwnedCount;
 			int x = 1;
-			while (owned > LevelUpRequirement(x))
+			while (owned >= LevelUpRequirement(x))
 			{
 				owned -= LevelUpRequirement(x);
 				x++;
 			}
-			Level = x;
+			Level = Math.Min(x-1,MaxLevel);
 			UpdateAllVisual();
 		}
 		public Item GetCopy()
@@ -195,7 +200,7 @@ namespace szakmajDusza
 				if (OwnedLabel != null) OwnedLabel.Visibility = Visibility.Collapsed;
 				if (LevelLabel != null) LevelLabel.Visibility = Visibility.Collapsed;
 				if (MaxLevelLabel != null) MaxLevelLabel.Visibility = Visibility.Collapsed;
-
+				if(LevelUpLabel!=null)LevelUpLabel.Visibility = Visibility.Collapsed;
 				// csak name + description
 				if (DescLabel != null) DescLabel.Visibility = Visibility.Visible;
 			};
@@ -213,7 +218,7 @@ namespace szakmajDusza
 				if (OwnedLabel != null) OwnedLabel.Visibility = Visibility.Visible;
 				if (LevelLabel != null) LevelLabel.Visibility = Visibility.Visible;
 				if (MaxLevelLabel != null) MaxLevelLabel.Visibility = Visibility.Visible;
-
+				if (LevelUpLabel != null) LevelUpLabel.Visibility = Visibility.Visible;
 				if (DescLabel != null) DescLabel.Visibility = Visibility.Collapsed;
 			};
 
@@ -425,7 +430,7 @@ namespace szakmajDusza
 				OwnedLabel = new Label
 				{
 					FontSize = 12,
-					Content = $"Szintlépés: {OwnedCount} / {LevelUpRequirement(Level + 1)}",
+					Content = $"Szintlépés: {CurrentLevelOwned()} / {LevelUpRequirement(Level + 1)}",
 					HorizontalAlignment = HorizontalAlignment.Center,
 					VerticalAlignment = VerticalAlignment.Bottom,
 					Margin = new Thickness(0, 0, 0, 8),

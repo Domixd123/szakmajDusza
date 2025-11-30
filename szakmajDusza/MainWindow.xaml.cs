@@ -217,7 +217,16 @@ namespace szakmajDusza
 
                 foreach (var a in Gyujtemeny)
                 {
-                    if (!Jatekos.Contains(a))
+					bool found = false;
+					foreach (var a2 in Jatekos)
+					{
+						if (a.Name == a2.Name)
+						{
+							found = true;
+							break;
+						}
+					}
+                    if (!found)
                     {
                         Cards_Wrap.Children.Add(a.GetVisual());
                     }
@@ -541,7 +550,7 @@ namespace szakmajDusza
 					Item.Items[data[1]].BaseVariable = int.Parse(data[7]);
 					Item.Items[data[1]].InRotation = bool.Parse(data[8]);
 				}
-				else if (data[0]=="jatekos kartya items")
+				else if (data[0] == "jatekos kartya items")
 				{
 					int ID = -1;
 					for (int i = 0; i < Gyujtemeny.Count; i++)
@@ -552,11 +561,12 @@ namespace szakmajDusza
 							break;
 						}
 					}
-					string[]itemNames= data[2].Split(',');
+					string[] itemNames = data[2].Split(',');
 					if (itemNames.Length == 1 && itemNames[0] == "") continue;
 					for (int i = 0; i < itemNames.Length; i++)
 					{
-						Gyujtemeny[i].Items.Add(Item.Items[itemNames[i]]);
+						Item item = Item.Items[itemNames[i]];
+						Gyujtemeny[ID].Items.Add(item);
 					}
 				}
 			}
@@ -1239,7 +1249,15 @@ namespace szakmajDusza
 
 			foreach (var item in Gyujtemeny)
 			{
-				if (!Jatekos.Contains(item))
+				bool found = false;
+				foreach (var item2 in Jatekos)
+				{
+					if (item.Name == item2.Name)
+					{
+						found=true; break;
+					}
+				}
+				if (!found)
 				{
 					Cards_Wrap.Children.Add(item.GetVisual());
 					item.Clicked += AddToPakli;
@@ -1913,6 +1931,15 @@ namespace szakmajDusza
 				foreach (var item in Gyujtemeny)
 				{
 					var card = item.GetCopy();
+					bool found = false;
+					foreach (var item2 in Jatekos)
+					{
+						if (item.Name==item2.Name)
+						{
+							found = true;
+							break;
+						}
+					}
 					if (card.Vezer || Jatekos.Contains(item as Card))
 					{
 
@@ -2064,7 +2091,16 @@ namespace szakmajDusza
 			PakliCards_Wrap.Children.Clear();
 			foreach (Card item in Gyujtemeny)
 			{
-				if (!Jatekos.Contains(item))
+				bool found = false;
+				foreach (var item2 in Jatekos)
+				{
+					if (item.Name == item2.Name)
+					{
+						found = true;
+						break;
+					}
+				}
+				if (!found)
 				{
 					Cards_Wrap.Children.Add(item.GetVisual());
 					/*item.Clicked -= RemoveFromPakli;

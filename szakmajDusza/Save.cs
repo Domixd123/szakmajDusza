@@ -102,8 +102,12 @@ namespace szakmajDusza
 			{
 				pakliString += item.Name + ",";
 			}
-			pakliString = pakliString.Substring(0,pakliString.Length-1);
-			sw.WriteLine($"uj pakli;{pakliString}");
+			if (pakliString.Length != 0)
+			{
+				pakliString = pakliString.Substring(0, pakliString.Length - 1);
+				sw.WriteLine($"uj pakli;{pakliString}");
+			}
+			
 			
 			sw.Close();
 		}

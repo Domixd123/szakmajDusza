@@ -7,7 +7,7 @@ namespace szakmajDusza
 	//copied from dusza github, we have to use this - TKD
 	public partial class App : Application
 	{
-		/*protected override void OnStartup(StartupEventArgs e)
+		protected override void OnStartup(StartupEventArgs e)
 		{
 			AttachConsole(-1);
 			base.OnStartup(e);
@@ -39,7 +39,7 @@ namespace szakmajDusza
 			{
 				Shutdown();
 			}
-		}*/
+		}
 		public static List<Card> Cards = new List<Card>();
 		public static Dictionary<string, Card> CardsDict = new Dictionary<string, Card>();
 		public static List<Card> Leaders = new List<Card>();

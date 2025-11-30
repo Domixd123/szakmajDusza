@@ -550,8 +550,9 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
+                animation = false;
                 tcs.SetResult(true);
-				animation = false;
+				
 
             };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -734,6 +735,7 @@ namespace szakmajDusza
             };
             anim2.Completed += (s, e) =>
             {
+                animation = false;
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);

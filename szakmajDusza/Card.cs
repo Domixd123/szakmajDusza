@@ -23,7 +23,7 @@ namespace szakmajDusza
 		public Button But { get; private set; }
 		public string Bonus { get; set; }
 		public string OriginName { get; set; }
-
+		public bool animation { get; set; } = false;
 
 		public Label NameLabel;
 		public Label Name2Label;
@@ -531,6 +531,7 @@ namespace szakmajDusza
 		}
 		public  Task StrengthAnim(int dmg)
 		{
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -550,6 +551,7 @@ namespace szakmajDusza
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);
+				animation = false;
 
             };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -557,6 +559,7 @@ namespace szakmajDusza
 		}
 		public  Task CritAnim(int dmg, int mult)
 		{
+			animation=true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -575,6 +578,7 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
+				animation= false;
                 tcs.SetResult(true);
             };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -582,6 +586,7 @@ namespace szakmajDusza
 		}
 		public  Task StrengthShieldAnim(int dmg, int blocked)
 		{
+			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
@@ -591,6 +596,7 @@ namespace szakmajDusza
 
 			var anim = new ThicknessAnimation
 			{
+
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 80),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
 				Duration = TimeSpan.FromSeconds(0.4f),
@@ -598,6 +604,7 @@ namespace szakmajDusza
 			};
 			anim.Completed += (s, e) =>
 			{
+				animation= false;
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
                 tcs.SetResult(true);

@@ -245,12 +245,12 @@ namespace szakmajDusza
 			}
 			defender.HP -= damage;*/
 			//damage animation
-			if (defender.HP < 0)
+			if (defender.HP <= 0)
 			{
 				RespawnItem(attacker, defender, attackerIsPlayer);
 			}
 
-			if (defender.HP < 0) return;
+			if (defender.HP <= 0) return;
 
 
 			foreach (var item in defender.Items)
@@ -267,7 +267,7 @@ namespace szakmajDusza
 					//thorns animation
 				}
 			}
-			if (attacker.HP < 0)
+			if (attacker.HP <= 0)
 			{
 				RespawnItem(defender, attacker, !attackerIsPlayer);
 			}
@@ -521,7 +521,7 @@ namespace szakmajDusza
 						break;
 					case KazamataReward.arany:
                         l.Content = $"Nyertél!";
-                        l2.Content = $"3arany";
+                        l2.Content = $"+3 arany";
 						Item.GoldOwned += 3;
                         break;
 					case KazamataReward.newcard:

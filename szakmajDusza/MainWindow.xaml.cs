@@ -518,13 +518,13 @@ namespace szakmajDusza
 					string[] kartyanevek = data[1].Split(',');
 					for (int i = 0; i < kartyanevek.Length; i++)
 					{
-						if (AllCardsDict.ContainsKey(kartyanevek[i]))
+						foreach (var item in Gyujtemeny)
 						{
-							Jatekos.Add(AllCardsDict[kartyanevek[i]]);
-						}
-						else if (AllLeadersDict.ContainsKey(kartyanevek[i]))
-						{
-							Jatekos.Add(AllCardsDict[kartyanevek[i]]);
+							if (item.Name == kartyanevek[i])
+							{
+								Jatekos.Add(item);
+								break;
+							}
 						}
 					}
 				}
@@ -1931,7 +1931,7 @@ namespace szakmajDusza
 				foreach (var item in Gyujtemeny)
 				{
 					var card = item.GetCopy();
-					bool found = false;
+					/*bool found = false;
 					foreach (var item2 in Jatekos)
 					{
 						if (item.Name==item2.Name)
@@ -1939,7 +1939,7 @@ namespace szakmajDusza
 							found = true;
 							break;
 						}
-					}
+					}*/
 					if (card.Vezer || Jatekos.Contains(item as Card))
 					{
 

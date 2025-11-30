@@ -33,8 +33,9 @@ namespace szakmajDusza
 		public Grid visualGroup;
 
 		public event EventHandler<Card> Clicked;
+        public event EventHandler<Card> RightClicked;
 
-		public Card(string n, int d, int h, string tipus, bool vezer, string originName="",List<Item> items=null)
+        public Card(string n, int d, int h, string tipus, bool vezer, string originName="",List<Item> items=null)
 		{
 			Name = n;
 			Damage = d;
@@ -426,6 +427,7 @@ namespace szakmajDusza
 
 				};
 			But.Click += (sender, e) => Clicked?.Invoke(this, this);
+			But.MouseRightButtonUp += (sender, e) => RightClicked?.Invoke(this, this);
 			if (Disabled)
 			{
 				visualGroup.Background = new LinearGradientBrush(Color.FromRgb(10, 5, 15), Color.FromRgb(30, 20, 40), 90);

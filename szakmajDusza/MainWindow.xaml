@@ -393,6 +393,8 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <ComboBox x:Name="KazamataJutalom" HorizontalAlignment="Left" Height="52" Margin="1469,169,0,0" VerticalAlignment="Top" Width="239" SelectionChanged="KazamataJutalom_SelectionChanged"/>
             </Grid>
 
+            
+
 
 
 

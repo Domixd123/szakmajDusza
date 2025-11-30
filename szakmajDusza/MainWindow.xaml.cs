@@ -121,6 +121,12 @@ namespace szakmajDusza
 			KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
 
 		}
+
+
+		private void RightClick(object sender, Card s)
+		{
+			
+		}
 		public void DisableNagyKazamata()
 		{
 			foreach (var item in AllCardsDict.Values)
@@ -347,13 +353,17 @@ namespace szakmajDusza
 				}
 				if (found) continue;
 				item.Clicked += AddToPakli;
+                item.RightClicked -= RightClick;
+                item.RightClicked += RightClick;
 				Cards_Wrap.Children.Add(item.GetVisual());
 			}
 			foreach (var item in Jatekos)
 			{
 				item.UpdateAllVisual();
 				item.Clicked += RemoveFromPakli;
-				PlayerCards_Wrap.Children.Add(item.GetVisual());
+                item.RightClicked -= RightClick;
+                item.RightClicked += RightClick;
+                PlayerCards_Wrap.Children.Add(item.GetVisual());
 			}
 			foreach (var item in AllKazamataDict.Values)
 			{
@@ -476,7 +486,9 @@ namespace szakmajDusza
 			foreach (var item in Gyujtemeny)
 			{
 				item.Clicked += AddToPakli;
-				Cards_Wrap.Children.Add(item.GetVisual());
+                item.RightClicked -= RightClick;
+                item.RightClicked += RightClick;
+                Cards_Wrap.Children.Add(item.GetVisual());
 			}
 
 			foreach (var item in AllKazamataDict.Values)
@@ -836,8 +848,10 @@ namespace szakmajDusza
 				PlayerCards_Wrap.Children.Add(clicked.GetVisual());
 				clicked.Clicked -= AddToPakli;
 				clicked.Clicked += RemoveFromPakli;
+                clicked.RightClicked -= RightClick;
+                clicked.RightClicked += RightClick;
 
-				SelectedCards_Label.Content = Jatekos.Count;
+                SelectedCards_Label.Content = Jatekos.Count;
 
 				se.Open(new Uri("Sounds/KartyaClick.wav", UriKind.Relative));
 				se.Play();

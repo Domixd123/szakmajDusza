@@ -528,9 +528,10 @@ namespace szakmajDusza
 			DamageLabel.Content = Damage;
 			HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
 		}
-		public async Task StrengthAnim(int dmg)
+		public  Task StrengthAnim(int dmg)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.ExtraBold;
 			ImportantLabel.Foreground = Brushes.OrangeRed;
@@ -547,13 +548,16 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
 
-			};
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
-		public async Task CritAnim(int dmg, int mult)
+		public  Task CritAnim(int dmg, int mult)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.DarkRed;
@@ -570,12 +574,15 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-			};
+                tcs.SetResult(true);
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
-		public async Task StrengthShieldAnim(int dmg, int blocked)
+		public  Task StrengthShieldAnim(int dmg, int blocked)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.ExtraBold;
 			ImportantLabel.Foreground = Brushes.DimGray;
@@ -592,13 +599,15 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-
-			};
+                tcs.SetResult(true);
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
-		public async Task CritShieldAnim(int dmg, int mult, int blocked)
+		public  Task CritShieldAnim(int dmg, int mult, int blocked)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.Gray;
@@ -615,12 +624,15 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-			};
+                tcs.SetResult(true);
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
-		public async Task DodgeAnim()
+		public  Task DodgeAnim()
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.Bold;
 			ImportantLabel.Foreground = Brushes.White;
@@ -637,8 +649,10 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
-			};
+                tcs.SetResult(true);
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
 		public Task HealAnim(int amount)//same as lifesteal 
 		{
@@ -668,8 +682,9 @@ namespace szakmajDusza
 
         }
 
-        public async Task ReviveAnim(int amount) 
+        public  Task ReviveAnim(int amount) 
         {
+            var tcs = new TaskCompletionSource<bool>();
             ImportantLabel2.Visibility = Visibility.Visible;
 			ImportantLabel.Visibility = Visibility.Visible;
             Panel.SetZIndex(ImportantLabel2, -1);
@@ -699,19 +714,23 @@ namespace szakmajDusza
             {
                 // hide once it’s slid away
                 ImportantLabel2.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
             };
             anim2.Completed += (s, e) =>
             {
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
             };
 
             ImportantLabel2.BeginAnimation(Label.MarginProperty, anim);
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim2);
+			return tcs.Task;
 
         }
-        public async Task MagicAnim()
+        public  Task MagicAnim()
         {
+            var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
             Panel.SetZIndex(ImportantLabel, -1);
             ImportantLabel.FontWeight = FontWeights.Bold;
@@ -729,14 +748,17 @@ namespace szakmajDusza
             {
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
             };
             ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
         }
 
 
-		public async Task NormalShieldAnim(int dmg,int blocked)
+		public  Task NormalShieldAnim(int dmg,int blocked)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 			ImportantLabel.FontWeight = FontWeights.ExtraBold;
 			ImportantLabel.Foreground = Brushes.DimGray;
@@ -753,18 +775,21 @@ namespace szakmajDusza
 			{
 				// hide once it’s slid away
 				ImportantLabel.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
 
-			};
+            };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
+			return tcs.Task;
 		}
 		public void HideAllLabels()
 		{
 			ImportantLabel.Visibility= Visibility.Hidden;
 			ImportantLabel2.Visibility= Visibility.Hidden;
 		}
-        public async Task UpdateVisualDamage(int dmg)
+        public Task UpdateVisualDamage(int dmg)
 		{
-			ImportantLabel.Visibility = Visibility.Visible;
+            var tcs = new TaskCompletionSource<bool>();
+            ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
 
 			ImportantLabel.Content = $"-{dmg}";
@@ -778,8 +803,9 @@ namespace szakmajDusza
 			};
 			anim.Completed += (s, e) =>
 			{
-				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+                tcs.SetResult(true);
+                // hide once it’s slid away
+                ImportantLabel.Visibility = Visibility.Hidden;
 				HPLabel.Content = HP;
 			};
 
@@ -789,14 +815,16 @@ namespace szakmajDusza
 			{
 				previousHP = 0;
 			}
+			return tcs.Task;
 			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
 			//HPLabel.Content = $"{previousHP}";
 			//HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
 			//ImportantLabel.Visibility = Visibility.Hidden;
 		}//rework
-		public async Task UpdateVisualHeal(int heal)
+		public  Task UpdateVisualHeal(int heal)
 		{
-			int previousHP = HP - heal;
+            var tcs = new TaskCompletionSource<bool>();
+            int previousHP = HP - heal;
 			if (HP - heal <= 0)
 			{
 				previousHP = 0;
@@ -804,6 +832,8 @@ namespace szakmajDusza
 			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} + {heal} ❤";
 			HPLabel.Content = $"{previousHP} + {heal}";
 			HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+            tcs.SetResult(true);
+            return tcs.Task;
 		}
 
 		public UIElement GetVisual()

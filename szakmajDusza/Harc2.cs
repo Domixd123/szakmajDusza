@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace szakmajDusza
@@ -244,26 +245,38 @@ namespace szakmajDusza
 				RespawnItem(attacker, defender, attackerIsPlayer);
 			}
 
-			if (defender.HP <= 0) return;
-
-
-			foreach (var item in defender.Items)
+			if (defender.HP > 0)
 			{
-				if (MagicRes(attacker)) continue;
-				if (item.Name == "Tüskék")
+				foreach (var item in defender.Items)
 				{
-					int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable*0.01, 0);
-					AnimationManager(attacker,"normal","",damage);
-					attacker.HP -= damage;
-					attacker.UpdateVisual();
-					/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
+					if (MagicRes(attacker)) continue;
+					if (item.Name == "Tüskék")
+					{
+						int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable * 0.01, 0);
+						AnimationManager(attacker, "normal", "", damage);
+						attacker.HP -= damage;
+						attacker.UpdateVisual();
+						/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
 
-					//thorns animation
+						//thorns animation
+					}
 				}
 			}
 			if (attacker.HP <= 0)
 			{
 				RespawnItem(defender, attacker, !attackerIsPlayer);
+			}
+			if (attacker.HP <= 0) return;
+			foreach (var item in attacker.Items)
+			{
+				if (defender.HP>0&&MagicRes(defender)) continue;
+				else if (item.Name == "Gyógyítás")
+				{
+					int healAmmount = item.Level*item.BaseVariable;
+					AnimationManager(attacker, "", "heal", 0, healAmmount);
+					attacker.HP += healAmmount;
+					attacker.UpdateVisual();
+				}
 			}
 		}
 		static void RespawnItem(Card attacker, Card defender, bool attackerIsPlayer)

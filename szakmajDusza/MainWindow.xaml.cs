@@ -2227,6 +2227,9 @@ namespace szakmajDusza
 		private void CreateNewCard_Button_Click(object sender, RoutedEventArgs e)
 		{
 			internalEdits = true;
+			LeaderCardPanel.Visibility = Visibility.Collapsed;
+			BasicCardPanel.Visibility = Visibility.Visible;
+
 			VezerCheck.IsChecked = false;
 			internalEdits = false;
 			GoToGrid(KartyaSzerkeszto_Grid);

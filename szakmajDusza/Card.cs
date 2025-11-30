@@ -193,7 +193,7 @@ namespace szakmajDusza
 				DisLabel = new Label
 				{
 					FontSize = 16,
-					Margin = new Thickness(0, 0, 0, 28),
+					Margin = new Thickness(0, 0, 0, 67),
 					Foreground = Brushes.Red,
 					FontWeight = FontWeights.Bold,
 					HorizontalAlignment = HorizontalAlignment.Center,

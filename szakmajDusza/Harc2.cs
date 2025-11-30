@@ -375,9 +375,14 @@ namespace szakmajDusza
 				else if (kaz != null)
 				{
 					//kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)), difficulty);
+					int beforeHPKaz = kaz.HP;
+					int beforeHPPlay = play.HP;
 					calculateDamage(play,kaz,true,difficulty);
+					int afterHPKaz = kaz.HP;
+					int afterHPPlay = play.HP;
 					//await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+
 					kaz.UpdateVisual();
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -434,7 +439,11 @@ namespace szakmajDusza
 				}
 				else if (play != null)
 				{
+					int beforeHPKaz = kaz.HP;
+					int beforeHPPlay=play.HP;
 					calculateDamage(kaz, play, false, difficulty);
+					int afterHPKaz = kaz.HP;
+					int afterHPPlay = play.HP;
 					//play.HP -= kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty);
 					//await play.UpdateVisualDamage(kazDamage((int)Math.Floor(kaz.Damage * Multiplier(kaz, play)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));

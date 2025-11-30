@@ -136,6 +136,7 @@ namespace szakmajDusza
 				if (item.OwnedCount > 0)
 				{
 					Item i = item;
+                    i.Clicked -= AddAbility;
 
                     i.Clicked += AddAbility;
 					Ability_Wrap.Children.Add(i.GetVisual(false));
@@ -146,18 +147,20 @@ namespace szakmajDusza
 		private void AddAbility(object sender, Item item)
 		{
 			Card c = lastCard;
-			if (c.Vezer && c.Items.Count <= 1)
+			if (!c.Items.Contains(item))
 			{
-                c.Items.Add(item);
-                c.UpdateAllVisual();
-            }
+                if (c.Vezer && c.Items.Count <= 1)
+                {
+                    c.Items.Add(item);
+                    c.UpdateAllVisual();
+                }
 
-			else if (!c.Vezer && c.Items.Count == 0)
-			{
-                c.Items.Add(item);
-                c.UpdateAllVisual();
+                else if (!c.Vezer && c.Items.Count == 0)
+                {
+                    c.Items.Add(item);
+                    c.UpdateAllVisual();
+                }
             }
-
 			else
 			{
 				c.Items.Remove(item);
@@ -1652,6 +1655,18 @@ namespace szakmajDusza
 				DisableNagyKazamata();
 
 			}
+			if (vissza==PakliOssze_Grid)
+			{
+				foreach (Card item in Gyujtemeny)
+				{
+					item.Disabled = false;
+				}
+				foreach (Card item in Jatekos)
+				{
+                    item.Disabled = false;
+
+                }
+            }
 
 			if (vissza != ChooseKornyezet_Grid)
 			{
@@ -1884,8 +1899,11 @@ namespace szakmajDusza
 
 			}
 			//Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
-			Card card = Gyujtemeny[Gyujtemeny.Count - 1].GetCopy();
-			card.Disabled = true;
+			Card card = Gyujtemeny[Gyujtemeny.Count - 1];
+            card.RightClicked -= RightClick;
+            card.RightClicked += RightClick;
+
+            card.Disabled = true;
 			card.UpdateAllVisual();
 			CardMerge_Wrap.Children.Add(card.GetVisual());
 

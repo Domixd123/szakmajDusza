@@ -449,6 +449,11 @@ namespace szakmajDusza
                     }
                     if (Items.Count >= 2)
                     {
+                        var brush1 = new ImageBrush();
+                        brush1.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[0].IconPath}"));
+                        brush1.Stretch = Stretch.UniformToFill;
+                        ellips1.Fill = brush1;
+
                         var brush2 = new ImageBrush();
                         brush2.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[1].IconPath}"));
                         brush2.Stretch = Stretch.UniformToFill;

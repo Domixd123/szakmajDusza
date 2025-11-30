@@ -416,20 +416,47 @@ namespace szakmajDusza
 				};
 				visualGroup.Children.Add(ellips2);
 				visualGroup.Children.Add(ellips1);
-				if (Items.Count >= 1)
+				if (!Vezer)
 				{
-					var brush1 = new ImageBrush();
-					brush1.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[0].IconPath}"));
-					brush1.Stretch = Stretch.UniformToFill;
-					ellips1.Fill = brush1;
-				}
-				if (Items.Count >= 2)
+                    if (Items.Count <= 0)
+                    {
+                        ellips1.Fill = Brushes.Transparent;
+
+                    }
+                    if (Items.Count >= 1)
+                    {
+                        var brush1 = new ImageBrush();
+                        brush1.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[0].IconPath}"));
+                        brush1.Stretch = Stretch.UniformToFill;
+                        ellips1.Fill = brush1;
+                    }
+                }
+				else
 				{
-					var brush2 = new ImageBrush();
-					brush2.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[1].IconPath}"));
-					brush2.Stretch = Stretch.UniformToFill;
-					ellips2.Fill = brush2;
-				}
+                    if (Items.Count <= 0)
+                    {
+                        ellips1.Fill = Brushes.Transparent;
+                        ellips2.Fill = Brushes.Transparent;
+
+                    }
+					else if (Items.Count==1)
+					{
+                        var brush1 = new ImageBrush();
+                        brush1.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[0].IconPath}"));
+                        brush1.Stretch = Stretch.UniformToFill;
+                        ellips1.Fill = brush1;
+                        ellips2.Fill = Brushes.Transparent;
+                    }
+                    if (Items.Count >= 2)
+                    {
+                        var brush2 = new ImageBrush();
+                        brush2.ImageSource = new BitmapImage(new Uri($"pack://application:,,,/images\\{Items[1].IconPath}"));
+                        brush2.Stretch = Stretch.UniformToFill;
+                        ellips2.Fill = brush2;
+                    }
+                }
+
+				
 			}
 			else
 			{

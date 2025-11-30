@@ -1,6 +1,7 @@
 using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Windows;
@@ -79,7 +80,7 @@ namespace szakmajDusza
 			InitializeComponent();
 			internalEdits = true;
 			KazamataTipus.ItemsSource = new string[] { "egyszerű", "kis", "nagy" }; KazamataTipus.SelectedIndex = 0;
-			KazamataJutalom.ItemsSource = new string[] { "életerő", "sebzés" }; KazamataJutalom.SelectedIndex = 0;
+			KazamataJutalom.ItemsSource = new string[] { "életerő", "sebzés", "arany" }; KazamataJutalom.SelectedIndex = 0;
 			internalEdits = false;
 			CreateNewCard_Button.Visibility=Visibility.Collapsed;
 			CreateNewKazamata_Button.Visibility = Visibility.Collapsed;
@@ -730,7 +731,7 @@ namespace szakmajDusza
 		{
 			Jutalom = new Label()
 			{
-				Content = k.reward == KazamataReward.eletero ? "Jutalom:+2❤" : k.reward == KazamataReward.sebzes ? "Jutalom:+1⚔" : "Jutalom:",
+				Content = k.reward == KazamataReward.eletero ? "Jutalom:+2❤" : k.reward == KazamataReward.sebzes ? "Jutalom:+1⚔" : k.reward==KazamataReward.arany ? "Jutalom:+3 arany" : "Jutalom:",
 				Name = "Jutalom",
 				Height = 100,
 				Margin = new Thickness(0, 305, 0, 0),
@@ -2557,7 +2558,11 @@ namespace szakmajDusza
 			{
 				KazamataJutalom.SelectedIndex = 1;
 			}
-			kazamataEditNmae = k.Name;
+			else if (k.reward==KazamataReward.arany)
+			{
+				KazamataJutalom.SelectedIndex = 2;
+			}
+				kazamataEditNmae = k.Name;
 
 
 
@@ -2810,10 +2815,14 @@ namespace szakmajDusza
 				{
 					AllKazamataDict[kazamataEditNmae].reward = KazamataReward.eletero;
 				}
-				else
+				else if(KazamataJutalom.SelectedIndex==1)
 				{
 					AllKazamataDict[kazamataEditNmae].reward = KazamataReward.sebzes;
 				}
+				else
+				{
+                    AllKazamataDict[kazamataEditNmae].reward = KazamataReward.arany;
+                }
 			}
 		}
 		private void SaveProgress_Click(object sender, RoutedEventArgs e)

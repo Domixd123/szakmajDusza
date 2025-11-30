@@ -73,7 +73,7 @@ namespace szakmajDusza
 		public static bool editor=false;
 		public static float spVolume = 0.25f;
 		public static float seVolume = 0.5f;
-		public static float spMult = 0.02f;
+		public static float spMult = 0.005f;
 		public static float seMult = 0.04f;
 		public MainWindow()
 		{
@@ -1617,7 +1617,14 @@ namespace szakmajDusza
 			internalEdits = false;
 			//UpdateKartyaSelectionCard(null, null);
 		}
-		private void UpdateKartyaSelectionCard(object sender, RoutedEventArgs es)
+        private void HomeButton(object sender, RoutedEventArgs e)
+        {
+            while (elozoGrid.Count != 0)
+            {
+                Back(null, null);
+            }
+        }
+        private void UpdateKartyaSelectionCard(object sender, RoutedEventArgs es)
 		{
 			if (!internalEdits)
 			{
@@ -2295,7 +2302,7 @@ namespace szakmajDusza
 			internalEdits = true;
 			LeaderCardPanel.Visibility = Visibility.Collapsed;
 			BasicCardPanel.Visibility = Visibility.Visible;
-
+			
 			VezerCheck.IsChecked = false;
 			internalEdits = false;
 			GoToGrid(KartyaSzerkeszto_Grid);
@@ -2493,6 +2500,7 @@ namespace szakmajDusza
 
 		private void Kazamata_Button_Click(object sender, RoutedEventArgs e)
 		{
+			KazMent.Visibility = Visibility.Collapsed;
 			CreateNewCard_Button.Visibility = Visibility.Collapsed;
 			CreateNewKazamata_Button.Visibility = Visibility.Visible;
 			MindenKazamata_List.Children.Clear();
@@ -3002,7 +3010,7 @@ namespace szakmajDusza
             Back(sender, e);
         }
 
-        private void UpdateKartyaSelectionCard(object sender, SelectionChangedEventArgs e)
+        private void UpdateKartyaSelectionCards(object sender, SelectionChangedEventArgs e)
         {
 			if (!internalEdits)
 			{

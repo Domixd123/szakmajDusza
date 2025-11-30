@@ -193,13 +193,20 @@ namespace szakmajDusza
                         c.Items.Add(item);
                         c.UpdateAllVisual();
                     }
-                }
+					else
+					{
+						c.Items.Remove(c.Items[0]);
+						c.Items.Add(item);
+						c.UpdateAllVisual();
+					}
+				}
                 else
                 {
                     c.Items.Remove(item);
                     c.UpdateAllVisual();
-                }
-                item.Clicked -= AddAbility;
+				}
+				
+					item.Clicked -= AddAbility;
 
                 SelectedCardForAbility.Children.Clear();
                 Ability_Wrap.Children.Clear();

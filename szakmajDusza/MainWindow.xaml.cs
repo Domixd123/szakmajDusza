@@ -206,6 +206,7 @@ namespace szakmajDusza
 		}
 		public void LoadSave(string path)
 		{
+			Save.fileName = Path.GetFileName(path);
 			Item.ResetItems();
 			DynamicButtonsPanel.Children.Clear();
 			Gyujtemeny.Clear();

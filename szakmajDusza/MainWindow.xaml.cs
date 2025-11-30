@@ -2981,7 +2981,7 @@ namespace szakmajDusza
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             string kazName = kazamataEditNmae;
-			AllCardsDict.Remove(kazName);
+			AllKazamataDict.Remove(kazName);
             MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
             Kazamata_Button_Click(null, null);
             Back(sender, e);

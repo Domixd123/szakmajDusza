@@ -542,7 +542,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -565,7 +565,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
@@ -587,7 +587,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -610,7 +610,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
@@ -632,7 +632,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
@@ -655,7 +655,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
                 tcs.SetResult(true);
             };
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
@@ -693,12 +693,12 @@ namespace szakmajDusza
             anim.Completed += (s, e) =>
             {
                 // hide once it’s slid away
-                ImportantLabel2.Visibility = Visibility.Hidden;
+                ImportantLabel2.Visibility = Visibility.Collapsed;
             };
             anim2.Completed += (s, e) =>
             {
                 // hide once it’s slid away
-                ImportantLabel.Visibility = Visibility.Hidden;
+                ImportantLabel.Visibility = Visibility.Collapsed;
             };
 
             ImportantLabel2.BeginAnimation(Label.MarginProperty, anim);
@@ -723,7 +723,7 @@ namespace szakmajDusza
             anim.Completed += (s, e) =>
             {
                 // hide once it’s slid away
-                ImportantLabel.Visibility = Visibility.Hidden;
+                ImportantLabel.Visibility = Visibility.Collapsed;
             };
             ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
         }
@@ -747,15 +747,15 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 
 			};
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 		}
 		public void HideAllLabels()
 		{
-			ImportantLabel.Visibility= Visibility.Hidden;
-			ImportantLabel2.Visibility= Visibility.Hidden;
+			ImportantLabel.Visibility= Visibility.Collapsed;
+			ImportantLabel2.Visibility= Visibility.Collapsed;
 		}
         public async Task UpdateVisualDamage(int dmg)
 		{
@@ -774,7 +774,7 @@ namespace szakmajDusza
 			anim.Completed += (s, e) =>
 			{
 				// hide once it’s slid away
-				ImportantLabel.Visibility = Visibility.Hidden;
+				ImportantLabel.Visibility = Visibility.Collapsed;
 				HPLabel.Content = HP;
 			};
 
@@ -787,7 +787,7 @@ namespace szakmajDusza
 			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
 			HPLabel.Content = $"{previousHP}";
 			HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
-			//ImportantLabel.Visibility = Visibility.Hidden;
+			//ImportantLabel.Visibility = Visibility.Collapsed;
 		}//rework
 		public async Task UpdateVisualHeal(int heal)
 		{

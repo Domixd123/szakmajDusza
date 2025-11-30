@@ -31,15 +31,14 @@ namespace szakmajDusza
 		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,double critMult=1)
 		{
 			string reductionType = "";
-			int reduction = 0;
-			int armorReduction = 0;
+			double armorReduction = 0;
 			foreach (var item in defender.Items)//apply all damage reductions
 			{
 				if (!MagicRes(attacker))
 				{
 					if (item.Name == "Páncél")
 					{
-						armorReduction = (item.Level * item.BaseVariable);
+						armorReduction = item.Level * item.BaseVariable*0.01;
 						if (reductionType != "dodge") reductionType = "shield";
 						//armor animation
 					}
@@ -73,7 +72,7 @@ namespace szakmajDusza
 					{
 						if (item.Name == "Tüskék")
 						{
-							damage = (int)Math.Round(damage*(1-(item.BaseVariable * item.Level * 0.01)), 0);
+							//damage = (int)Math.Round(damage*(1-(item.BaseVariable * item.Level * 0.01)), 0);
 							int damage2 = (int)Math.Round(damage*item.BaseVariable * item.Level * 0.01, 0);
 							await AnimationManager(attacker, "normal", "", damage2);
 							attacker.HP -= damage2;
@@ -87,8 +86,8 @@ namespace szakmajDusza
 				}
 			}
 			
-			await AnimationManager(defender, damageType, reductionType, damage, reduction, (int)(critMult*100));
-			defender.HP -= (int)Math.Round(damage*critMult,0);
+			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * critMult * armorReduction, 0), (int)(critMult*100));
+			defender.HP -= (int)Math.Round(damage*critMult*(1-armorReduction),0);
 		}
 		public static async Task AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{

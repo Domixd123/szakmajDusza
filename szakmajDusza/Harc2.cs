@@ -91,6 +91,10 @@ namespace szakmajDusza
 		}
 		public static async void AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
+			while (card.animation)
+			{
+
+			}
 			string damagetype2 = damageType;
 			if (damageType == "normal")
 			{
@@ -202,12 +206,12 @@ namespace szakmajDusza
 			}
 			if (critHappened)
 			{
-				int damage = (int)Math.Round(attacker.Damage * damageMultiplier, 0);
+				int damage = (int)Math.Round(attacker.Damage*Multiplier(attacker,defender) * damageMultiplier, 0);
 				DamageReductions(attacker, defender, damage, "crit",(0.4*critLevel));
 			}
 			else
 			{
-				int damage = (int)Math.Round(attacker.Damage * damageMultiplier, 0);
+				int damage = (int)Math.Round(attacker.Damage * Multiplier(attacker, defender) * damageMultiplier, 0);
 				DamageReductions(attacker, defender, damage, "normal");
 			}
 			/*foreach (var item in defender.Items)//apply all damage reductions

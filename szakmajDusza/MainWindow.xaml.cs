@@ -2976,6 +2976,7 @@ namespace szakmajDusza
         {
 			
 			Save.Kornyezetrogress();
+			Back(null, null);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

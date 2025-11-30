@@ -14,6 +14,7 @@
     <None Remove="images\crit.png" />
     <None Remove="images\dodge.png" />
     <None Remove="images\earth.jpg" />
+    <None Remove="images\Fire kazamata.png" />
     <None Remove="images\fire.jpg" />
     <None Remove="images\healing.png" />
     <None Remove="images\heartbg.png" />
@@ -23,6 +24,7 @@
     <None Remove="images\strength.png" />
     <None Remove="images\thorns.png" />
     <None Remove="images\water.jpg" />
+    <None Remove="images\Wind kazamata.png" />
     <None Remove="images\wind.jpg" />
   </ItemGroup>
 
@@ -34,6 +36,7 @@
     <Resource Include="images\earth.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\Fire kazamata.png" />
     <Resource Include="images\fire.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -47,6 +50,7 @@
     <Resource Include="images\water.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\Wind kazamata.png" />
     <Resource Include="images\wind.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

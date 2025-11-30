@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace szakmajDusza
@@ -37,6 +38,7 @@ namespace szakmajDusza
 		public Label NewLabel;
 		public Label LevelUpLabel;
 		public Border border;
+		public Ellipse centerImage;
 
 		public Grid visualGroup;
 
@@ -189,6 +191,10 @@ namespace szakmajDusza
 			};
 			visualGroup.MouseEnter += (s, e) =>
 			{
+				if (centerImage != null)
+				{
+					centerImage.Visibility = Visibility.Collapsed;
+				}
 				if (NewLabel != null) NewLabel.Visibility = Visibility.Collapsed;
 				visualGroup.Background = new LinearGradientBrush(
 					Color.FromRgb(92, 71, 161),
@@ -207,7 +213,11 @@ namespace szakmajDusza
 
 			visualGroup.MouseLeave += (s, e) =>
 			{
-				if (NewLabel != null) NewLabel.Visibility = Visibility.Visible;
+                if (centerImage != null)
+                {
+                    centerImage.Visibility = Visibility.Visible;
+                }
+                if (NewLabel != null) NewLabel.Visibility = Visibility.Visible;
 				visualGroup.Background = new LinearGradientBrush(
 					Color.FromRgb(25, 20, 30),
 					Color.FromRgb(45, 35, 55),
@@ -250,7 +260,29 @@ namespace szakmajDusza
 				HorizontalContentAlignment = HorizontalAlignment.Center,
 
 			};
-			if (Name.Split(' ').Length > 1)
+
+			centerImage = new Ellipse
+			{
+				Width = 50,
+				Height = 50,
+				VerticalAlignment = VerticalAlignment.Center,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Margin = new Thickness(0, 10,0 ,0 ),
+
+				Stroke = Brushes.Gold,
+				StrokeThickness = 2,
+				Fill = new ImageBrush
+				{
+
+					ImageSource = new BitmapImage(
+					new Uri($"pack://application:,,,/Images/{Items[Name].IconPath}"))
+				},
+				IsHitTestVisible = false
+			};
+
+            // a border után, a name label előtt érdemes hozzáadni
+            visualGroup.Children.Add(centerImage);
+            if (Name.Split(' ').Length > 1)
 			{
 				Name2Label = new Label
 				{
@@ -291,13 +323,16 @@ namespace szakmajDusza
 					FontWeight = FontWeights.ExtraBold,
 					FontSize = 18,
 					HorizontalAlignment = HorizontalAlignment.Center,
-					VerticalAlignment = VerticalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Top,
+					Margin = new Thickness(0, 40, 0, 0),
 					IsHitTestVisible = false
 				};
 
 
 				visualGroup.Children.Add(NewLabel);
 			}
+
+
 			/*else if(LevelUpRequirement(Level+1)==CurrentLevelOwned()+1)
 			{
 				border.BorderBrush = new LinearGradientBrush(
@@ -404,7 +439,8 @@ namespace szakmajDusza
 						FontWeight = FontWeights.ExtraBold,
 						FontSize = 18,
 						HorizontalAlignment = HorizontalAlignment.Center,
-						VerticalAlignment = VerticalAlignment.Center,
+						VerticalAlignment = VerticalAlignment.Top,
+						Margin = new Thickness(0, 40, 0, 0),
 						IsHitTestVisible = false
 					};
 					visualGroup.Children.Add(LevelUpLabel);

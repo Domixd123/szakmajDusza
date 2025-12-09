@@ -564,8 +564,8 @@ namespace szakmajDusza
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel.Visibility = Visibility.Visible;
 			Panel.SetZIndex(ImportantLabel, -1);
-			ImportantLabel.FontWeight = FontWeights.Bold;
-			ImportantLabel.Foreground = Brushes.DarkRed;
+			ImportantLabel.FontWeight = FontWeights.ExtraBold;
+			ImportantLabel.Foreground = Brushes.Black;
 			ImportantLabel.Content = $"-{dmg}×{mult}";
 
 			var anim = new ThicknessAnimation

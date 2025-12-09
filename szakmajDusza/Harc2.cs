@@ -516,9 +516,11 @@ namespace szakmajDusza
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
-				MessageBox.Show(MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds.ToString());
+                while (!MainWindow.se.NaturalDuration.HasTimeSpan)
+                    await Task.Delay(1);
                 await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
                 MainWindow.se.Stop();
+				MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
                 MainWindow.sp.Play();
             }
 			else
@@ -532,8 +534,9 @@ namespace szakmajDusza
 				MainWindow.se.Open(new Uri("Sounds/Win.wav", UriKind.Relative));
 				MainWindow.se.Play();
 				MainWindow.sp.Stop();
+               
 
-				switch (k.reward)
+                switch (k.reward)
 				{
 					case KazamataReward.eletero:
 						//MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
@@ -593,7 +596,13 @@ namespace szakmajDusza
 					default:
 						break;
 				}
-			}
+                while (!MainWindow.se.NaturalDuration.HasTimeSpan)
+                    await Task.Delay(1);
+                await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
+                MainWindow.se.Stop();
+                MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                MainWindow.sp.Play();
+            }
 		}
 
 

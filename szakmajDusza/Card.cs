@@ -546,7 +546,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 80),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.4f),
+				Duration = TimeSpan.FromSeconds(0.8f/Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -575,7 +575,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.6f),
+				Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -603,7 +603,7 @@ namespace szakmajDusza
 
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 80),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.4f),
+				Duration = TimeSpan.FromSeconds(0.8f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -630,7 +630,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.6f),
+				Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -657,7 +657,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 130),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 65),
-				Duration = TimeSpan.FromSeconds(0.6f),
+				Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -685,7 +685,7 @@ namespace szakmajDusza
 			{
                 From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
                 To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
-                Duration = TimeSpan.FromSeconds(0.6f),
+                Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
                 FillBehavior = FillBehavior.Stop
             };
 			anim.Completed += (s, e) =>
@@ -722,14 +722,14 @@ namespace szakmajDusza
             {
                 From = new Thickness(25 - 5.5 * ImportantLabel2.Content.ToString().Length, 0, 0, 70),
                 To = new Thickness(25 - 5.5 * ImportantLabel2.Content.ToString().Length, 0, 0, 5),
-                Duration = TimeSpan.FromSeconds(0.6f),
+                Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
                 FillBehavior = FillBehavior.Stop
             };
             var anim2 = new ThicknessAnimation
             {
                 From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
                 To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
-                Duration = TimeSpan.FromSeconds(0.6f),
+                Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
                 FillBehavior = FillBehavior.Stop
             };
             anim.Completed += (s, e) =>
@@ -788,7 +788,7 @@ namespace szakmajDusza
             {
                 From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 130),
                 To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 65),
-                Duration = TimeSpan.FromSeconds(0.6f),
+                Duration = TimeSpan.FromSeconds(1.0f / Harc2.playSpeedMultiplier),
                 FillBehavior = FillBehavior.Stop
             };
             anim.Completed += (s, e) =>
@@ -817,7 +817,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 80),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.4f),
+				Duration = TimeSpan.FromSeconds(0.8f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>
@@ -851,7 +851,7 @@ namespace szakmajDusza
 			{
 				From = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 70),
 				To = new Thickness(0, 0, 25 - 5.5 * ImportantLabel.Content.ToString().Length, 5),
-				Duration = TimeSpan.FromSeconds(0.4f),
+				Duration = TimeSpan.FromSeconds(0.8f / Harc2.playSpeedMultiplier),
 				FillBehavior = FillBehavior.Stop
 			};
 			anim.Completed += (s, e) =>

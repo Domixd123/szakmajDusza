@@ -1560,7 +1560,7 @@ namespace szakmajDusza
 				}
 			}
 
-			if (Gyujtemeny.First(x => x.Name == cardName) != null)
+			if (Gyujtemeny.FirstOrDefault(x => x.Name == cardName) != null)
 			{
                 Gyujtemeny.Remove(Gyujtemeny.First(x => x.Name == cardName));
             }

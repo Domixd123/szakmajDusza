@@ -516,7 +516,8 @@ namespace szakmajDusza
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
-                await Task.Delay(MainWindow.se.NaturalDuration.TimeSpan);
+				MessageBox.Show(MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds.ToString());
+                await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
                 MainWindow.se.Stop();
                 MainWindow.sp.Play();
             }

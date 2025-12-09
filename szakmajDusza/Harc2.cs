@@ -505,15 +505,21 @@ namespace szakmajDusza
 			if (playerCopies.Count == 0 && play == null)
 			{
 				l.Content = "Vesztettél!";
+				MainWindow.se.Close();
 				MainWindow.se.Open(new Uri("Sounds/Lose.wav", UriKind.Relative));
 				MainWindow.se.Play();
 				MainWindow.sp.Stop();
-				//MessageBox.Show("Játékos veszített!");
-				kazamata.Children.Clear();
+               
+
+                //MessageBox.Show("Játékos veszített!");
+                kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
-			}
+                await Task.Delay(MainWindow.se.NaturalDuration.TimeSpan);
+                MainWindow.se.Stop();
+                MainWindow.sp.Play();
+            }
 			else
 			{
 				Label l2 = MainWindow.CreateJutalom(grid);

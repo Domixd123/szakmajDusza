@@ -1033,12 +1033,12 @@ namespace szakmajDusza
 
 			if (new Random().Next(2) == 1)
 			{
-				sp.Open(new Uri("Sounds/Nehez.wav", UriKind.Relative));
+				sp.Open(new Uri("Sounds/NagyHarc.wav", UriKind.Relative));
 				sp.Play();
 			}
 			else
 			{
-				sp.Open(new Uri("Sounds/Kozepes.wav", UriKind.Relative));
+				sp.Open(new Uri("Sounds/KozepesHarc.wav", UriKind.Relative));
 				sp.Play();
 			}
 

@@ -18,6 +18,7 @@ namespace szakmajDusza
 			if (fileName == null || fileName == "")
 			{
 				//ask for a unique filename
+				return;
 			}
 			Directory.CreateDirectory("saves");
 			StreamWriter sw =new StreamWriter("saves/"+fileName);
@@ -115,7 +116,7 @@ namespace szakmajDusza
         {
             if (fileName == null || fileName == "")
             {
-                
+				return;
             }
             Directory.CreateDirectory("kornyezet");
             StreamWriter sw = new StreamWriter("kornyezet/" + fileName);

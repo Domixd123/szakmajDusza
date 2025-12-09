@@ -67,9 +67,9 @@ namespace szakmajDusza
 		public static List<Card> Merging = new List<Card>();
 
 		public static bool editor = false;
-		public static float spVolume = 0.25f;
+		public static float spVolume = 0.5f;
 		public static float seVolume = 0.5f;
-		public static float spMult = 0.005f;
+		public static float spMult = 0.0025f;
 		public static float seMult = 0.04f;
 		public MainWindow()
 		{

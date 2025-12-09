@@ -115,12 +115,11 @@ namespace szakmajDusza
         {
             if (fileName == null || fileName == "")
             {
-                //ask for a unique filename
+                
             }
             Directory.CreateDirectory("kornyezet");
             StreamWriter sw = new StreamWriter("kornyezet/" + fileName);
-            sw.WriteLine($"difficulty;{MainWindow.Difficulty}");
-            sw.WriteLine();
+            
             foreach (var item in MainWindow.AllCardsDict.Values)
             {
                 sw.WriteLine($"uj kartya;{item.Name};{item.Damage};{item.HP};{Card.TipusToString(item.Tipus)}");
@@ -178,10 +177,14 @@ namespace szakmajDusza
             sw.WriteLine($"shopRefreshPrice;{Item.shopRefreshPrice}");
             sw.WriteLine($"shopItemCount;{Item.shopItemCount}");
             sw.WriteLine();
-            foreach (var item in Item.Items.Values)
-            {
-                sw.WriteLine($"item;{item.Name};{item.Buyable};{item.MaxLevel};{item.Price};{item.Level};{item.OwnedCount};{item.BaseVariable};{item.InRotation}");
+			if (Item.Items != null)
+			{
+                foreach (var item in Item.Items.Values)
+                {
+                    sw.WriteLine($"item;{item.Name};{item.Buyable};{item.MaxLevel};{item.Price};{item.Level};{item.OwnedCount};{item.BaseVariable};{item.InRotation}");
+                }
             }
+            
             sw.WriteLine();
             /*foreach (var item in MainWindow.Gyujtemeny)
             {

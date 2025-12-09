@@ -240,7 +240,7 @@ namespace szakmajDusza
 			else
 			{
                 Card c = lastCard;
-                if (!c.Items.Contains(item))
+                if (c.Items.FirstOrDefault(x => x.Name == item.Name) != null)
                 {
                     if (c.Vezer && c.Items.Count <= 1)
                     {
@@ -1442,13 +1442,13 @@ namespace szakmajDusza
 			GoToGrid(KornyezetSzerkeszto_Grid);
 		}
 
-		private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
+		/*private void PlayInKornyezet_Click(object sender, RoutedEventArgs e)
 		{
 			editor = false;
 			LoadSave($"kornyezet/{KornyezetekJatekos_List.SelectedItem.ToString()}.txt");
 			//loaddata was here
 			GoToGrid(PakliOssze_Grid);
-		}
+		}*/
 
 
 
@@ -1532,9 +1532,14 @@ namespace szakmajDusza
 				}
 			}
 
-
-			AllCardsDict.Remove(cardName);
+			if (Gyujtemeny.First(x => x.Name == cardName) != null)
+			{
+                Gyujtemeny.Remove(Gyujtemeny.First(x => x.Name == cardName));
+            }
+            
+            AllCardsDict.Remove(cardName);
 			AllLeadersDict.Remove(cardName);
+			
 			MessageBox.Show("Sikeres törlés!", "", MessageBoxButton.OK, MessageBoxImage.Information);
 			ListKartya_Button_Click(null,null);
 			Back(sender, e);
@@ -1770,7 +1775,8 @@ namespace szakmajDusza
 			string fileName = KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[0][..^1];
 			if (KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[1] == "mentett)")
 			{
-				LoadSave($"saves/{fileName}.txt");
+                editor = false;
+                LoadSave($"saves/{fileName}.txt");
 				KornyezetekJatekos_List.SelectedItem = null;
 				GoToGrid(PakliOssze_Grid);
 			}
@@ -1778,11 +1784,13 @@ namespace szakmajDusza
 			{
 				Difficulty_Stack.Visibility = Visibility.Visible;
 			}
-		}
+            
+        }
 
 		private void ConfirmDif_Button_Click(object sender, RoutedEventArgs e)
 		{
 			string fileName = KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[0][..^1];
+			editor = false;
 			LoadSave($"kornyezet/{fileName}.txt");
 			//loaddata was here
 			Difficulty = int.Parse((string)Dif_Label.Content);
@@ -2370,7 +2378,7 @@ namespace szakmajDusza
 			else
 			{
 				internalEdits = true;
-				AllCardsDict.Remove(cardEditName);
+				
 				SelectedCard_Wrap.Children.Clear();
 				BasicCardPanel.Visibility = Visibility.Collapsed;
 				LeaderCardPanel.Visibility = Visibility.Visible;
@@ -2379,11 +2387,13 @@ namespace szakmajDusza
 				VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
 				VezerBonusTipus.SelectedIndex = 0;
 				Card k = AllCardsDict[VezerAlapKartya.SelectedItem.ToString()].GetCopy();
-				k.Vezer = true;
+                AllCardsDict.Remove(cardEditName);
+                k.Vezer = true;
 				k.OriginName = VezerAlapKartya.SelectedItem.ToString();
 				VezerNev.Text = "Vezér";
 				cardEditName = VezerNev.Text + " " + VezerAlapKartya.SelectedItem.ToString();
-				AllLeadersDict.Add(cardEditName, k);
+                
+                AllLeadersDict.Add(cardEditName, k);
 				AllLeadersDict[cardEditName].Name = cardEditName;
 				SelectedCard_Wrap.Children.Add(k.GetVisual());
 				if (VezerBonusTipus.SelectedIndex == 0)
@@ -2500,7 +2510,7 @@ namespace szakmajDusza
 
 		private void Kazamata_Button_Click(object sender, RoutedEventArgs e)
 		{
-			KazMent.Visibility = Visibility.Collapsed;
+			KazMent.IsEnabled = false;
 			CreateNewCard_Button.Visibility = Visibility.Collapsed;
 			CreateNewKazamata_Button.Visibility = Visibility.Visible;
 			MindenKazamata_List.Children.Clear();
@@ -2931,8 +2941,28 @@ namespace szakmajDusza
 			else
 			{
 				Save.fileName = $"{FileName_TextBox.Text}.txt";
-				Save.SaveProgress();
+				if (elozoGrid.Peek().Name == "KornyezetSzerkeszto_Grid")
+				{
+					Save.Kornyezetrogress();
+                    KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
+                    var k1 = Directory.GetFiles("kornyezet")
+    .Select(x => Path.GetFileNameWithoutExtension(x) + " (új)");
+
+                    var k2 = Directory.GetFiles("saves")
+                        .Select(x => Path.GetFileNameWithoutExtension(x) + " (mentett)");
+
+                    KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
+                    Back(sender, e);
+					Save.fileName = "";
+				}
+				else
+				{
+					Save.SaveProgress();
+                    
+                }
+					
 				Back(sender, e);
+				
 			}
 
 
@@ -2996,7 +3026,11 @@ namespace szakmajDusza
 
         private void KornyezetMentes_Button_Click(object sender, RoutedEventArgs e)
         {
-			
+			if (Save.fileName == null || Save.fileName == "")
+			{
+				GoToGrid(Save_Grid);
+				return;
+			}
 			Save.Kornyezetrogress();
 			Back(null, null);
         }

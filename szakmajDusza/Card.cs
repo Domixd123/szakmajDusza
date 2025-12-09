@@ -524,8 +524,12 @@ namespace szakmajDusza
 				HP = 0;
 				visualGroup.Opacity = 0.4;
 			}
-			//DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
-			HPLabel.Content = HP;
+			else
+			{
+				visualGroup.Opacity = 1;
+			}
+				//DamageAndHPLabel.Content = $"{Damage} ⚔ / {HP} ❤";
+				HPLabel.Content = HP;
 			DamageLabel.Content = Damage;
 			HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
 		}
@@ -558,7 +562,7 @@ namespace szakmajDusza
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 			return tcs.Task;
 		}
-		public  Task CritAnim(int dmg, int mult)
+		public  Task CritAnim(int dmg, double mult)
 		{
 			animation=true;
             var tcs = new TaskCompletionSource<bool>();
@@ -613,7 +617,7 @@ namespace szakmajDusza
 			ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
 			return tcs.Task;
 		}
-		public  Task CritShieldAnim(int dmg, int mult, int blocked)
+		public  Task CritShieldAnim(int dmg, double mult, int blocked)
 		{
 			animation = true;
             var tcs = new TaskCompletionSource<bool>();
@@ -699,6 +703,9 @@ namespace szakmajDusza
 
         public  Task ReviveAnim(int amount) 
         {
+			bool anim1comp = false;
+			bool anim2comp = false;
+
 			animation = true;
             var tcs = new TaskCompletionSource<bool>();
             ImportantLabel2.Visibility = Visibility.Visible;
@@ -728,17 +735,39 @@ namespace szakmajDusza
             };
             anim.Completed += (s, e) =>
             {
-				animation = false;
+				
                 // hide once it’s slid away
                 ImportantLabel2.Visibility = Visibility.Hidden;
-                tcs.SetResult(true);
+				if (anim2comp)
+				{
+					Disabled = false;
+					animation = false;
+                    tcs.SetResult(true);
+                    
+                }
+				else
+				{
+					anim1comp = true;
+				}
+                
             };
             anim2.Completed += (s, e) =>
             {
-                animation = false;
+                
                 // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
-                tcs.SetResult(true);
+				if (anim1comp)
+				{
+					Disabled = false;
+					animation = false;
+                    tcs.SetResult(true);
+                    
+                }
+				else
+				{
+					anim2comp = true;
+				}
+                
             };
 
             ImportantLabel2.BeginAnimation(Label.MarginProperty, anim);

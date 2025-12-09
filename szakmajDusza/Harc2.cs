@@ -28,7 +28,7 @@ namespace szakmajDusza
 		static string respawnedNamePlayer = "";
 		static int respawnTimesKazamata = 0;
 		static string respawnedNameKazamata = "";
-		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,double critMult=1)
+		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,double critMult=0)
 		{
 			string reductionType = "";
 			double armorReduction = 0;
@@ -86,10 +86,10 @@ namespace szakmajDusza
 				}
 			}
 			
-			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * critMult * armorReduction, 0), (int)(critMult*100));
-			defender.HP -= (int)Math.Round(damage*critMult*(1-armorReduction),0);
+			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * (1+critMult) * armorReduction, 0), 1+critMult);
+			defender.HP -= (int)Math.Round(damage*(1+critMult)*(1-armorReduction),0);
 		}
-		public static async Task AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, int bonusParam1 = int.MinValue/*, int bonusParam2 = int.MinValue*/)
+		public static async Task AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, double bonusParam1 = double.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
 			/*while (card.animation)
 			{
@@ -146,6 +146,7 @@ namespace szakmajDusza
 				else if (reductionType == "revive")
 				{
 					await card.ReviveAnim(reductionParam);
+					card.Disabled = false;
 				}
 				else if (reductionType == "magic")
 				{
@@ -192,7 +193,7 @@ namespace szakmajDusza
 					await DamageReductions(attacker,defender,damage,"strength");
 					//strength animation
 				}
-				else if (item.Name == "Krit ütés")
+				else if (item.Name == "Krit csapás")
 				{
 					if (random.Next(0, 100) < item.Level * item.BaseVariable)
 					{

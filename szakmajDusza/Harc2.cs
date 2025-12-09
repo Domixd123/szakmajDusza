@@ -509,7 +509,7 @@ namespace szakmajDusza
 				MainWindow.se.Open(new Uri("Sounds/Lose.wav", UriKind.Relative));
 				MainWindow.se.Play();
 				MainWindow.sp.Stop();
-               
+				MainWindow.menuMusic = "";
 
                 //MessageBox.Show("Játékos veszített!");
                 kazamata.Children.Clear();
@@ -519,9 +519,15 @@ namespace szakmajDusza
                 while (!MainWindow.se.NaturalDuration.HasTimeSpan)
                     await Task.Delay(1);
                 await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
-                MainWindow.se.Stop();
-				MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-                MainWindow.sp.Play();
+				if (MainWindow.menuMusic=="")
+				{
+                    MainWindow.se.Stop();
+                    MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                    MainWindow.sp.Play();
+                    MainWindow.menuMusic = "menu";
+
+                }
+
             }
 			else
 			{
@@ -599,9 +605,13 @@ namespace szakmajDusza
                 while (!MainWindow.se.NaturalDuration.HasTimeSpan)
                     await Task.Delay(1);
                 await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
-                MainWindow.se.Stop();
-                MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-                MainWindow.sp.Play();
+                if (MainWindow.menuMusic == "")
+                {
+                    MainWindow.se.Stop();
+                    MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                    MainWindow.sp.Play();
+					MainWindow.menuMusic = "menu";
+                }
             }
 		}
 

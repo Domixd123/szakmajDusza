@@ -44,7 +44,7 @@ namespace szakmajDusza
 		static public string cardEditName = "";
 		static public string kazamataEditNmae = "";
 		static public bool internalEdits = false;
-
+		static public string menuMusic = "menu";
 		public static int Difficulty = 0;
 
 		public static List<Card> Gyujtemeny = new List<Card>();
@@ -1041,6 +1041,7 @@ namespace szakmajDusza
 				sp.Open(new Uri("Sounds/KozepesHarc.wav", UriKind.Relative));
 				sp.Play();
 			}
+			menuMusic = "harc";
 
 		}
 
@@ -1869,7 +1870,13 @@ namespace szakmajDusza
 
 		private void Back(object sender, RoutedEventArgs e)
 		{
-			if (elozoGrid.Count == 0)
+			if (menuMusic!="menu")
+			{
+                MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+                MainWindow.sp.Play();
+				menuMusic= "menu";
+            }
+            if (elozoGrid.Count == 0)
 				return;
 
 			/*if (elozoGrid.Peek().Name== "Shop_Grid")

@@ -253,7 +253,7 @@ namespace szakmajDusza
 					if (c.Vezer && c.Items.Count <= 1)
 					{
 						string e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
-						while (!int.TryParse(e, out int number) && number >= 1 && number <= item.MaxLevel)
+						while (!int.TryParse(e, out int number) && (number < 1 || number > item.MaxLevel))
 						{
 							e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
 						}
@@ -267,9 +267,9 @@ namespace szakmajDusza
 					else if (!c.Vezer && c.Items.Count == 0)
 					{
 						string e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
-						while (!int.TryParse(e, out int number) && number >= 1 && number <= item.MaxLevel)
-						{
-							e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
+                        while (!int.TryParse(e, out int number) && (number < 1 || number > item.MaxLevel))
+                        {
+                            e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
 						}
 						Item i = item.GetCopy();
 						i.Level = int.Parse(e);
@@ -280,7 +280,7 @@ namespace szakmajDusza
 					else
 					{
                         string e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
-                        while (!int.TryParse(e, out int number) && number >= 1 && number <= item.MaxLevel)
+                        while (!int.TryParse(e, out int number) && (number < 1 || number > item.MaxLevel))
                         {
                             e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
                         }

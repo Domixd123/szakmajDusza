@@ -208,19 +208,18 @@ namespace szakmajDusza
 				}
 			}
 
-
-			// statok
-			/*DamageAndHPLabel = new Label
-			{
-				Content = $"{Damage} ⚔ / {HP} ❤",
-				Foreground = Brushes.WhiteSmoke,
-				FontSize = 14,
-				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Bottom,
-				Margin = new Thickness(0, 0, 0, 10),
-				IsHitTestVisible = false
-			};*/
-			var aBG = new ImageBrush();
+				// statok
+				/*DamageAndHPLabel = new Label
+				{
+					Content = $"{Damage} ⚔ / {HP} ❤",
+					Foreground = Brushes.WhiteSmoke,
+					FontSize = 14,
+					HorizontalAlignment = HorizontalAlignment.Center,
+					VerticalAlignment = VerticalAlignment.Bottom,
+					Margin = new Thickness(0, 0, 0, 10),
+					IsHitTestVisible = false
+				};*/
+				var aBG = new ImageBrush();
 			aBG.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images\\attackbg.png"));
 			aBG.Stretch = Stretch.UniformToFill;
 			var DMGEllipse = new Ellipse

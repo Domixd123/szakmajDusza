@@ -2149,7 +2149,9 @@ namespace szakmajDusza
 			MergeToVezet.haromToVezer(Merging[0], Merging[1], Merging[2]);
 			Shop_Merge.IsEnabled = false;
 			Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
-			Shop_Merging_Cards.Children.Clear();
+            Gyujtemeny[Gyujtemeny.Count - 1].RightClicked += RightClick;
+
+            Shop_Merging_Cards.Children.Clear();
 			Cards_Wrap.Children.Clear();
 			//DynamicButtonsPanel.Children.Clear();
 			PlayerCards_Wrap.Children.Clear();
@@ -2180,13 +2182,15 @@ namespace szakmajDusza
 
 			}
 			//Gyujtemeny[Gyujtemeny.Count - 1].Clicked += AddToPakli;
-			Card card = Gyujtemeny[Gyujtemeny.Count - 1];
-			card.RightClicked -= RightClick;
-			card.RightClicked += RightClick;
+			Card card = Gyujtemeny[Gyujtemeny.Count - 1].GetCopy();
+            /*card.RightClicked -= RightClick;
+            card.RightClicked += RightClick;
+            Card c = card.GetCopy();*/
 
-			card.Disabled = true;
+            card.Disabled = true;
 			card.UpdateAllVisual();
 			CardMerge_Wrap.Children.Add(card.GetVisual());
+			
 
 			SelectableCounter_Label.Content = $"/ {Math.Ceiling((float)Gyujtemeny.Count / 2f)}";
 			int vezCount = 0;

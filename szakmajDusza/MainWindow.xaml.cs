@@ -1443,6 +1443,7 @@ namespace szakmajDusza
 			AllCardsDict.Clear();
 			AllLeadersDict.Clear();
 			AllKazamataDict.Clear();
+			Item.ResetItems();
 			GoToGrid(KornyezetSzerkeszto_Grid);
 		}
 

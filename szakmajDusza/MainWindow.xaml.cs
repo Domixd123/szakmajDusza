@@ -1438,7 +1438,11 @@ namespace szakmajDusza
 
 		private void AddKornyezet_Button_Click(object sender, RoutedEventArgs e)
 		{
-
+			Gyujtemeny.Clear();
+			Jatekos.Clear();
+			AllCardsDict.Clear();
+			AllLeadersDict.Clear();
+			AllKazamataDict.Clear();
 			GoToGrid(KornyezetSzerkeszto_Grid);
 		}
 

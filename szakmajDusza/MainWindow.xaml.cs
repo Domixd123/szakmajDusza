@@ -377,6 +377,7 @@ namespace szakmajDusza
 		}
 		public void DisableNagyKazamata()
 		{
+			bool cardRemains = false;
 			foreach (var item in AllCardsDict.Values)
 			{
 				bool found = false;
@@ -388,15 +389,29 @@ namespace szakmajDusza
 						break;
 					}
 				}
-				if (!found) return;//there are cards that can still be acquired
+				if (!found) cardRemains=true;//there are cards that can still be acquired
 			}
-			foreach (var item in DynamicButtonsPanel.Children)//only runs if all normal cards are already acquired
+			if (!cardRemains)
 			{
-				if (item.GetType() == typeof(Button) && AllKazamataDict.ContainsKey((item as Button).Content.ToString()) && AllKazamataDict[(item as Button).Content.ToString()].Tipus == KazamataType.nagy)
-				{
-					(item as Button).IsEnabled = false;
-				}
-			}
+                foreach (var item in DynamicButtonsPanel.Children)//only runs if all normal cards are already acquired
+                {
+                    if (item.GetType() == typeof(Button) && AllKazamataDict.ContainsKey((item as Button).Content.ToString()) && AllKazamataDict[(item as Button).Content.ToString()].Tipus == KazamataType.nagy)
+                    {
+                        (item as Button).IsEnabled = false;
+                    }
+                }
+            }
+			else
+			{
+                foreach (var item in DynamicButtonsPanel.Children)//only runs if all normal cards are already acquired
+                {
+                    if (item.GetType() == typeof(Button) && AllKazamataDict.ContainsKey((item as Button).Content.ToString()) && AllKazamataDict[(item as Button).Content.ToString()].Tipus == KazamataType.nagy)
+                    {
+                        (item as Button).IsEnabled = true;
+                    }
+                }
+            }
+			
 		}
 		public void LoadSave(string path)
 		{

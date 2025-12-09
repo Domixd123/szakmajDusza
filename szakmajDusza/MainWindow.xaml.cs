@@ -249,9 +249,10 @@ namespace szakmajDusza
                         {
                             e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
                         }
-						item.Level = int.Parse(e);
+						Item i = item.GetCopy();
+						i.Level = int.Parse(e);
 
-                        c.Items.Add(item);
+                        c.Items.Add(i);
                         c.UpdateAllVisual();
                     }
 
@@ -262,9 +263,10 @@ namespace szakmajDusza
                         {
                             e = Interaction.InputBox($"Add meg a szintet 1 és {item.MaxLevel} között", "Add meg a szintet", "0", 200, 200);
                         }
-                        item.Level = int.Parse(e);
+                        Item i = item.GetCopy();
+                        i.Level = int.Parse(e);
 
-                        c.Items.Add(item);
+                        c.Items.Add(i);
                         c.UpdateAllVisual();
                     }
                 }
@@ -274,7 +276,7 @@ namespace szakmajDusza
                     c.UpdateAllVisual();
                 }
                 item.Clicked -= AddAbility;
-
+				
                 SelectedCardForAbility.Children.Clear();
                 Ability_Wrap.Children.Clear();
 

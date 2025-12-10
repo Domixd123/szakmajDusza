@@ -167,7 +167,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
 
             </Grid>
 
-            <Grid x:Name="JatekMester_Grid" Visibility="Visible">
+            <Grid x:Name="JatekMester_Grid" Visibility="Visible" d:IsHidden="True">
                 <ListBox x:Name="KornyezetekMester_List" SelectionChanged="KornyezetekMester_List_SelectionChanged" Margin="0,0,0,341"/>
                 <Button x:Name="AddKornyezet_Button" Content="Hozzáadás" HorizontalAlignment="Left" Margin="560,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50" Click="AddKornyezet_Button_Click"/>
                 <Button Click="Back" Content="Vissza" HorizontalAlignment="Left" Margin="1047,849,0,0" VerticalAlignment="Top" Width="400" Height="100" FontSize="50"/>
@@ -247,7 +247,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </CheckBox>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="421*"/>
                     <RowDefinition Height="119*"/>

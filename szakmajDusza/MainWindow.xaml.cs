@@ -2558,6 +2558,8 @@ namespace szakmajDusza
                 SelectedCard_Wrap.Children.Clear();
 				BasicCardPanel.Visibility = Visibility.Collapsed;
 				LeaderCardPanel.Visibility = Visibility.Visible;
+				Gyujtemeny_Check.IsChecked = false;
+				Gyujtemeny_Check1.IsChecked = false;
 				VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
 				VezerAlapKartya.SelectedIndex = 0;
 				VezerBonusTipus.ItemsSource = new string[] { "Életerő", "Sebzés" };
@@ -2608,6 +2610,8 @@ namespace szakmajDusza
 				AllLeadersDict.Remove(cardEditName);
 				BasicCardPanel.Visibility = Visibility.Visible;
 				LeaderCardPanel.Visibility = Visibility.Collapsed;
+                Gyujtemeny_Check.IsChecked = false;
+                Gyujtemeny_Check1.IsChecked = false;
                 for (int i = 0; i < Gyujtemeny.Count; i++)
                 {
                     if (Gyujtemeny[i].Name == cardEditName)

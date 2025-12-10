@@ -1607,7 +1607,8 @@ namespace szakmajDusza
 		}
 		private void SelectForModify(Card k)
 		{
-			VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
+            SelectedCard_Wrap.Children.Clear();
+            VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
             if (AllCardsDict.Count > 1||k.Vezer)
             {
                 VezerCheck.IsEnabled = true;
@@ -2470,7 +2471,7 @@ namespace szakmajDusza
 			internalEdits = true;
 			LeaderCardPanel.Visibility = Visibility.Collapsed;
 			BasicCardPanel.Visibility = Visibility.Visible;
-
+			SelectedCard_Wrap.Children.Clear();
 			VezerCheck.IsChecked = false;
 			
 			internalEdits = false;

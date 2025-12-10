@@ -113,6 +113,7 @@ namespace szakmajDusza
 				sp.Play();
 			};
 			sp.Play();
+			Save.fileName = "";
 			//KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => /*"kornyezet/"+*/x.Split('\\')[1].Split('.')[0]);
 			KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
 			//KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("saves").Select(x => "saves/" + x.Split('\\')[1].Split('.')[0]);
@@ -604,6 +605,7 @@ namespace szakmajDusza
 					}
 				}
 			}
+			sr.Close();
 			foreach (var item in Gyujtemeny)
 			{
 				item.UpdateAllVisual();
@@ -3169,6 +3171,7 @@ namespace szakmajDusza
 				if (elozoGrid.Peek().Name == "KornyezetSzerkeszto_Grid")
 				{
 					Save.Kornyezetrogress();
+					Save.fileName = "";
 					KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
 					var k1 = Directory.GetFiles("kornyezet")
 	.Select(x => Path.GetFileNameWithoutExtension(x) + " (új)");

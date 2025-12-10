@@ -28,7 +28,7 @@ namespace szakmajDusza
 		static string respawnedNamePlayer = "";
 		static int respawnTimesKazamata = 0;
 		static string respawnedNameKazamata = "";
-		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,double critMult=0)
+		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,bool attackerIsPlayer,double critMult=0)
 		{
 			string reductionType = "";
 			double armorReduction = 0;
@@ -53,15 +53,15 @@ namespace szakmajDusza
 							break;
 						}
 					}
-					else if (item.Name == "Tüskék")
+					/*else if (item.Name == "Tüskék")
 					{
 						int damage2 = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable * 0.01, 0);
 						await AnimationManager(attacker, "normal", "", damage2);
 						attacker.HP -= damage2;
-						/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
+						/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);
 
 						//thorns animation
-					}
+					}*/
 				}
 			}
 			if (reductionType != "dodge")
@@ -76,11 +76,13 @@ namespace szakmajDusza
 							int damage2 = (int)Math.Round(damage*item.BaseVariable * item.Level * 0.01, 0);
 							await AnimationManager(attacker, "normal", "", damage2);
 							attacker.HP -= damage2;
-							reductionType = "shield";
-							attacker.UpdateVisual();
 							/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
 
 							//thorns animation
+							if (attacker.HP <= 0)
+							{
+								await RespawnItem(defender, attacker, !attackerIsPlayer);
+							}
 						}
 					}
 				}
@@ -181,7 +183,7 @@ namespace szakmajDusza
 				if (item.Name == "Életerőlopás")
 				{
 					int damage = (int)Math.Round(item.BaseVariable * item.Level * damageMultiplier, 0);
-					await DamageReductions(attacker, defender, damage, "normal");
+					await DamageReductions(attacker, defender, damage, "normal",attackerIsPlayer);
 					await AnimationManager(attacker, "", "heal", 0, damage);
 					attacker.HP += damage;
 					attacker.UpdateVisual();
@@ -190,7 +192,7 @@ namespace szakmajDusza
 				else if (item.Name == "Erő")
 				{
 					int damage = (int)Math.Round(item.BaseVariable * item.Level*damageMultiplier,0);
-					await DamageReductions(attacker,defender,damage,"strength");
+					await DamageReductions(attacker,defender,damage,"strength",attackerIsPlayer);
 					//strength animation
 				}
 				else if (item.Name == "Krit csapás")
@@ -208,68 +210,16 @@ namespace szakmajDusza
 			if (critHappened)
 			{
 				int damage = (int)Math.Round(attacker.Damage*Multiplier(attacker,defender) * damageMultiplier, 0);
-				await DamageReductions(attacker, defender, damage, "crit",(0.4*critLevel));
+				await DamageReductions(attacker, defender, damage, "crit",attackerIsPlayer,(0.4*critLevel));
 			}
 			else
 			{
 				int damage = (int)Math.Round(attacker.Damage * Multiplier(attacker, defender) * damageMultiplier, 0);
-				await DamageReductions(attacker, defender, damage, "normal");
+				await DamageReductions(attacker, defender, damage, "normal",attackerIsPlayer);
 			}
-			/*foreach (var item in defender.Items)//apply all damage reductions
-			{
-				if (!MagicRes(attacker))
-				{
-					if (item.Name == "Páncél")
-					{
-						damage /= (item.Level * item.BaseVariable);
-						//armor animation
-					}
-					else if (item.Name == "Kikerülés")
-					{
-						if (random.Next(0, 100) < item.Level * item.BaseVariable)
-						{
-							damage = 0;
-							//dodge animation
-							break;
-						}
-					}
-				}
-			}*/
-			/*if (attackerIsPlayer)
-			{
-				damage = (int)Math.Round(damage * (1 - (roll * difficulty / 20)));
-			}
-			else
-			{
-				damage = (int)Math.Round(damage * (1 + (roll * difficulty / 10)));
-			}
-			defender.HP -= damage;*/
-			//damage animation
 			if (defender.HP <= 0)
 			{
 				await RespawnItem(attacker, defender, attackerIsPlayer);
-			}
-
-			if (defender.HP > 0)
-			{
-				foreach (var item in defender.Items)
-				{
-					if (MagicRes(attacker)) continue;
-					if (item.Name == "Tüskék")
-					{
-						int damage = (int)Math.Round(item.BaseVariable * item.Level * item.BaseVariable * 0.01, 0);
-						await AnimationManager(attacker, "normal", "", damage);
-						attacker.HP -= damage;
-						attacker.UpdateVisual();
-						/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
-
-						//thorns animation
-					}
-				}
-			}
-			if (attacker.HP <= 0)
-			{
-				await RespawnItem(defender, attacker, !attackerIsPlayer);
 			}
 			if (attacker.HP <= 0) return;
 			foreach (var item in attacker.Items)

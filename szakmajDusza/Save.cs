@@ -65,15 +65,31 @@ namespace szakmajDusza
 			sw.WriteLine();
 			foreach (var item in MainWindow.Gyujtemeny)
 			{
-				int eleteroAmmount = item.HP - MainWindow.AllCardsDict[item.Name].HP;
-				if (eleteroAmmount > 0)
+				if (item.Vezer)
 				{
-					sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
+					int eleteroAmmount = item.HP - MainWindow.AllLeadersDict[item.Name].HP;
+					if (eleteroAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
+					}
+					int sebzesAmmount = item.Damage - MainWindow.AllLeadersDict[item.Name].Damage;
+					if (sebzesAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
+					}
 				}
-				int sebzesAmmount = item.Damage - MainWindow.AllCardsDict[item.Name].Damage;
-				if (sebzesAmmount > 0)
+				else
 				{
-					sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
+					int eleteroAmmount = item.HP - MainWindow.AllCardsDict[item.Name].HP;
+					if (eleteroAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
+					}
+					int sebzesAmmount = item.Damage - MainWindow.AllCardsDict[item.Name].Damage;
+					if (sebzesAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
+					}
 				}
 			}
 			sw.WriteLine();
@@ -162,16 +178,33 @@ namespace szakmajDusza
             sw.WriteLine();
             foreach (var item in MainWindow.Gyujtemeny)
             {
-                int eleteroAmmount = item.HP - MainWindow.AllCardsDict[item.Name].HP;
-                if (eleteroAmmount > 0)
-                {
-                    sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
-                }
-                int sebzesAmmount = item.Damage - MainWindow.AllCardsDict[item.Name].Damage;
-                if (sebzesAmmount > 0)
-                {
-                    sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
-                }
+				if (item.Vezer)
+				{
+					int eleteroAmmount = item.HP - MainWindow.AllLeadersDict[item.Name].HP;
+					if (eleteroAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
+					}
+					int sebzesAmmount = item.Damage - MainWindow.AllLeadersDict[item.Name].Damage;
+					if (sebzesAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
+					}
+				}
+				else
+				{
+					int eleteroAmmount = item.HP - MainWindow.AllCardsDict[item.Name].HP;
+					if (eleteroAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};eletero;{eleteroAmmount}");
+					}
+					int sebzesAmmount = item.Damage - MainWindow.AllCardsDict[item.Name].Damage;
+					if (sebzesAmmount > 0)
+					{
+						sw.WriteLine($"kartyafejlesztes;{item.Name};sebzes;{sebzesAmmount}");
+					}
+				}
+					
             }
             sw.WriteLine();
             sw.WriteLine($"arany;{Item.GoldOwned}");

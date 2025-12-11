@@ -251,5 +251,82 @@ namespace szakmajDusza
 			SelectedCards_Label.Content = Jatekos.Count;
 
 		}
+		private void KornyezetekJatekos_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (KornyezetekJatekos_List.SelectedItem == null)
+				return;
+
+			// Csak megjelenítjük a nehézségi választót
+			string fileName = KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[0][..^1];
+			if (KornyezetekJatekos_List.SelectedItem.ToString().Split('(')[1] == "mentett)")
+			{
+				editor = false;
+				LoadSave($"saves/{fileName}.txt");
+				KornyezetekJatekos_List.SelectedItem = null;
+				GoToGrid(PakliOssze_Grid);
+			}
+			else
+			{
+				Difficulty_Stack.Visibility = Visibility.Visible;
+			}
+
+		}
+		private void SaveProgress_Click(object sender, RoutedEventArgs e)
+		{
+			if (Save.fileName == null || Save.fileName == "")
+			{
+				GoToGrid(Save_Grid);
+			}
+			else
+			{
+				Save.SaveProgress();
+			}
+		}
+		private async void Save_World_Button_Click(object sender, RoutedEventArgs e)
+		{
+			if (elozoGrid.Peek().Name == "KornyezetSzerkeszto_Grid")
+			{
+				if (File.Exists($"kornyezet/{FileName_TextBox.Text}.txt"))
+				{
+					UsedFileNameError_Label.Visibility = Visibility.Visible;
+					await Task.Delay(2000);
+					UsedFileNameError_Label.Visibility = Visibility.Collapsed;
+				}
+				else
+				{
+					Save.fileName = $"{FileName_TextBox.Text}.txt";
+					Save.Kornyezetrogress();
+					KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
+					var k1 = Directory.GetFiles("kornyezet")
+	.Select(x => Path.GetFileNameWithoutExtension(x) + " (új)");
+
+					var k2 = Directory.GetFiles("saves")
+						.Select(x => Path.GetFileNameWithoutExtension(x) + " (mentett)");
+
+					KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
+					Back(sender, e);
+					Save.fileName = "";
+					Back(sender, e);
+				}
+			}
+			else
+			{
+				if (File.Exists($"saves/{FileName_TextBox.Text}.txt"))
+				{
+					UsedFileNameError_Label.Visibility = Visibility.Visible;
+					await Task.Delay(2000);
+					UsedFileNameError_Label.Visibility = Visibility.Collapsed;
+				}
+				else
+				{
+					Save.fileName = $"{FileName_TextBox.Text}.txt";
+					Save.SaveProgress();
+					Back(sender, e);
+
+				}
+			}
+
+		}
+
 	}
 }

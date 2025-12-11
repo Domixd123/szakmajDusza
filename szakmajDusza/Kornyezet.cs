@@ -8,7 +8,7 @@ namespace szakmajDusza
 {
     public class Kornyezet
     {
-        //alapinformációk
+        //alapinformációk s
         public string Name { get; set; }
         public List<Card> SimaKartyak { get; set; }
         public List<Card> VezerKartyak { get; set; }

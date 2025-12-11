@@ -10,10 +10,14 @@ namespace szakmajDusza
 {
 	public class Item
 	{
+		//Arany
 		public static int GoldOwned = 100000;
+		//Bolt tulajdonságai
 		public static int shopItemCount = 3;
 		public static int shopRefreshPrice = 2;
+		//Tárgyak
 		public static Dictionary<string, Item> Items;
+		//Alaptulajdonság
 		public bool Disabled {  get; set; }=false;
 		public string Name { get; set; }
 		public string Description { get; set; }
@@ -24,6 +28,7 @@ namespace szakmajDusza
 		public int Level { get; set; }
 		public int MaxLevel { get; set; }
 		public int BaseVariable {  get; set; }
+		//Vizuális elements
 		public Rectangle Rec { get; private set; }
 		public Button But { get; private set; }
 		public string IconPath { get; set; }
@@ -39,10 +44,10 @@ namespace szakmajDusza
 		public Label LevelUpLabel;
 		public Border border;
 		public Ellipse centerImage;
-
 		public Grid visualGroup;
-
+		//Click even
 		public event EventHandler<Item> Clicked;
+		//
 		public Item(string name, string description, bool buyable, int maxlevel, int price, string ico,int baseVariable, int level = 0, int ownedcount = 0, bool inRotation = false )
 		{
 			IconPath=(ico);
@@ -56,6 +61,7 @@ namespace szakmajDusza
 			BaseVariable = baseVariable;
 			InRotation = inRotation;
 		}
+		//Alaphelyzetre visszaállítás
 		public static void ResetItems()
 		{
 			GoldOwned = 0;
@@ -75,6 +81,7 @@ namespace szakmajDusza
 			{"Mágikus", new Item("Mágikus","(Szint*#)% eséllyel blokkolja az ellenfél következő képességét (kivétel a Mágikus-t)",true,5,5,"magic.png",8) },
 		};
 		}
+		//Bolt
 		public void Buy()
 		{
 			if (GoldOwned<Price||!Buyable||Level==MaxLevel)
@@ -140,6 +147,7 @@ namespace szakmajDusza
 				}
 			}
 		}
+		//Szint fejlődés
 		public static int LevelUpRequirement(int level)
 		{
 			if (level == 0) return 0;

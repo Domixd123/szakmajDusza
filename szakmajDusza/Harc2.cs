@@ -573,7 +573,6 @@ namespace szakmajDusza
 				MainWindow.sp.Stop();
 				MainWindow.menuMusic = "";
 
-                //MessageBox.Show("Játékos veszített!");
                 kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();

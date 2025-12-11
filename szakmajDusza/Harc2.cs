@@ -30,6 +30,10 @@ namespace szakmajDusza
 		static string respawnedNameKazamata = "";
 		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,bool attackerIsPlayer,double critMult=0)
 		{
+			if (attacker.HP<=0||defender.HP<=0)
+			{
+				return;
+			}
 			string reductionType = "";
 			double armorReduction = 0;
 			foreach (var item in defender.Items)//apply all damage reductions
@@ -64,6 +68,10 @@ namespace szakmajDusza
 					}*/
 				}
 			}
+			
+			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * (1+critMult) * armorReduction, 0), 1+critMult);
+			defender.HP -= (int)Math.Round(damage*(1+critMult)*(1-armorReduction),0);
+
 			if (reductionType != "dodge")
 			{
 				foreach (var item in defender.Items)
@@ -73,7 +81,7 @@ namespace szakmajDusza
 						if (item.Name == "Tüskék")
 						{
 							//damage = (int)Math.Round(damage*(1-(item.BaseVariable * item.Level * 0.01)), 0);
-							int damage2 = (int)Math.Round(damage*item.BaseVariable * item.Level * 0.01, 0);
+							int damage2 = (int)Math.Round(damage * item.BaseVariable * item.Level * 0.01, 0);
 							await AnimationManager(attacker, "normal", "", damage2);
 							attacker.HP -= damage2;
 							/*int damage2 = (int)(damage * item.Level * 0.01 * item.BaseVariable);*/
@@ -87,9 +95,6 @@ namespace szakmajDusza
 					}
 				}
 			}
-			
-			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * (1+critMult) * armorReduction, 0), 1+critMult);
-			defender.HP -= (int)Math.Round(damage*(1+critMult)*(1-armorReduction),0);
 		}
 		public static async Task AnimationManager(Card card, string damageType, string reductionType, int damageParam = int.MinValue, int reductionParam = int.MinValue, double bonusParam1 = double.MinValue/*, int bonusParam2 = int.MinValue*/)
 		{
@@ -299,7 +304,7 @@ namespace szakmajDusza
 			defendDeploy.Visibility = Visibility.Collapsed;
 			player.Children.Clear();
 			kazamata.Children.Clear();
-
+			
 			foreach (var c in playerCopies)
 				player.Children.Add(c.GetVisual());
 			foreach (var c in kazamataCopies)
@@ -375,12 +380,65 @@ namespace szakmajDusza
 						kazamata.Children.Add(kaz.GetVisual());
 						kaz = null;
 					}
+					if (play.HP <= 0)
+					{
+						play.HP = 0;
+						play.UpdateVisual();
+						//player.Children.Remove(play.GetVisual());
+						fightPlayer.Children.Remove(play.GetVisual());
+						play.visualGroup.Width = 140;
+						play.visualGroup.Height = 180;
+						//play.But.Background = Brushes.Gray;
+						play.NameLabel.Foreground = Brushes.Gray;
+						player.Children.Add(play.GetVisual());
+						play = null;
+
+						index++;
+					}
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
-				else
+				else if(kazamataCopies.Count!=0)//thorns kill
 				{
-					MessageBox.Show("KYS player action");
-					//this shouldnt have happened xd
+					attack.Visibility = Visibility.Visible;
+					defend.Visibility = Visibility.Collapsed;
+					attackDeploy.Visibility = Visibility.Collapsed;
+					defendDeploy.Visibility = Visibility.Collapsed;
+					await calculateDamage(play, kazamataCopies[0], true, difficulty);
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+					play.UpdateVisual();
+					kazamataCopies[0].UpdateVisual();
+
+
+					if (kazamataCopies[0].HP <= 0)
+					{
+						kazamataCopies[0].HP = 0;
+						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+						kazamataCopies[0].UpdateVisual();
+						//kazamata.Children.Remove(kaz.GetVisual());
+						/*fightKazamata.Children.Remove(kazamataCopies[0].GetVisual());
+						kazamataCopies[0].visualGroup.Width = 140;
+						kazamataCopies[0].visualGroup.Height = 180;*/
+						//kaz.But.Background = Brushes.Gray;
+						kazamataCopies[0].NameLabel.Foreground = Brushes.Gray;
+						//kazamata.Children.Add(kaz.GetVisual());
+						kazamataCopies.RemoveAt(0);
+					}
+					if (play.HP <= 0)
+					{
+						play.HP = 0;
+						play.UpdateVisual();
+						//player.Children.Remove(play.GetVisual());
+						fightPlayer.Children.Remove(play.GetVisual());
+						play.visualGroup.Width = 140;
+						play.visualGroup.Height = 180;
+						//play.But.Background = Brushes.Gray;
+						play.NameLabel.Foreground = Brushes.Gray;
+						player.Children.Add(play.GetVisual());
+						play = null;
+
+						index++;
+					}
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
 
 
@@ -441,12 +499,66 @@ namespace szakmajDusza
 
 						index++;
 					}
+					if (kaz.HP <= 0)
+					{
+
+						kaz.HP = 0;
+						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+						kaz.UpdateVisual();
+						//kazamata.Children.Remove(kaz.GetVisual());
+						fightKazamata.Children.Remove(kaz.GetVisual());
+						kaz.visualGroup.Width = 140;
+						kaz.visualGroup.Height = 180;
+						//kaz.But.Background = Brushes.Gray;
+						kaz.NameLabel.Foreground = Brushes.Gray;
+						kazamata.Children.Add(kaz.GetVisual());
+						kaz = null;
+					}
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
-				else
+				else if(playerCopies.Count<0)//thorns kill
 				{
-					MessageBox.Show("KYS kazamata action");
-					//this shouldnt have happened xd
+					attack.Visibility = Visibility.Collapsed;
+					defend.Visibility = Visibility.Visible;
+					attackDeploy.Visibility = Visibility.Collapsed;
+					defendDeploy.Visibility = Visibility.Collapsed;
+					await calculateDamage(kaz, playerCopies[0], false, difficulty);
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+					kaz.UpdateVisual();
+					playerCopies[0].UpdateVisual();
+
+
+					if (playerCopies[0].HP <= 0)
+					{
+						playerCopies[0].HP = 0;
+						playerCopies[0].UpdateVisual();
+						//player.Children.Remove(play.GetVisual());
+						/*fightPlayer.Children.Remove(playerCopies[0].GetVisual());
+						playerCopies[0].visualGroup.Width = 140;
+						playerCopies[0].visualGroup.Height = 180;*/
+						//play.But.Background = Brushes.Gray;
+						playerCopies[0].NameLabel.Foreground = Brushes.Gray;
+						//player.Children.Add(playerCopies[0].GetVisual());
+						play = null;
+						playerCopies.RemoveAt(0);
+						index++;
+					}
+					if (kaz.HP <= 0)
+					{
+
+						kaz.HP = 0;
+						await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
+						kaz.UpdateVisual();
+						//kazamata.Children.Remove(kaz.GetVisual());
+						fightKazamata.Children.Remove(kaz.GetVisual());
+						kaz.visualGroup.Width = 140;
+						kaz.visualGroup.Height = 180;
+						//kaz.But.Background = Brushes.Gray;
+						kaz.NameLabel.Foreground = Brushes.Gray;
+						kazamata.Children.Add(kaz.GetVisual());
+						kaz = null;
+					}
+					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
 			}
 

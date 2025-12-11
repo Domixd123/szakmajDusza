@@ -725,6 +725,11 @@ namespace szakmajDusza
             Back(sender, e);
         }
 
+        private void VezerAlapKartya_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            VezerAlapKartya.ItemsSource = AllCardsDict.Keys;
+        }
+
 
 
 

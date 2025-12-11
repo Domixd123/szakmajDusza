@@ -14,7 +14,10 @@ namespace szakmajDusza
 	{
 		private void GoToShop_Button_Click(object sender, RoutedEventArgs e)
 		{
-
+			if (Item.GoldOwned>=Item.shopRefreshPrice)
+			{
+				Shop_Refresh.IsEnabled = true;
+			}
 			All_Vezer_Obtained.Visibility = Visibility.Collapsed;
 			CardMerge_Wrap.Children.Clear();
 			Shop_Merging_Cards.Children.Clear();

@@ -19,8 +19,8 @@ Height="110"
 Margin="780,688,780,272"
 FontSize="26" Click="Save_World_Button_Click" Width="350"/>
             </Grid>
-            <Grid x:Name="Shop_Grid" Visibility="Collapsed"
-      Width="1910" Height="1070" Margin="5,5,5,5" d:IsHidden="True">
+            <Grid x:Name="Shop_Grid" Visibility="Visible"
+      Width="1910" Height="1070" Margin="5,5,5,5">
 
                 <Grid.RowDefinitions>
 
@@ -32,8 +32,8 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" BorderBrush="White" BorderThickness="2" d:IsHidden="True"/>
-                <Border Grid.Column="0" Grid.Row="1" BorderBrush="White" BorderThickness="2" d:IsHidden="True">
+                <Border Grid.Column="0" Grid.Row="0" BorderBrush="White" BorderThickness="2"/>
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="White" BorderThickness="2">
                     <Label Content="" x:Name="GoldOwned_Label"
 			FontWeight="Bold"
 			HorizontalAlignment="Left"
@@ -43,8 +43,8 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
 						   Foreground="Gold"
 			Margin="1099,8,0,0" Width="321"/>
                 </Border>
-                <Border Grid.Column="1" Grid.Row="0" BorderBrush="White" BorderThickness="2" d:IsHidden="True"/>
-                <Border Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="2" d:IsHidden="True">
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="White" BorderThickness="2"/>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="White" BorderThickness="2">
                     <Label Content="" Name="ShopRerollPrice_Label"
 						   FontWeight="Bold"
 					HorizontalAlignment="Center"
@@ -63,7 +63,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <StackPanel x:Name="Shop_Inv_Panel"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Height="790" Width="1400" d:IsHidden="True" >
+               Height="790" Width="1400" >
                     <Label x:Name="Obtained_Label" Content="Megszerzett Kártyák:" Height="53" HorizontalAlignment="Left" VerticalAlignment="Top" Width="285" d:IsHidden="True"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" d:IsHidden="True">
                         <Grid Background="Transparent">
@@ -83,7 +83,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 Margin="0,40,0,0"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Center"
-                Width="480" Height="770" d:IsHidden="True"
+                Width="480" Height="770"
                 >
 
 
@@ -119,7 +119,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                Height="260"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-                Width="Auto" RenderTransformOrigin="0.5,0.5" d:IsHidden="True">
+                Width="Auto" RenderTransformOrigin="0.5,0.5">
 
                     <Label x:Name="Shop_Label" Content="Bolt:" Height="53" Width="1402" d:IsHidden="True"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" d:IsHidden="True">
@@ -141,17 +141,17 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     Margin="0,40,0,0"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
-                    Width="350" Height="130" d:IsHidden="True">
+                    Width="350" Height="130">
                     <Button x:Name="Shop_Refresh"
 						Click="RefreshShop_Button_Click"
                         Content="Újra pörgetés"
                         Height="110"
                         Width="350"
                         Margin="0,0,0,20"
-                        FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" d:IsHidden="True" />
+                        FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 </StackPanel>
-                <Label x:Name="AllItemsMaxedError_Label" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Minden tárgy max szinten van!" Foreground="Red" FontSize="50" Visibility="Visible" Margin="196,8,264,0" Grid.Row="1" d:IsHidden="True"/>
+                <Label x:Name="AllItemsMaxedError_Label" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Minden tárgy max szinten van!" Foreground="Red" FontSize="50" Visibility="Visible" Margin="196,8,264,0" Grid.Row="1"/>
 
             </Grid>
 
@@ -229,7 +229,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                 <StackPanel x:Name="LeaderCardPanel" HorizontalAlignment="Left" Height="371" Margin="1233,201,0,0" VerticalAlignment="Top" Width="455">
 
                     <Label Content="Alap kártya:" HorizontalAlignment="Left" Height="49" VerticalAlignment="Top" Width="200" FontWeight="Bold" Margin="0,5,0,0"/>
-                    <ComboBox x:Name="VezerAlapKartya" Visibility="Visible" Width="120" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top" SelectionChanged="VezerAlapKartya_SelectionChanged"/>
+                    <ComboBox x:Name="VezerAlapKartya" Visibility="Visible" Width="120" HorizontalAlignment="Right" Margin="0,-44,0,0" VerticalAlignment="Top" SelectionChanged="VezerAlapKartya_SelectionChanged" ContextMenuOpening="VezerAlapKartya_ContextMenuOpening"/>
                     <Label Content="Vezér név:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
                     <TextBox x:Name="VezerNev" Visibility="Visible" TextChanged="KartyaSzerkeszto_TextChange" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-43.7,0,0" KeyDown="KartyaSzerkeszto_TextChange"/>
                     <Label Content="Bónusz típus:" HorizontalAlignment="Left" Height="51" VerticalAlignment="Top" Width="200" FontWeight="Bold"/>
@@ -247,7 +247,7 @@ FontSize="26" Click="Save_World_Button_Click" Width="350"/>
                     </CheckBox>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible">
+            <Grid x:Name="KornyezetSzerkeszto_Grid" Visibility="Visible" d:IsHidden="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="421*"/>
                     <RowDefinition Height="119*"/>

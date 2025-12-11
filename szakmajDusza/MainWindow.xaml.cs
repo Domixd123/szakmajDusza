@@ -122,5 +122,5 @@ namespace szakmajDusza
 			KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
 
 		}
-	}
+    }
 }

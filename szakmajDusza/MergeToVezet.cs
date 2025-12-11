@@ -32,7 +32,8 @@ namespace szakmajDusza
                 return;
                 //Kristóf implement error vmessage in UI
             }
-            for (int i = 0; i < MainWindow.Gyujtemeny.Count; i++)
+
+            for (int i = 0; i < MainWindow.Gyujtemeny.Count; i++)//A harom kartya elvesztése
             {
                 if (MainWindow.Gyujtemeny[i].Name==elso.Name|| MainWindow.Gyujtemeny[i].Name == masodik.Name|| MainWindow.Gyujtemeny[i].Name == harmaid.Name)
                 {
@@ -42,7 +43,8 @@ namespace szakmajDusza
 
                 }
             }
-            for (int i = 0; i < MainWindow.Jatekos.Count; i++)
+
+            /*for (int i = 0; i < MainWindow.Jatekos.Count; i++)
             {
                 if (MainWindow.Jatekos[i].Name == elso.Name || MainWindow.Jatekos[i].Name == masodik.Name || MainWindow.Jatekos[i].Name == harmaid.Name)
                 {
@@ -50,8 +52,9 @@ namespace szakmajDusza
                     i--;
 
                 }
-            }
-            //int x = 0;
+            }*/
+           
+            //A még meg nem szerzett vezér kiválasztása
             foreach (var item in MainWindow.AllLeadersDict.Values)
             {
                 int x = 0;

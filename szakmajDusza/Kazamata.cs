@@ -2,11 +2,22 @@
 {
 	public class Kazamata
 	{
+		//Kazamata alap információi
 		public string Name { get; set; }
 		public List<Card> Defenders { get; set; }
 		public KazamataType Tipus { get; set; }
 		public KazamataReward reward {  get; set; }
-		public List<string> GetDefenderNames()
+
+
+        public Kazamata(string name, string type, string reward, List<Card> defenders)
+        {
+            Name = name;
+            Tipus = StringToKazamataType(type);
+            this.reward = StringToKazamataReward(reward);
+            Defenders = defenders;
+        }
+        //A védők nevei
+        public List<string> GetDefenderNames()
 		{
 			 List<string> rat = new List<string>();
 			foreach (Card card in Defenders)
@@ -16,13 +27,7 @@
 			return rat;
 
 		}
-		public Kazamata(string name, string type, string reward,List<Card> defenders)
-		{
-			Name = name;
-			Tipus=StringToKazamataType(type);
-			this.reward=StringToKazamataReward(reward);
-			Defenders = defenders;
-		}
+		
 		public bool Equals(Kazamata? obj)
 		{
 			if (obj.Name == this.Name && obj.Defenders==this.Defenders && obj.Tipus == this.Tipus&&obj.reward==this.reward)
@@ -31,6 +36,7 @@
 			}
 			return false;
 		}
+		//Jutalmak
 		public static string KazamataRewardToString(KazamataReward reward)
 		{
 			string Reward;
@@ -55,6 +61,7 @@
 			};
 			return Reward;
 		}
+		//Kazamata típus
 		public static string KazamataTypeToString(KazamataType type)
 		{
 			string Type;
@@ -81,6 +88,7 @@
 			};
 			return Type;
 		}
+		//egyéb
 		public Kazamata GetCopy()
 		{
 			return new Kazamata(Name,KazamataTypeToString(Tipus),KazamataRewardToString(reward),Card.GetListCopy(Defenders));

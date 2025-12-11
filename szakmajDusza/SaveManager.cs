@@ -538,5 +538,12 @@ namespace szakmajDusza
 
 			sw.Close();
 		}
+		/*private void HomeButton(object sender, RoutedEventArgs e)
+		{
+			while (elozoGrid.Count != 0)
+			{
+				Back(null, null);
+			}
+		}*/
 	}
 }

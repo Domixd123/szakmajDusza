@@ -901,7 +901,7 @@ namespace szakmajDusza
 				return;
 			}
 			LoadSave($"kornyezet/{KornyezetekMester_List.SelectedItem.ToString()}.txt");
-			Save.fileName = KornyezetekMester_List.SelectedItem.ToString() + ".txt";
+			fileName = KornyezetekMester_List.SelectedItem.ToString() + ".txt";
 			MindenKartya_List.Children.Clear();
 			MindenKazamata_List.Children.Clear();
 			//loaddata was here

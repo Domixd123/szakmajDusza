@@ -461,5 +461,19 @@ namespace szakmajDusza
 				b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
 			}
 		}
+		public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)
+		{
+			WrapPanel wrap = new WrapPanel
+			{
+				HorizontalAlignment = HorizontalAlignment.Center,
+				VerticalAlignment = VerticalAlignment.Center,
+				Orientation = Orientation.Horizontal, // vízszintes
+				Width = width,
+				Height = height,
+				Margin = new Thickness(spacing)
+			};
+			wrap.Children.Add(kartya.GetCopy().GetVisual());
+			return wrap;
+		}
 	}
 }

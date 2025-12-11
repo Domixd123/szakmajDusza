@@ -49,16 +49,10 @@ namespace szakmajDusza
 
 		public static List<Card> Gyujtemeny = new List<Card>();
 		public static List<Card> Jatekos = new List<Card>();
-		//public static List<Card> AllCards = new List<Card>();
-		//public static List<Card> AllLeaders=new List<Card>();
 		public static Dictionary<string, Card> AllLeadersDict = new Dictionary<string, Card>();
 		public static Dictionary<string, Card> AllCardsDict = new Dictionary<string, Card>();
-		//public static List<Kazamata> AllKazamata = new List<Kazamata>();
 		public static Dictionary<string, Kazamata> AllKazamataDict = new Dictionary<string, Kazamata>();
-		//public static Kazamata AllKazamata["Barlangi portya"] = new Kazamata("Barlangi portya", "egyszeru", "sebzes", new List<Card>());
-		//public static Kazamata AllKazamata["Osi szentely"] = new Kazamata("Osi szentely", "kis", "eletero", new List<Card>());
-		//public static Kazamata AllKazamata["A melyseg kiralynoje"] = new Kazamata("A melyseg kiralynoje", "nagy", "", new List<Card>());
-
+		
 		public static MediaPlayer sp = new MediaPlayer();
 		public static MediaPlayer se = new MediaPlayer();
 
@@ -115,7 +109,7 @@ namespace szakmajDusza
 				sp.Play();
 			};
 			sp.Play();
-			Save.fileName = "";
+			fileName = "";
 			//KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => /*"kornyezet/"+*/x.Split('\\')[1].Split('.')[0]);
 			KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
 			//KornyezetekJatekos_List.ItemsSource = Directory.GetFiles("saves").Select(x => "saves/" + x.Split('\\')[1].Split('.')[0]);
@@ -128,26 +122,5 @@ namespace szakmajDusza
 			KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
 
 		}
-		public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)
-		{
-			WrapPanel wrap = new WrapPanel
-			{
-				HorizontalAlignment = HorizontalAlignment.Center,
-				VerticalAlignment = VerticalAlignment.Center,
-				Orientation = Orientation.Horizontal, // vízszintes
-				Width = width,
-				Height = height,
-				Margin = new Thickness(spacing)
-			};
-			wrap.Children.Add(kartya.GetCopy().GetVisual());
-			return wrap;
-		}
-		/*private void HomeButton(object sender, RoutedEventArgs e)
-		{
-			while (elozoGrid.Count != 0)
-			{
-				Back(null, null);
-			}
-		}*/
 	}
 }

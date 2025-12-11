@@ -127,57 +127,6 @@ namespace szakmajDusza
 			KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
 
 		}
-		private void Vissza_Button_Click(object sender, RoutedEventArgs e)
-		{
-			foreach (var item in ((sender as Button).Parent as Grid).Children)
-			{
-				if (item.GetType() == typeof(Label))
-				{
-					if ((item as Label).Name == "Jutalom")
-					{
-						((sender as Button).Parent as Grid).Children.Remove(item as Label);
-						break;
-					}
-				}
-			}
-			foreach (var item in ((sender as Button).Parent as Grid).Children)
-			{
-				if (item.GetType() == typeof(Label))
-				{
-					if ((item as Label).Name == "Jutalom")
-					{
-						((sender as Button).Parent as Grid).Children.Remove(item as Label);
-						break;
-					}
-				}
-			}
-			foreach (var item in ((sender as Button).Parent as Grid).Children)
-			{
-				if (item.GetType() == typeof(Label))
-				{
-					if ((item as Label).Name == "Jutalom")
-					{
-						((sender as Button).Parent as Grid).Children.Remove(item as Label);
-						break;
-					}
-				}
-			}
-			foreach (var item in FightGrid.Children)
-			{
-				if (item.GetType() == typeof(WrapPanel) && (item as WrapPanel).Name == "rewardCard")
-				{
-					(item as WrapPanel).Children.RemoveRange(0, (item as WrapPanel).Children.Count);
-				}
-			}
-			RemoveShitFomrShit();
-			//GoToGrid(MainRoom_Grid);
-			DisableNagyKazamata();
-			/*sp.Stop();
-            sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-            sp.Play();
-            RemoveShitFomrShit();
-            ShowPakli();*/
-		}
 		public static WrapPanel CreateCenteredWrapPanel(double width, double height, double spacing, Card kartya)
 		{
 			WrapPanel wrap = new WrapPanel

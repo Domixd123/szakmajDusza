@@ -361,5 +361,30 @@ namespace szakmajDusza
 			return Jutalom;
 
 		}
+		public void RemoveShitFomrShit()
+		{
+			// Remove static combat UI
+			FightGrid.Children.Remove(FightPlayer_Wrap);
+			FightGrid.Children.Remove(FightKazamata_Wrap);
+			FightGrid.Children.Remove(Fight_Wrap);
+			FightGrid.Children.Remove(FightPlayerAttacker_Wrap);
+			FightGrid.Children.Remove(FightKazamataAttacker_Wrap);
+			FightGrid.Children.Remove(Attack_Label);
+			FightGrid.Children.Remove(Defend_Label);
+			FightGrid.Children.Remove(AttackDeploy_Label);
+			FightGrid.Children.Remove(DefendDeploy_Label);
+			FightGrid.Children.Remove(Harc);
+			FightGrid.Children.Remove(Vissza);
+			FightGrid.Children.Remove(ChangeSpeed);
+			FightGrid.Children.Remove(Speed_Label);
+			FightGrid.Children.Remove(Jutalom);
+
+			// Remove reward card if exists
+			foreach (var item in FightGrid.Children.OfType<WrapPanel>().ToList())
+			{
+				if (item.Name == "rewardCard")
+					FightGrid.Children.Remove(item);
+			}
+		}
 	}
 }

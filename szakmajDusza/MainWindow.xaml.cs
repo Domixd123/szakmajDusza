@@ -148,29 +148,5 @@ namespace szakmajDusza
 				Back(null, null);
 			}
 		}*/
-		private void DynamicButtonsPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			AutoResizeButtons(sender as WrapPanel);
-		}
-		private void AutoResizeButtons(WrapPanel wrap)
-		{
-			if (wrap.Children.Count == 0)
-				return;
-
-			//double panelWidth = wrap.ActualWidth;
-			double panelWidth = 700;
-			double minButtonWidth = 250; // minimális gombszélesség
-			int buttonsPerRow = Math.Max(1, (int)(panelWidth / minButtonWidth));
-
-			double buttonWidth = (panelWidth / buttonsPerRow) - 20; // 20 = margin
-
-
-			foreach (Button b in wrap.Children)
-			{
-				b.Width = buttonWidth;
-				b.Height = buttonWidth * 0.6; // arányos magasság
-				b.FontSize = buttonWidth / 15; // automatikus fontsize skálázás
-			}
-		}
 	}
 }

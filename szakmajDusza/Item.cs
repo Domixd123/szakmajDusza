@@ -311,6 +311,7 @@ namespace szakmajDusza
 				};
 				visualGroup.Children.Add(Name2Label);
 			}
+			//új kártya
 			if (Items[Name].Level == 0)
 			{
 				border.BorderBrush = new LinearGradientBrush(
@@ -367,6 +368,7 @@ namespace szakmajDusza
 				};
 				visualGroup.Children.Add(LevelUpLabel);
 			}*/
+			//gomb (láthatatlan, de kattintható)
 				But = new Button
 				{
 					Background = Brushes.Transparent,
@@ -379,9 +381,9 @@ namespace szakmajDusza
 			{
 				visualGroup.Background = new LinearGradientBrush(Color.FromRgb(10, 5, 15), Color.FromRgb(30, 20, 40), 90);
 			}
-			//visualGroup.Children.Add(ellipse);
+			
 			visualGroup.Children.Add(NameLabel);
-			//visualGroup.Children.Add(DamageAndHPLabel);
+			
 			visualGroup.Children.Add(But);
 		}
 		public UIElement GetVisual(bool shopMode)

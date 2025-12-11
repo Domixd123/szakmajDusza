@@ -481,7 +481,7 @@ namespace szakmajDusza
             
             visualGroup.Children.Add(But);
         }
-        //Sebzés esetén életerő változtatása
+        //Sebzés és gyógyítás esetén életerő változtatása
         public void UpdateVisual()
         {
             if (HP <= 0)
@@ -849,21 +849,13 @@ namespace szakmajDusza
         }
        
 
-        public UIElement GetVisual()
+        public UIElement GetVisual()//A kártya vizualizálása
         {
             return visualGroup;
         }
 
-        /*public bool Equals(Card? obj)
-		{
-			if (obj.Name == this.Name && obj.Damage == this.Damage && obj.HP == this.HP && obj.Tipus == this.Tipus)
-			{
-				return true;
-			}
-			return false;
-		}*/
 
-
+        //egyéb funct.
         public void SetPosition(double x, double y)
         {
             Canvas.SetLeft(visualGroup, x);

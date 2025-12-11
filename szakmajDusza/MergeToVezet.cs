@@ -10,13 +10,14 @@ namespace szakmajDusza
     {
         public static void haromToVezer(Card elso, Card masodik, Card harmaid)
         {
-            //MainWindow.Gyujtemeny;
-            //MainWindow.AllLeaders;
-            if (elso.Vezer||masodik.Vezer||harmaid.Vezer)
+            
+            if (elso.Vezer||masodik.Vezer||harmaid.Vezer)//ha van vezér break (nem lehetséges elv.
             {
                 return;
                 //Kristóf implement error vmessage in UI
             }
+
+            //Megszerzett vezérek listája
             List<Card> obtainedVezer = new List<Card>();
             foreach (var item in MainWindow.Gyujtemeny)
             {
@@ -25,7 +26,8 @@ namespace szakmajDusza
                     obtainedVezer.Add(item);
                 }
             }
-            if (obtainedVezer.Count>=MainWindow.AllCardsDict.Values.Count)
+
+            if (obtainedVezer.Count>=MainWindow.AllCardsDict.Values.Count)//Ha az osszes vezer meg van, break (nem lehetséges elv)
             {
                 return;
                 //Kristóf implement error vmessage in UI

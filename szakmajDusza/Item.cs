@@ -256,7 +256,7 @@ namespace szakmajDusza
 				Background = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255))
 			};
 			visualGroup.Children.Add(border);
-
+			//név
 			NameLabel = new Label
 			{
 				Content = Name.Split(' ')[0],
@@ -271,7 +271,7 @@ namespace szakmajDusza
 				HorizontalContentAlignment = HorizontalAlignment.Center,
 
 			};
-
+			//icon
 			centerImage = new Ellipse
 			{
 				Width = 50,
@@ -290,9 +290,8 @@ namespace szakmajDusza
 				},
 				IsHitTestVisible = false
 			};
-
-            // a border után, a name label előtt érdemes hozzáadni
             visualGroup.Children.Add(centerImage);
+			//név két részre választása
             if (Name.Split(' ').Length > 1)
 			{
 				Name2Label = new Label

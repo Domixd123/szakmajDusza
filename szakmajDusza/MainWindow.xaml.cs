@@ -122,12 +122,5 @@ namespace szakmajDusza
 			KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
 
 		}
-		/*private void HomeButton(object sender, RoutedEventArgs e)
-		{
-			while (elozoGrid.Count != 0)
-			{
-				Back(null, null);
-			}
-		}*/
 	}
 }

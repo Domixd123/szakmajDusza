@@ -185,6 +185,7 @@ namespace szakmajDusza
 		//Vizuálisan újrarajzolás
         public void UpdateAllVisual()
 		{
+			//alap
 			visualGroup = new Grid
 			{
 				Width = 140,
@@ -199,6 +200,7 @@ namespace szakmajDusza
 				Color = Colors.Black,
 				Opacity = 0.7
 			};
+			//Hover
 			visualGroup.MouseEnter += (s, e) =>
 			{
 				if (centerImage != null)
@@ -220,7 +222,6 @@ namespace szakmajDusza
 				// csak name + description
 				if (DescLabel != null) DescLabel.Visibility = Visibility.Visible;
 			};
-
 			visualGroup.MouseLeave += (s, e) =>
 			{
                 if (centerImage != null)

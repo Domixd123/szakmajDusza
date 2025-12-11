@@ -497,6 +497,21 @@ namespace szakmajDusza
             DamageLabel.Content = Damage;
             HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
         }
+        public Task UpdateVisualHeal(int heal)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            int previousHP = HP - heal;
+            if (HP - heal <= 0)
+            {
+                previousHP = 0;
+            }
+
+            HPLabel.Content = $"{previousHP} + {heal}";
+            HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
+            tcs.SetResult(true);
+            return tcs.Task;
+        }
+
         //Animációk
         public Task StrengthAnim(int dmg)
         {
@@ -794,12 +809,6 @@ namespace szakmajDusza
             ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
             return tcs.Task;
         }
-        //Animációk utána Labelek elrejtése
-        public void HideAllLabels()
-        {
-            ImportantLabel.Visibility = Visibility.Hidden;
-            ImportantLabel2.Visibility = Visibility.Hidden;
-        }
         public Task UpdateVisualDamage(int dmg)
         {
             animation = true;
@@ -822,37 +831,23 @@ namespace szakmajDusza
             {
                 animation = false;
                 tcs.SetResult(true);
-                // hide once it’s slid away
                 ImportantLabel.Visibility = Visibility.Hidden;
                 HPLabel.Content = HP;
             };
 
-            //int previousHP = HP + dmg;
+
             ImportantLabel.BeginAnimation(Label.MarginProperty, anim);
-            /*if (HP + dmg <= 0)
-			{
-				previousHP = 0;
-			}*/
+
             return tcs.Task;
-            //DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} - {dmg} ❤";
-            //HPLabel.Content = $"{previousHP}";
-            //HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
-            //ImportantLabel.Visibility = Visibility.Hidden;
-        }//rework
-        public Task UpdateVisualHeal(int heal)
-        {
-            var tcs = new TaskCompletionSource<bool>();
-            int previousHP = HP - heal;
-            if (HP - heal <= 0)
-            {
-                previousHP = 0;
-            }
-            //DamageAndHPLabel.Content = $"{Damage} ⚔ / {previousHP} + {heal} ❤";
-            HPLabel.Content = $"{previousHP} + {heal}";
-            HPLabel.Margin = new Thickness(0, 0, 25 - 5.5 * HPLabel.Content.ToString().Length, 17);
-            tcs.SetResult(true);
-            return tcs.Task;
+
         }
+        //Animációk utána Labelek elrejtése
+        public void HideAllLabels()
+        {
+            ImportantLabel.Visibility = Visibility.Hidden;
+            ImportantLabel2.Visibility = Visibility.Hidden;
+        }
+       
 
         public UIElement GetVisual()
         {

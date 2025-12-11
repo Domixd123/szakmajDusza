@@ -220,25 +220,7 @@ namespace szakmajDusza
             }
             
             sw.WriteLine();
-            /*foreach (var item in MainWindow.Gyujtemeny)
-            {
-                string itemString = "";
-                foreach (var item2 in item.Items)
-                {
-                    itemString += item2.Name + ",";
-                }
-                if (itemString.Length > 0) itemString = itemString.Substring(0, itemString.Length - 1);
-
-                sw.WriteLine($"jatekos kartya items;{item.Name};{itemString}");
-            }
-            sw.WriteLine();*/
-            /*string pakliString = "";
-            foreach (var item in MainWindow.Jatekos)
-            {
-                pakliString += item.Name + ",";
-            }
-            pakliString = pakliString.Substring(0, pakliString.Length - 1);
-            sw.WriteLine($"uj pakli;{pakliString}");*/
+           
 
             sw.Close();
         }

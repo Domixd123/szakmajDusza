@@ -72,6 +72,7 @@ namespace szakmajDusza
 		public static float spMult = 0.0025f;
 		public static float seMult = 0.04f;
 		public static Card lastCard;
+		public static string fileName = "";
 		public MainWindow()
 		{
 			InitializeComponent();

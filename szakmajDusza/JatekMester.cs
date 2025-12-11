@@ -446,12 +446,12 @@ namespace szakmajDusza
 		}
 		private void KornyezetMentes_Button_Click(object sender, RoutedEventArgs e)
 		{
-			if (Save.fileName == null || Save.fileName == "")
+			if (fileName == null || fileName == "")
 			{
 				GoToGrid(Save_Grid);
 				return;
 			}
-			Save.Kornyezetrogress();
+			Kornyezetrogress();
 			Back(null, null);
 		}
 		private void DeleteButton_Click(object sender, RoutedEventArgs e)

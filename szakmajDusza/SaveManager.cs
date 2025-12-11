@@ -145,6 +145,31 @@ namespace szakmajDusza
 						Gyujtemeny.Add(AllLeadersDict[data[1]].GetCopy());
 					}
 				}
+				else if (data[0] == "kartyafejlesztes")
+				{
+					if (data[2]=="sebzes")
+					{
+						foreach (var item in Gyujtemeny)
+						{
+							if (item.Name == data[1])
+							{
+								item.Damage += int.Parse(data[3]);
+								break;
+							}
+						}
+					}
+					else if (data[2] == "eletero")
+					{
+						foreach (var item in Gyujtemeny)
+						{
+							if (item.Name == data[1])
+							{
+								item.HP += int.Parse(data[3]);
+								break;
+							}
+						}
+					}
+				}
 				else if (data[0] == "uj pakli")
 				{
 					string[] kartyanevek = data[1].Split(',');

@@ -177,11 +177,13 @@ namespace szakmajDusza
 			Level = Math.Min(x-1,MaxLevel);
 			UpdateAllVisual();
 		}
-		public Item GetCopy()
-		{
-			return new Item(Name, Description, Buyable, MaxLevel, Price, IconPath, BaseVariable, Level, OwnedCount, InRotation);
-		}
-		public void UpdateAllVisual()
+		//
+        public Item GetCopy()
+        {
+            return new Item(Name, Description, Buyable, MaxLevel, Price, IconPath, BaseVariable, Level, OwnedCount, InRotation);
+        }
+		//Vizuálisan újrarajzolás
+        public void UpdateAllVisual()
 		{
 			visualGroup = new Grid
 			{

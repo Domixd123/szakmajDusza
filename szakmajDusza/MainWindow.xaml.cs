@@ -99,7 +99,6 @@ namespace szakmajDusza
 			Difficulty_Stack.Visibility = Visibility.Collapsed;
 
 			idk.Children.Add(FightGrid);
-
 			sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
 			sp.Volume = spVolume;
 

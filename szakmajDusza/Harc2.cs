@@ -68,7 +68,7 @@ namespace szakmajDusza
 				}
 				else
 				{
-					await AnimationManager(attacker, "", "magic");
+					await AnimationManager(defender, "", "magic");
 				}
 			}
 
@@ -98,7 +98,7 @@ namespace szakmajDusza
 					}
 					else
 					{
-						await AnimationManager(attacker, "", "magic");
+						await AnimationManager(defender, "", "magic");
 					}
 				}
 			}
@@ -190,7 +190,7 @@ namespace szakmajDusza
 			{
 				if (MagicRes(defender))
 				{
-					await AnimationManager(defender, "", "magic");
+					await AnimationManager(attacker, "", "magic");
 					continue;
 				}
 				if (item.Name == "Életerőlopás")

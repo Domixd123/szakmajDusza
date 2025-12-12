@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace szakmajDusza
@@ -28,9 +27,9 @@ namespace szakmajDusza
 		static string respawnedNamePlayer = "";
 		static int respawnTimesKazamata = 0;
 		static string respawnedNameKazamata = "";
-		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType,bool attackerIsPlayer,double critMult=0)
+		public static async Task DamageReductions(Card attacker, Card defender, int damage, string damageType, bool attackerIsPlayer, double critMult = 0)
 		{
-			if (attacker.HP<=0||defender.HP<=0)
+			if (attacker.HP <= 0 || defender.HP <= 0)
 			{
 				return;
 			}
@@ -42,7 +41,7 @@ namespace szakmajDusza
 				{
 					if (item.Name == "Páncél")
 					{
-						armorReduction = item.Level * item.BaseVariable*0.01;
+						armorReduction = item.Level * item.BaseVariable * 0.01;
 						if (reductionType != "dodge") reductionType = "shield";
 						//armor animation
 					}
@@ -67,10 +66,14 @@ namespace szakmajDusza
 						//thorns animation
 					}*/
 				}
+				else
+				{
+					await AnimationManager(attacker, "", "magic");
+				}
 			}
-			
-			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * (1+critMult) * armorReduction, 0), 1+critMult);
-			defender.HP -= (int)Math.Round(damage*(1+critMult)*(1-armorReduction),0);
+
+			await AnimationManager(defender, damageType, reductionType, damage, (int)Math.Round(damage * (1 + critMult) * armorReduction, 0), 1 + critMult);
+			defender.HP -= (int)Math.Round(damage * (1 + critMult) * (1 - armorReduction), 0);
 
 			if (reductionType != "dodge")
 			{
@@ -92,6 +95,10 @@ namespace szakmajDusza
 								await RespawnItem(defender, attacker, !attackerIsPlayer);
 							}
 						}
+					}
+					else
+					{
+						await AnimationManager(attacker, "", "magic");
 					}
 				}
 			}
@@ -183,12 +190,13 @@ namespace szakmajDusza
 			{
 				if (MagicRes(defender))
 				{
+					await AnimationManager(defender, "", "magic");
 					continue;
 				}
 				if (item.Name == "Életerőlopás")
 				{
 					int damage = (int)Math.Round(item.BaseVariable * item.Level * damageMultiplier, 0);
-					await DamageReductions(attacker, defender, damage, "normal",attackerIsPlayer);
+					await DamageReductions(attacker, defender, damage, "normal", attackerIsPlayer);
 					await AnimationManager(attacker, "", "heal", 0, damage);
 					attacker.HP += damage;
 					attacker.UpdateVisual();
@@ -196,15 +204,15 @@ namespace szakmajDusza
 				}
 				else if (item.Name == "Erő")
 				{
-					int damage = (int)Math.Round(item.BaseVariable * item.Level*damageMultiplier,0);
-					await DamageReductions(attacker,defender,damage,"strength",attackerIsPlayer);
+					int damage = (int)Math.Round(item.BaseVariable * item.Level * damageMultiplier, 0);
+					await DamageReductions(attacker, defender, damage, "strength", attackerIsPlayer);
 					//strength animation
 				}
 				else if (item.Name == "Krit csapás")
 				{
 					if (random.Next(0, 100) < item.Level * item.BaseVariable)
 					{
-						critHappened=true;
+						critHappened = true;
 						critLevel = item.Level;
 						//int damage = (int)Math.Round(attacker.Damage, 0);
 						//damage += (int)(item.Level * 0.4 * attacker.Damage);
@@ -214,13 +222,13 @@ namespace szakmajDusza
 			}
 			if (critHappened)
 			{
-				int damage = (int)Math.Round(attacker.Damage*Multiplier(attacker,defender) * damageMultiplier, 0);
-				await DamageReductions(attacker, defender, damage, "crit",attackerIsPlayer,(0.4*critLevel));
+				int damage = (int)Math.Round(attacker.Damage * Multiplier(attacker, defender) * damageMultiplier, 0);
+				await DamageReductions(attacker, defender, damage, "crit", attackerIsPlayer, (0.4 * critLevel));
 			}
 			else
 			{
 				int damage = (int)Math.Round(attacker.Damage * Multiplier(attacker, defender) * damageMultiplier, 0);
-				await DamageReductions(attacker, defender, damage, "normal",attackerIsPlayer);
+				await DamageReductions(attacker, defender, damage, "normal", attackerIsPlayer);
 			}
 			if (defender.HP <= 0)
 			{
@@ -229,10 +237,16 @@ namespace szakmajDusza
 			if (attacker.HP <= 0) return;
 			foreach (var item in attacker.Items)
 			{
-				if (defender.HP>0&&MagicRes(defender)) continue;
+				if (defender.HP > 0 && MagicRes(defender))
+				{
+
+					await AnimationManager(defender, "", "magic");
+
+					continue;
+				}
 				else if (item.Name == "Gyógyítás")
 				{
-					int healAmmount = item.Level*item.BaseVariable;
+					int healAmmount = item.Level * item.BaseVariable;
 					await AnimationManager(attacker, "", "heal", 0, healAmmount);
 					attacker.HP += healAmmount;
 					attacker.UpdateVisual();
@@ -243,7 +257,13 @@ namespace szakmajDusza
 		{
 			foreach (var item in defender.Items)
 			{
-				if (MagicRes(attacker)) continue;
+				if (MagicRes(attacker))
+				{
+
+					await AnimationManager(attacker, "", "magic");
+
+					continue;
+				}
 				if (item.Name == "Újraéledés")
 				{
 					int respawntimes = 0;
@@ -260,14 +280,14 @@ namespace szakmajDusza
 						int maxHP = 0;
 						for (int i = 0; i < MainWindow.Gyujtemeny.Count; i++)
 						{
-							if (MainWindow.Gyujtemeny[i].Name==defender.Name)
+							if (MainWindow.Gyujtemeny[i].Name == defender.Name)
 							{
 								maxHP = MainWindow.Gyujtemeny[i].HP;
 								break;
 							}
 						}
-						await AnimationManager(defender,"","revive",0,maxHP);
-						defender.HP= maxHP;
+						await AnimationManager(defender, "", "revive", 0, maxHP);
+						defender.HP = maxHP;
 						defender.UpdateVisual();
 						//respawn animation
 						return;
@@ -289,7 +309,7 @@ namespace szakmajDusza
 			}
 			bool magicResist = random.Next(0, 100) < magicResistLevel * baseVariable;
 			//magicres animation
-			if(magicResist)AnimationManager(resistor,"","magic");
+			//if(magicResist)AnimationManager(resistor,"","magic");
 
 			return magicResist;
 		}
@@ -304,7 +324,7 @@ namespace szakmajDusza
 			defendDeploy.Visibility = Visibility.Collapsed;
 			player.Children.Clear();
 			kazamata.Children.Clear();
-			
+
 			foreach (var c in playerCopies)
 				player.Children.Add(c.GetVisual());
 			foreach (var c in kazamataCopies)
@@ -356,14 +376,14 @@ namespace szakmajDusza
 					//kaz.HP -= plyDamage((play.Damage * Multiplier(play, kaz)), difficulty);
 					int beforeHPKaz = kaz.HP;
 					int beforeHPPlay = play.HP;
-					await calculateDamage(play,kaz,true,difficulty);
+					await calculateDamage(play, kaz, true, difficulty);
 					int afterHPKaz = kaz.HP;
 					int afterHPPlay = play.HP;
 					//await kaz.UpdateVisualDamage(plyDamage((play.Damage * Multiplier(play, kaz)), difficulty));
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					play.UpdateVisual();
 					kaz.UpdateVisual();
-					
+
 
 					if (kaz.HP <= 0)
 					{
@@ -397,7 +417,7 @@ namespace szakmajDusza
 					}
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
-				else if(kazamataCopies.Count!=0)//thorns kill
+				else if (kazamataCopies.Count != 0)//thorns kill
 				{
 					attack.Visibility = Visibility.Visible;
 					defend.Visibility = Visibility.Collapsed;
@@ -473,7 +493,7 @@ namespace szakmajDusza
 					attackDeploy.Visibility = Visibility.Collapsed;
 					defendDeploy.Visibility = Visibility.Collapsed;
 					int beforeHPKaz = kaz.HP;
-					int beforeHPPlay=play.HP;
+					int beforeHPPlay = play.HP;
 					await calculateDamage(kaz, play, false, difficulty);
 					int afterHPKaz = kaz.HP;
 					int afterHPPlay = play.HP;
@@ -482,7 +502,7 @@ namespace szakmajDusza
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 					kaz.UpdateVisual();
 					play.UpdateVisual();
-					
+
 
 					if (play.HP <= 0)
 					{
@@ -516,7 +536,7 @@ namespace szakmajDusza
 					}
 					await Task.Delay((int)(basePlaySpeed / (2 * playSpeedMultiplier)));
 				}
-				else if(playerCopies.Count<0)//thorns kill
+				else if (playerCopies.Count < 0)//thorns kill
 				{
 					attack.Visibility = Visibility.Collapsed;
 					defend.Visibility = Visibility.Visible;
@@ -573,23 +593,23 @@ namespace szakmajDusza
 				MainWindow.sp.Stop();
 				MainWindow.menuMusic = "";
 
-                kazamata.Children.Clear();
+				kazamata.Children.Clear();
 				player.Children.Clear();
 				fightPlayer.Children.Clear();
 				fightKazamata.Children.Clear();
-                while (!MainWindow.se.NaturalDuration.HasTimeSpan)
-                    await Task.Delay(1);
-                await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
-				if (MainWindow.menuMusic=="")
+				while (!MainWindow.se.NaturalDuration.HasTimeSpan)
+					await Task.Delay(1);
+				await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
+				if (MainWindow.menuMusic == "")
 				{
-                    MainWindow.se.Stop();
-                    MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-                    MainWindow.sp.Play();
-                    MainWindow.menuMusic = "menu";
+					MainWindow.se.Stop();
+					MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+					MainWindow.sp.Play();
+					MainWindow.menuMusic = "menu";
 
-                }
+				}
 
-            }
+			}
 			else
 			{
 				Label l2 = MainWindow.CreateJutalom(grid);
@@ -601,9 +621,9 @@ namespace szakmajDusza
 				MainWindow.se.Open(new Uri("Sounds/Win.wav", UriKind.Relative));
 				MainWindow.se.Play();
 				MainWindow.sp.Stop();
-               
 
-                switch (k.reward)
+
+				switch (k.reward)
 				{
 					case KazamataReward.eletero:
 						//MessageBox.Show($"Játékos nyert! Nyeremény: +2 HP {pakli[index].Name}");
@@ -621,10 +641,10 @@ namespace szakmajDusza
 						pakli[index].UpdateVisual();
 						break;
 					case KazamataReward.arany:
-                        l.Content = $"Nyertél!";
-                        l2.Content = $"+3 arany";
+						l.Content = $"Nyertél!";
+						l2.Content = $"+3 arany";
 						Item.GoldOwned += 3;
-                        break;
+						break;
 					case KazamataReward.newcard:
 						foreach (var item in MainWindow.AllCardsDict.Values)
 						{
@@ -663,17 +683,17 @@ namespace szakmajDusza
 					default:
 						break;
 				}
-                while (!MainWindow.se.NaturalDuration.HasTimeSpan)
-                    await Task.Delay(1);
-                await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
-                if (MainWindow.menuMusic == "")
-                {
-                    MainWindow.se.Stop();
-                    MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
-                    MainWindow.sp.Play();
+				while (!MainWindow.se.NaturalDuration.HasTimeSpan)
+					await Task.Delay(1);
+				await Task.Delay(((int)MainWindow.se.NaturalDuration.TimeSpan.TotalMilliseconds));
+				if (MainWindow.menuMusic == "")
+				{
+					MainWindow.se.Stop();
+					MainWindow.sp.Open(new Uri("Sounds/Menu.wav", UriKind.Relative));
+					MainWindow.sp.Play();
 					MainWindow.menuMusic = "menu";
-                }
-            }
+				}
+			}
 		}
 
 

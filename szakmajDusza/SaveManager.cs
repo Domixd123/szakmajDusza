@@ -345,7 +345,15 @@ namespace szakmajDusza
 				else
 				{
 					fileName = $"{FileName_TextBox.Text}.txt";
-					SaveProgress();
+                    KornyezetekMester_List.ItemsSource = Directory.GetFiles("kornyezet").Select(x => x.Split('\\')[1].Split('.')[0]);
+                    var k1 = Directory.GetFiles("kornyezet")
+    .Select(x => Path.GetFileNameWithoutExtension(x) + " (új)");
+
+                    var k2 = Directory.GetFiles("saves")
+                        .Select(x => Path.GetFileNameWithoutExtension(x) + " (mentett)");
+
+                    KornyezetekJatekos_List.ItemsSource = k1.Concat(k2).ToList();
+                    SaveProgress();
 					Back(sender, e);
 
 				}

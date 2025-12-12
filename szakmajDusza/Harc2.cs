@@ -240,7 +240,7 @@ namespace szakmajDusza
 				if (defender.HP > 0 && MagicRes(defender))
 				{
 
-					await AnimationManager(defender, "", "magic");
+					await AnimationManager(attacker, "", "magic");
 
 					continue;
 				}
@@ -260,7 +260,7 @@ namespace szakmajDusza
 				if (MagicRes(attacker))
 				{
 
-					await AnimationManager(attacker, "", "magic");
+					await AnimationManager(defender, "", "magic");
 
 					continue;
 				}

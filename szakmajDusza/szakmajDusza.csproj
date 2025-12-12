@@ -20,6 +20,7 @@
     <None Remove="images\heartbg.png" />
     <None Remove="images\lifesteal.png" />
     <None Remove="images\magic.png" />
+    <None Remove="images\playing-card.ico" />
     <None Remove="images\revive.png" />
     <None Remove="images\strength.png" />
     <None Remove="images\thorns.png" />
@@ -44,6 +45,7 @@
     <Resource Include="images\heartbg.png" />
     <Resource Include="images\lifesteal.png" />
     <Resource Include="images\magic.png" />
+    <Resource Include="images\playing-card.ico" />
     <Resource Include="images\revive.png" />
     <Resource Include="images\strength.png" />
     <Resource Include="images\thorns.png" />

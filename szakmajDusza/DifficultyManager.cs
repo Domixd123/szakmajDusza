@@ -19,6 +19,7 @@ namespace szakmajDusza
 			//loaddata was here
 			Difficulty = int.Parse((string)Dif_Label.Content);
 			KornyezetekJatekos_List.SelectedItem = null;
+			Difficulty_Stack.Visibility= Visibility.Collapsed;
 			GoToGrid(PakliOssze_Grid);
 		}
 		private void DifPlus_Button_Click(object sender, RoutedEventArgs e)

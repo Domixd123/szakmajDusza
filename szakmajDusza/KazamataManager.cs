@@ -304,7 +304,7 @@ namespace szakmajDusza
 
 			if (new Random().Next(2) == 1)
 			{
-				sp.Open(new Uri("Sounds/NagyHarc.wav", UriKind.Relative));
+				sp.Open(new Uri("Sounds/peak.mp3", UriKind.Relative));
 				sp.Play();
 			}
 			else
